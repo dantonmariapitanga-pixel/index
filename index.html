@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DL DESIGN | Web Design Profissional</title>
+    <title>DL DESIGN | Agência de Web Design e Alta Performance</title>
     <style>
         /* CSS Reset & Variáveis */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         :root { 
             --primary-bg: #0a0a0a; 
-            --secondary-bg: #161616; 
+            --secondary-bg: #121212; 
+            --tertiary-bg: #1a1a1a;
             --accent-color: #00ff88; 
+            --accent-hover: #1ebd5c;
             --text-light: #f4f4f4; 
             --text-muted: #a0a0a0;
             --whatsapp-green: #25D366;
@@ -18,144 +20,226 @@
         
         body { background-color: var(--primary-bg); color: var(--text-light); line-height: 1.6; scroll-behavior: smooth; }
         
-        /* Cabeçalho */
-        header { background-color: var(--secondary-bg); padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
-        .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: 2px; }
-        .logo span { color: var(--accent-color); }
-        nav ul { list-style: none; display: flex; gap: 2.5rem; }
-        nav a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        /* ================= CABEÇALHO E LOGO ================= */
+        header { background-color: var(--secondary-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+        
+        /* Logomarca Profissional em SVG */
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 42px; height: 42px; }
+        .logo-text { font-size: 1.6rem; font-weight: 800; letter-spacing: 2px; color: var(--text-light); display: flex; align-items: center;}
+        .logo-text span { color: var(--accent-color); margin-left: 5px; }
+
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 0.95rem; }
         nav a:hover { color: var(--accent-color); }
         
-        /* Botões */
-        .btn { padding: 15px 35px; background-color: var(--accent-color); color: var(--primary-bg); text-decoration: none; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: 0.3s ease; display: inline-block; font-size: 1rem;}
+        /* ================= BOTÕES ================= */
+        .btn { padding: 15px 35px; background-color: var(--accent-color); color: var(--primary-bg); text-decoration: none; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: 0.3s ease; display: inline-block; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;}
         .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2); }
         
-        /* Botão WhatsApp Grande (Seção Contato) */
-        .btn-whatsapp-large { 
-            background-color: var(--whatsapp-green); 
-            color: white; 
-            font-size: 1.2rem; 
-            padding: 15px 40px; 
-            border-radius: 50px; 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            gap: 12px; 
-            margin-top: 1.5rem; 
-            text-decoration: none; 
-            font-weight: bold; 
-        }
+        /* Botão WhatsApp Grande */
+        .btn-whatsapp-large { background-color: var(--whatsapp-green); color: white; font-size: 1.1rem; padding: 15px 40px; border-radius: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin-top: 1.5rem; text-decoration: none; font-weight: bold; transition: 0.3s ease; }
         .btn-whatsapp-large:hover { background-color: #1ebd5c; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); color: white; transform: translateY(-3px); }
-        .btn-whatsapp-large img { width: 28px; height: 28px; object-fit: contain; }
 
-        /* Hero & Serviços */
-        .hero { min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.1; }
-        .hero p { font-size: 1.2rem; margin-bottom: 2.5rem; max-width: 600px; color: var(--text-muted); }
-        
-        .services, .contact { padding: 5rem 5%; background-color: var(--secondary-bg); text-align: center; }
-        .contact { background-color: var(--primary-bg); }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
-        
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .service-card { background-color: var(--primary-bg); padding: 2rem; border-radius: 8px; border-top: 4px solid var(--accent-color); transition: transform 0.3s ease; text-align: left; }
-        .service-card:hover { transform: translateY(-5px); }
-        .service-card h3 { margin-bottom: 1rem; color: var(--text-light); }
-        .service-card p { color: var(--text-muted); }
+        /* ================= SEÇÕES GERAIS ================= */
+        section { padding: 6rem 5%; }
+        .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; color: var(--text-light); }
+        .section-subtitle { text-align: center; color: var(--accent-color); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4rem; font-weight: 600; }
 
-        /* --- BOTÃO WHATSAPP FLUTUANTE COM A SUA IMAGEM --- */
+        /* HERO (Início) */
+        .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(180deg, var(--secondary-bg) 0%, var(--primary-bg) 100%); padding: 40px 20px; }
+        .hero h1 { font-size: 4.5rem; margin-bottom: 1.5rem; line-height: 1.1; font-weight: 800; }
+        .hero p { font-size: 1.3rem; margin-bottom: 3rem; max-width: 700px; color: var(--text-muted); }
+
+        /* SOBRE NÓS */
+        .about { background-color: var(--primary-bg); display: flex; gap: 4rem; align-items: center; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .about-text { flex: 1; }
+        .about-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .about-text p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .about-stats { display: flex; gap: 2rem; margin-top: 2rem; border-top: 1px solid #333; padding-top: 2rem; }
+        .stat h4 { font-size: 2rem; color: var(--accent-color); }
+        .stat p { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; }
+
+        /* SERVIÇOS */
+        .services { background-color: var(--secondary-bg); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .service-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border-top: 4px solid transparent; transition: 0.3s ease; text-align: left; }
+        .service-card:hover { border-top-color: var(--accent-color); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color); }
+        .service-card h3 { margin-bottom: 1rem; color: var(--text-light); font-size: 1.4rem; }
+        .service-card p { color: var(--text-muted); font-size: 1rem; }
+
+        /* PROCESSO (Metodologia) */
+        .process { background-color: var(--primary-bg); text-align: center; }
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .process-step { position: relative; padding: 2rem; }
+        .step-number { font-size: 4rem; font-weight: 800; color: #222; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 0; }
+        .process-step h3 { position: relative; z-index: 1; margin-top: 1rem; margin-bottom: 1rem; color: var(--accent-color); }
+        .process-step p { position: relative; z-index: 1; color: var(--text-muted); }
+
+        /* CONTATO FINAL */
+        .contact { background-color: var(--secondary-bg); text-align: center; padding: 8rem 5%; }
+        .contact-box { background-color: var(--tertiary-bg); padding: 4rem 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto; border: 1px solid #333; }
+        .contact-box h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .contact-box p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2.5rem; }
+
+        /* ================= BOTÃO WHATSAPP FLUTUANTE (Ícone SVG) ================= */
         .whatsapp-btn { 
-            position: fixed; 
-            bottom: 20px; 
-            right: 20px; 
-            background-color: var(--whatsapp-green); 
-            width: 60px; /* Largura fixa */
-            height: 60px; /* Altura fixa */
-            border-radius: 50%; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
-            z-index: 9999; /* Garante que fica na frente de tudo */
-            display: flex; 
-            justify-content: center; /* Centraliza a imagem na horizontal */
-            align-items: center; /* Centraliza a imagem na vertical */
-            transition: transform 0.3s;
-            text-decoration: none;
+            position: fixed; bottom: 20px; right: 20px; background-color: var(--whatsapp-green); 
+            width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+            z-index: 9999; display: flex; justify-content: center; align-items: center; 
+            transition: transform 0.3s; text-decoration: none;
         }
-        .whatsapp-btn img {
-            width: 38px; /* Tamanho exato do ícone dentro da bolinha */
-            height: 38px;
-            object-fit: contain;
-            /* Um pequeno ajuste para compensar o desenho do logo do WhatsApp se necessário */
-            margin-left: 2px; 
-            margin-top: 2px;
-        }
+        .whatsapp-btn svg { width: 35px; height: 35px; fill: white; }
         .whatsapp-btn:hover { transform: scale(1.1); }
 
         /* Rodapé */
-        footer { background-color: #050505; padding: 2rem; text-align: center; color: #555; margin-bottom: 60px; /* Espaço para o botão no celular */ }
+        footer { background-color: #050505; padding: 2.5rem; text-align: center; color: #555; margin-bottom: 60px; border-top: 1px solid #111; }
 
         /* Responsividade */
         @media(max-width: 768px) {
             nav ul { display: none; }
-            .hero h1 { font-size: 2.2rem; }
-            header { flex-direction: column; gap: 1rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .about { flex-direction: column; text-align: center; }
+            .about-stats { justify-content: center; flex-wrap: wrap; }
+            .section-title { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">DL <span>DESIGN</span></div>
+        <a href="#home" class="brand">
+            <svg class="logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 4L4 18V46L32 60L60 46V18L32 4Z" stroke="var(--accent-color)" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M32 4V32M32 32L60 18M32 32L4 18M4 46L32 32M60 46L32 32" stroke="var(--text-muted)" stroke-width="2" stroke-linejoin="round" opacity="0.6"/>
+                <circle cx="32" cy="32" r="5" fill="var(--text-light)"/>
+            </svg>
+            <div class="logo-text">DL<span>DESIGN</span></div>
+        </a>
         <nav>
             <ul>
                 <li><a href="#home">Início</a></li>
-                <li><a href="#services">Serviços</a></li>
-                <li><a href="#contact">Contato</a></li>
+                <li><a href="#sobre">Agência</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#metodologia">Processo</a></li>
+                <li><a href="#contato">Orçamento</a></li>
             </ul>
         </nav>
     </header>
 
     <section id="home" class="hero">
-        <h1>Transformamos Ideias em<br>Experiências Digitais</h1>
-        <p>Especialistas em criação de sites modernos, de alta performance e focados em resultados para o seu negócio.</p>
-        <a href="#contact" class="btn">Inicie seu Projeto</a>
+        <h1>Construímos Máquinas de<br>Vendas na Internet</h1>
+        <p>A DL DESIGN é especializada em criar sites premium, rápidos e focados em transformar visitantes comuns em clientes fiéis para o seu negócio.</p>
+        <a href="#contato" class="btn">Solicitar Orçamento Gratuito</a>
     </section>
 
-    <section id="services" class="services">
-        <h2 class="section-title">Soluções Completas</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>UI/UX Design</h3>
-                <p>Projetamos interfaces intuitivas focadas na experiência do usuário.</p>
-            </div>
-            <div class="service-card">
-                <h3>Desenvolvimento Web</h3>
-                <p>Sites rápidos e responsivos, prontos para rankear no Google.</p>
-            </div>
-            <div class="service-card">
-                <h3>E-commerce</h3>
-                <p>Lojas virtuais otimizadas para conversão e vendas 24h.</p>
+    <section id="sobre" class="about">
+        <div class="about-text">
+            <h4 style="color: var(--accent-color); letter-spacing: 2px; margin-bottom: 10px;">QUEM SOMOS</h4>
+            <h2>Não fazemos apenas sites.<br>Criamos experiências.</h2>
+            <p>No mercado digital atual, ter um site comum não é mais suficiente. Se a sua página for lenta, confusa ou mal posicionada no Google, você está perdendo dinheiro todos os dias para o seu concorrente.</p>
+            <p>Na <strong>DL DESIGN</strong>, unimos tecnologia de ponta, design psicológico e estratégias de conversão para entregar plataformas digitais que realmente geram valor e impacto visual.</p>
+            
+            <div class="about-stats">
+                <div class="stat">
+                    <h4>100%</h4>
+                    <p>Foco em Resultados</p>
+                </div>
+                <div class="stat">
+                    <h4>24/7</h4>
+                    <p>Sites Otimizados</p>
+                </div>
+                <div class="stat">
+                    <h4>Top</h4>
+                    <p>Design Responsivo</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="contact">
-        <h2 class="section-title">Vamos Conversar?</h2>
-        <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem;">
-            Clique no botão abaixo para me mandar uma mensagem direta no WhatsApp e começarmos o seu projeto.
-        </p>
-        
-        <a href="https://wa.me/5585991469859?text=Olá! Estava no site da DL DESIGN e gostaria de conversar sobre um projeto." target="_blank" class="btn btn-whatsapp-large">
-            <img src="https://images.icon-icons.com/2972/PNG/512/whatsapp_logo_icon_186881.png" alt="Ícone WhatsApp">
-            Falar no WhatsApp
-        </a>
+    <section id="servicos" class="services">
+        <h2 class="section-title">Nossas Especialidades</h2>
+        <h4 class="section-subtitle">O que podemos fazer pela sua empresa</h4>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💻</div>
+                <h3>Sites Institucionais</h3>
+                <p>A vitrine perfeita para a sua empresa. Criamos sites elegantes que transmitem autoridade, confiança e profissionalismo para seus clientes.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🛒</div>
+                <h3>Lojas Virtuais (E-commerce)</h3>
+                <p>Venda 24 horas por dia com plataformas de e-commerce seguras, com gestão de estoque integrada e checkout facilitado.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🚀</div>
+                <h3>Landing Pages de Venda</h3>
+                <p>Páginas de altíssima conversão feitas estrategicamente para lançamentos de produtos, cursos ou captação de leads (contatos).</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Design UI/UX Responsivo</h3>
+                <p>Seu site perfeito em qualquer tela. Otimizamos a experiência do usuário para garantir que o cliente navegue facilmente pelo celular.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔍</div>
+                <h3>Otimização SEO (Google)</h3>
+                <p>Aplicamos as melhores técnicas de SEO no código do seu site para ajudar sua empresa a aparecer nas primeiras páginas do Google.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚙️</div>
+                <h3>Suporte e Manutenção</h3>
+                <p>Não te abandonamos após a entrega. Oferecemos suporte técnico contínuo para garantir que seu site fique sempre no ar e seguro.</p>
+            </div>
+        </div>
     </section>
 
-    <a href="https://wa.me/5585991469859?text=Olá! Estava no site da DL DESIGN e gostaria de conversar sobre um projeto." class="whatsapp-btn" target="_blank" aria-label="Falar no WhatsApp">
-        <img src="https://images.icon-icons.com/2972/PNG/512/whatsapp_logo_icon_186881.png" alt="WhatsApp">
+    <section id="metodologia" class="process">
+        <h2 class="section-title">Como Trabalhamos</h2>
+        <h4 class="section-subtitle">Do zero ao site no ar</h4>
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="step-number">01</div>
+                <h3>Descoberta</h3>
+                <p>Entendemos o seu negócio, seus objetivos e quem é o seu público-alvo para traçar a melhor estratégia.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">02</div>
+                <h3>Design & UX</h3>
+                <p>Criamos o visual completo do site e enviamos para a sua aprovação antes de escrever qualquer linha de código.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">03</div>
+                <h3>Desenvolvimento</h3>
+                <p>Transformamos o design em um site real, rápido e estruturado com as tecnologias mais modernas do mercado.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">04</div>
+                <h3>Lançamento</h3>
+                <p>Fazemos rigorosos testes de qualidade, publicamos o site no seu domínio e entregamos as chaves para você!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="contact">
+        <div class="contact-box">
+            <h2>Pronto para dominar o mercado?</h2>
+            <p>Pare de perder clientes por não ter uma presença digital profissional. Toque no botão abaixo e fale diretamente com nossa equipe de especialistas.</p>
+            
+            <a href="https://wa.me/5585991469859?text=Olá! Quero dar o próximo passo e criar um site profissional com a DL DESIGN." target="_blank" class="btn btn-whatsapp-large">
+                <svg style="width:24px;height:24px;fill:white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                Iniciar meu Projeto Agora
+            </a>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5585991469859?text=Olá! Quero criar um site com a DL DESIGN." class="whatsapp-btn" target="_blank" aria-label="Falar no WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </a>
 
     <footer>
-        <p>&copy; 2026 DL DESIGN. Todos os direitos reservados.</p>
+        <p>&copy; 2026 DL DESIGN. Criando o futuro da web. Todos os direitos reservados.</p>
     </footer>
 
 </body>
