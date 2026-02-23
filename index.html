@@ -114,16 +114,20 @@
         /* DEPOIMENTOS */
         .testimonials { background-color: var(--secondary-bg); text-align: center; }
         .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .testimonial-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid #333; text-align: left; transition: transform 0.3s ease; }
+        .testimonial-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid #333; text-align: left; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;}
         .testimonial-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
         .stars { color: #FFD700; font-size: 1.2rem; margin-bottom: 1rem; }
         .testimonial-card p { font-style: italic; color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.05rem; }
-        .client-info strong { display: block; color: var(--accent-color); font-size: 1.1rem; margin-bottom: 0.2rem; }
-        .client-info span { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* Novas configurações para a foto + infos do cliente */
+        .client-profile { display: flex; align-items: center; gap: 15px; }
+        .client-avatar { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color); padding: 2px; }
+        .client-info { display: flex; flex-direction: column; }
+        .client-info strong { color: var(--accent-color); font-size: 1.1rem; margin-bottom: 0.1rem; }
+        .client-info span { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
         /* CONTATO FINAL */
         .contact { background-color: var(--primary-bg); text-align: center; padding: 8rem 5%; }
-        /* Retirei a classe .reveal daqui para evitar bugs de exibição no fim da tela */
         .contact-box { background-color: var(--tertiary-bg); padding: 4rem 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto; border: 1px solid #333; position: relative; overflow: hidden; }
         .contact-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-color); }
         .contact-box h2 { font-size: 2.5rem; margin-bottom: 1rem; }
@@ -140,7 +144,6 @@
         .whatsapp-btn:hover { transform: scale(1.1); }
 
         /* Rodapé */
-        /* Retirei a animação do footer para ele ficar fixo e visível sem bugar */
         footer { background-color: #050505; padding: 2.5rem; text-align: center; color: #555; margin-bottom: 60px; border-top: 1px solid #111; }
 
         /* Responsividade */
@@ -296,27 +299,42 @@
         <h4 class="section-subtitle reveal">O que dizem os nossos clientes</h4>
         <div class="testimonials-grid">
             <div class="testimonial-card reveal delay-seq-1">
-                <div class="stars">★★★★★</div>
-                <p>"A DL DESIGN transformou completamente a nossa presença online. Nosso site antigo era lento e não convertia. Após o lançamento do novo projeto, nossas solicitações de orçamento aumentaram em 150% logo no primeiro mês!"</p>
-                <div class="client-info">
-                    <strong>Carlos Mendes</strong>
-                    <span>Diretor Comercial, TechMendes</span>
+                <div>
+                    <div class="stars">★★★★★</div>
+                    <p>"A DL DESIGN transformou completamente a nossa presença online. Nosso site antigo era lento e não convertia. Após o lançamento do novo projeto, nossas solicitações de orçamento aumentaram em 150% logo no primeiro mês!"</p>
+                </div>
+                <div class="client-profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Mendes" class="client-avatar">
+                    <div class="client-info">
+                        <strong>Carlos Mendes</strong>
+                        <span>Diretor Comercial, TechMendes</span>
+                    </div>
                 </div>
             </div>
             <div class="testimonial-card reveal delay-seq-2">
-                <div class="stars">★★★★★</div>
-                <p>"Trabalho impecável! A equipe foi super atenciosa desde a primeira reunião. Entregaram nossa loja virtual antes do prazo e o design ficou de altíssimo nível. Recomendo de olhos fechados para quem busca qualidade."</p>
-                <div class="client-info">
-                    <strong>Juliana Torres</strong>
-                    <span>CEO, Torres Semijoias</span>
+                <div>
+                    <div class="stars">★★★★★</div>
+                    <p>"Trabalho impecável! A equipe foi super atenciosa desde a primeira reunião. Entregaram nossa loja virtual antes do prazo e o design ficou de altíssimo nível. Recomendo de olhos fechados para quem busca qualidade."</p>
+                </div>
+                <div class="client-profile">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Juliana Torres" class="client-avatar">
+                    <div class="client-info">
+                        <strong>Juliana Torres</strong>
+                        <span>CEO, Torres Semijoias</span>
+                    </div>
                 </div>
             </div>
             <div class="testimonial-card reveal delay-seq-3">
-                <div class="stars">★★★★★</div>
-                <p>"Estávamos perdendo muito espaço para a concorrência porque nosso site não funcionava bem no celular. A agência resolveu isso com maestria. Entregaram um site extremamente rápido, elegante e focado em vendas. Sensacional!"</p>
-                <div class="client-info">
-                    <strong>Roberto Alves</strong>
-                    <span>Sócio-Fundador, Alves Advocacia</span>
+                <div>
+                    <div class="stars">★★★★★</div>
+                    <p>"Estávamos perdendo muito espaço para a concorrência porque nosso site não funcionava bem no celular. A agência resolveu isso com maestria. Entregaram um site extremamente rápido, elegante e focado em vendas. Sensacional!"</p>
+                </div>
+                <div class="client-profile">
+                    <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Roberto Alves" class="client-avatar">
+                    <div class="client-info">
+                        <strong>Roberto Alves</strong>
+                        <span>Sócio-Fundador, Alves Advocacia</span>
+                    </div>
                 </div>
             </div>
         </div>
