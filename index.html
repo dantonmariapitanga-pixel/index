@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DL DESIGN | Agência de Web Design e Alta Performance</title>
+    <title>DL DESIGN| Agência de Web Design e Alta Performance</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,22 @@
         
         body { background-color: var(--primary-bg); color: var(--text-light); line-height: 1.6; scroll-behavior: smooth; overflow-x: hidden; }
         
-        /* ================= ANIMAÇÕES DE SURGIMENTO (SCROLL REVEAL) ================= */
+        /* ================= ANIMAÇÕES GERAIS ================= */
+        
+        /* 1. Animação de Entrada Automática (Para o topo do site) */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUpAnim 0.8s ease-out forwards;
+        }
+        @keyframes fadeInUpAnim {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
+
+        /* 2. Animação de Scroll Reveal (Para o resto do site) */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -35,19 +50,18 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Delays para efeito cascata */
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
-        .delay-5 { transition-delay: 0.5s; }
-        .delay-6 { transition-delay: 0.6s; }
+        /* Delays para as caixinhas subirem em cascata */
+        .delay-seq-1 { transition-delay: 0.1s; }
+        .delay-seq-2 { transition-delay: 0.2s; }
+        .delay-seq-3 { transition-delay: 0.3s; }
+        .delay-seq-4 { transition-delay: 0.4s; }
+        .delay-seq-5 { transition-delay: 0.5s; }
+        .delay-seq-6 { transition-delay: 0.6s; }
 
         /* ================= CABEÇALHO E LOGO ================= */
         header { background-color: var(--secondary-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
         
         .brand { display: flex; align-items: center; text-decoration: none; }
-        
         .logo-svg { height: 65px; width: auto; max-width: 100%; transition: transform 0.3s ease; }
         .brand:hover .logo-svg { transform: scale(1.02); }
 
@@ -184,9 +198,9 @@
     </header>
 
     <section id="home" class="hero">
-        <h1 class="reveal delay-1">Construímos Máquinas de<br>Vendas na Internet</h1>
-        <p class="reveal delay-2">A DL DESIGN é especializada em criar sites premium, rápidos e focados em transformar visitantes comuns em clientes fiéis para o seu negócio.</p>
-        <a href="#contato" class="btn reveal delay-3">Solicitar Orçamento Gratuito</a>
+        <h1 class="fade-in-up delay-1">Construímos Máquinas de<br>Vendas na Internet</h1>
+        <p class="fade-in-up delay-2">A DL DESIGN é especializada em criar sites premium, rápidos e focados em transformar visitantes comuns em clientes fiéis para o seu negócio.</p>
+        <a href="#contato" class="btn fade-in-up delay-3">Solicitar Orçamento Gratuito</a>
     </section>
 
     <section id="sobre" class="about">
@@ -217,32 +231,32 @@
         <h2 class="section-title reveal">Nossas Especialidades</h2>
         <h4 class="section-subtitle reveal">O que podemos fazer pela sua empresa</h4>
         <div class="services-grid">
-            <div class="service-card reveal delay-1">
+            <div class="service-card reveal delay-seq-1">
                 <div class="service-icon">💻</div>
                 <h3>Sites Institucionais</h3>
                 <p>A vitrine perfeita para a sua empresa. Criamos sites elegantes que transmitem autoridade, confiança e profissionalismo para seus clientes.</p>
             </div>
-            <div class="service-card reveal delay-2">
+            <div class="service-card reveal delay-seq-2">
                 <div class="service-icon">🛒</div>
                 <h3>Lojas Virtuais (E-commerce)</h3>
                 <p>Venda 24 horas por dia com plataformas de e-commerce seguras, com gestão de estoque integrada e checkout facilitado.</p>
             </div>
-            <div class="service-card reveal delay-3">
+            <div class="service-card reveal delay-seq-3">
                 <div class="service-icon">🚀</div>
                 <h3>Landing Pages de Venda</h3>
                 <p>Páginas de altíssima conversão feitas estrategicamente para lançamentos de produtos, cursos ou captação de leads (contatos).</p>
             </div>
-            <div class="service-card reveal delay-4">
+            <div class="service-card reveal delay-seq-4">
                 <div class="service-icon">📱</div>
                 <h3>Design UI/UX Responsivo</h3>
                 <p>Seu site perfeito em qualquer tela. Otimizamos a experiência do usuário para garantir que o cliente navegue facilmente pelo celular.</p>
             </div>
-            <div class="service-card reveal delay-5">
+            <div class="service-card reveal delay-seq-5">
                 <div class="service-icon">🔍</div>
                 <h3>Otimização SEO (Google)</h3>
                 <p>Aplicamos as melhores técnicas de SEO no código do seu site para ajudar sua empresa a aparecer nas primeiras páginas do Google.</p>
             </div>
-            <div class="service-card reveal delay-6">
+            <div class="service-card reveal delay-seq-6">
                 <div class="service-icon">⚙️</div>
                 <h3>Suporte e Manutenção</h3>
                 <p>Não te abandonamos após a entrega. Oferecemos suporte técnico contínuo para garantir que seu site fique sempre no ar e seguro.</p>
@@ -254,22 +268,22 @@
         <h2 class="section-title reveal">Como Trabalhamos</h2>
         <h4 class="section-subtitle reveal">Do zero ao site no ar</h4>
         <div class="process-grid">
-            <div class="process-step reveal delay-1">
+            <div class="process-step reveal delay-seq-1">
                 <div class="step-number">01</div>
                 <h3>Descoberta</h3>
                 <p>Entendemos o seu negócio, seus objetivos e quem é o seu público-alvo para traçar a melhor estratégia.</p>
             </div>
-            <div class="process-step reveal delay-2">
+            <div class="process-step reveal delay-seq-2">
                 <div class="step-number">02</div>
                 <h3>Design & UX</h3>
                 <p>Criamos o visual completo do site e enviamos para a sua aprovação antes de escrever qualquer linha de código.</p>
             </div>
-            <div class="process-step reveal delay-3">
+            <div class="process-step reveal delay-seq-3">
                 <div class="step-number">03</div>
                 <h3>Desenvolvimento</h3>
                 <p>Transformamos o design em um site real, rápido e estruturado com as tecnologias mais modernas do mercado.</p>
             </div>
-            <div class="process-step reveal delay-4">
+            <div class="process-step reveal delay-seq-4">
                 <div class="step-number">04</div>
                 <h3>Lançamento</h3>
                 <p>Fazemos rigorosos testes de qualidade, publicamos o site no seu domínio e entregamos as chaves para você!</p>
@@ -281,7 +295,7 @@
         <h2 class="section-title reveal">Histórias de Sucesso</h2>
         <h4 class="section-subtitle reveal">O que dizem os nossos clientes</h4>
         <div class="testimonials-grid">
-            <div class="testimonial-card reveal delay-1">
+            <div class="testimonial-card reveal delay-seq-1">
                 <div class="stars">★★★★★</div>
                 <p>"A DL DESIGN transformou completamente a nossa presença online. Nosso site antigo era lento e não convertia. Após o lançamento do novo projeto, nossas solicitações de orçamento aumentaram em 150% logo no primeiro mês!"</p>
                 <div class="client-info">
@@ -289,7 +303,7 @@
                     <span>Diretor Comercial, TechMendes</span>
                 </div>
             </div>
-            <div class="testimonial-card reveal delay-2">
+            <div class="testimonial-card reveal delay-seq-2">
                 <div class="stars">★★★★★</div>
                 <p>"Trabalho impecável! A equipe foi super atenciosa desde a primeira reunião. Entregaram nossa loja virtual antes do prazo e o design ficou de altíssimo nível. Recomendo de olhos fechados para quem busca qualidade."</p>
                 <div class="client-info">
@@ -297,7 +311,7 @@
                     <span>CEO, Torres Semijoias</span>
                 </div>
             </div>
-            <div class="testimonial-card reveal delay-3">
+            <div class="testimonial-card reveal delay-seq-3">
                 <div class="stars">★★★★★</div>
                 <p>"Estávamos perdendo muito espaço para a concorrência porque nosso site não funcionava bem no celular. A agência resolveu isso com maestria. Entregaram um site extremamente rápido, elegante e focado em vendas. Sensacional!"</p>
                 <div class="client-info">
@@ -353,15 +367,26 @@
             observer.observe(statsSection);
         }
 
-        // Animação de Scroll Reveal (Surgimento na tela)
+        // Animação de Scroll Reveal (Surgimento Seguro)
         const revealElements = document.querySelectorAll('.reveal');
         
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
+                // Tira a dependência pesada de porcentagem, ativando assim que o elemento tocar a tela
                 if(entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target); // Para animar apenas uma vez
+                    revealObserver.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.15 // Dispara quando 1
+            rootMargin: "0px 0px -20px 0px", 
+            threshold: 0 
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+
+</body>
+</html>
