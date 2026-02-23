@@ -23,14 +23,31 @@
             --whatsapp-green: #25D366;
         }
         
-        body { background-color: var(--primary-bg); color: var(--text-light); line-height: 1.6; scroll-behavior: smooth; }
+        body { background-color: var(--primary-bg); color: var(--text-light); line-height: 1.6; scroll-behavior: smooth; overflow-x: hidden; }
         
+        /* ================= ANIMAÇÕES DE SURGIMENTO (SCROLL REVEAL) ================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Delays para efeito cascata */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+
         /* ================= CABEÇALHO E LOGO ================= */
         header { background-color: var(--secondary-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
         
         .brand { display: flex; align-items: center; text-decoration: none; }
         
-        /* A logo agora embutida tem 65px de altura para destacar bem o escudo */
         .logo-svg { height: 65px; width: auto; max-width: 100%; transition: transform 0.3s ease; }
         .brand:hover .logo-svg { transform: scale(1.02); }
 
@@ -67,8 +84,8 @@
         /* SERVIÇOS */
         .services { background-color: var(--secondary-bg); }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .service-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border-top: 4px solid transparent; transition: 0.3s ease; text-align: left; }
-        .service-card:hover { border-top-color: var(--accent-color); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .service-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border-top: 4px solid transparent; transition: all 0.3s ease; text-align: left; }
+        .service-card:hover { border-top-color: var(--accent-color); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color); }
         .service-card h3 { margin-bottom: 1rem; color: var(--text-light); font-size: 1.4rem; }
         .service-card p { color: var(--text-muted); font-size: 1rem; }
@@ -137,26 +154,20 @@
                         <stop offset="100%" stop-color="#777777" />
                     </linearGradient>
                 </defs>
-
                 <path d="M 50 10 L 95 20 L 95 65 C 95 95 50 115 50 115 C 50 115 5 95 5 65 L 5 20 Z" stroke="url(#shieldGrad)" stroke-width="3" fill="#0a0a0a"/>
-
                 <path d="M 50 20 V 35 M 20 45 H 30 V 55 H 40 M 80 45 H 70 V 65 H 60 M 30 85 L 40 75 V 65 M 70 85 L 60 75 V 85" stroke="#00ff88" stroke-width="1.5" opacity="0.6"/>
                 <circle cx="20" cy="45" r="2" fill="#00ff88" opacity="0.6"/>
                 <circle cx="80" cy="45" r="2" fill="#00ff88" opacity="0.6"/>
                 <circle cx="30" cy="85" r="2" fill="#00ff88" opacity="0.6"/>
                 <circle cx="70" cy="85" r="2" fill="#00ff88" opacity="0.6"/>
-
                 <path d="M 25 40 L 45 40 C 60 40 60 75 45 75 L 25 75 Z" fill="#ffffff"/>
-                <path d="M 33 48 L 43 48 C 51 48 51 67 43 67 L 33 67 Z" fill="#0a0a0a"/> <circle cx="41" cy="57" r="7" stroke="#00ff88" stroke-width="1" fill="none"/>
+                <path d="M 33 48 L 43 48 C 51 48 51 67 43 67 L 33 67 Z" fill="#0a0a0a"/> 
+                <circle cx="41" cy="57" r="7" stroke="#00ff88" stroke-width="1" fill="none"/>
                 <path d="M 41 50 C 37 50 37 64 41 64 C 45 64 45 50 41 50 Z" stroke="#00ff88" stroke-width="1" fill="none"/>
                 <path d="M 34 57 H 48" stroke="#00ff88" stroke-width="1"/>
-
                 <path d="M 55 45 V 82 H 80" stroke="#00ff88" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter" fill="none" filter="url(#neon)"/>
-
                 <text x="115" y="65" font-family="'Playfair Display', serif" font-size="44" fill="#ffffff" font-weight="bold" letter-spacing="1">DL DESIGN</text>
-                
                 <circle cx="372" cy="50" r="7" fill="#00ff88" filter="url(#neon)"/>
-
                 <text x="120" y="92" font-family="'Montserrat', sans-serif" font-size="16" fill="#00ff88" font-weight="900" letter-spacing="3">WEB DESIGNER</text>
             </svg>
         </a>
@@ -173,13 +184,13 @@
     </header>
 
     <section id="home" class="hero">
-        <h1>Construímos Máquinas de<br>Vendas na Internet</h1>
-        <p>A DL DESIGN é especializada em criar sites premium, rápidos e focados em transformar visitantes comuns em clientes fiéis para o seu negócio.</p>
-        <a href="#contato" class="btn">Solicitar Orçamento Gratuito</a>
+        <h1 class="reveal delay-1">Construímos Máquinas de<br>Vendas na Internet</h1>
+        <p class="reveal delay-2">A DL DESIGN é especializada em criar sites premium, rápidos e focados em transformar visitantes comuns em clientes fiéis para o seu negócio.</p>
+        <a href="#contato" class="btn reveal delay-3">Solicitar Orçamento Gratuito</a>
     </section>
 
     <section id="sobre" class="about">
-        <div class="about-text">
+        <div class="about-text reveal">
             <h4 style="color: var(--accent-color); letter-spacing: 2px; margin-bottom: 10px;">QUEM SOMOS</h4>
             <h2>Não fazemos apenas sites.<br>Criamos experiências.</h2>
             <p>No mercado digital atual, ter um site comum não é mais suficiente. Se a sua página for lenta, confusa ou mal posicionada no Google, você está perdendo dinheiro todos os dias para o seu concorrente.</p>
@@ -203,35 +214,35 @@
     </section>
 
     <section id="servicos" class="services">
-        <h2 class="section-title">Nossas Especialidades</h2>
-        <h4 class="section-subtitle">O que podemos fazer pela sua empresa</h4>
+        <h2 class="section-title reveal">Nossas Especialidades</h2>
+        <h4 class="section-subtitle reveal">O que podemos fazer pela sua empresa</h4>
         <div class="services-grid">
-            <div class="service-card">
+            <div class="service-card reveal delay-1">
                 <div class="service-icon">💻</div>
                 <h3>Sites Institucionais</h3>
                 <p>A vitrine perfeita para a sua empresa. Criamos sites elegantes que transmitem autoridade, confiança e profissionalismo para seus clientes.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card reveal delay-2">
                 <div class="service-icon">🛒</div>
                 <h3>Lojas Virtuais (E-commerce)</h3>
                 <p>Venda 24 horas por dia com plataformas de e-commerce seguras, com gestão de estoque integrada e checkout facilitado.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card reveal delay-3">
                 <div class="service-icon">🚀</div>
                 <h3>Landing Pages de Venda</h3>
                 <p>Páginas de altíssima conversão feitas estrategicamente para lançamentos de produtos, cursos ou captação de leads (contatos).</p>
             </div>
-            <div class="service-card">
+            <div class="service-card reveal delay-4">
                 <div class="service-icon">📱</div>
                 <h3>Design UI/UX Responsivo</h3>
                 <p>Seu site perfeito em qualquer tela. Otimizamos a experiência do usuário para garantir que o cliente navegue facilmente pelo celular.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card reveal delay-5">
                 <div class="service-icon">🔍</div>
                 <h3>Otimização SEO (Google)</h3>
                 <p>Aplicamos as melhores técnicas de SEO no código do seu site para ajudar sua empresa a aparecer nas primeiras páginas do Google.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card reveal delay-6">
                 <div class="service-icon">⚙️</div>
                 <h3>Suporte e Manutenção</h3>
                 <p>Não te abandonamos após a entrega. Oferecemos suporte técnico contínuo para garantir que seu site fique sempre no ar e seguro.</p>
@@ -240,25 +251,25 @@
     </section>
 
     <section id="metodologia" class="process">
-        <h2 class="section-title">Como Trabalhamos</h2>
-        <h4 class="section-subtitle">Do zero ao site no ar</h4>
+        <h2 class="section-title reveal">Como Trabalhamos</h2>
+        <h4 class="section-subtitle reveal">Do zero ao site no ar</h4>
         <div class="process-grid">
-            <div class="process-step">
+            <div class="process-step reveal delay-1">
                 <div class="step-number">01</div>
                 <h3>Descoberta</h3>
                 <p>Entendemos o seu negócio, seus objetivos e quem é o seu público-alvo para traçar a melhor estratégia.</p>
             </div>
-            <div class="process-step">
+            <div class="process-step reveal delay-2">
                 <div class="step-number">02</div>
                 <h3>Design & UX</h3>
                 <p>Criamos o visual completo do site e enviamos para a sua aprovação antes de escrever qualquer linha de código.</p>
             </div>
-            <div class="process-step">
+            <div class="process-step reveal delay-3">
                 <div class="step-number">03</div>
                 <h3>Desenvolvimento</h3>
                 <p>Transformamos o design em um site real, rápido e estruturado com as tecnologias mais modernas do mercado.</p>
             </div>
-            <div class="process-step">
+            <div class="process-step reveal delay-4">
                 <div class="step-number">04</div>
                 <h3>Lançamento</h3>
                 <p>Fazemos rigorosos testes de qualidade, publicamos o site no seu domínio e entregamos as chaves para você!</p>
@@ -267,10 +278,10 @@
     </section>
 
     <section id="depoimentos" class="testimonials">
-        <h2 class="section-title">Histórias de Sucesso</h2>
-        <h4 class="section-subtitle">O que dizem os nossos clientes</h4>
+        <h2 class="section-title reveal">Histórias de Sucesso</h2>
+        <h4 class="section-subtitle reveal">O que dizem os nossos clientes</h4>
         <div class="testimonials-grid">
-            <div class="testimonial-card">
+            <div class="testimonial-card reveal delay-1">
                 <div class="stars">★★★★★</div>
                 <p>"A DL DESIGN transformou completamente a nossa presença online. Nosso site antigo era lento e não convertia. Após o lançamento do novo projeto, nossas solicitações de orçamento aumentaram em 150% logo no primeiro mês!"</p>
                 <div class="client-info">
@@ -278,7 +289,7 @@
                     <span>Diretor Comercial, TechMendes</span>
                 </div>
             </div>
-            <div class="testimonial-card">
+            <div class="testimonial-card reveal delay-2">
                 <div class="stars">★★★★★</div>
                 <p>"Trabalho impecável! A equipe foi super atenciosa desde a primeira reunião. Entregaram nossa loja virtual antes do prazo e o design ficou de altíssimo nível. Recomendo de olhos fechados para quem busca qualidade."</p>
                 <div class="client-info">
@@ -286,7 +297,7 @@
                     <span>CEO, Torres Semijoias</span>
                 </div>
             </div>
-            <div class="testimonial-card">
+            <div class="testimonial-card reveal delay-3">
                 <div class="stars">★★★★★</div>
                 <p>"Estávamos perdendo muito espaço para a concorrência porque nosso site não funcionava bem no celular. A agência resolveu isso com maestria. Entregaram um site extremamente rápido, elegante e focado em vendas. Sensacional!"</p>
                 <div class="client-info">
@@ -298,26 +309,20 @@
     </section>
 
     <section id="contato" class="contact">
-        <div class="contact-box">
+        <div class="contact-box reveal">
             <h2>Pronto para dominar o mercado?</h2>
             <p>Pare de perder clientes por não ter uma presença digital profissional. Toque no botão abaixo e fale diretamente com nossa equipe de especialistas.</p>
             
             <a href="https://wa.me/5585991469859?text=Olá! Quero dar o próximo passo e criar um site profissional com a DL DESIGN." target="_blank" class="btn btn-whatsapp-large">
                 <svg style="width:24px;height:24px;fill:white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                Iniciar meu Projeto Agora
-            </a>
-        </div>
-    </section>
-
-    <a href="https://wa.me/5585991469859?text=Olá! Quero criar um site com a DL DESIGN." class="whatsapp-btn" target="_blank" aria-label="Falar no WhatsApp">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </a>
 
-    <footer>
+    <footer class="reveal">
         <p>&copy; 2026 DL DESIGN. DESENVOLVIDO E CRIADO POR DANTON LIMA. Todos os direitos reservados.</p>
     </footer>
 
     <script>
+        // Animação dos números (Estatísticas)
         const nums = document.querySelectorAll('.num');
         const statsSection = document.querySelector('.about-stats');
         let hasAnimated = false;
@@ -347,7 +352,16 @@
         if(statsSection){
             observer.observe(statsSection);
         }
-    </script>
 
-</body>
-</html>
+        // Animação de Scroll Reveal (Surgimento na tela)
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target); // Para animar apenas uma vez
+                }
+            });
+        }, {
+            threshold: 0.15 // Dispara quando 1
