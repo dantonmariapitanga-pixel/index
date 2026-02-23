@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DL DESIGN | Agência de Web Design e Alta Performance</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+
     <style>
         /* CSS Reset & Variáveis */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -23,11 +28,15 @@
         /* ================= CABEÇALHO E LOGO ================= */
         header { background-color: var(--secondary-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
         
-        /* Logomarca Profissional em SVG */
-        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-icon { width: 42px; height: 42px; }
-        .logo-text { font-size: 1.6rem; font-weight: 800; letter-spacing: 2px; color: var(--text-light); display: flex; align-items: center;}
-        .logo-text span { color: var(--accent-color); margin-left: 5px; }
+        /* Logomarca Elaborada e Tipografia */
+        .brand { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-icon { width: 45px; height: 45px; }
+        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 1px; color: var(--text-light); display: flex; align-items: center;}
+        .logo-text span { color: var(--accent-color); margin-left: 6px; }
+        
+        /* Ponto piscando para dar ar de agência ativa */
+        .blinking-dot { width: 8px; height: 8px; background-color: var(--accent-color); border-radius: 50%; margin-left: 8px; margin-top: 8px; animation: blink 1.5s infinite; box-shadow: 0 0 10px var(--accent-color); }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         nav ul { list-style: none; display: flex; gap: 2rem; }
         nav a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 0.95rem; }
@@ -57,7 +66,7 @@
         .about-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
         .about-text p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem; }
         .about-stats { display: flex; gap: 2rem; margin-top: 2rem; border-top: 1px solid #333; padding-top: 2rem; }
-        .stat h4 { font-size: 2rem; color: var(--accent-color); }
+        .stat h4 { font-size: 2rem; color: var(--accent-color); display: flex; align-items: center; }
         .stat p { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; }
 
         /* SERVIÇOS */
@@ -110,12 +119,18 @@
 
     <header>
         <a href="#home" class="brand">
-            <svg class="logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M32 4L4 18V46L32 60L60 46V18L32 4Z" stroke="var(--accent-color)" stroke-width="4" stroke-linejoin="round"/>
-                <path d="M32 4V32M32 32L60 18M32 32L4 18M4 46L32 32M60 46L32 32" stroke="var(--text-muted)" stroke-width="2" stroke-linejoin="round" opacity="0.6"/>
-                <circle cx="32" cy="32" r="5" fill="var(--text-light)"/>
+            <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00ff88"/>
+                        <stop offset="100%" stop-color="#0088ff"/>
+                    </linearGradient>
+                </defs>
+                <polygon points="50,5 95,25 95,75 50,95 5,75 5,25" stroke="url(#neonGradient)" stroke-width="6" stroke-linejoin="round" opacity="0.8"/>
+                <path d="M 30 25 L 30 75 L 55 75 C 70 75 70 45 55 45 L 30 45" stroke="var(--text-light)" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+                <circle cx="50" cy="25" r="6" fill="var(--accent-color)"/>
             </svg>
-            <div class="logo-text">DL<span>DESIGN</span></div>
+            <div class="logo-text">DL<span>DESIGN</span> <div class="blinking-dot"></div></div>
         </a>
         <nav>
             <ul>
@@ -159,4 +174,121 @@
     </section>
 
     <section id="servicos" class="services">
-        <h2 class="section-title
+        <h2 class="section-title">Nossas Especialidades</h2>
+        <h4 class="section-subtitle">O que podemos fazer pela sua empresa</h4>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💻</div>
+                <h3>Sites Institucionais</h3>
+                <p>A vitrine perfeita para a sua empresa. Criamos sites elegantes que transmitem autoridade, confiança e profissionalismo para seus clientes.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🛒</div>
+                <h3>Lojas Virtuais (E-commerce)</h3>
+                <p>Venda 24 horas por dia com plataformas de e-commerce seguras, com gestão de estoque integrada e checkout facilitado.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🚀</div>
+                <h3>Landing Pages de Venda</h3>
+                <p>Páginas de altíssima conversão feitas estrategicamente para lançamentos de produtos, cursos ou captação de leads (contatos).</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Design UI/UX Responsivo</h3>
+                <p>Seu site perfeito em qualquer tela. Otimizamos a experiência do usuário para garantir que o cliente navegue facilmente pelo celular.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔍</div>
+                <h3>Otimização SEO (Google)</h3>
+                <p>Aplicamos as melhores técnicas de SEO no código do seu site para ajudar sua empresa a aparecer nas primeiras páginas do Google.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚙️</div>
+                <h3>Suporte e Manutenção</h3>
+                <p>Não te abandonamos após a entrega. Oferecemos suporte técnico contínuo para garantir que seu site fique sempre no ar e seguro.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="metodologia" class="process">
+        <h2 class="section-title">Como Trabalhamos</h2>
+        <h4 class="section-subtitle">Do zero ao site no ar</h4>
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="step-number">01</div>
+                <h3>Descoberta</h3>
+                <p>Entendemos o seu negócio, seus objetivos e quem é o seu público-alvo para traçar a melhor estratégia.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">02</div>
+                <h3>Design & UX</h3>
+                <p>Criamos o visual completo do site e enviamos para a sua aprovação antes de escrever qualquer linha de código.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">03</div>
+                <h3>Desenvolvimento</h3>
+                <p>Transformamos o design em um site real, rápido e estruturado com as tecnologias mais modernas do mercado.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">04</div>
+                <h3>Lançamento</h3>
+                <p>Fazemos rigorosos testes de qualidade, publicamos o site no seu domínio e entregamos as chaves para você!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="contact">
+        <div class="contact-box">
+            <h2>Pronto para dominar o mercado?</h2>
+            <p>Pare de perder clientes por não ter uma presença digital profissional. Toque no botão abaixo e fale diretamente com nossa equipe de especialistas.</p>
+            
+            <a href="https://wa.me/5585991469859?text=Olá! Quero dar o próximo passo e criar um site profissional com a DL DESIGN." target="_blank" class="btn btn-whatsapp-large">
+                <svg style="width:24px;height:24px;fill:white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                Iniciar meu Projeto Agora
+            </a>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5585991469859?text=Olá! Quero criar um site com a DL DESIGN." class="whatsapp-btn" target="_blank" aria-label="Falar no WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </a>
+
+    <footer>
+        <p>&copy; 2026 DL DESIGN. DESENVOLVIDO E CRIADO POR DANTON LIMA. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const nums = document.querySelectorAll('.num');
+        const statsSection = document.querySelector('.about-stats');
+        let hasAnimated = false;
+
+        // IntersectionObserver com threshold em '0' (Ativa assim que encostar na tela)
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !hasAnimated) {
+                hasAnimated = true; // Impede que repita
+                
+                nums.forEach((num) => {
+                    const target = parseInt(num.getAttribute('data-val'));
+                    const increment = target / 40; // Divide o número em 40 pedaços para subir suavemente
+                    let current = 0;
+                    
+                    const updateCounter = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            num.innerText = target;
+                            clearInterval(updateCounter);
+                        } else {
+                            num.innerText = Math.ceil(current); // Arredonda para não mostrar decimais
+                        }
+                    }, 40); // Velocidade do giro
+                });
+            }
+        }, { threshold: 0 }); // Threshold 0 é o segredo para nunca falhar no celular
+
+        if(statsSection){
+            observer.observe(statsSection);
+        }
+    </script>
+
+</body>
+</html>
