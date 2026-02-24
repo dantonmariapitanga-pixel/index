@@ -13,23 +13,22 @@
         /* CSS Reset & Variáveis */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         :root { 
-            /* As cores de fundo primária e secundária foram removidas do uso direto nas seções para dar lugar ao degradê unificado, mas mantidas aqui para referência se necessário */
             --primary-bg: #0a0a0a; 
             --secondary-bg: #121212; 
-            --tertiary-bg: #1a1a1a; /* Mantido para os cards */
+            --tertiary-bg: #1a1a1a; 
             /* CORES DE ACENTO (AZUL) */
             --accent-color: #0f4f8c; 
             --gradient-start: #2589f5; 
             --text-light: #f4f4f4; 
             --text-muted: #a0a0a0;
-            /* Nova cor do cabeçalho para referência */
+            /* Cor do cabeçalho */
             --header-bg: #030504;
         }
         
         body { 
-            /* NOVO: Degradê unificado para todo o site */
+            /* Degradê unificado para todo o site */
             background: linear-gradient(to bottom, var(--header-bg) 0%, #0c0c0c 100%);
-            background-attachment: fixed; /* Faz o degradê ficar fixo enquanto a página rola */
+            background-attachment: fixed; 
             color: var(--text-light); 
             line-height: 1.6; 
             scroll-behavior: smooth; 
@@ -37,27 +36,14 @@
         }
         
         /* ================= ANIMAÇÕES GERAIS ================= */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUpAnim 0.8s ease-out forwards;
-        }
-        @keyframes fadeInUpAnim {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .fade-in-up { opacity: 0; transform: translateY(30px); animation: fadeInUpAnim 0.8s ease-out forwards; }
+        @keyframes fadeInUpAnim { to { opacity: 1; transform: translateY(0); } }
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.3s; }
         .delay-3 { animation-delay: 0.5s; }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
         .delay-seq-1 { transition-delay: 0.1s; }
         .delay-seq-2 { transition-delay: 0.2s; }
         .delay-seq-3 { transition-delay: 0.3s; }
@@ -66,7 +52,6 @@
         .delay-seq-6 { transition-delay: 0.6s; }
 
         /* ================= CABEÇALHO E LOGO ================= */
-        /* Fundo do cabeçalho alterado para o tom exato solicitado (#030504) */
         header { background-color: var(--header-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #111; }
         
         .brand { display: flex; align-items: center; text-decoration: none; }
@@ -114,7 +99,14 @@
             text-decoration: none; 
             font-weight: bold; 
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center; /* Garante que o texto fique centralizado */
         }
+        /* Classe específica para garantir a visibilidade do texto */
+        .btn-text {
+            display: block;
+            white-space: normal;
+        }
+
         .btn-whatsapp-large:hover { 
             box-shadow: 0 15px 30px rgba(15, 79, 140, 0.6); 
             color: white; 
@@ -124,17 +116,16 @@
         .btn-whatsapp-large svg { width: 26px; height: 26px; fill: white; flex-shrink: 0; }
 
         /* ================= SEÇÕES GERAIS ================= */
-        /* As seções agora são transparentes para mostrar o degradê do body */
         section { padding: 6rem 5%; background-color: transparent; }
         .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; color: var(--text-light); }
         .section-subtitle { text-align: center; color: var(--accent-color); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4rem; font-weight: 600; }
 
-        /* HERO (Início) - Fundo removido para usar o do body */
+        /* HERO */
         .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; }
         .hero h1 { font-size: 4.5rem; margin-bottom: 1.5rem; line-height: 1.1; font-weight: 800; }
         .hero p { font-size: 1.3rem; margin-bottom: 3rem; max-width: 700px; color: var(--text-muted); }
 
-        /* SOBRE NÓS - Fundo removido */
+        /* SOBRE NÓS */
         .about { display: flex; gap: 4rem; align-items: center; justify-content: center; max-width: 1200px; margin: 0 auto; }
         .about-text { flex: 1; }
         .about-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
@@ -143,17 +134,15 @@
         .stat h4 { font-size: 2rem; color: var(--accent-color); display: flex; align-items: center; }
         .stat p { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; }
 
-        /* SERVIÇOS - Fundo removido */
-        .services { }
+        /* SERVIÇOS */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        /* Cards mantêm o fundo terciário para contraste */
         .service-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border-top: 4px solid transparent; transition: all 0.3s ease; text-align: left; }
         .service-card:hover { border-top-color: var(--accent-color); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color); }
         .service-card h3 { margin-bottom: 1rem; color: var(--text-light); font-size: 1.4rem; }
         .service-card p { color: var(--text-muted); font-size: 1rem; }
 
-        /* PROCESSO - Fundo removido */
+        /* PROCESSO */
         .process { text-align: center; }
         .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .process-step { position: relative; padding: 2rem; }
@@ -161,10 +150,9 @@
         .process-step h3 { position: relative; z-index: 1; margin-top: 1rem; margin-bottom: 1rem; color: var(--accent-color); }
         .process-step p { position: relative; z-index: 1; color: var(--text-muted); }
 
-        /* DEPOIMENTOS - Fundo removido */
+        /* DEPOIMENTOS */
         .testimonials { text-align: center; }
         .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        /* Cards mantêm o fundo terciário */
         .testimonial-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid #333; text-align: left; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;}
         .testimonial-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
         .stars { color: #FFD700; font-size: 1.2rem; margin-bottom: 1rem; }
@@ -176,9 +164,8 @@
         .client-info strong { color: var(--accent-color); font-size: 1.1rem; margin-bottom: 0.1rem; }
         .client-info span { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* CONTATO FINAL - Fundo removido */
+        /* CONTATO FINAL */
         .contact { text-align: center; padding: 8rem 5%; }
-        /* Caixa de contato mantém o fundo terciário */
         .contact-box { background-color: var(--tertiary-bg); padding: 4rem 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto; border: 1px solid #333; position: relative; overflow: hidden; }
         .contact-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-color); }
         .contact-box h2 { font-size: 2.5rem; margin-bottom: 1rem; }
@@ -195,7 +182,7 @@
         .whatsapp-btn svg { width: 35px; height: 35px; fill: white; }
         .whatsapp-btn:hover { transform: scale(1.1); filter: brightness(1.1); }
 
-        /* Rodapé - Fundo e borda removidos para integração total */
+        /* Rodapé */
         footer { background-color: transparent; padding: 2.5rem; text-align: center; color: #555; margin-bottom: 60px; border-top: none; }
 
         /* RESPONSIVIDADE */
@@ -222,7 +209,15 @@
             .about-stats { justify-content: center; flex-wrap: wrap; }
             .section-title { font-size: 2.2rem; }
             
-            .btn-whatsapp-large { padding: 15px 20px; font-size: 1rem; width: 100%; box-sizing: border-box; }
+            /* Ajustes no botão largo para não cortar o texto */
+            .btn-whatsapp-large { 
+                padding: 15px 20px; 
+                font-size: 1rem; 
+                width: 100%; 
+                box-sizing: border-box; 
+                display: flex;
+                flex-direction: row; /* Mantém ícone e texto lado a lado */
+            }
             .btn-whatsapp-large svg { width: 24px; height: 24px; } 
         }
     </style>
@@ -392,6 +387,13 @@
             
             <a href="https://wa.me/5585991469859?text=Olá! Quero dar o próximo passo e criar um site profissional com a DL DESIGN." target="_blank" class="btn btn-whatsapp-large">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                <span class="btn-text">Iniciar meu Projeto Agora</span>
+            </a>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5585991469859?text=Olá! Quero criar um site com a DL DESIGN." class="whatsapp-btn" target="_blank" aria-label="Falar no WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </a>
 
     <footer>
