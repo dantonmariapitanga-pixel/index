@@ -1,15 +1,3 @@
-Compreendi perfeitamente. A ideia é criar uma experiência visual contínua, sem quebras bruscas de cor entre as seções, unificando o fundo do site em um único degradê suave que começa no novo tom do cabeçalho.
-
-Aqui está o que foi feito:
-
-1. **Cabeçalho (`header`):** A cor de fundo foi alterada para o tom exato solicitado: `#030504`.
-2. **Corpo (`body`):** Foi aplicado um `linear-gradient` (degradê linear) que começa no topo com a cor `#030504` e desce suavemente até uma cor ligeiramente mais clara (`#0c0c0c`) na parte inferior. Adicionei `background-attachment: fixed;`, o que faz com que o degradê fique fixo na tela enquanto o conteúdo rola por cima, criando um efeito visual muito moderno e premium.
-3. **Seções Transparentes:** Para que o degradê do corpo seja visível, removi as cores de fundo individuais de todas as seções (`.hero`, `.about`, `.services`, `.process`, `.testimonials`, `.contact`) e do rodapé (`footer`). Agora elas são transparentes, deixando o degradê brilhar.
-4. **Harmonia dos Cards:** Os cartões de conteúdo (serviços, depoimentos, caixa de contato) mantiveram seus fundos escuros (`--tertiary-bg`), o que agora cria um contraste muito elegante sobre o novo fundo degradê unificado.
-
-Aqui está o código completo e atualizado:
-
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -462,5 +450,3 @@ Aqui está o código completo e atualizado:
 
 </body>
 </html>
-
-```
