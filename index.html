@@ -16,11 +16,13 @@
             --primary-bg: #0a0a0a; 
             --secondary-bg: #121212; 
             --tertiary-bg: #1a1a1a;
-            --accent-color: #00ff88; 
-            --accent-hover: #1ebd5c;
+            /* NOVAS CORES DE ACENTO (VERMELHO) */
+            --accent-color: #ff1a1a; /* Vermelho Neon Vibrante */
+            --accent-hover: #d60000; /* Vermelho mais escuro para hover */
             --text-light: #f4f4f4; 
             --text-muted: #a0a0a0;
-            --whatsapp-green: #25D366;
+            /* Mudamos o verde do WhatsApp para vermelho para manter o tema */
+            --whatsapp-theme-color: #ff1a1a; 
         }
         
         body { background-color: var(--primary-bg); color: var(--text-light); line-height: 1.6; scroll-behavior: smooth; overflow-x: hidden; }
@@ -67,13 +69,15 @@
         nav a:hover { color: var(--accent-color); }
         
         /* ================= BOTÕES ================= */
-        .btn { padding: 15px 35px; background-color: var(--accent-color); color: var(--primary-bg); text-decoration: none; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: 0.3s ease; display: inline-block; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;}
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 136, 0.2); }
+        .btn { padding: 15px 35px; background-color: var(--accent-color); color: var(--text-light); text-decoration: none; font-weight: 700; border-radius: 4px; border: none; cursor: pointer; transition: 0.3s ease; display: inline-block; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;}
+        /* Atualizado a cor da sombra para vermelho */
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 26, 26, 0.3); background-color: var(--accent-hover); }
         
-        .btn-whatsapp-large { background-color: var(--whatsapp-green); color: white; font-size: 1.1rem; padding: 15px 40px; border-radius: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin-top: 1.5rem; text-decoration: none; font-weight: bold; transition: 0.3s ease; }
-        .btn-whatsapp-large:hover { background-color: #1ebd5c; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); color: white; transform: translateY(-3px); }
+        /* Botão grande do WhatsApp agora usa a cor do tema vermelho */
+        .btn-whatsapp-large { background-color: var(--whatsapp-theme-color); color: white; font-size: 1.1rem; padding: 15px 40px; border-radius: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; margin-top: 1.5rem; text-decoration: none; font-weight: bold; transition: 0.3s ease; }
+        /* Atualizado hover e sombra para vermelho */
+        .btn-whatsapp-large:hover { background-color: var(--accent-hover); box-shadow: 0 10px 20px rgba(255, 26, 26, 0.4); color: white; transform: translateY(-3px); }
         
-        /* Trava de tamanho para o ícone do botão não encolher */
         .btn-whatsapp-large svg { width: 26px; height: 26px; fill: white; flex-shrink: 0; }
 
         /* ================= SEÇÕES GERAIS ================= */
@@ -117,7 +121,7 @@
         .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .testimonial-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid #333; text-align: left; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;}
         .testimonial-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
-        .stars { color: #FFD700; font-size: 1.2rem; margin-bottom: 1rem; }
+        .stars { color: #FFD700; font-size: 1.2rem; margin-bottom: 1rem; } /* Mantive as estrelas douradas, mas poderiam ser vermelhas também */
         .testimonial-card p { font-style: italic; color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.05rem; }
         
         .client-profile { display: flex; align-items: center; gap: 15px; }
@@ -135,13 +139,13 @@
 
         /* WHATSAPP FLUTUANTE */
         .whatsapp-btn { 
-            position: fixed; bottom: 20px; right: 20px; background-color: var(--whatsapp-green); 
+            position: fixed; bottom: 20px; right: 20px; background-color: var(--whatsapp-theme-color); 
             width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
             z-index: 9999; display: flex; justify-content: center; align-items: center; 
             transition: transform 0.3s; text-decoration: none;
         }
         .whatsapp-btn svg { width: 35px; height: 35px; fill: white; }
-        .whatsapp-btn:hover { transform: scale(1.1); }
+        .whatsapp-btn:hover { transform: scale(1.1); background-color: var(--accent-hover); }
 
         /* Rodapé */
         footer { background-color: #050505; padding: 2.5rem; text-align: center; color: #555; margin-bottom: 60px; border-top: 1px solid #111; }
@@ -155,9 +159,8 @@
             .section-title { font-size: 2.2rem; }
             .logo-svg { height: 50px; }
             
-            /* Ajustes para o botão do WhatsApp no celular */
             .btn-whatsapp-large { padding: 15px 20px; font-size: 1rem; }
-            .btn-whatsapp-large svg { width: 30px; height: 30px; } /* Ícone maior no mobile */
+            .btn-whatsapp-large svg { width: 30px; height: 30px; } 
         }
     </style>
 </head>
@@ -177,19 +180,19 @@
                     </linearGradient>
                 </defs>
                 <path d="M 50 10 L 95 20 L 95 65 C 95 95 50 115 50 115 C 50 115 5 95 5 65 L 5 20 Z" stroke="url(#shieldGrad)" stroke-width="3" fill="#0a0a0a"/>
-                <path d="M 50 20 V 35 M 20 45 H 30 V 55 H 40 M 80 45 H 70 V 65 H 60 M 30 85 L 40 75 V 65 M 70 85 L 60 75 V 85" stroke="#00ff88" stroke-width="1.5" opacity="0.6"/>
-                <circle cx="20" cy="45" r="2" fill="#00ff88" opacity="0.6"/>
-                <circle cx="80" cy="45" r="2" fill="#00ff88" opacity="0.6"/>
-                <circle cx="30" cy="85" r="2" fill="#00ff88" opacity="0.6"/>
-                <circle cx="70" cy="85" r="2" fill="#00ff88" opacity="0.6"/>
+                <path d="M 50 20 V 35 M 20 45 H 30 V 55 H 40 M 80 45 H 70 V 65 H 60 M 30 85 L 40 75 V 65 M 70 85 L 60 75 V 85" stroke="#ff1a1a" stroke-width="1.5" opacity="0.6"/>
+                <circle cx="20" cy="45" r="2" fill="#ff1a1a" opacity="0.6"/>
+                <circle cx="80" cy="45" r="2" fill="#ff1a1a" opacity="0.6"/>
+                <circle cx="30" cy="85" r="2" fill="#ff1a1a" opacity="0.6"/>
+                <circle cx="70" cy="85" r="2" fill="#ff1a1a" opacity="0.6"/>
                 <path d="M 25 40 L 45 40 C 60 40 60 75 45 75 L 25 75 Z" fill="#ffffff"/>
                 <path d="M 33 48 L 43 48 C 51 48 51 67 43 67 L 33 67 Z" fill="#0a0a0a"/> 
-                <circle cx="41" cy="57" r="7" stroke="#00ff88" stroke-width="1" fill="none"/>
-                <path d="M 41 50 C 37 50 37 64 41 64 C 45 64 45 50 41 50 Z" stroke="#00ff88" stroke-width="1" fill="none"/>
-                <path d="M 34 57 H 48" stroke="#00ff88" stroke-width="1"/>
-                <path d="M 55 45 V 82 H 80" stroke="#00ff88" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter" fill="none" filter="url(#neon)"/>
+                <circle cx="41" cy="57" r="7" stroke="#ff1a1a" stroke-width="1" fill="none"/>
+                <path d="M 41 50 C 37 50 37 64 41 64 C 45 64 45 50 41 50 Z" stroke="#ff1a1a" stroke-width="1" fill="none"/>
+                <path d="M 34 57 H 48" stroke="#ff1a1a" stroke-width="1"/>
+                <path d="M 55 45 V 82 H 80" stroke="#ff1a1a" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter" fill="none" filter="url(#neon)"/>
                 <text x="115" y="65" font-family="'Playfair Display', serif" font-size="44" fill="#ffffff" font-weight="bold" letter-spacing="1">DL DESIGN</text>
-                <text x="120" y="92" font-family="'Montserrat', sans-serif" font-size="16" fill="#00ff88" font-weight="900" letter-spacing="3">WEB DESIGNER</text>
+                <text x="120" y="92" font-family="'Montserrat', sans-serif" font-size="16" fill="#ff1a1a" font-weight="900" letter-spacing="3">WEB DESIGNER</text>
             </svg>
         </a>
         <nav>
