@@ -26,8 +26,8 @@
         }
         
         body { 
-            /* Degradê unificado para todo o site */
-            background: linear-gradient(to bottom, var(--header-bg) 0%, #0c0c0c 100%);
+            /* Degradê visível e harmônico: do preto do cabeçalho para um azul escuro profundo */
+            background: linear-gradient(180deg, var(--header-bg) 0%, #060d14 50%, #0a192f 100%);
             background-attachment: fixed; 
             color: var(--text-light); 
             line-height: 1.6; 
@@ -52,7 +52,7 @@
         .delay-seq-6 { transition-delay: 0.6s; }
 
         /* ================= CABEÇALHO E LOGO ================= */
-        header { background-color: var(--header-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #111; }
+        header { background-color: var(--header-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); }
         
         .brand { display: flex; align-items: center; text-decoration: none; }
         .logo-img { height: 85px; width: auto; max-width: 100%; transition: transform 0.3s ease; border-radius: 4px; }
@@ -99,9 +99,8 @@
             text-decoration: none; 
             font-weight: bold; 
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center; /* Garante que o texto fique centralizado */
+            text-align: center;
         }
-        /* Classe específica para garantir a visibilidade do texto */
         .btn-text {
             display: block;
             white-space: normal;
@@ -130,7 +129,7 @@
         .about-text { flex: 1; }
         .about-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
         .about-text p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .about-stats { display: flex; gap: 2rem; margin-top: 2rem; border-top: 1px solid #333; padding-top: 2rem; }
+        .about-stats { display: flex; gap: 2rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; }
         .stat h4 { font-size: 2rem; color: var(--accent-color); display: flex; align-items: center; }
         .stat p { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; }
 
@@ -146,14 +145,14 @@
         .process { text-align: center; }
         .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .process-step { position: relative; padding: 2rem; }
-        .step-number { font-size: 4rem; font-weight: 800; color: #222; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 0; }
+        .step-number { font-size: 4rem; font-weight: 800; color: rgba(255,255,255,0.05); position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 0; }
         .process-step h3 { position: relative; z-index: 1; margin-top: 1rem; margin-bottom: 1rem; color: var(--accent-color); }
         .process-step p { position: relative; z-index: 1; color: var(--text-muted); }
 
         /* DEPOIMENTOS */
         .testimonials { text-align: center; }
         .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .testimonial-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid #333; text-align: left; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;}
+        .testimonial-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: left; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;}
         .testimonial-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
         .stars { color: #FFD700; font-size: 1.2rem; margin-bottom: 1rem; }
         .testimonial-card p { font-style: italic; color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.05rem; }
@@ -166,7 +165,7 @@
 
         /* CONTATO FINAL */
         .contact { text-align: center; padding: 8rem 5%; }
-        .contact-box { background-color: var(--tertiary-bg); padding: 4rem 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto; border: 1px solid #333; position: relative; overflow: hidden; }
+        .contact-box { background-color: var(--tertiary-bg); padding: 4rem 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
         .contact-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-color); }
         .contact-box h2 { font-size: 2.5rem; margin-bottom: 1rem; }
         .contact-box p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2.5rem; }
@@ -209,14 +208,13 @@
             .about-stats { justify-content: center; flex-wrap: wrap; }
             .section-title { font-size: 2.2rem; }
             
-            /* Ajustes no botão largo para não cortar o texto */
             .btn-whatsapp-large { 
                 padding: 15px 20px; 
                 font-size: 1rem; 
                 width: 100%; 
                 box-sizing: border-box; 
                 display: flex;
-                flex-direction: row; /* Mantém ícone e texto lado a lado */
+                flex-direction: row; 
             }
             .btn-whatsapp-large svg { width: 24px; height: 24px; } 
         }
