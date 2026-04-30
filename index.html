@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Baixa de Restrições - Emissão de Protocolo</title>
-    <!-- Fontes e Icones -->
+    <title>Sistema Nacional de Emissão de Protocolos</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -12,7 +11,6 @@
         :root {
             --primary: #1a3a5a;
             --secondary: #28a745;
-            --accent: #f39c12;
             --dark: #121212;
             --light: #f4f7f6;
             --white: #ffffff;
@@ -26,71 +24,48 @@
         /* Header */
         header { padding: 15px 0; background: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
         .logo i { color: var(--secondary); }
-        .secure { color: var(--secondary); font-weight: 700; font-size: 0.9rem; }
+        .secure { color: var(--secondary); font-weight: 700; font-size: 0.8rem; }
 
-        /* Hero Section */
-        .hero { padding: 80px 0; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); position: relative; overflow: hidden; }
-        .hero-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
-        .hero-text { flex: 1; min-width: 300px; }
-        .hero-image { flex: 1; min-width: 300px; text-align: center; }
-        .hero-image img { width: 100%; max-width: 500px; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        /* Hero / Painel de Consulta */
+        .hero { padding: 60px 0; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); text-align: center; }
+        h1 { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; }
+        .subtitle { font-size: 1.1rem; color: #555; margin-bottom: 40px; max-width: 800px; margin-inline: auto; }
 
-        h1 { font-size: 3rem; font-weight: 800; line-height: 1.1; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; }
-        h1 span { color: var(--secondary); }
-        .subtitle { font-size: 1.2rem; color: #555; margin-bottom: 35px; }
+        /* Estilo do Painel */
+        .consult-panel { background: var(--white); max-width: 600px; margin: 0 auto; padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        .panel-header { margin-bottom: 25px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .panel-header h3 { font-size: 1.2rem; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.9rem; color: var(--primary); }
+        input[type="text"] { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; transition: 0.3s; }
+        input[type="text"]:focus { border-color: var(--primary); }
 
-        /* Botão Pulsante */
-        .btn-cta { 
-            display: inline-block; 
-            background: var(--secondary); 
-            color: var(--white); 
-            padding: 22px 45px; 
-            border-radius: 50px; 
-            text-decoration: none; 
-            font-weight: 800; 
-            font-size: 1.3rem; 
-            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
-            transition: 0.3s;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
-        .btn-cta:hover { transform: scale(1.05); background: #218838; }
+        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 18px; border: none; border-radius: 8px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
+        .btn-consult:hover { background: #132a41; }
 
-        .price-lock { margin-top: 15px; font-weight: 700; color: var(--primary); }
+        /* Estados do Painel */
+        #loading-state, #result-state { display: none; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 20px; border-radius: 10px; margin-top: 10px; }
+        .result-box h4 { color: var(--secondary); margin-bottom: 10px; }
+        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 18px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 1.2rem; margin-top: 20px; animation: pulse 2s infinite; }
 
         /* Benefits Bar */
         .benefits-bar { padding: 30px 0; background: var(--primary); color: var(--white); text-align: center; }
         .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .benefit-item { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; }
-        .benefit-item i { color: var(--secondary); font-size: 1.5rem; }
-
-        /* Curiosity Section */
-        .problem-section { padding: 100px 0; background: var(--white); }
-        .problem-card { background: var(--light); padding: 40px; border-radius: 20px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
-        .problem-card img { width: 100%; max-width: 400px; border-radius: 15px; }
-        .problem-info { flex: 1; min-width: 300px; }
-        .problem-info h3 { margin-bottom: 20px; color: var(--primary); font-size: 1.8rem; }
-
-        /* Social Proof */
-        .social-proof { padding: 100px 0; background: var(--light); }
-        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .t-card { background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .t-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .t-header img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
-        .t-info strong { display: block; font-size: 1.1rem; }
-        .t-info span { color: var(--secondary); font-size: 0.9rem; font-weight: 700; }
+        .benefit-item { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; font-size: 0.9rem; }
+        .benefit-item i { color: var(--secondary); }
 
         /* Footer */
-        footer { background: var(--dark); color: #666; padding: 60px 0 20px; font-size: 0.8rem; text-align: center; }
-        .legal-notice { border-top: 1px solid #222; margin-top: 30px; padding-top: 30px; max-width: 800px; margin-inline: auto; }
+        footer { background: var(--dark); color: #666; padding: 40px 0; font-size: 0.75rem; text-align: center; }
+        .disclaimer { max-width: 800px; margin: 0 auto; line-height: 1.4; border-top: 1px solid #222; padding-top: 20px; }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2.2rem; }
-            .hero-flex { flex-direction: column-reverse; }
-            .btn-cta { width: 100%; text-align: center; padding: 20px 10px; }
-        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -99,31 +74,47 @@
     <div class="container">
         <div class="nav-wrapper">
             <div class="logo"><i class="fas fa-university"></i> EMISSOR DE PROTOCOLOS</div>
-            <div class="secure"><i class="fas fa-shield-check"></i> AMBIENTE OFICIAL OPERACIONAL</div>
+            <div class="secure"><i class="fas fa-shield-check"></i> ACESSO SEGURO SSL</div>
         </div>
     </div>
 </header>
 
 <section class="hero">
     <div class="container">
-        <div class="hero-flex">
-            <div class="hero-text">
-                <h1>SISTEMA DE BAIXA: <span class="highlight">LIMPE SEU CPF</span> SEM PAGAR A DÍVIDA!</h1>
-                <p class="subtitle">Emita agora o Protocolo de Caducidade Administrativa (Art. 43 CDC) para remoção imediata de apontamentos e restrições internas.</p>
-                
-                <a href="#checkout" class="btn-cta">⚡ EMITIR MEU PROTOCOLO AGORA</a>
-                
-                <div class="price-lock">
-                    <i class="fas fa-bolt"></i> Taxa única de processamento: <strong>R$ 30,00</strong>
-                </div>
-                
-                <div style="margin-top: 30px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="25">
-                    <p style="font-size: 0.75rem; margin-top: 10px; font-weight: bold; color: var(--secondary);">LIBERAÇÃO IMEDIATA APÓS O PAGAMENTO</p>
-                </div>
+        <h1>SISTEMA DE BAIXA ADMINISTRATIVA</h1>
+        <p class="subtitle">Verifique agora a disponibilidade do Protocolo de Caducidade (Art. 43 CDC) para o seu CPF e remova restrições internas.</p>
+
+        <div class="consult-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-search"></i> CONSULTA DE DISPONIBILIDADE</h3>
             </div>
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" alt="Sucesso">
+
+            <!-- Estado Inicial -->
+            <div id="initial-state">
+                <div class="input-group">
+                    <label>Informe seu CPF para verificação:</label>
+                    <input type="text" id="cpf-input" placeholder="000.000.000-00">
+                </div>
+                <button class="btn-consult" onclick="startConsult()">VERIFICAR AGORA</button>
+                <p style="font-size: 0.7rem; color: #999; margin-top: 15px;"><i class="fas fa-lock"></i> Seus dados estão protegidos pela LGPD.</p>
+            </div>
+
+            <!-- Estado Carregando -->
+            <div id="loading-state">
+                <div class="loader"></div>
+                <p id="loading-text">Acessando banco de dados...</p>
+                <p style="font-size: 0.8rem; color: #666;">Aguarde o processamento dos registros.</p>
+            </div>
+
+            <!-- Estado Resultado -->
+            <div id="result-state">
+                <div class="result-box">
+                    <h4><i class="fas fa-check-circle"></i> PROTOCOLO DISPONÍVEL!</h4>
+                    <p style="font-size: 0.9rem; color: #444;">Identificamos pendências administrativas passíveis de <strong>Baixa Imediata</strong> para este CPF.</p>
+                </div>
+                <p style="margin-top: 20px; font-weight: bold; color: var(--primary);">Taxa de Emissão de Protocolo: R$ 30,00</p>
+                <a href="#checkout" class="btn-checkout">LIBERAR PROTOCOLO E LIMPAR CPF</a>
+                <p style="font-size: 0.75rem; color: #999; margin-top: 10px;">O documento será enviado imediatamente para seu e-mail.</p>
             </div>
         </div>
     </div>
@@ -132,71 +123,49 @@
 <div class="benefits-bar">
     <div class="container">
         <div class="benefits-grid">
-            <div class="benefit-item"><i class="fas fa-user-check"></i> CPF Liberado</div>
-            <div class="benefit-item"><i class="fas fa-chart-line"></i> Atualização de Score</div>
-            <div class="benefit-item"><i class="fas fa-file-contract"></i> Baixa Administrativa</div>
-            <div class="benefit-item"><i class="fas fa-user-slash"></i> Sem Advogados</div>
+            <div class="benefit-item"><i class="fas fa-bolt"></i> Processamento em Segundos</div>
+            <div class="benefit-item"><i class="fas fa-file-alt"></i> Fundamentação Art. 43 CDC</div>
+            <div class="benefit-item"><i class="fas fa-check-double"></i> Sem Consulta a Advogado</div>
+            <div class="benefit-item"><i class="fas fa-sync-alt"></i> Atualização Automática</div>
         </div>
     </div>
 </div>
 
-<section class="problem-section">
-    <div class="container">
-        <div class="problem-card">
-            <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="Cartão Aprovado">
-            <div class="problem-info">
-                <h3>Como funciona a liberação?</h3>
-                <p>Nosso sistema gera o documento de retificação de dados fundamentado na Lei Federal 8.078/90. O processo atua diretamente na raiz do bloqueio, forçando a atualização do seu status creditício nos principais bancos de dados.</p>
-                <p><strong>Basta emitir o arquivo e apresentá-lo via portal do consumidor para que a baixa seja processada em tempo recorde.</strong></p>
-                
-                <ul style="margin-top: 20px; list-style: none;">
-                    <li><i class="fas fa-check-circle" style="color:var(--secondary);"></i> <strong>Status:</strong> Restabelecimento imediato de direitos.</li>
-                    <li><i class="fas fa-check-circle" style="color:var(--secondary);"></i> <strong>Praticidade:</strong> Sem necessidade de processos demorados.</li>
-                    <li><i class="fas fa-check-circle" style="color:var(--secondary);"></i> <strong>Garantia:</strong> Amparo total no Código de Defesa do Consumidor.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="social-proof">
-    <div class="container">
-        <div class="testimonial-grid">
-            <div class="t-card">
-                <div class="t-header">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Cliente">
-                    <div class="t-info"><strong>Ricardo Oliveira</strong><span>Status: Regularizado</span></div>
-                </div>
-                <p>"Caiu a restrição! Meu score subiu 200 pontos em 3 dias após apresentar o protocolo gerado pelo sistema."</p>
-            </div>
-            
-            <div class="t-card">
-                <div class="t-header">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Cliente">
-                    <div class="t-info"><strong>Mariana Souza</strong><span>Status: Aprovado</span></div>
-                </div>
-                <p>"Achei que demoraria meses, mas o documento oficial funcionou na hora. Finalmente consegui meu cartão."</p>
-            </div>
-            
-            <div class="t-card">
-                <div class="t-header">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="Cliente">
-                    <div class="t-info"><strong>André Costa</strong><span>Status: Score Ativo</span></div>
-                </div>
-                <p>"O sistema gerou o PDF em segundos. Valeu muito a pena, pararam de negar crédito pra mim."</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 <footer>
     <div class="container">
-        <div class="legal-notice">
-            <p><strong>AVISO LEGAL:</strong> Este site oferece uma ferramenta de automação de documentos administrativos. A eficácia da baixa depende do cumprimento dos requisitos legais (prescrição ou erro de dado). Não somos uma instituição financeira ou órgão de proteção ao crédito.</p>
-            <p style="margin-top: 15px;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
+        <div class="disclaimer">
+            <p><strong>AVISO LEGAL:</strong> Este site oferece uma ferramenta de automação para emissão de documentos administrativos baseados no Código de Defesa do Consumidor. A eficácia da baixa depende da situação legal do CPF informado. Não somos um órgão governamental ou instituição financeira.</p>
+            <p style="margin-top: 20px;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
         </div>
     </div>
 </footer>
+
+<script>
+    function startConsult() {
+        const cpfInput = document.getElementById('cpf-input').value;
+        if (cpfInput.length < 11) {
+            alert("Por favor, informe um CPF válido para consulta.");
+            return;
+        }
+
+        // Esconder inicial, mostrar carregando
+        document.getElementById('initial-state').style.display = 'none';
+        document.getElementById('loading-state').style.display = 'block';
+
+        const loadingText = document.getElementById('loading-text');
+        
+        // Simulação de etapas de carregamento
+        setTimeout(() => { loadingText.innerText = "Localizando apontamentos internos..."; }, 1000);
+        setTimeout(() => { loadingText.innerText = "Validando requisitos do Art. 43 do CDC..."; }, 2500);
+        setTimeout(() => { loadingText.innerText = "Gerando Protocolo de Baixa..."; }, 4000);
+
+        // Mostrar resultado final
+        setTimeout(() => {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('result-state').style.display = 'block';
+        }, 5500);
+    }
+</script>
 
 </body>
 </html>
