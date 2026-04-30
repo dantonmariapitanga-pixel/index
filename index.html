@@ -1,917 +1,461 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>DL DESIGN | Agência de Web Design e Alta Performance</title>
-
-
-
+    <title>Solução CPF Limpo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-
-        /* CSS Reset & Variáveis */
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-
-        :root { 
-
-            --primary-bg: #0a0a0a; 
-
-            --secondary-bg: #121212; 
-
-            --tertiary-bg: #1a1a1a; 
-
-            /* CORES DE ACENTO (AZUL) */
-
-            --accent-color: #0f4f8c; 
-
-            --gradient-start: #2589f5; 
-
-            --text-light: #f4f4f4; 
-
-            --text-muted: #a0a0a0;
-
-            /* Cor do cabeçalho */
-
-            --header-bg: #030504;
-
+        :root {
+            --bg-color: #F8F9FA;
+            --text-main: #111111;
+            --text-secondary: #333333;
+            --blue-logo: #0A3A6A;
+            --light-blue: #007BFF;
+            --green-btn: #00D23A;
+            --footer-bg: #1A1A1A;
+            --footer-text: #B0B0B0;
         }
 
-
-
-        body { 
-
-            /* Degradê visível e harmônico: do preto do cabeçalho para um azul escuro profundo */
-
-            background: linear-gradient(180deg, var(--header-bg) 0%, #060d14 50%, #0a192f 100%);
-
-            background-attachment: fixed; 
-
-            color: var(--text-light); 
-
-            line-height: 1.6; 
-
-            scroll-behavior: smooth; 
-
-            overflow-x: hidden; 
-
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
 
+        /* Container Principal com a imagem de fundo */
+        .main-wrapper {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 50px;
+        }
 
-        /* ================= ANIMAÇÕES GERAIS ================= */
+        /* Área de Conteúdo (Alinhada à esquerda para dar espaço à imagem) */
+        .content-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
 
-        .fade-in-up { opacity: 0; transform: translateY(30px); animation: fadeInUpAnim 0.8s ease-out forwards; }
+        /* Hero Image (O rapaz segurando o cartão) */
+        .hero-image {
+            position: absolute;
+            right: 0;
+            bottom: -50px;
+            height: 90vh;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-        @keyframes fadeInUpAnim { to { opacity: 1; transform: translateY(0); } }
+        /* Logo */
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            align-self: flex-start;
+            margin-left: 15%;
+        }
 
-        .delay-1 { animation-delay: 0.1s; }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
 
-        .delay-2 { animation-delay: 0.3s; }
+        .logo-text span:first-child {
+            color: var(--light-blue);
+            font-size: 18px;
+            font-weight: 600;
+        }
 
-        .delay-3 { animation-delay: 0.5s; }
+        .logo-text span:last-child {
+            color: var(--blue-logo);
+            font-size: 22px;
+            font-weight: 800;
+        }
 
-
-
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
-
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        .delay-seq-1 { transition-delay: 0.1s; }
-
-        .delay-seq-2 { transition-delay: 0.2s; }
-
-        .delay-seq-3 { transition-delay: 0.3s; }
-
-        .delay-seq-4 { transition-delay: 0.4s; }
-
-        .delay-seq-5 { transition-delay: 0.5s; }
-
-        .delay-seq-6 { transition-delay: 0.6s; }
-
-
-
-        /* ================= CABEÇALHO E LOGO ================= */
-
-        header { background-color: var(--header-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-
-
-        .brand { display: flex; align-items: center; text-decoration: none; }
-
-        .logo-img { height: 85px; width: auto; max-width: 100%; transition: transform 0.3s ease; border-radius: 4px; }
-
-        .brand:hover .logo-img { transform: scale(1.02); }
-
-
-
-        nav ul { list-style: none; display: flex; gap: 2rem; }
-
-        nav a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 0.95rem; }
-
-        nav a:hover { color: var(--accent-color); }
-
-
-
-        /* ================= BOTÕES ================= */
-
-        .btn { 
-
-            padding: 15px 35px; 
-
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--accent-color) 100%);
-
-            color: var(--text-light); 
-
-            text-decoration: none; 
-
-            font-weight: 700; 
-
-            border-radius: 4px; 
-
-            border: none; 
-
-            cursor: pointer; 
-
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-            display: inline-block; 
-
-            font-size: 1rem; 
-
-            text-transform: uppercase; 
-
-            letter-spacing: 1px;
-
+        /* Textos Principais */
+        .text-center-block {
             text-align: center;
-
+            max-width: 850px;
+            margin-bottom: 30px;
+            margin-right: 15%; /* Desloca o texto um pouco para a esquerda */
         }
 
-        .btn:hover { 
-
-            transform: translateY(-3px); 
-
-            box-shadow: 0 15px 30px rgba(15, 79, 140, 0.5); 
-
-            filter: brightness(1.1);
-
+        h1 {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
         }
 
+        .subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
 
+        /* Benefícios (Ícones) */
+        .benefits-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            margin-right: 15%;
+        }
 
-        .btn-whatsapp-large { 
-
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--accent-color) 100%);
-
-            color: white; 
-
-            font-size: 1.1rem; 
-
-            padding: 15px 40px; 
-
-            border-radius: 50px; 
-
-            display: inline-flex; 
-
-            align-items: center; 
-
-            justify-content: center; 
-
-            gap: 12px; 
-
-            margin-top: 1.5rem; 
-
-            text-decoration: none; 
-
-            font-weight: bold; 
-
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+        .benefit-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-
+            max-width: 200px;
         }
 
-        .btn-text {
-
-            display: block;
-
-            white-space: normal;
-
+        .benefit-icon {
+            height: 70px;
+            margin-bottom: 10px;
         }
 
-
-
-        .btn-whatsapp-large:hover { 
-
-            box-shadow: 0 15px 30px rgba(15, 79, 140, 0.6); 
-
-            color: white; 
-
-            transform: translateY(-3px); 
-
-            filter: brightness(1.1);
-
+        .benefit-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            line-height: 1.2;
         }
 
-        .btn-whatsapp-large svg { width: 26px; height: 26px; fill: white; flex-shrink: 0; }
-
-
-
-        /* ================= SEÇÕES GERAIS ================= */
-
-        section { padding: 6rem 5%; background-color: transparent; }
-
-        .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; color: var(--text-light); }
-
-        .section-subtitle { text-align: center; color: var(--accent-color); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4rem; font-weight: 600; }
-
-
-
-        /* HERO */
-
-        .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; }
-
-        .hero h1 { font-size: 4.5rem; margin-bottom: 1.5rem; line-height: 1.1; font-weight: 800; }
-
-        .hero p { font-size: 1.3rem; margin-bottom: 3rem; max-width: 700px; color: var(--text-muted); }
-
-
-
-        /* SOBRE NÓS */
-
-        .about { display: flex; gap: 4rem; align-items: center; justify-content: center; max-width: 1200px; margin: 0 auto; }
-
-        .about-text { flex: 1; }
-
-        .about-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
-
-        .about-text p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem; }
-
-        .about-stats { display: flex; gap: 2rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; }
-
-        .stat h4 { font-size: 2rem; color: var(--accent-color); display: flex; align-items: center; }
-
-        .stat p { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; }
-
-
-
-        /* SERVIÇOS */
-
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-
-        .service-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border-top: 4px solid transparent; transition: all 0.3s ease; text-align: left; }
-
-        .service-card:hover { border-top-color: var(--accent-color); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-
-        .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color); }
-
-        .service-card h3 { margin-bottom: 1rem; color: var(--text-light); font-size: 1.4rem; }
-
-        .service-card p { color: var(--text-muted); font-size: 1rem; }
-
-
-
-        /* PROCESSO (Ajuste na cor dos números) */
-
-        .process { text-align: center; }
-
-        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-
-        .process-step { position: relative; padding: 2rem; }
-
-        /* Cor alterada para um azul claro sutil (20% de opacidade) para destaque no fundo escuro */
-
-        .step-number { font-size: 4rem; font-weight: 800; color: rgba(37, 137, 245, 0.2); position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 0; }
-
-        .process-step h3 { position: relative; z-index: 1; margin-top: 1rem; margin-bottom: 1rem; color: var(--accent-color); }
-
-        .process-step p { position: relative; z-index: 1; color: var(--text-muted); }
-
-
-
-        /* DEPOIMENTOS */
-
-        .testimonials { text-align: center; }
-
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-
-        .testimonial-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: left; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;}
-
-        .testimonial-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
-
-        .stars { color: #FFD700; font-size: 1.2rem; margin-bottom: 1rem; }
-
-        .testimonial-card p { font-style: italic; color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.05rem; }
-
-
-
-        .client-profile { display: flex; align-items: center; gap: 15px; }
-
-        .client-avatar { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color); padding: 2px; }
-
-        .client-info { display: flex; flex-direction: column; }
-
-        .client-info strong { color: var(--accent-color); font-size: 1.1rem; margin-bottom: 0.1rem; }
-
-        .client-info span { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
-
-
-
-        /* CONTATO FINAL */
-
-        .contact { text-align: center; padding: 8rem 5%; }
-
-        .contact-box { background-color: var(--tertiary-bg); padding: 4rem 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
-
-        .contact-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-color); }
-
-        .contact-box h2 { font-size: 2.5rem; margin-bottom: 1rem; }
-
-        .contact-box p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2.5rem; }
-
-
-
-        /* WHATSAPP FLUTUANTE */
-
-        .whatsapp-btn { 
-
-            position: fixed; bottom: 20px; right: 20px; 
-
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--accent-color) 100%);
-
-            width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.6); 
-
-            z-index: 9999; display: flex; justify-content: center; align-items: center; 
-
-            transition: transform 0.3s; text-decoration: none;
-
+        .benefit-desc {
+            font-size: 13px;
+            font-weight: 400;
         }
 
-        .whatsapp-btn svg { width: 35px; height: 35px; fill: white; }
-
-        .whatsapp-btn:hover { transform: scale(1.1); filter: brightness(1.1); }
-
-
-
-        /* Rodapé */
-
-        footer { background-color: transparent; padding: 2.5rem; text-align: center; color: #555; margin-bottom: 60px; border-top: none; }
-
-
-
-        /* RESPONSIVIDADE */
-
-        @media(max-width: 768px) {
-
-            nav ul { display: none; }
-
-            header { padding: 1rem 5%; }
-
-            .logo-img { height: 65px; } 
-
-
-
-            .hero h1 { font-size: 2.6rem; }
-
-            .hero p { font-size: 1.1rem; }
-
-
-
-            .btn { 
-
-                padding: 14px 20px; 
-
-                font-size: 0.85rem; 
-
-                width: 90%; 
-
-                max-width: 320px;
-
-                white-space: normal; 
-
-            }
-
-
-
-            .whatsapp-btn { width: 55px; height: 55px; bottom: 15px; right: 15px; }
-
-            .whatsapp-btn svg { width: 30px; height: 30px; }
-
-
-
-            .about { flex-direction: column; text-align: center; }
-
-            .about-stats { justify-content: center; flex-wrap: wrap; }
-
-            .section-title { font-size: 2.2rem; }
-
-
-
-            .btn-whatsapp-large { 
-
-                padding: 15px 20px; 
-
-                font-size: 1rem; 
-
-                width: 100%; 
-
-                box-sizing: border-box; 
-
-                display: flex;
-
-                flex-direction: row; 
-
-            }
-
-            .btn-whatsapp-large svg { width: 24px; height: 24px; } 
-
+        /* Botão de CTA */
+        .cta-container {
+            margin-right: 15%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
+        .cta-button {
+            background-color: var(--green-btn);
+            color: white;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 25px rgba(0, 210, 58, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 210, 58, 0.5);
+        }
+
+        .cta-price {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        /* Pagamentos e Urgência */
+        .payment-info {
+            text-align: center;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 5px;
+            height: 25px;
+        }
+
+        .security-text {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .urgency-text {
+            font-size: 16px;
+            font-weight: 800;
+            color: #000;
+        }
+
+        /* Depoimentos */
+        .testimonials-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-right: 15%;
+            margin-top: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #EAEAEA;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #eee;
+            object-fit: cover;
+        }
+
+        .testimonial-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .testimonial-text {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 11px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-title {
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: var(--footer-text);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-star {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.3;
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .hero-image { opacity: 0.2; right: -200px; }
+            .header-logo, .text-center-block, .benefits-row, .cta-container, .testimonials-row { margin-left: 0; margin-right: 0; }
+            h1 { font-size: 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .benefits-row { flex-direction: column; align-items: center; gap: 30px; }
+            .testimonials-row { flex-direction: column; align-items: center; }
+            .hero-image { display: none; }
+            .cta-button { padding: 15px 20px; font-size: 14px; flex-direction: column; text-align: center; }
+            h1 { font-size: 26px; }
+        }
     </style>
-
 </head>
-
 <body>
 
+    <div class="main-wrapper">
+        <!-- SVG Placeholder do Homem (Substitua por uma tag <img> com sua foto PNG transparente) -->
+        <svg class="hero-image" viewBox="0 0 400 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M150 200 C150 150, 250 150, 250 200 C250 260, 220 280, 200 280 C180 280, 150 260, 150 200 Z" fill="#E2E2E2"/>
+            <path d="M200 130 C160 130, 140 160, 140 190 C140 180, 150 160, 170 150 C190 140, 220 140, 240 150 C260 160, 265 180, 260 190 C260 160, 240 130, 200 130 Z" fill="#444"/>
+            <path d="M180 280 C180 280, 100 320, 80 400 L50 800 L350 800 L320 400 C300 320, 220 280, 220 280 Z" fill="#F0F0F0" stroke="#DDD" stroke-width="2"/>
+            <rect x="250" y="380" width="120" height="75" rx="8" fill="#4A70A6" transform="rotate(-10 250 380)"/>
+            <rect x="260" y="395" width="20" height="15" rx="2" fill="#D4AF37" transform="rotate(-10 260 395)"/>
+            <path d="M240 450 C250 430, 270 420, 280 440" stroke="#D1B098" stroke-width="15" stroke-linecap="round" fill="none"/>
+        </svg>
 
+        <div class="content-container">
+            
+            <header class="header-logo">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 10 L10 25 V50 C10 75 40 90 50 95 C60 90 90 75 90 50 V25 L50 10 Z" fill="#E8F1FA" stroke="#0A3A6A" stroke-width="6" stroke-linejoin="round"/>
+                    <path d="M30 50 L45 65 L70 35" stroke="#00D23A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="logo-text">
+                    <span>SOLUÇÃO</span>
+                    <span>CPF LIMPO</span>
+                </div>
+            </header>
 
-    <header>
+            <main class="text-center-block">
+                <h1>DESVINCULE SEU CPF DO LIMBO E<br>LIMPE SEU NOME DEFINITIVAMENTE!</h1>
+                <p class="subtitle">O Método Administrativo Exclusivo Amparado no Art. 43 do CDC para<br>Regularizar sua Situação Creditícia sem Burocracia!</p>
+            </main>
 
-        <a href="#home" class="brand">
-
-            <img src="https://raw.githubusercontent.com/dantonmariapitanga-pixel/index/refs/heads/main/Gemini_Generated_Image_o0pb4do0pb4do0pb(1).png" alt="Logo DL DESIGN" class="logo-img">
-
-        </a>
-
-        <nav>
-
-            <ul>
-
-                <li><a href="#home">Início</a></li>
-
-                <li><a href="#sobre">Agência</a></li>
-
-                <li><a href="#servicos">Serviços</a></li>
-
-                <li><a href="#metodologia">Processo</a></li>
-
-                <li><a href="#depoimentos">Clientes</a></li>
-
-                <li><a href="#contato">Orçamento</a></li>
-
-            </ul>
-
-        </nav>
-
-    </header>
-
-
-
-    <section id="home" class="hero">
-
-        <h1 class="fade-in-up delay-1">Construímos máquinas de<br>vendas na internet</h1>
-
-        <p class="fade-in-up delay-2">A DL DESIGN é especializada em criar sites premium, rápidos e focados em transformar visitantes comuns em clientes fiéis para o seu negócio.</p>
-
-        <a href="#contato" class="btn fade-in-up delay-3">Solicitar Orçamento Gratuito</a>
-
-    </section>
-
-
-
-    <section id="sobre" class="about">
-
-        <div class="about-text reveal">
-
-            <h4 style="color: var(--accent-color); letter-spacing: 2px; margin-bottom: 10px;">INTRODUCÃO</h4>
-
-            <h2>Não perca dinheiro</h2>
-
-            <p>No mercado digital atual, ter um site comum não é mais suficiente. Se a sua página for lenta, confusa ou mal posicionada no Google, você está perdendo dinheiro todos os dias para o seu concorrente.</p>
-
-            <p>Na <strong>DL DESIGN</strong>, unimos tecnologia de ponta, design psicológico e estratégias de conversão para entregar plataformas digitais que realmente geram valor e impacto visual.</p>
-
-
-
-            <div class="about-stats">
-
-                <div class="stat">
-
-                    <h4><span class="num" data-val="100">0</span>%</h4>
-
-                    <p>Foco em Resultados</p>
-
+            <div class="benefits-row">
+                <!-- Benefício 1 -->
+                <div class="benefit-item">
+                    <svg class="benefit-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="30" y="45" width="40" height="35" rx="5" fill="#00D23A" stroke="#111" stroke-width="4"/>
+                        <path d="M38 45 V30 C38 20 62 20 62 30 V45" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="50" cy="62" r="5" fill="#111"/>
+                        <circle cx="75" cy="70" r="12" fill="#D3E2F2" stroke="#111" stroke-width="4"/>
+                        <path d="M75 54 V58 M75 82 V86 M60 70 H64 M86 70 H90 M64 60 L67 63 M83 77 L86 80 M64 80 L67 77 M83 60 L86 63" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                    <div class="benefit-title">MÉTODO<br>ADMINISTRATIVO</div>
+                    <div class="benefit-desc">Passo a Passo Validado Legalmente</div>
                 </div>
 
-                <div class="stat">
-
-                    <h4>+<span class="num" data-val="100">0</span></h4>
-
-                    <p>Clientes Satisfeitos</p>
-
+                <!-- Benefício 2 -->
+                <div class="benefit-item">
+                    <svg class="benefit-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 50 C15 50 15 35 25 35 C25 20 50 15 60 25 C75 20 85 35 75 50 Z" fill="#4CA1FF" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+                        <rect x="35" y="45" width="30" height="20" rx="2" fill="white" stroke="#111" stroke-width="4"/>
+                        <path d="M30 65 L70 65 L75 70 L25 70 Z" fill="#E8F1FA" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="benefit-title">100% ONLINE<br>E RÁPIDO</div>
+                    <div class="benefit-desc">Acesso Imediato ao Conteúdo</div>
                 </div>
 
-                <div class="stat">
-
-                    <h4>+<span class="num" data-val="15">0</span></h4>
-
-                    <p>Anos de Experiência</p>
-
+                <!-- Benefício 3 -->
+                <div class="benefit-item">
+                    <svg class="benefit-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="35" cy="35" r="12" fill="#4CA1FF" stroke="#111" stroke-width="4"/>
+                        <path d="M15 65 C15 50 55 50 55 65" fill="#4CA1FF" stroke="#111" stroke-width="4"/>
+                        <rect x="55" y="35" width="25" height="35" rx="3" fill="#E8F1FA" stroke="#111" stroke-width="4"/>
+                        <path d="M62 45 H73 M62 52 H73 M62 59 H68" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="85" cy="25" r="10" fill="#00D23A" stroke="#111" stroke-width="3"/>
+                        <path d="M80 25 L83 28 L90 21" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="benefit-title">SEM ADVOGADOS<br>OU PROCESSOS</div>
+                    <div class="benefit-desc">Evite Gastos com Honorários Legais</div>
                 </div>
-
             </div>
 
-        </div>
-
-    </section>
-
-
-
-    <section id="servicos" class="services">
-
-        <h2 class="section-title reveal">Nossas especialidades</h2>
-
-        <h4 class="section-subtitle reveal">O que podemos fazer pela sua empresa:</h4>
-
-        <div class="services-grid">
-
-            <div class="service-card reveal delay-seq-1">
-
-                <div class="service-icon">💻</div>
-
-                <h3>Sites Institucionais</h3>
-
-                <p>A vitrine perfeita para a sua empresa. Criamos sites elegantes que transmitem autoridade, confiança e profissionalismo para seus clientes.</p>
-
-            </div>
-
-            <div class="service-card reveal delay-seq-2">
-
-                <div class="service-icon">🛒</div>
-
-                <h3>Lojas Virtuais (E-commerce)</h3>
-
-                <p>Venda 24 horas por dia com plataformas de e-commerce seguras, com gestão de estoque integrada e checkout facilitado.</p>
-
-            </div>
-
-            <div class="service-card reveal delay-seq-3">
-
-                <div class="service-icon">🚀</div>
-
-                <h3>Landing Pages de Venda</h3>
-
-                <p>Páginas de altíssima conversão feitas estrategicamente para lançamentos de produtos, cursos ou captação de leads (contatos).</p>
-
-            </div>
-
-            <div class="service-card reveal delay-seq-4">
-
-                <div class="service-icon">📱</div>
-
-                <h3>Design UI/UX Responsivo</h3>
-
-                <p>Seu site perfeito em qualquer tela. Otimizamos a experiência do usuário para garantir que o cliente navegue facilmente pelo celular.</p>
-
-            </div>
-
-            <div class="service-card reveal delay-seq-5">
-
-                <div class="service-icon">🔍</div>
-
-                <h3>Otimização SEO (Google)</h3>
-
-                <p>Aplicamos as melhores técnicas de SEO no código do seu site para ajudar sua empresa a aparecer nas primeiras páginas do Google.</p>
-
-            </div>
-
-            <div class="service-card reveal delay-seq-6">
-
-                <div class="service-icon">⚙️</div>
-
-                <h3>Suporte e Manutenção</h3>
-
-                <p>Não te abandonamos após a entrega. Oferecemos suporte técnico contínuo para garantir que seu site fique sempre no ar e seguro.</p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <section id="metodologia" class="process">
-
-
-        <h2 class="section-title reveal">Como Trabalhamos</h2>
-
-
-        <h2 class="section-title reveal">Nossa metodologia:</h2>
-
-        <h4 class="section-subtitle reveal">Do zero ao site no ar</h4>
-
-        <div class="process-grid">
-
-            <div class="process-step reveal delay-seq-1">
-
-                <div class="step-number">01</div>
-
-                <h3>Descoberta</h3>
-
-                <p>Entendemos o seu negócio, seus objetivos e quem é o seu público-alvo para traçar a melhor estratégia.</p>
-
-            </div>
-
-            <div class="process-step reveal delay-seq-2">
-
-                <div class="step-number">02</div>
-
-                <h3>Design & UX</h3>
-
-                <p>Criamos o visual completo do site e enviamos para a sua aprovação antes de escrever qualquer linha de código.</p>
-
-            </div>
-
-            <div class="process-step reveal delay-seq-3">
-
-                <div class="step-number">03</div>
-
-                <h3>Desenvolvimento</h3>
-
-                <p>Transformamos o design em um site real, rápido e estruturado com as tecnologias mais modernas do mercado.</p>
-
-            </div>
-
-            <div class="process-step reveal delay-seq-4">
-
-                <div class="step-number">04</div>
-
-                <h3>Lançamento</h3>
-
-                <p>Fazemos rigorosos testes de qualidade, publicamos o site no seu domínio e entregamos as chaves para você!</p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <section id="depoimentos" class="testimonials">
-
-
-        <h2 class="section-title reveal">Histórias de Sucesso</h2>
-
-
-        <h4 class="section-subtitle reveal">O que dizem os nossos clientes</h4>
-
-
-        <h2 class="section-title reveal">Histórias de sucesso</h2>
-
-
-        <h4 class="section-subtitle reveal">O que dizem os nossos clientes:</h4>
-
-        <div class="testimonials-grid">
-
-            <div class="testimonial-card reveal delay-seq-1">
-
-                <div>
-
-                    <div class="stars">★★★★★</div>
-
-                    <p>"A DL DESIGN transformou completamente a nossa presença online. Nosso site antigo era lento e não convertia. Após o lançamento do novo projeto, nossas solicitações de orçamento aumentaram em 150% logo no primeiro mês!"</p>
-
-                </div>
-
-                <div class="client-profile">
-
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Mendes" class="client-avatar">
-
-                    <div class="client-info">
-
-                        <strong>Carlos Mendes</strong>
-
-                        <span>Diretor Comercial, TechMendes</span>
-
+            <div class="cta-container">
+                <a href="#" class="cta-button">
+                    QUERO LIMPAR MEU CPF AGORA! 👉 <span class="cta-price">(Apenas R$ 67,90)</span>
+                </a>
+                
+                <div class="payment-info">
+                    <div class="payment-icons">
+                        <!-- Pix -->
+                        <svg width="40" height="15" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 10 L5 5 L10 0 L15 5 Z M18 15 L23 10 L18 5 M0 10 L5 15 L10 10" stroke="#32BCAD" stroke-width="2" stroke-linejoin="round"/>
+                            <text x="28" y="14" fill="#32BCAD" font-family="Arial" font-weight="bold" font-size="14">pix</text>
+                        </svg>
+                        <!-- Visa -->
+                        <svg width="35" height="15" viewBox="0 0 50 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="14" fill="#1434CB" font-family="Arial" font-weight="900" font-style="italic" font-size="16">VISA</text>
+                        </svg>
+                        <!-- Mastercard -->
+                        <svg width="30" height="18" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="12" fill="#EB001B"/>
+                            <circle cx="28" cy="12" r="12" fill="#F79E1B" fill-opacity="0.8"/>
+                        </svg>
                     </div>
-
+                    <p class="security-text">Acesso Imediato via PIX | Pagamento Seguro</p>
+                    <p class="urgency-text">ÚLTIMAS VAGAS COM DESCONTO!</p>
                 </div>
-
             </div>
 
-            <div class="testimonial-card reveal delay-seq-2">
-
-                <div>
-
-                    <div class="stars">★★★★★</div>
-
-                    <p>"Trabalho impecável! A equipe foi super atenciosa desde a primeira reunião. Entregaram nossa loja virtual antes do prazo e o design ficou de altíssimo nível. Recomendo de olhos fechados para quem busca qualidade."</p>
-
-                </div>
-
-                <div class="client-profile">
-
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Juliana Torres" class="client-avatar">
-
-                    <div class="client-info">
-
-                        <strong>Juliana Masako</strong>
-
-                        <span>CEO, Masako Semijoias</span>
-
+            <div class="testimonials-row">
+                <!-- Depoimento 1 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <svg class="avatar" viewBox="0 0 40 40"><circle cx="20" cy="15" r="8" fill="#CCC"/><path d="M5 35 C5 25 35 25 35 35" fill="#CCC"/></svg>
+                        <span class="testimonial-name">Marina S.</span>
                     </div>
-
+                    <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Marina S.</p>
                 </div>
 
-            </div>
-
-            <div class="testimonial-card reveal delay-seq-3">
-
-                <div>
-
-                    <div class="stars">★★★★★</div>
-
-                    <p>"Estávamos perdendo muito espaço para a concorrência porque nosso site não funcionava bem no celular. A agência resolveu isso com maestria. Entregaram um site extremamente rápido, elegante e focado em vendas. Sensacional!"</p>
-
-                </div>
-
-                <div class="client-profile">
-
-                    <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Roberto Alves" class="client-avatar">
-
-                    <div class="client-info">
-
-                        <strong>Roberto Alves</strong>
-
-                        <span>Sócio-Fundador, Alves Advocacia</span>
-
+                <!-- Depoimento 2 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <svg class="avatar" viewBox="0 0 40 40"><circle cx="20" cy="15" r="8" fill="#CCC"/><path d="M5 35 C5 25 35 25 35 35" fill="#CCC"/></svg>
+                        <span class="testimonial-name">Carlos P.</span>
                     </div>
-
+                    <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Carlos P.</p>
                 </div>
 
+                <!-- Depoimento 3 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <svg class="avatar" viewBox="0 0 40 40"><circle cx="20" cy="15" r="8" fill="#CCC"/><path d="M5 35 C5 25 35 25 35 35" fill="#CCC"/></svg>
+                        <span class="testimonial-name">Ana L.</span>
+                    </div>
+                    <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Ana L.</p>
+                </div>
             </div>
 
         </div>
-
-    </section>
-
-
-
-    <section id="contato" class="contact">
-
-        <div class="contact-box">
-
-            <h2>Pronto para dominar o mercado?</h2>
-
-            <p>Pare de perder clientes por não ter uma presença digital profissional. Toque no botão abaixo e fale diretamente com nossa equipe de especialistas.</p>
-
-
-
-            <a href="https://wa.me/5585991469859?text=Olá! Quero dar o próximo passo e criar um site profissional com a DL DESIGN." target="_blank" class="btn btn-whatsapp-large">
-
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-
-                <span class="btn-text">Iniciar meu Projeto Agora</span>
-
-            </a>
-
-        </div>
-
-    </section>
-
-
-
-    <a href="https://wa.me/5585991469859?text=Olá! Quero criar um site com a DL DESIGN." class="whatsapp-btn" target="_blank" aria-label="Falar no WhatsApp">
-
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-
-    </a>
-
-
+    </div>
 
     <footer>
-
-        <p>&copy; 2026 DL DESIGN. Todos os direitos reservados.</p>
-
+        <svg class="footer-star" width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z" fill="#444"/>
+        </svg>
+        <div class="footer-content">
+            <div class="footer-title">**AVISO LEGAL**</div>
+            <p>Este método é educacional e consultivo. Não garantimos resultados financeiros ou a remoção imediata das restrições de crédito. Os resultados variam e dependem da aplicação do guia administrativo e da situação específica das dívidas nos órgãos de proteção ao crédito. O uso das informações é de inteira responsabilidade do usuário. Consulte sempre o CDC e busque orientação profissional se necessário.</p>
+            <div class="footer-links">
+                © 2024 CPF Limpo Agora. Todos os Direitos Reservados. <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a>
+            </div>
+        </div>
     </footer>
 
-
-
-    <script>
-
-        const nums = document.querySelectorAll('.num');
-
-        const statsSection = document.querySelector('.about-stats');
-
-        let hasAnimated = false;
-
-
-
-        const observer = new IntersectionObserver((entries) => {
-
-            if (entries[0].isIntersecting && !hasAnimated) {
-
-                hasAnimated = true; 
-
-
-
-                nums.forEach((num) => {
-
-                    const target = parseInt(num.getAttribute('data-val'));
-
-                    const increment = target / 40; 
-
-                    let current = 0;
-
-
-
-                    const updateCounter = setInterval(() => {
-
-                        current += increment;
-
-                        if (current >= target) {
-
-                            num.innerText = target;
-
-                            clearInterval(updateCounter);
-
-                        } else {
-
-                            num.innerText = Math.ceil(current); 
-
-                        }
-
-                    }, 40); 
-
-                });
-
-            }
-
-        }, { threshold: 0 }); 
-
-
-
-        if(statsSection){
-
-            observer.observe(statsSection);
-
-        }
-
-
-
-        const revealElements = document.querySelectorAll('.reveal');
-
-
-
-        const revealObserver = new IntersectionObserver((entries) => {
-
-            entries.forEach(entry => {
-
-                if(entry.isIntersecting) {
-
-                    entry.target.classList.add('active');
-
-                    revealObserver.unobserve(entry.target);
-
-                }
-
-            });
-
-        }, {
-
-            rootMargin: "0px 0px -20px 0px", 
-
-            threshold: 0 
-
-        });
-
-
-
-        revealElements.forEach(el => {
-
-            revealObserver.observe(el);
-
-        });
-
-    </script>
-
-
-
 </body>
-
 </html>
