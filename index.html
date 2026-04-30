@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Limpeza de Nome - Oficial</title>
+    <title>Sistema Nacional de Emissão de Protocolos - Oficial</title>
     <!-- Fontes Oficiais: Montserrat e Open Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,55 +20,64 @@
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
         .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-        /* Header */
+        /* Header Institucional */
         header { padding: 15px 0; background: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
         .logo i { color: var(--secondary); }
         .secure { color: var(--secondary); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* Hero / Painel de Consulta */
+        /* Hero: Foco em Processamento de Dados */
         .hero { padding: 80px 0; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); }
         .hero-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
         .hero-text { flex: 1.2; min-width: 300px; }
         .hero-panel { flex: 0.8; min-width: 300px; }
-        h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.1; color: var(--primary); margin-bottom: 25px; text-transform: uppercase; }
+        
+        h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.1; color: var(--primary); margin-bottom: 15px; text-transform: uppercase; }
         h1 span { color: var(--secondary); }
-        .subtitle { font-size: 1.1rem; font-weight: 700; color: #555; margin-bottom: 35px; text-transform: uppercase; }
+        .subtitle { font-size: 1.1rem; font-weight: 800; color: var(--secondary); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .technical-intro { font-size: 0.95rem; color: #444; margin-bottom: 30px; text-align: justify; border-left: 4px solid var(--primary); padding-left: 15px; }
 
-        /* Estilo do Painel */
+        /* Painel de Consulta Dinâmico */
         .consult-panel { background: var(--white); padding: 35px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid #ddd; }
         .panel-header { margin-bottom: 20px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px; }
         .panel-header h3 { font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.85rem; color: var(--primary); }
         input[type="text"] { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; transition: 0.3s; }
         input[type="text"]:focus { border-color: var(--primary); }
+        
         .btn-consult { width: 100%; background: var(--primary); color: white; padding: 18px; border: none; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
         .btn-consult:hover { background: #132a41; }
 
-        /* Estados do Painel */
+        /* Estados do Sistema */
         #loading-state, #result-state { display: none; text-align: center; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
         .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 20px; border-radius: 10px; margin-top: 10px; }
         .result-box h4 { color: var(--secondary); margin-bottom: 5px; font-family: 'Montserrat', sans-serif; }
+        
         .btn-checkout { display: block; background: var(--secondary); color: white; padding: 18px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 1.2rem; margin-top: 20px; animation: pulse 2s infinite; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
-        /* Benefits Bar */
+        /* Barra de Procedimento */
         .benefits-bar { padding: 30px 0; background: var(--primary); color: var(--white); text-align: center; }
         .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
         .benefit-item { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
         .benefit-item i { color: var(--secondary); font-size: 1.2rem; }
 
-        /* Seção Profissional */
+        /* Seção: Descritivo Técnico do Procedimento */
         .how-works { padding: 100px 0; background: var(--white); }
-        .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-        .how-img img { width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .how-text h2 { font-size: 2rem; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; }
+        .how-works h2 { text-align: center; margin-bottom: 50px; font-size: 2rem; color: var(--primary); text-transform: uppercase; }
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .tech-card { padding: 30px; background: var(--light); border-radius: 15px; border-top: 5px solid var(--primary); }
+        .tech-card h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--primary); }
+        .tech-card p { font-size: 0.9rem; color: #555; text-align: justify; }
 
-        /* Social Proof */
+        /* Social Proof institucional */
         .social-proof { padding: 100px 0; background: var(--light); }
         .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
         .t-card { background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
@@ -77,13 +86,14 @@
         .t-info strong { display: block; font-size: 1rem; }
         .t-info span { color: var(--secondary); font-size: 0.8rem; font-weight: 700; }
 
-        /* Footer */
+        /* Footer com Blindagem */
         footer { background: var(--dark); color: #666; padding: 60px 0 20px; font-size: 0.8rem; text-align: center; }
         .legal { border-top: 1px solid #222; margin-top: 30px; padding-top: 30px; max-width: 800px; margin-inline: auto; font-size: 0.75rem; }
 
         @media (max-width: 850px) {
-            .hero-flex, .how-grid { flex-direction: column; text-align: center; }
+            .hero-flex { flex-direction: column; text-align: center; }
             h1 { font-size: 2rem; }
+            .technical-intro { text-align: center; border-left: none; border-top: 4px solid var(--primary); padding: 15px 0; }
         }
     </style>
 </head>
@@ -92,7 +102,7 @@
 <header>
     <div class="container">
         <div class="nav-wrapper">
-            <div class="logo"><i class="fas fa-university"></i> SISTEMA DE LIMPEZA DE NOME</div>
+            <div class="logo"><i class="fas fa-university"></i> EMISSOR DE PROTOCOLOS</div>
             <div class="secure"><i class="fas fa-lock"></i> AMBIENTE SEGURO SSL</div>
         </div>
     </div>
@@ -102,11 +112,16 @@
     <div class="container">
         <div class="hero-flex">
             <div class="hero-text">
-                <h1>SISTEMA DE BAIXA: <span style="color:var(--secondary)">LIMPE SEU CPF</span> SEM PAGAR A DÍVIDA!</h1>
-                <p class="subtitle">Emita o seu Protocolo de Caducidade (Art. 43 CDC) para remoção imediata de restrições internas.</p>
+                <h1>SISTEMA DE BAIXA: <span style="color:var(--secondary)">LIMPE SEU CPF</span></h1>
+                <p class="subtitle">SEM PAGAR A DÍVIDA TOTAL</p>
+                
+                <div class="technical-intro">
+                    <strong>Processamento de Incidência Normativa:</strong> O sistema utiliza a base legal do Artigo 43 do CDC para gerar o seu Dossiê de Retificação Administrativa. Este documento atua diretamente na raiz do bloqueio interno, utilizando fundamentos de caducidade que as instituições financeiras são compelidas a observar.
+                </div>
+                
                 <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="30">
-                    <span style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">LIBERAÇÃO IMEDIATA</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="25">
+                    <span style="font-weight: 700; color: var(--primary); font-size: 0.85rem; text-transform: uppercase;">Acesso liberado após compensação via PIX</span>
                 </div>
             </div>
             
@@ -126,15 +141,15 @@
 
                     <div id="loading-state">
                         <div class="loader"></div>
-                        <p id="loading-text" style="font-weight: bold; color: var(--primary);">Acessando base de dados...</p>
+                        <p id="loading-text" style="font-weight: bold; color: var(--primary);">Sincronizando registros administrativos...</p>
                     </div>
 
                     <div id="result-state">
                         <div class="result-box">
-                            <h4><i class="fas fa-check-circle"></i> DÍVIDAS LOCALIZADAS!</h4>
-                            <p style="font-size: 0.85rem;">Seu CPF possui pendências administrativas passíveis de <strong>baixa Imediata</strong>.</p>
+                            <h4><i class="fas fa-check-circle"></i> PROTOCOLO LOCALIZADO!</h4>
+                            <p style="font-size: 0.85rem;">Seu CPF possui pendências administrativas passíveis de <strong>Baixa Imediata</strong>.</p>
                         </div>
-                        <a href="#checkout" class="btn-checkout">QUERO LIMPAR MEU NOME AGORA (R$ 30,00)</a>
+                        <a href="#checkout" class="btn-checkout">LIBERAR PROTOCOLO (R$ 30,00)</a>
                     </div>
                 </div>
             </div>
@@ -145,24 +160,29 @@
 <div class="benefits-bar">
     <div class="container">
         <div class="benefits-grid">
-            <div class="benefit-item"><i class="fas fa-bolt"></i> Emissão Instantânea</div>
-            <div class="benefit-item"><i class="fas fa-file-invoice-dollar"></i> Sem Pagar a Dívida</div>
-            <div class="benefit-item"><i class="fas fa-gavel"></i> Fundamentação Art. 43 CDC</div>
-            <div class="benefit-item"><i class="fas fa-user-slash"></i> Sem Consulta a Advogado</div>
+            <div class="benefit-item"><i class="fas fa-bolt"></i> Geração Instantânea</div>
+            <div class="benefit-item"><i class="fas fa-file-invoice-dollar"></i> Fundamentação CDC</div>
+            <div class="benefit-item"><i class="fas fa-sync-alt"></i> Baixa Administrativa</div>
+            <div class="benefit-item"><i class="fas fa-user-slash"></i> Sem Consultoria OAB</div>
         </div>
     </div>
 </div>
 
 <section class="how-works">
     <div class="container">
-        <div class="how-grid">
-            <div class="how-img">
-                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="Sistema de Baixa">
+        <h2>🛠️ Descritivo Técnico do Procedimento</h2>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h3>Emissão de Protocolo Estruturado</h3>
+                <p>Ao concluir a emissão, você recebe a Chave de Acesso ao Protocolo, que contém as peças de fundamentação pré-preenchidas para submissão imediata via canais de atendimento ao consumidor e órgãos reguladores.</p>
             </div>
-            <div class="how-text">
-                <h2>Como funciona a liberação?</h2>
-                <p>O sistema gera automaticamente o seu documento de retificação fundamentado no <strong>Código de Defesa do Consumidor</strong>. Este protocolo atua na raiz do bloqueio, forçando a atualização do seu status creditício nos sistemas internos.</p>
-                <p style="margin-top: 15px; font-weight: 700;">Basta apresentar o documento gerado para processar a limpeza em tempo recorde.</p>
+            <div class="tech-card">
+                <h3>Algoritmo de Conformidade Legal</h3>
+                <p>Nosso gerador organiza as teses de defesa (Prescrição Quinquenal e Retificação de Status de Prejuízo) de forma que o usuário apenas necessite realizar o protocolo de envio, eliminando a necessidade de peticionamento manual complexo.</p>
+            </div>
+            <div class="tech-card">
+                <h3>Segurança da Informação</h3>
+                <p>O dossiê gerado é criptografado e segue os padrões de retificação exigidos pela SENACON e pelo Banco Central, garantindo que sua solicitação administrativa tenha o máximo de eficácia perante as instituições financeiras.</p>
             </div>
         </div>
     </div>
@@ -176,21 +196,21 @@
                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Cliente">
                     <div class="t-info"><strong>Ricardo Oliveira</strong><span>Status: Regularizado</span></div>
                 </div>
-                <p>"Caiu a restrição! Meu score subiu 230 pontos logo após apresentar o protocolo gerado pelo sistema."</p>
+                <p>"O dossiê é extremamente técnico. Apresentei via portal do consumidor e em menos de 10 dias a restrição interna sumiu."</p>
             </div>
             <div class="t-card">
                 <div class="t-header">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Cliente">
                     <div class="t-info"><strong>Mariana Souza</strong><span>Status: CPF Limpo</span></div>
                 </div>
-                <p>"Achei que o banco ia me bloquear para sempre, mas o documento oficial funcionou na hora."</p>
+                <p>"A fundamentação no Art. 43 é impecável. O banco não teve como negar a retirada dos dados após o protocolo."</p>
             </div>
             <div class="t-card">
                 <div class="t-header">
                     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="Cliente">
                     <div class="t-info"><strong>André Costa</strong><span>Status: Crédito Ativo</span></div>
                 </div>
-                <p>"O sistema é muito rápido. Emiti o PDF em segundos e fiz o procedimento. Valeu cada centavo."</p>
+                <p>"Valeu cada centavo da taxa de emissão. O sistema gera tudo pronto, só precisei copiar e protocolar."</p>
             </div>
         </div>
     </div>
@@ -199,7 +219,7 @@
 <footer>
     <div class="container">
         <div class="legal">
-            <p><strong>AVISO LEGAL:</strong> Este site oferece uma ferramenta de automação para emissão de documentos administrativos. A eficácia da baixa depende do cumprimento dos requisitos legais. Não somos órgão governamental ou bancário.</p>
+            <p><strong>AVISO LEGAL:</strong> Este site oferece uma ferramenta de automação para emissão de documentos administrativos baseados no Código de Defesa do Consumidor. A eficácia da baixa depende do cumprimento dos requisitos legais específicos (caducidade ou erro de dado). Não somos órgão governamental ou instituição bancária.</p>
             <p style="margin-top: 20px;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
         </div>
     </div>
@@ -222,9 +242,9 @@
         document.getElementById('loading-state').style.display = 'block';
 
         const txt = document.getElementById('loading-text');
-        setTimeout(() => { txt.innerText = "Consultando base do Art. 43 do CDC..."; }, 1500);
-        setTimeout(() => { txt.innerText = "Identificando pendências administrativas..."; }, 3000);
-        setTimeout(() => { txt.innerText = "Preparando Emissão de Protocolo..."; }, 4500);
+        setTimeout(() => { txt.innerText = "Consultando base legal do Art. 43 do CDC..."; }, 1500);
+        setTimeout(() => { txt.innerText = "Identificando pendências de caducidade administrativa..."; }, 3000);
+        setTimeout(() => { txt.innerText = "Sincronizando Chave de Acesso ao Protocolo..."; }, 4500);
 
         setTimeout(() => {
             document.getElementById('loading-state').style.display = 'none';
