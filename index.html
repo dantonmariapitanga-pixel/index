@@ -3,98 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protocolo Limpa Nome - Recupere seu Crédito</title>
-    <!-- Fontes e Icones Externos -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Sistema de Baixa de Restrições - Emissão de Protocolo</title>
+    <!-- Fontes e Icones -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #0f2a44;
-            --secondary: #21ba45;
-            --accent: #f2c037;
-            --text-dark: #1d2124;
-            --text-light: #545b62;
-            --bg-light: #f8f9fa;
+            --gov-blue: #003366;
+            --gov-green: #2e7d32;
+            --gov-bg: #f4f7f6;
             --white: #ffffff;
+            --text: #333333;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Open Sans', sans-serif; color: var(--text-dark); line-height: 1.6; background-color: var(--white); }
-        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+        body { font-family: 'Roboto', sans-serif; background-color: var(--gov-bg); color: var(--text); line-height: 1.5; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
-        /* Header */
-        header { padding: 15px 0; background: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
-        .header-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
-        .secure-badge { font-size: 0.85rem; color: var(--secondary); font-weight: 700; display: flex; align-items: center; gap: 5px; }
+        /* Header Estilo Portal */
+        header { background: var(--white); border-bottom: 3px solid var(--gov-blue); padding: 15px 0; }
+        .header-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 900; font-size: 1.2rem; color: var(--gov-blue); display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
+        .status-online { color: var(--gov-green); font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .status-online::before { content: ""; width: 8px; height: 8px; background: var(--gov-green); border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
         /* Hero Section */
-        .hero { padding: 60px 0; background: radial-gradient(circle at 70% 30%, #fff 0%, #e9ecef 100%); }
-        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-        .hero-text h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 20px; color: var(--primary); }
-        .hero-text h1 span { color: var(--secondary); }
-        .hero-text p { font-size: 1.2rem; color: var(--text-light); margin-bottom: 30px; }
-        .hero-img img { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .hero { padding: 40px 0; text-align: center; }
+        .official-seal { font-size: 3rem; color: var(--gov-blue); margin-bottom: 20px; }
+        h1 { font-size: 2.2rem; font-weight: 900; color: var(--gov-blue); line-height: 1.2; margin-bottom: 15px; text-transform: uppercase; }
+        .sub-headline { font-size: 1.1rem; color: #555; margin-bottom: 30px; max-width: 700px; margin-inline: auto; }
 
-        /* CTA Button */
-        .cta-wrapper { margin-top: 20px; }
-        .btn-cta { 
-            display: inline-block; 
-            background: var(--secondary); 
-            color: var(--white); 
-            padding: 22px 40px; 
-            border-radius: 50px; 
+        /* CTA Section */
+        .cta-box { background: var(--white); padding: 30px; border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 40px; }
+        .btn-emissao { 
+            display: block; 
+            background: var(--gov-green); 
+            color: white; 
+            padding: 20px; 
+            border-radius: 5px; 
             text-decoration: none; 
-            font-weight: 800; 
-            font-size: 1.25rem; 
-            box-shadow: 0 10px 20px rgba(33, 186, 69, 0.3);
+            font-weight: 900; 
+            font-size: 1.4rem; 
+            margin-bottom: 15px;
             transition: 0.3s;
-            text-align: center;
+            text-transform: uppercase;
         }
-        .btn-cta:hover { transform: scale(1.03); background: #1ea33d; }
-        .payment-info { margin-top: 15px; font-size: 0.9rem; font-weight: 700; color: var(--primary); }
+        .btn-emissao:hover { background: #1b5e20; }
+        .fee { font-size: 0.9rem; font-weight: bold; color: var(--text); }
+        .fee span { color: var(--gov-green); font-size: 1.2rem; }
 
-        /* Benefits Bar */
-        .benefits-bar { background: var(--primary); color: var(--white); padding: 25px 0; }
-        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; }
-        .benefit-item { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.95rem; font-weight: 600; }
-        .benefit-item i { color: var(--secondary); font-size: 1.2rem; }
+        /* Icons Status */
+        .status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 40px; }
+        .status-item { background: #e8f5e9; padding: 15px; border-radius: 5px; display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 0.9rem; border-left: 5px solid var(--gov-green); }
+        .status-item i { color: var(--gov-green); font-size: 1.2rem; }
 
-        /* Curiosity Section */
-        .curiosity { padding: 100px 0; background: var(--white); }
-        .curiosity-card { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; background: var(--bg-light); padding: 50px; border-radius: 30px; }
-        .curiosity-text h2 { font-size: 2.2rem; margin-bottom: 20px; color: var(--primary); }
-        .curiosity-text p { margin-bottom: 15px; font-size: 1.05rem; }
-        .curiosity-list { list-style: none; margin-top: 25px; }
-        .curiosity-list li { display: flex; gap: 10px; margin-bottom: 12px; font-weight: 600; }
-        .curiosity-list i { color: var(--secondary); margin-top: 5px; }
+        /* How it Works */
+        .how-works { background: var(--white); padding: 40px; border-radius: 10px; margin-bottom: 40px; border: 1px solid #ddd; }
+        .how-works h2 { color: var(--gov-blue); margin-bottom: 15px; font-size: 1.5rem; }
+        .how-works p { font-size: 1rem; color: #666; }
 
-        /* Social Proof */
-        .testimonials { padding: 100px 0; background: var(--bg-light); }
-        .t-header { text-align: center; margin-bottom: 60px; }
-        .t-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .t-card { background: var(--white); padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .t-user { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .t-user img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; }
-        .t-name { font-weight: 700; font-size: 1rem; }
-        .t-name span { display: block; color: var(--secondary); font-size: 0.8rem; }
-        .t-text { font-style: italic; color: var(--text-light); font-size: 0.95rem; }
+        /* Short Proofs */
+        .proof-section { margin-bottom: 40px; }
+        .proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .proof-card { background: #dcf8c6; padding: 15px; border-radius: 10px; font-size: 0.85rem; display: flex; gap: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .proof-card i { color: #075e54; font-size: 1.2rem; }
 
         /* Footer */
-        footer { background: #111; color: #777; padding: 60px 0 20px; font-size: 0.85rem; }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-col h4 { color: #fff; margin-bottom: 15px; }
-        .legal-notice { border-top: 1px solid #222; padding-top: 20px; text-align: center; }
+        footer { background: #eeeeee; padding: 40px 0; color: #888; font-size: 0.75rem; text-align: center; }
+        .disclaimer { max-width: 700px; margin: 0 auto; line-height: 1.4; }
 
-        /* Mobile */
-        @media (max-width: 850px) {
-            .hero-grid, .curiosity-card { grid-template-columns: 1fr; text-align: center; }
-            .hero-text h1 { font-size: 2.2rem; }
-            .curiosity-card { padding: 30px 20px; }
-            .btn-cta { width: 100%; padding: 20px 10px; }
-            .hero-img { order: -1; }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; }
+            .status-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -102,98 +85,56 @@
 
 <header>
     <div class="container">
-        <div class="header-flex">
-            <div class="logo"><i class="fas fa-shield-alt"></i> SOLUÇÃO CPF LIMPO</div>
-            <div class="secure-badge"><i class="fas fa-lock"></i> AMBIENTE 100% SEGURO</div>
+        <div class="header-wrapper">
+            <div class="logo"><i class="fas fa-university"></i> Emissor de Protocolos</div>
+            <div class="status-online">SISTEMA OPERACIONAL</div>
         </div>
     </div>
 </header>
 
 <section class="hero">
     <div class="container">
-        <div class="hero-grid">
-            <div class="hero-text">
-                <h1>Limpe seu Nome e Volte a Ter Crédito <span class="highlight">Sem Pagar a Dívida Total!</span></h1>
-                <p>Descubra o Protocolo Administrativo baseado na Lei do Consumidor para remover restrições do seu CPF e recuperar seu poder de compra em tempo recorde.</p>
-                
-                <div class="cta-wrapper">
-                    <a href="#checkout" class="btn-cta">QUERO LIMPAR MEU NOME AGORA!</a>
-                    <div class="payment-info">
-                        <i class="fas fa-bolt"></i> Acesso Imediato por apenas <strong>R$ 67,90</strong>
-                    </div>
-                    <div style="margin-top: 15px;">
-                        <img src="https://logospng.org/download/pix/logo-pix-1024.png" alt="Pix" height="20" style="margin-right: 10px;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" height="12" style="margin-right: 10px;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Master" height="20">
-                    </div>
-                </div>
-            </div>
-            <div class="hero-img">
-                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sucesso Financeiro">
+        <div class="official-seal">
+            <i class="fas fa-file-invoice-dollar"></i>
+        </div>
+        <h1>Sistema de Baixa de Restrições: <span style="color:var(--gov-green)">Limpando seu CPF</span></h1>
+        <p class="sub-headline">Emita agora o Protocolo de Caducidade Administrativa (Art. 43 CDC) para remoção imediata de apontamentos e restrições internas.</p>
+        
+        <div class="cta-box">
+            <a href="#checkout" class="btn-emissao">⚡ EMITIR MEU PROTOCOLO AGORA</a>
+            <p class="fee">Taxa única de processamento: <span>R$ 10,00</span></p>
+            <div style="margin-top: 20px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="20">
+                <p style="font-size: 0.7rem; margin-top: 5px; color: #999;">Liberação imediata após o pagamento</p>
             </div>
         </div>
-    </div>
-</section>
 
-<div class="benefits-bar">
-    <div class="container">
-        <div class="benefits-grid">
-            <div class="benefit-item"><i class="fas fa-check"></i> Nome Limpo em Dias</div>
-            <div class="benefit-item"><i class="fas fa-chart-line"></i> Score Restaurado</div>
-            <div class="benefit-item"><i class="fas fa-gavel"></i> 100% Dentro da Lei</div>
-            <div class="benefit-item"><i class="fas fa-user-shield"></i> Sem Advogados</div>
+        <div class="status-grid">
+            <div class="status-item"><i class="fas fa-check-double"></i> Status: CPF Liberado</div>
+            <div class="status-item"><i class="fas fa-chart-line"></i> Atualização de Score</div>
+            <div class="status-item"><i class="fas fa-certificate"></i> Certificado de Baixa SCR</div>
+            <div class="status-item"><i class="fas fa-user-shield"></i> Sem Consulta a Advogado</div>
         </div>
-    </div>
-</div>
 
-<section class="curiosity">
-    <div class="container">
-        <div class="curiosity-card">
-            <div class="curiosity-img">
-                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cartão Aprovado" style="width:100%; border-radius: 20px;">
-            </div>
-            <div class="curiosity-text">
-                <h2>O que os bancos não querem que você saiba...</h2>
-                <p>Você tenta limpar seu nome, mas os juros são abusivos e a conta nunca fecha? O que as instituições financeiras escondem é que existe um <strong>procedimento administrativo direto</strong> que elas são obrigadas a seguir.</p>
-                <p>Nosso guia revela o "atalho" legal que remove as barreiras do seu CPF sem que você precise gastar fortunas com negociadores ou processos demorados.</p>
-                
-                <ul class="curiosity-list">
-                    <li><i class="fas fa-eye-slash"></i> <strong>Ação Invisível:</strong> Saiba exatamente onde os bancos travam seu crédito.</li>
-                    <li><i class="fas fa-copy"></i> <strong>Método Copia e Cola:</strong> Documentos prontos para preencher e enviar.</li>
-                    <li><i class="fas fa-unlock-alt"></i> <strong>Liberdade Financeira:</strong> Volte a ser visto pelo mercado financeiro hoje mesmo.</li>
-                </ul>
-            </div>
+        <div class="how-works">
+            <h2>Como funciona a liberação automática?</h2>
+            <p>Nosso sistema gera o documento de retificação de dados fundamentado na Lei Federal 8.078/90. Basta emitir o arquivo e apresentar via portal do consumidor para que a baixa seja processada em tempo recorde.</p>
         </div>
-    </div>
-</section>
 
-<section class="testimonials">
-    <div class="container">
-        <div class="t-header">
-            <h2>Quem aplicou, aprovou!</h2>
-            <p>Veja os resultados de quem usou o protocolo administrativo.</p>
-        </div>
-        <div class="t-grid">
-            <div class="t-card">
-                <div class="t-user">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Cliente">
-                    <div class="t-name">Ricardo M. <span>Limpou em 9 dias</span></div>
+        <div class="proof-section">
+            <div class="proof-grid">
+                <div class="proof-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <p><strong>Ricardo:</strong> "Acabei de emitir e já enviei. Restrição sumiu em 48h! Valeu cada centavo."</p>
                 </div>
-                <p class="t-text">"Minha dívida era antiga e eu não conseguia mais nada. Segui o passo a passo do guia e em pouco tempo meu nome estava limpo no sistema. Valeu cada centavo!"</p>
-            </div>
-            <div class="t-card">
-                <div class="t-user">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Cliente">
-                    <div class="t-name">Juliana F. <span>Cartão Aprovado</span></div>
+                <div class="proof-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <p><strong>Mariana:</strong> "Meu score subiu 230 pontos. O protocolo é aceito na hora pelo sistema."</p>
                 </div>
-                <p class="t-text">"O melhor são os modelos de texto. Eu não sabia o que falar para o banco, mas o guia me deu tudo pronto. Só precisei enviar e esperar a resposta positiva."</p>
-            </div>
-            <div class="t-card">
-                <div class="t-user">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="Cliente">
-                    <div class="t-name">Marcos T. <span>Score Subiu</span></div>
+                <div class="proof-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <p><strong>André:</strong> "Finalmente consegui meu cartão. O sistema gerou o PDF em 10 segundos."</p>
                 </div>
-                <p class="t-text">"Eu achava que precisava de advogado, mas o protocolo administrativo resolveu tudo sozinho. Recomendo para quem quer parar de ser negado nos bancos."</p>
             </div>
         </div>
     </div>
@@ -201,23 +142,9 @@
 
 <footer>
     <div class="container">
-        <div class="footer-content">
-            <div class="footer-col">
-                <h4>Sobre o Protocolo</h4>
-                <p>Consultoria educacional sobre direitos do consumidor e reabilitação de crédito administrativo.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Garantia</h4>
-                <p><i class="fas fa-check-circle" style="color:var(--accent)"></i> 7 Dias de garantia total conforme o CDC.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Atendimento</h4>
-                <p><i class="fab fa-whatsapp"></i> Suporte via WhatsApp<br><i class="fas fa-envelope"></i> suporte@cpflimpo.com</p>
-            </div>
-        </div>
-        <div class="legal-notice">
-            <p><strong>AVISO LEGAL:</strong> Este site não possui vínculo com o Banco Central, Serasa ou SPC. O produto é um guia educacional. A concessão de crédito é decidida pelas instituições financeiras.</p>
-            <p style="margin-top: 15px;">© 2026 CPF Limpo Agora - Todos os Direitos Reservados.</p>
+        <div class="disclaimer">
+            <strong>AVISO LEGAL:</strong> Este site oferece uma ferramenta de automação de documentos administrativos. A eficácia da baixa depende do cumprimento dos requisitos legais (prescrição ou erro de dado). Não somos uma instituição financeira ou órgão de proteção ao crédito. O uso do sistema é de inteira responsabilidade do usuário.
+            <p style="margin-top: 20px;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
         </div>
     </div>
 </footer>
