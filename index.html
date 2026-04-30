@@ -3,79 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solução CPF Limpo - Protocolo Administrativo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>Protocolo Limpa Nome - O Fim da Lista Negra</title>
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #1a3a5a;
             --secondary: #28a745;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
+            --accent: #f39c12;
+            --dark: #121212;
+            --light: #f4f7f6;
+            --white: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-box: border-box; font-family: 'Inter', sans-serif; }
-
-        body { background-color: white; color: var(--dark); line-height: 1.6; }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--white); color: var(--dark); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
         /* Header */
-        header { padding: 20px 0; text-align: center; }
-        .logo { font-weight: 800; color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .logo-icon { width: 30px; height: 30px; background: var(--primary); border-radius: 5px; }
+        header { padding: 15px 0; background: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--secondary); }
 
         /* Hero Section */
-        .hero { padding: 60px 0; text-align: center; background: radial-gradient(circle, #ffffff 0%, #f1f4f8 100%); }
-        h1 { font-size: 2.5rem; font-weight: 800; color: var(--dark); margin-bottom: 20px; text-transform: uppercase; line-height: 1.1; }
-        .highlight { color: var(--primary); }
-        .subtitle { font-size: 1.2rem; color: var(--gray); margin-bottom: 40px; max-width: 800px; margin-inline: auto; }
+        .hero { padding: 80px 0; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); position: relative; overflow: hidden; }
+        .hero-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+        .hero-text { flex: 1; min-width: 300px; }
+        .hero-image { flex: 1; min-width: 300px; text-align: center; }
+        .hero-image img { width: 100%; max-width: 500px; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
 
-        /* Features */
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 50px; }
-        .feature-card { text-align: center; padding: 20px; }
-        .feature-card img { width: 60px; margin-bottom: 15px; }
-        .feature-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary); }
-        .feature-card p { font-size: 0.9rem; color: var(--gray); }
+        h1 { font-size: 3rem; font-weight: 800; line-height: 1.1; color: var(--primary); margin-bottom: 20px; }
+        h1 span { color: var(--secondary); }
+        .subtitle { font-size: 1.2rem; color: #555; margin-bottom: 35px; }
 
-        /* CTA Button */
-        .cta-container { margin-top: 20px; }
+        /* Botão Pulsante */
         .btn-cta { 
             display: inline-block; 
-            background-color: var(--secondary); 
-            color: white; 
-            padding: 20px 40px; 
+            background: var(--secondary); 
+            color: var(--white); 
+            padding: 22px 45px; 
             border-radius: 50px; 
             text-decoration: none; 
             font-weight: 800; 
             font-size: 1.3rem; 
-            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
-            transition: transform 0.2s;
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
+            transition: 0.3s;
+            animation: pulse 2s infinite;
         }
-        .btn-cta:hover { transform: scale(1.05); }
-        .price-tag { margin-top: 15px; font-weight: bold; color: var(--secondary); font-size: 1.1rem; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        .btn-cta:hover { transform: scale(1.05); background: #218838; }
 
-        /* Payment Icons */
-        .payments { margin-top: 20px; opacity: 0.7; }
-        .payments img { height: 25px; margin: 0 5px; }
+        .price-lock { margin-top: 15px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
 
-        /* Social Proof Section */
-        .testimonials { padding: 60px 0; background: var(--light); }
-        .section-title { text-align: center; margin-bottom: 40px; font-weight: 800; color: var(--primary); }
-        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .testimonial-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .user-info { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .user-img { width: 50px; height: 50px; background: #ddd; border-radius: 50%; }
-        .user-name { font-weight: 700; font-size: 0.9rem; }
-        .testimonial-text { font-style: italic; font-size: 0.95rem; color: #444; }
+        /* Benefits Bar */
+        .benefits-bar { padding: 30px 0; background: var(--primary); color: var(--white); text-align: center; }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .benefit-item { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; }
+        .benefit-item i { color: var(--secondary); font-size: 1.5rem; }
 
-        /* Legal Section */
-        .legal-box { padding: 40px 20px; background: #111; color: #999; font-size: 0.75rem; text-align: center; }
-        .legal-box strong { color: #ccc; display: block; margin-bottom: 10px; }
+        /* The Problem (SCR) */
+        .problem-section { padding: 100px 0; background: var(--white); }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 15px; }
+        .problem-card { background: var(--light); padding: 40px; border-radius: 20px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+        .problem-card img { width: 100%; max-width: 400px; border-radius: 15px; }
+        .problem-info { flex: 1; min-width: 300px; }
+        .problem-info h3 { margin-bottom: 20px; color: #c0392b; }
 
+        /* Social Proof */
+        .social-proof { padding: 100px 0; background: var(--light); }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .t-card { background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .t-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .t-header img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+        .t-info strong { display: block; font-size: 1.1rem; }
+        .t-info span { color: var(--secondary); font-size: 0.9rem; font-weight: 700; }
+        .t-text { font-style: italic; color: #555; }
+
+        /* Footer */
+        footer { background: var(--dark); color: #888; padding: 80px 0 20px; font-size: 0.9rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 50px; }
+        .footer-col h4 { color: var(--white); margin-bottom: 20px; }
+        .footer-bottom { border-top: 1px solid #333; padding-top: 20px; text-align: center; }
+
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .btn-cta { font-size: 1.1rem; padding: 15px 25px; }
+            h1 { font-size: 2.2rem; }
+            .hero-flex { flex-direction: column-reverse; }
+            .btn-cta { width: 100%; text-align: center; padding: 20px 10px; }
         }
     </style>
 </head>
@@ -83,82 +106,127 @@
 
 <header>
     <div class="container">
-        <div class="logo">
-            <div class="logo-icon"></div>
-            SOLUÇÃO CPF LIMPO
+        <div class="nav-wrapper">
+            <div class="logo"><i class="fas fa-shield-check"></i> SOLUÇÃO CPF LIMPO</div>
+            <div class="secure"><i class="fas fa-lock"></i> Ambiente 100% Seguro</div>
         </div>
     </div>
 </header>
 
 <section class="hero">
     <div class="container">
-        <h1>Desvincule seu CPF do <span class="highlight">Limbo</span> e Limpe seu Nome Definitivamente!</h1>
-        <p class="subtitle">O Método Administrativo Exclusivo Amparado no Art. 43 do CDC para Regularizar sua Situação Creditícia sem Burocracia e sem Listas Negras.</p>
+        <div class="hero-flex">
+            <div class="hero-text">
+                <h1>Livre-se da <span class="highlight">Lista Negra</span> dos Bancos Hoje!</h1>
+                <p class="subtitle">O método administrativo exclusivo baseado no <strong>Artigo 43 do CDC</strong> para forçar a limpeza definitiva dos seus dados e restaurar seu poder de compra.</p>
+                
+                <a href="#checkout" class="btn-cta">QUERO LIMPAR MEU CPF AGORA!</a>
+                
+                <div class="price-lock">
+                    <i class="fas fa-tag"></i> Por apenas 12x de <strong>R$ 6,81</strong> ou <strong>R$ 67,90</strong> à vista.
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="25" style="margin-right: 15px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" height="15" style="margin-right: 15px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" height="25">
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1573163281530-5be9c28aa7bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sucesso Financeiro">
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="benefits-bar">
+    <div class="container">
+        <div class="benefits-grid">
+            <div class="benefit-item"><i class="fas fa-bolt"></i> Acesso Imediato</div>
+            <div class="benefit-item"><i class="fas fa-user-slash"></i> Sem Advogados</div>
+            <div class="benefit-item"><i class="fas fa-file-invoice-dollar"></i> Sem Pagar a Dívida</div>
+            <div class="benefit-item"><i class="fas fa-check-double"></i> 100% Legal (CDC)</div>
+        </div>
+    </div>
+</div>
+
+<section class="problem-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Por que seu crédito é negado?</h2>
+            <p>Mesmo após 5 anos, os bancos escondem seus dados no "Sistema Registrato".</p>
+        </div>
         
-        <div class="features">
-            <div class="feature-card">
-                <h3>Método Administrativo</h3>
-                <p>Passo a passo validado legalmente para execução imediata.</p>
+        <div class="problem-card">
+            <img src="https://images.unsplash.com/photo-1554224155-1696413565d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Análise de Crédito">
+            <div class="problem-info">
+                <h3>O Segredo do SCR (Banco Central)</h3>
+                <p>Os bancos mantêm uma "Lista Negra" interna chamada SCR. Mesmo que sua dívida caduque, essa anotação de "prejuízo" impede novos cartões e financiamentos. <strong>O nosso Protocolo ensina você a forçar a baixa desse registro em até 10 dias de forma totalmente administrativa.</strong></p>
+                <ul style="margin-top: 20px; list-style: none;">
+                    <li><i class="fas fa-check-circle" style="color:var(--secondary);"></i> Aprenda a acessar o seu Registrato</li>
+                    <li><i class="fas fa-check-circle" style="color:var(--secondary);"></i> Use os Modelos de Petição Extrajudicial</li>
+                    <li><i class="fas fa-check-circle" style="color:var(--secondary);"></i> Restaure seu score interno nos bancos</li>
+                </ul>
             </div>
-            <div class="feature-card">
-                <h3>100% Online e Rápido</h3>
-                <p>Acesso imediato ao conteúdo logo após a confirmação.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Sem Advogados</h3>
-                <p>Aprenda a fazer sozinho e economize milhares de reais em honorários.</p>
-            </div>
-        </div>
-
-        <div class="cta-container">
-            <a href="#" class="btn-cta">QUERO LIMPAR MEU CPF AGORA!</a>
-            <p class="price-tag">(Apenas R$ 67,90)</p>
-            
-            <div class="payments">
-                <span>Acesso Imediato via PIX | Pagamento Seguro</span><br><br>
-                <img src="https://logospng.org/download/pix/logo-pix-1024.png" alt="Pix" style="height: 20px;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard">
-            </div>
-            <p style="margin-top: 15px; font-weight: bold; color: #d9534f;">⚠️ ÚLTIMAS VAGAS COM VALOR PROMOCIONAL!</p>
         </div>
     </div>
 </section>
 
-<section class="testimonials">
+<section class="social-proof">
     <div class="container">
-        <h2 class="section-title">Quem já usou, aprovou!</h2>
+        <div class="section-header">
+            <h2>Quem aplicou, recuperou o crédito!</h2>
+        </div>
+        
         <div class="testimonial-grid">
-            <div class="testimonial-card">
-                <div class="user-info">
-                    <div class="user-img"></div>
-                    <div class="user-name">Marina S.</div>
+            <div class="t-card">
+                <div class="t-header">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Cliente">
+                    <div class="t-info"><strong>Ricardo Oliveira</strong><span>Limpou em 8 dias</span></div>
                 </div>
-                <p class="testimonial-text">"Minha dívida tinha 7 anos e continuava aparecendo no tal do Registrato. Segui o protocolo, enviei o e-mail que eles dão pronto e em 8 dias meu nome estava zerado. Consegui meu primeiro cartão após anos!"</p>
+                <p class="t-text">"Minha dívida tinha 6 anos e nenhum banco me dava crédito. Descobri pelo guia que meu nome estava no prejuízo do SCR. Enviei a notificação pronta do guia e em uma semana meu Registrato estava limpo!"</p>
             </div>
-            <div class="testimonial-card">
-                <div class="user-info">
-                    <div class="user-img"></div>
-                    <div class="user-name">Carlos P.</div>
+            
+            <div class="t-card">
+                <div class="t-header">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Cliente">
+                    <div class="t-info"><strong>Mariana Souza</strong><span>Conseguiu Financiamento</span></div>
                 </div>
-                <p class="testimonial-text">"Achei que era golpe, mas como era barato resolvi testar. O conteúdo sobre o SCR é o que ninguém te conta. Fiz a reclamação administrativa e o banco tirou o prejuízo do meu CPF. Recomendo demais."</p>
+                <p class="t-text">"Paguei uma dívida com desconto e achei que estava tudo bem, mas o banco me bloqueou internamente. O Protocolo 2.0 me ensinou a reclamar do jeito certo e hoje meu nome está 100% livre."</p>
             </div>
-            <div class="testimonial-card">
-                <div class="user-info">
-                    <div class="user-img"></div>
-                    <div class="user-name">Ana L.</div>
+            
+            <div class="t-card">
+                <div class="t-header">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Cliente">
+                    <div class="t-info"><strong>André Costa</strong><span>Score Subiu 300 pontos</span></div>
                 </div>
-                <p class="testimonial-text">"O melhor é que já vem o texto pronto pra copiar. Não precisei gastar com advogado nem nada. O suporte me ajudou a achar o link do Banco Central e resolveu rápido."</p>
+                <p class="t-text">"Melhor investimento que já fiz. O conteúdo é direto ao ponto, sem enrolação. Os modelos de texto são perfeitos, só precisei preencher meu CPF e enviar."</p>
             </div>
         </div>
     </div>
 </section>
 
-<footer class="legal-box">
+<footer>
     <div class="container">
-        <strong>**AVISO LEGAL**</strong>
-        <p>Este método é educacional e consultivo. Não garantimos resultados financeiros ou a remoção imediata das restrições de crédito sem a devida fundamentação legal. Os resultados variam e dependem da aplicação do guia administrativo e da situação específica das dívidas nos órgãos de proteção ao crédito. O uso das informações é de inteira responsabilidade do usuário. Consulte sempre o CDC e busque orientação profissional se necessário.</p>
-        <p style="margin-top: 20px;">© 2026 CPF Limpo Agora. Todos os Direitos Reservados. <a href="#" style="color: #666;">Termos de Uso</a> | <a href="#" style="color: #666;">Privacidade</a></p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Sobre o Protocolo</h4>
+                <p>Somos uma consultoria educacional focada em direitos do consumidor e reabilitação de crédito administrativo.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Garantia de Satisfação</h4>
+                <p><i class="fas fa-certificate" style="color:var(--accent);"></i> 7 Dias de garantia incondicional conforme o CDC.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contato Suporte</h4>
+                <p><i class="fab fa-whatsapp"></i> (85) 9XXXX-XXXX<br><i class="fas fa-envelope"></i> suporte@cpflimpoagora.com</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p><strong>AVISO LEGAL:</strong> Este site não possui vínculo com o Banco Central do Brasil, Serasa ou SPC. O conteúdo é estritamente educacional. A decisão de concessão de crédito é exclusiva das instituições financeiras.</p>
+            <p style="margin-top: 15px;">© 2026 CPF Limpo Agora - Todos os Direitos Reservados.</p>
+        </div>
     </div>
 </footer>
 
