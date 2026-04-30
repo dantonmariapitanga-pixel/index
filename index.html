@@ -3,481 +3,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solução CPF Limpo</title>
+    <title>Solução CPF Limpo | Limpe seu nome definitivamente</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --primary-dark: #1F2E52; /* Cor azul escuro do logo e textos */
-            --green-active: #01C164; /* Cor verde do botão e ícones de ativação */
-            --text-main: #2F2F2F; /* Texto principal */
-            --text-lighter: #5F5F5F; /* Texto secundário */
-            --card-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Sombra suave para os depoimentos */
-            --font-family-main: 'Poppins', sans-serif;
-            --font-family-header: 'Montserrat', sans-serif;
+        /* CSS Reset & Variáveis Baseadas no Padrão Premium */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        :root { 
+            --primary-bg: #f8f9fa; 
+            --secondary-bg: #ffffff; 
+            --tertiary-bg: #ffffff; 
+            /* CORES DE ACENTO */
+            --accent-blue: #0A3A6A; 
+            --accent-light-blue: #007BFF;
+            --gradient-start: #00D23A; 
+            --gradient-end: #00B331; 
+            
+            --text-dark: #111111; 
+            --text-muted: #555555;
+            --header-bg: rgba(248, 249, 250, 0.95);
+            
+            --shadow-sm: 0 4px 15px rgba(0,0,0,0.04);
+            --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        body { 
+            background-color: var(--primary-bg);
+            color: var(--text-dark); 
+            line-height: 1.6; 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
         }
 
-        body {
-            font-family: var(--font-family-main);
-            background-color: #ffffff;
-            color: var(--text-main);
-            overflow-x: hidden;
+        /* ================= ANIMAÇÕES GERAIS (DL DESIGN STANDARD) ================= */
+        .fade-in-up { opacity: 0; transform: translateY(30px); animation: fadeInUpAnim 0.8s ease-out forwards; }
+        @keyframes fadeInUpAnim { to { opacity: 1; transform: translateY(0); } }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-seq-1 { transition-delay: 0.1s; }
+        .delay-seq-2 { transition-delay: 0.2s; }
+        .delay-seq-3 { transition-delay: 0.3s; }
+
+        /* ================= CABEÇALHO E LOGO ================= */
+        header { 
+            background-color: var(--header-bg); 
+            padding: 1.5rem 5%; 
+            display: flex; 
+            justify-content: flex-start; 
+            align-items: center; 
+            position: absolute; 
+            top: 0; left: 0; right: 0;
+            z-index: 1000; 
+            backdrop-filter: blur(10px);
         }
 
-        /* Contêiner principal centralizado */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px 200px 20px; /* Mais padding inferior para os depoimentos */
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s ease; }
+        .brand:hover { transform: scale(1.02); }
+        .logo-icon { width: 45px; height: 45px; }
+        
+        .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .logo-text span:first-child { color: var(--accent-light-blue); font-size: 16px; font-weight: 600; letter-spacing: 0.5px;}
+        .logo-text span:last-child { color: var(--accent-blue); font-size: 22px; font-weight: 900; letter-spacing: -0.5px;}
 
-        /* Header e Logo */
-        header {
-            display: flex;
+        /* ================= BOTÕES ================= */
+        .btn-cta { 
+            padding: 20px 45px; 
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: white; 
+            text-decoration: none; 
+            font-weight: 800; 
+            border-radius: 50px; 
+            border: none; 
+            cursor: pointer; 
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+            display: inline-flex; 
             align-items: center;
-            margin-bottom: 50px;
-            width: 100%;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-svg {
-            width: 40px;
-            height: 40px;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-            line-height: 1.2;
-        }
-
-        .logo-title {
-            font-family: var(--font-family-header);
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--primary-dark);
-        }
-
-        .logo-subtitle {
-            font-weight: 400;
-            font-size: 14px;
-            color: var(--text-lighter);
-        }
-
-        /* Seção Herói (Título e Subtítulo) */
-        .hero {
-            margin-bottom: 60px;
-            width: calc(100% - 300px); /* Deixa espaço para o homem à direita */
-            margin-left: 0;
-            text-align: center;
-        }
-
-        h1 {
-            font-family: var(--font-family-header);
-            font-weight: 800;
-            font-size: 36px;
-            color: var(--primary-dark);
-            line-height: 1.2;
-            margin-bottom: 15px;
-        }
-
-        .subtitle {
-            font-weight: 400;
-            font-size: 16px;
-            color: var(--text-lighter);
-            line-height: 1.5;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Seção de Benefícios (Ícones) */
-        .benefits {
-            display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-bottom: 60px;
-            width: calc(100% - 300px);
-            margin-left: 0;
+            gap: 10px;
+            font-size: 1.1rem; 
+            box-shadow: 0 10px 25px rgba(0, 210, 58, 0.3);
         }
+        .btn-cta:hover { 
+            transform: translateY(-4px) scale(1.02); 
+            box-shadow: 0 15px 35px rgba(0, 210, 58, 0.4); 
+            filter: brightness(1.05);
+        }
+        .btn-cta small { font-weight: 600; font-size: 0.95rem; opacity: 0.9; }
 
-        .benefit-item {
+        /* ================= SEÇÕES GERAIS ================= */
+        section { padding: 6rem 5%; position: relative; }
+
+        /* HERO SECTION */
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            max-width: 1300px; 
+            margin: 0 auto; 
+            padding-top: 120px; /* Compensa o header absoluto */
+        }
+        .hero-content { flex: 1; max-width: 750px; z-index: 2; }
+        .hero-content h1 { 
+            font-size: 3.2rem; 
+            color: var(--text-dark); 
+            line-height: 1.1; 
+            font-weight: 900; 
+            letter-spacing: -1px;
+            margin-bottom: 1.2rem; 
+        }
+        .hero-content p { 
+            font-size: 1.25rem; 
+            color: var(--text-muted); 
+            margin-bottom: 3rem; 
+            font-weight: 400;
+            line-height: 1.5;
+            max-width: 600px;
+        }
+        
+        .hero-image-wrapper {
             flex: 1;
-            max-width: 200px;
+            display: flex;
+            justify-content: flex-end;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 55%;
+            height: 90vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: bottom right;
+        }
+
+        /* BENEFÍCIOS (SERVICES GRID) */
+        .benefits { text-align: center; max-width: 1300px; margin: -4rem auto 2rem auto; z-index: 3; position: relative;}
+        .benefits-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 2rem; 
+            max-width: 900px; 
+            margin: 0; 
+            /* Alinha à esquerda para não sobrepor a imagem */
+        }
+        .benefit-card { 
+            background-color: transparent; 
+            padding: 1.5rem; 
+            transition: transform 0.3s ease; 
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
+        .benefit-icon { width: 75px; height: 75px; margin-bottom: 1rem; }
+        .benefit-card h3 { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 0.5rem; line-height: 1.2; }
+        .benefit-card p { color: var(--text-muted); font-size: 0.95rem; }
 
-        .benefit-icon {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 15px;
-        }
-
-        .benefit-title {
-            font-family: var(--font-family-header);
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--primary-dark);
-            margin-bottom: 5px;
-        }
-
-        .benefit-desc {
-            font-size: 12px;
-            color: var(--text-lighter);
-            line-height: 1.4;
-        }
-
-        /* Botão CTA e Seção de Pagamento */
-        .cta-section {
+        /* CHECKOUT / CTA SECTION */
+        .checkout-section {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            margin-bottom: 80px;
-            width: calc(100% - 300px);
-            margin-left: 0;
+            align-items: flex-start;
+            max-width: 1300px;
+            margin: 0 auto;
+            z-index: 3;
+            position: relative;
         }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            background-color: var(--green-active);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 16px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(1, 193, 100, 0.4);
-            margin-bottom: 15px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(1, 193, 100, 0.5);
-        }
-
-        .cta-icon {
-            width: 18px;
-            height: 18px;
-            margin-left: 8px;
-        }
-
         .payment-info {
-            font-size: 12px;
-            color: var(--text-lighter);
+            margin-top: 1.5rem;
             text-align: center;
+            width: fit-content;
+            margin-left: 20px;
         }
-
         .payment-methods {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 5px;
-        }
-
-        .payment-icon {
-            width: 25px;
-            height: 16px;
-        }
-
-        .urgency-text {
-            font-weight: 700;
-            color: var(--text-main);
-            margin-top: 5px;
-        }
-
-        /* Seção de Depoimentos (Cartões flutuantes) */
-        .testimonials {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            width: calc(100% - 300px);
-            margin-left: 0;
-            position: relative;
-            z-index: 3;
-        }
-
-        .testimonial-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            width: calc(33.33% - 14px);
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .testimonial-header {
-            display: flex;
-            align-items: center;
             gap: 12px;
+            margin-bottom: 8px;
         }
+        .payment-icon { height: 20px; width: auto; }
+        .security-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 600;}
+        .urgency-text { font-size: 1.1rem; font-weight: 900; color: var(--text-dark); }
 
-        .avatar-container {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
-            background-color: #f0f0f0; /* Fundo cinza para os avatares */
-        }
-
-        .avatar-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .testimonial-name {
-            font-family: var(--font-family-header);
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--primary-dark);
-        }
-
-        .testimonial-text {
-            font-size: 12px;
-            color: var(--text-lighter);
-            line-height: 1.5;
-        }
-
-        /* Imagem do Homem (Preservada da imagem original) */
-        .person-image {
-            position: absolute;
-            top: 10%;
-            right: 0px;
-            width: 500px; /* Tamanho proporcional à imagem original */
-            height: auto;
-            z-index: 1; /* Atrás do conteúdo e dos cartões de depoimento */
-        }
-
-        /* Rodapé Escuro */
-        footer {
-            background-color: #1A1A1A;
-            color: #999999;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 11px;
-            position: relative;
-        }
-
-        .footer-content {
+        /* DEPOIMENTOS */
+        .testimonials { padding-top: 2rem; max-width: 1300px; margin: 0 auto; z-index: 3; position: relative;}
+        .testimonials-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 1.5rem; 
             max-width: 900px;
-            margin: 0 auto;
-            line-height: 1.6;
+        }
+        .testimonial-card { 
+            background-color: var(--secondary-bg); 
+            padding: 2rem; 
+            border-radius: 12px; 
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.03); 
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); 
+        }
+        .testimonial-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-md); 
+            border-color: rgba(0, 123, 255, 0.1);
+        }
+        
+        .client-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 15px;}
+        .client-avatar { 
+            width: 45px; height: 45px; 
+            border-radius: 50%; 
+            background-color: #E2E8F0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .client-info strong { color: var(--text-dark); font-size: 1rem; font-weight: 800;}
+        .testimonial-card p { font-style: italic; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;}
+
+        /* RODAPÉ */
+        footer { 
+            background-color: #111111; 
+            padding: 3.5rem 5%; 
+            text-align: center; 
+            color: #888888; 
+            position: relative;
+            z-index: 10;
+        }
+        .footer-content { max-width: 900px; margin: 0 auto; }
+        .footer-title { color: #ffffff; font-weight: 800; font-size: 1rem; margin-bottom: 1rem; display: block; letter-spacing: 1px;}
+        .footer-content p { font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        .footer-links { font-size: 0.8rem; }
+        .footer-links a { color: #888888; text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: #ffffff; }
+
+        /* Estrela decorativa no rodapé */
+        .footer-sparkle { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 60px; height: 60px; opacity: 0.1; }
+
+        /* RESPONSIVIDADE */
+        @media(max-width: 1024px) {
+            .hero-image-wrapper { opacity: 0.15; width: 100%; right: -20%; }
+            .hero-content, .benefits-grid, .checkout-section, .testimonials-grid { max-width: 100%; margin-left: 0; align-items: center; text-align: center; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .checkout-section { align-items: center; }
+            .payment-info { margin-left: 0; }
         }
 
-        .footer-title {
-            font-weight: 700;
-            font-size: 13px;
-            color: white;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .legal-notice {
-            margin-bottom: 20px;
-        }
-
-        .copyright {
-            color: #777777;
-        }
-
-        /* Ícone de estrela/sparkle no rodapé */
-        .footer-sparkle {
-            position: absolute;
-            bottom: 20px;
-            right: 30px;
-            width: 15px;
-            height: 15px;
-        }
-
-        /* Responsividade para telas menores */
-        @media (max-width: 1024px) {
-            .person-image {
-                width: 350px;
-                opacity: 0.2; /* Desbota a imagem em telas menores para não atrapalhar a leitura */
-            }
-            .hero, .benefits, .cta-section, .testimonials {
-                width: 100%;
-                margin-left: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 28px;
-            }
-            .benefits {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-            }
-            .benefit-item {
-                max-width: 160px;
-            }
-            .testimonials {
-                flex-direction: column;
-                gap: 20px;
-                align-items: center;
-            }
-            .testimonial-card {
-                width: 100%;
-                max-width: 400px;
-            }
+        @media(max-width: 768px) {
+            header { justify-content: center; padding: 1rem; }
+            .hero { padding-top: 140px; text-align: center; flex-direction: column; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .hero-image-wrapper { display: none; } /* Remove a imagem no celular para focar na conversão */
+            .btn-cta { padding: 18px 25px; font-size: 1rem; width: 100%; flex-direction: column; gap: 5px; }
+            .benefits-grid, .testimonials-grid { grid-template-columns: 1fr; gap: 1rem;}
         }
     </style>
 </head>
 <body>
 
-    <img src="https://i.ibb.co/Xxd97C7/person-with-card.png" alt="Homem sorrindo segurando um cartão de crédito" class="person-image">
+    <header>
+        <a href="#" class="brand fade-in-up">
+            <!-- Logo Vetorial de Alta Qualidade -->
+            <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10 L15 25 V50 C15 75 45 90 50 95 C55 90 85 75 85 50 V25 L50 10 Z" fill="#E8F1FA"/>
+                <path d="M50 10 L15 25 V50 C15 75 45 90 50 95 C55 90 85 75 85 50 V25 L50 10 Z" stroke="#0A3A6A" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M35 52 L45 62 L65 40" stroke="#00D23A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="logo-text">
+                <span>SOLUÇÃO</span>
+                <span>CPF LIMPO</span>
+            </div>
+        </a>
+    </header>
 
-    <div class="container">
-        <header>
-            <div class="logo-container">
-                <svg class="logo-svg" viewBox="0 0 100 100">
-                    <path d="M50 5 L10 25 V55 C10 80, 50 95, 50 95 C50 95, 90 80, 90 55 V25 L50 5 Z" fill="#EBF4F2"/>
-                    <path d="M50 5 L10 25 V55 C10 80, 50 95, 50 95 C50 95, 90 80, 90 55 V25 L50 5 Z" fill="none" stroke="#1F2E52" stroke-width="4"/>
-                    <path d="M30 50 L45 65 L70 35" fill="none" stroke="#01C164" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <div class="logo-text">
-                    <span class="logo-title">SOLUÇÃO</span>
-                    <span class="logo-subtitle">CPF LIMPO</span>
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="fade-in-up delay-1">DESVINCULE SEU CPF DO LIMBO E LIMPE SEU NOME DEFINITIVAMENTE!</h1>
+            <p class="fade-in-up delay-2">O Método Administrativo Exclusivo Amparado no Art. 43 do CDC para Regularizar sua Situação Creditícia sem Burocracia!</p>
+            
+            <div class="benefits">
+                <div class="benefits-grid">
+                    <!-- Card 1 -->
+                    <div class="benefit-card reveal delay-seq-1">
+                        <svg class="benefit-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="35" y="45" width="30" height="25" rx="4" fill="#E8F1FA" stroke="#111" stroke-width="4"/>
+                            <path d="M40 45 V35 C40 25 60 25 60 35 V45" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="50" cy="57" r="3" fill="#111"/>
+                            <circle cx="75" cy="75" r="14" fill="#fff" stroke="#111" stroke-width="4"/>
+                            <path d="M75 66 V84 M66 75 H84 M70 70 L80 80 M70 80 L80 70" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="75" cy="75" r="5" fill="#00D23A"/>
+                        </svg>
+                        <h3>MÉTODO ADMINISTRATIVO</h3>
+                        <p>Passo a Passo Validado Legalmente</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="benefit-card reveal delay-seq-2">
+                        <svg class="benefit-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M70 45 C80 45 85 35 75 25 C80 15 65 10 55 15 C55 5 35 5 30 15 C15 10 10 25 20 35 C10 45 20 55 30 55 L70 55 Z" fill="#E8F1FA" stroke="#007BFF" stroke-width="4" stroke-linejoin="round"/>
+                            <rect x="35" y="60" width="30" height="20" rx="2" fill="#fff" stroke="#111" stroke-width="4"/>
+                            <path d="M30 80 H70 L75 85 H25 Z" fill="#111"/>
+                        </svg>
+                        <h3>100% ONLINE E RÁPIDO</h3>
+                        <p>Acesso Imediato ao Conteúdo</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="benefit-card reveal delay-seq-3">
+                        <svg class="benefit-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="35" cy="30" r="10" stroke="#111" stroke-width="4" fill="#E8F1FA"/>
+                            <path d="M20 60 C20 45 50 45 50 60" stroke="#111" stroke-width="4" fill="#E8F1FA" stroke-linecap="round"/>
+                            <rect x="55" y="40" width="25" height="35" rx="3" fill="#fff" stroke="#111" stroke-width="4"/>
+                            <path d="M62 50 H73 M62 57 H73 M62 64 H68" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="85" cy="30" r="12" fill="#00D23A" stroke="#111" stroke-width="3"/>
+                            <path d="M79 30 L83 34 L91 26" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>SEM ADVOGADOS OU PROCESSOS</h3>
+                        <p>Evite Gastos com Honorários Legais</p>
+                    </div>
                 </div>
             </div>
-        </header>
 
-        <main>
-            <section class="hero">
-                <h1>DESVINCULE SEU CPF DO LIMBO E<br>LIMPE SEU NOME DEFINITIVAMENTE!</h1>
-                <p class="subtitle">O Método Administrativo Exclusivo Amparado no Art. 43 do CDC para<br>Regularizar sua Situação Creditícia sem Burocracia!</p>
-            </section>
-
-            <section class="benefits">
-                <div class="benefit-item">
-                    <svg class="benefit-icon" viewBox="0 0 100 100">
-                        <rect x="30" y="45" width="40" height="35" rx="5" fill="#EBF4F2" stroke="#1F2E52" stroke-width="3"/>
-                        <path d="M38 45 V30 C38 20 62 20 62 30 V45" fill="none" stroke="#1F2E52" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="50" cy="62" r="5" fill="#1F2E52"/>
-                        <circle cx="75" cy="70" r="12" fill="white" stroke="#01C164" stroke-width="3"/>
-                        <path d="M75 62 V78 M67 70 H83" stroke="#01C164" stroke-width="3" stroke-linecap="round"/>
-                    </svg>
-                    <span class="benefit-title">MÉTODO ADMINISTRATIVE</span>
-                    <span class="benefit-desc">Passo a Passo Validado Legalmente</span>
-                </div>
-                <div class="benefit-item">
-                    <svg class="benefit-icon" viewBox="0 0 100 100">
-                        <path d="M75 50 C85 50 90 40 80 30 C85 20 70 15 60 20 C60 10 40 10 35 20 C20 15 15 30 25 40 C15 50 25 60 35 60 L75 60 Z" fill="#EBF4F2" stroke="#1F2E52" stroke-width="3"/>
-                        <rect x="30" y="55" width="40" height="25" rx="3" fill="white" stroke="#1F2E52" stroke-width="3"/>
-                        <path d="M25 80 H75 L80 85 H20 Z" fill="#1F2E52"/>
-                    </svg>
-                    <span class="benefit-title">100% ONLINE E RÁPIDO</span>
-                    <span class="benefit-desc">Acesso Imediato ao Conteúdo</span>
-                </div>
-                <div class="benefit-item">
-                    <svg class="benefit-icon" viewBox="0 0 100 100">
-                        <circle cx="35" cy="35" r="10" fill="none" stroke="#1F2E52" stroke-width="3"/>
-                        <circle cx="65" cy="35" r="10" fill="none" stroke="#1F2E52" stroke-width="3"/>
-                        <path d="M15 70 C15 60 55 60 55 70 M45 70 C45 60 85 60 85 70" fill="none" stroke="#1F2E52" stroke-width="3"/>
-                        <circle cx="50" cy="50" r="15" fill="white" stroke="#01C164" stroke-width="3"/>
-                        <path d="M43 50 L48 55 L57 45" fill="none" stroke="#01C164" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="benefit-title">SEM ADVOGADOS OU PROCESSOS</span>
-                    <span class="benefit-desc">Evite Gastos com Honorários Legais</span>
-                </div>
-            </section>
-
-            <section class="cta-section">
-                <a href="#" class="cta-button">
-                    QUERO LIMPAR MEU CPF AGORA!
-                    <svg class="cta-icon" viewBox="0 0 20 20" fill="none">
-                        <path d="M5 10 H15 M11 6 L15 10 L11 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+            <div class="checkout-section reveal delay-seq-4">
+                <a href="#" class="btn-cta">
+                    QUERO LIMPAR MEU CPF AGORA! 👉 <small>(Apenas R$ 67,90)</small>
                 </a>
+                
                 <div class="payment-info">
-                    <span class="payment-methods">
-                        <svg class="payment-icon" viewBox="0 0 60 20">
-                            <path d="M30 10 L25 5 L30 0 L35 5 Z M38 15 L43 10 L38 5 M20 10 L25 15 L30 10" stroke="#32BCAD" stroke-width="2" stroke-linejoin="round"/>
-                            <text x="0" y="15" fill="#32BCAD" font-family="Arial" font-weight="bold" font-size="14">pix</text>
+                    <div class="payment-methods">
+                        <!-- PIX SVG -->
+                        <svg class="payment-icon" viewBox="0 0 60 20" fill="none">
+                            <path d="M15 10 L10 5 L15 0 L20 5 Z M24 15 L29 10 L24 5 M4 10 L9 15 L14 10" stroke="#32BCAD" stroke-width="2" stroke-linejoin="round"/>
+                            <text x="32" y="15" fill="#32BCAD" font-family="Arial" font-weight="900" font-size="16">pix</text>
                         </svg>
-                        <svg class="payment-icon" viewBox="0 0 50 16">
-                            <text x="0" y="14" fill="#1434CB" font-family="Arial" font-weight="900" font-style="italic" font-size="16">VISA</text>
+                        <!-- VISA SVG -->
+                        <svg class="payment-icon" viewBox="0 0 50 16" fill="none">
+                            <text x="0" y="15" fill="#1A1F71" font-family="Arial" font-weight="900" font-style="italic" font-size="18">VISA</text>
                         </svg>
-                        <svg class="payment-icon" viewBox="0 0 40 24">
+                        <!-- MASTERCARD SVG -->
+                        <svg class="payment-icon" viewBox="0 0 40 24" fill="none">
                             <circle cx="12" cy="12" r="12" fill="#EB001B"/>
-                            <circle cx="28" cy="12" r="12" fill="#F79E1B" fill-opacity="0.8"/>
+                            <circle cx="28" cy="12" r="12" fill="#F79E1B" fill-opacity="0.9"/>
                         </svg>
-                    </span>
-                    Acesso Imediato via PIX | Pagamento Seguro (Apenas R$ 67,90)
+                    </div>
+                    <p class="security-text">Acesso Imediato via PIX | Pagamento Seguro</p>
                     <p class="urgency-text">ÚLTIMAS VAGAS COM DESCONTO!</p>
                 </div>
-            </section>
-        </main>
+            </div>
 
-        <section class="testimonials">
-            <div class="testimonial-card">
-                <div class="testimonial-header">
-                    <div class="avatar-container">
-                        <img src="https://i.ibb.co/741G44W/avatar1.jpg" alt="Marina S." class="avatar-img">
+            <div class="testimonials">
+                <div class="testimonials-grid">
+                    <!-- Depoimento 1 -->
+                    <div class="testimonial-card reveal delay-seq-1">
+                        <div class="client-profile">
+                            <div class="client-avatar">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#A0AEC0"><path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/></svg>
+                            </div>
+                            <div class="client-info">
+                                <strong>Marina S.</strong>
+                            </div>
+                        </div>
+                        <p>"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Marina S.</p>
                     </div>
-                    <span class="testimonial-name">Marina S.</span>
-                </div>
-                <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Marina S.</p>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-header">
-                    <div class="avatar-container">
-                        <img src="https://i.ibb.co/3s6t90m/avatar2.jpg" alt="Carlos P." class="avatar-img">
+                    <!-- Depoimento 2 -->
+                    <div class="testimonial-card reveal delay-seq-2">
+                        <div class="client-profile">
+                            <div class="client-avatar">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#A0AEC0"><path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/></svg>
+                            </div>
+                            <div class="client-info">
+                                <strong>Carlos P.</strong>
+                            </div>
+                        </div>
+                        <p>"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Carlos P.</p>
                     </div>
-                    <span class="testimonial-name">Carlos P.</span>
-                </div>
-                <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Carlos P.</p>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-header">
-                    <div class="avatar-container">
-                        <img src="https://i.ibb.co/5LqT45R/avatar3.jpg" alt="Ana L." class="avatar-img">
+                    <!-- Depoimento 3 -->
+                    <div class="testimonial-card reveal delay-seq-3">
+                        <div class="client-profile">
+                            <div class="client-avatar">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="#A0AEC0"><path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"/></svg>
+                            </div>
+                            <div class="client-info">
+                                <strong>Ana L.</strong>
+                            </div>
+                        </div>
+                        <p>"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Ana L.</p>
                     </div>
-                    <span class="testimonial-name">Ana L.</span>
                 </div>
-                <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Ana L.</p>
             </div>
-        </section>
-    </div>
+
+        </div>
+
+        <!-- IMAGEM DO RAPAZ (Com o nome do arquivo referenciado verbatim) -->
+        <div class="hero-image-wrapper fade-in-up delay-3">
+            <img src="Gemini_Generated_Image_p5nknvp5nknvp5nk.jpg" alt="Rapaz sorrindo com cartão">
+        </div>
+    </section>
 
     <footer>
-        <div class="footer-content">
-            <span class="footer-title">**AVISO LEGAL**</span>
-            <p class="legal-notice">Este método é educacional e consultivo. Não garantimos resultados financeiros ou a remoção imediata das restrições de crédito. Os resultados variam e dependem da aplicação do guia administrativo e da situação específica das dívidas nos órgãos de proteção ao crédito. O uso das informações é de inteira responsabilidade do usuário. Consulte sempre o CDC e busque orientação profissional se necessário.</p>
-            <p class="copyright">© 2024 CPF Limpo Agora. Todos os Direitos Reservados. Termos de Uso | Política de Privacidade</p>
-        </div>
-        <svg class="footer-sparkle" viewBox="0 0 100 100">
-            <path d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z" fill="#333"/>
+        <svg class="footer-sparkle" viewBox="0 0 100 100" fill="none">
+            <path d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z" fill="#ffffff"/>
         </svg>
+        <div class="footer-content reveal">
+            <span class="footer-title">**AVISO LEGAL**</span>
+            <p>Este método é educacional e consultivo. Não garantimos resultados financeiros ou a remoção imediata das restrições de crédito. Os resultados variam e dependem da aplicação do guia administrativo e da situação específica das dívidas nos órgãos de proteção ao crédito. O uso das informações é de inteira responsabilidade do usuário. Consulte sempre o CDC e busque orientação profissional se necessário.</p>
+            <div class="footer-links">
+                © 2024 CPF Limpo Agora. Todos os Direitos Reservados. <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a>
+            </div>
+        </div>
     </footer>
 
+    <script>
+        // Lógica do Intersection Observer para revelar elementos ao rolar a página
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            rootMargin: "0px 0px -20px 0px", 
+            threshold: 0.1 
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
 </body>
 </html>
