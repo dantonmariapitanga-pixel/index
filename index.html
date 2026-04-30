@@ -1,884 +1,453 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solução CPF Limpo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DL DESIGN | Agência de Web Design e Alta Performance</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-    <style>
-        /* ================= RESET E TIPOGRAFIA FIEL À IMAGEM ================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* Fontes padrão de sistema para replicar o Arial clássico da imagem */
-            font-family: Arial, Helvetica, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+    <style>
+        /* CSS Reset & Variáveis */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root { 
+            --primary-bg: #0a0a0a; 
+            --secondary-bg: #121212; 
+            --tertiary-bg: #1a1a1a; 
+            /* CORES DE ACENTO (AZUL) */
+            --accent-color: #0f4f8c; 
+            --gradient-start: #2589f5; 
+            --text-light: #f4f4f4; 
+            --text-muted: #a0a0a0;
+            /* Cor do cabeçalho */
+            --header-bg: #030504;
+        }
+        
+        body { 
+            /* Degradê visível e harmônico: do preto do cabeçalho para um azul escuro profundo */
+            background: linear-gradient(180deg, var(--header-bg) 0%, #060d14 50%, #0a192f 100%);
+            background-attachment: fixed; 
+            color: var(--text-light); 
+            line-height: 1.6; 
+            scroll-behavior: smooth; 
+            overflow-x: hidden; 
+        }
+        
+        /* ================= ANIMAÇÕES GERAIS ================= */
+        .fade-in-up { opacity: 0; transform: translateY(30px); animation: fadeInUpAnim 0.8s ease-out forwards; }
+        @keyframes fadeInUpAnim { to { opacity: 1; transform: translateY(0); } }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
 
-        body {
-            background-color: #ffffff;
-            color: #000000;
-            overflow-x: hidden;
-            position: relative;
-        }
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-seq-1 { transition-delay: 0.1s; }
+        .delay-seq-2 { transition-delay: 0.2s; }
+        .delay-seq-3 { transition-delay: 0.3s; }
+        .delay-seq-4 { transition-delay: 0.4s; }
+        .delay-seq-5 { transition-delay: 0.5s; }
+        .delay-seq-6 { transition-delay: 0.6s; }
 
-        /* ================= ESTRUTURA PRINCIPAL ================= */
-        .page-wrapper {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+        /* ================= CABEÇALHO E LOGO ================= */
+        header { background-color: var(--header-bg); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        
+        .brand { display: flex; align-items: center; text-decoration: none; }
+        .logo-img { height: 85px; width: auto; max-width: 100%; transition: transform 0.3s ease; border-radius: 4px; }
+        .brand:hover .logo-img { transform: scale(1.02); }
 
-        /* 
-           ESPAÇO PARA A SUA IMAGEM:
-           Insira o link da imagem do rapaz com o cartão (sem fundo) no HTML lá embaixo.
-        */
-        .hero-image {
-            position: absolute;
-            bottom: 0;
-            right: -20px;
-            height: 90vh;
-            max-height: 850px;
-            z-index: 0;
-            pointer-events: none;
-        }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: var(--text-light); text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 0.95rem; }
+        nav a:hover { color: var(--accent-color); }
+        
+        /* ================= BOTÕES ================= */
+        .btn { 
+            padding: 15px 35px; 
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--accent-color) 100%);
+            color: var(--text-light); 
+            text-decoration: none; 
+            font-weight: 700; 
+            border-radius: 4px; 
+            border: none; 
+            cursor: pointer; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block; 
+            font-size: 1rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 15px 30px rgba(15, 79, 140, 0.5); 
+            filter: brightness(1.1);
+        }
+        
+        .btn-whatsapp-large { 
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--accent-color) 100%);
+            color: white; 
+            font-size: 1.1rem; 
+            padding: 15px 40px; 
+            border-radius: 50px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
+            margin-top: 1.5rem; 
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        .btn-text {
+            display: block;
+            white-space: normal;
+        }
 
-        /* ================= CABEÇALHO ================= */
-        header {
-            display: flex;
-            align-items: center;
-            padding: 20px 0 30px 0;
-            z-index: 10;
-            position: relative;
-        }
+        .btn-whatsapp-large:hover { 
+            box-shadow: 0 15px 30px rgba(15, 79, 140, 0.6); 
+            color: white; 
+            transform: translateY(-3px); 
+            filter: brightness(1.1);
+        }
+        .btn-whatsapp-large svg { width: 26px; height: 26px; fill: white; flex-shrink: 0; }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
+        /* ================= SEÇÕES GERAIS ================= */
+        section { padding: 6rem 5%; background-color: transparent; }
+        .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; color: var(--text-light); }
+        .section-subtitle { text-align: center; color: var(--accent-color); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4rem; font-weight: 600; }
 
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1;
-        }
+        /* HERO */
+        .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; }
+        .hero h1 { font-size: 4.5rem; margin-bottom: 1.5rem; line-height: 1.1; font-weight: 800; }
+        .hero p { font-size: 1.3rem; margin-bottom: 3rem; max-width: 700px; color: var(--text-muted); }
 
-        .logo-text span:first-child {
-            font-size: 0.9rem;
-            color: #1a7ebf;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
+        /* SOBRE NÓS */
+        .about { display: flex; gap: 4rem; align-items: center; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .about-text { flex: 1; }
+        .about-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .about-text p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .about-stats { display: flex; gap: 2rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; }
+        .stat h4 { font-size: 2rem; color: var(--accent-color); display: flex; align-items: center; }
+        .stat p { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; }
 
-        .logo-text span:last-child {
-            font-size: 1.5rem;
-            color: #000000;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-        }
+        /* SERVIÇOS */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .service-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border-top: 4px solid transparent; transition: all 0.3s ease; text-align: left; }
+        .service-card:hover { border-top-color: var(--accent-color); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .service-icon { font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-color); }
+        .service-card h3 { margin-bottom: 1rem; color: var(--text-light); font-size: 1.4rem; }
+        .service-card p { color: var(--text-muted); font-size: 1rem; }
 
-        /* ================= CONTEÚDO PRINCIPAL ================= */
-        .content-area {
-            position: relative;
-            z-index: 10;
-            width: 75%;
-            padding-top: 10px;
-            padding-bottom: 50px;
-            text-align: center;
-        }
+        /* PROCESSO (Ajuste na cor dos números) */
+        .process { text-align: center; }
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .process-step { position: relative; padding: 2rem; }
+        /* Cor alterada para um azul claro sutil (20% de opacidade) para destaque no fundo escuro */
+        .step-number { font-size: 4rem; font-weight: 800; color: rgba(37, 137, 245, 0.2); position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 0; }
+        .process-step h3 { position: relative; z-index: 1; margin-top: 1rem; margin-bottom: 1rem; color: var(--accent-color); }
+        .process-step p { position: relative; z-index: 1; color: var(--text-muted); }
 
-        .headline {
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            /* Letras mais juntas, como no layout original */
-            letter-spacing: -1.2px; 
-            color: #000000;
-        }
+        /* DEPOIMENTOS */
+        .testimonials { text-align: center; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .testimonial-card { background-color: var(--tertiary-bg); padding: 2.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); text-align: left; transition: transform 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;}
+        .testimonial-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+        .stars { color: #FFD700; font-size: 1.2rem; margin-bottom: 1rem; }
+        .testimonial-card p { font-style: italic; color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.05rem; }
+        
+        .client-profile { display: flex; align-items: center; gap: 15px; }
+        .client-avatar { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color); padding: 2px; }
+        .client-info { display: flex; flex-direction: column; }
+        .client-info strong { color: var(--accent-color); font-size: 1.1rem; margin-bottom: 0.1rem; }
+        .client-info span { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        .subheadline {
-            font-size: 1.35rem;
-            font-weight: 400;
-            margin-bottom: 40px;
-            color: #111111;
-            line-height: 1.3;
-        }
+        /* CONTATO FINAL */
+        .contact { text-align: center; padding: 8rem 5%; }
+        .contact-box { background-color: var(--tertiary-bg); padding: 4rem 2rem; border-radius: 12px; max-width: 800px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .contact-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-color); }
+        .contact-box h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .contact-box p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2.5rem; }
 
-        /* ================= ÍCONES DE BENEFÍCIOS ================= */
-        .benefits-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
+        /* WHATSAPP FLUTUANTE */
+        .whatsapp-btn { 
+            position: fixed; bottom: 20px; right: 20px; 
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--accent-color) 100%);
+            width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.6); 
+            z-index: 9999; display: flex; justify-content: center; align-items: center; 
+            transition: transform 0.3s; text-decoration: none;
+        }
+        .whatsapp-btn svg { width: 35px; height: 35px; fill: white; }
+        .whatsapp-btn:hover { transform: scale(1.1); filter: brightness(1.1); }
 
-        .benefit-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 200px;
-        }
+        /* Rodapé */
+        footer { background-color: transparent; padding: 2.5rem; text-align: center; color: #555; margin-bottom: 60px; border-top: none; }
 
-        .svg-icon {
-            width: 75px;
-            height: 75px;
-            margin-bottom: 10px;
-        }
+        /* RESPONSIVIDADE */
+        @media(max-width: 768px) {
+            nav ul { display: none; }
+            header { padding: 1rem 5%; }
+            .logo-img { height: 65px; } 
+            
+            .hero h1 { font-size: 2.6rem; }
+            .hero p { font-size: 1.1rem; }
+            
+            .btn { 
+                padding: 14px 20px; 
+                font-size: 0.85rem; 
+                width: 90%; 
+                max-width: 320px;
+                white-space: normal; 
+            }
 
-        .benefit-item h3 {
-            font-size: 1.1rem;
-            font-weight: 900; /* Negrito mais forte (Black) */
-            line-height: 1.1;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            color: #000000;
-            letter-spacing: -0.5px;
-        }
-
-        .benefit-item p {
-            font-size: 0.9rem;
-            color: #000000;
-            font-weight: 400;
-            line-height: 1.2;
-        }
-
-        /* ================= BOTÃO DE ALTA CONVERSÃO ================= */
-        .cta-wrapper {
-            margin-bottom: 40px;
-        }
-
-        .btn-green {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background-color: #00d830;
-            background-image: linear-gradient(180deg, #00e032 0%, #00c429 100%);
-            color: #ffffff;
-            font-size: 1.35rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 16px 40px;
-            border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(0, 200, 41, 0.4);
-            transition: all 0.2s ease;
-            letter-spacing: -0.5px;
-        }
-
-        .btn-green:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(0, 200, 41, 0.5);
-        }
-
-        .payment-security {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .badges {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            height: 20px;
-            margin-bottom: 5px;
-        }
-
-        .payment-text {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #000000;
-        }
-
-        .urgency {
-            font-size: 1.1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: #000000;
-            margin-top: 5px;
-            letter-spacing: -0.5px;
-        }
-
-        /* ================= DEPOIMENTOS ================= */
-        .testimonials-row {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-        }
-
-        .t-card {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            width: 32%;
-            text-align: left;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
-        }
-
-        .t-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .t-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            background-color: #f0f0f0;
-        }
-
-        .t-name {
-            font-weight: 900;
-            font-size: 1rem;
-            color: #000000;
-        }
-
-        .t-text {
-            font-size: 0.85rem;
-            line-height: 1.4;
-            color: #000000;
-            font-weight: 400;
-        }
-
-        /* ================= RODAPÉ ================= */
-        footer {
-            background-color: #1a1a1a;
-            color: #d0d0d0;
-            padding: 30px 20px;
-            text-align: center;
-            font-size: 0.75rem;
-            line-height: 1.5;
-            border-top: 3px solid #000;
-            position: relative;
-        }
-
-        footer h4 {
-            color: #ffffff;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        footer p {
-            max-width: 900px;
-            margin: 0 auto 10px auto;
-        }
-
-        footer a {
-            color: #d0d0d0;
-            text-decoration: underline;
-        }
-
-        /* ================= RESPONSIVO ================= */
-        @media (max-width: 1024px) {
-            .content-area { width: 100%; }
-            .hero-image { opacity: 0.2; z-index: -1; right: 0; }
-            .headline { font-size: 2.6rem; }
-        }
-
-        @media (max-width: 768px) {
-            .headline { font-size: 2rem; letter-spacing: -1px; }
-            .subheadline { font-size: 1.1rem; }
-            .benefits-grid { flex-direction: column; align-items: center; gap: 20px; }
-            .testimonials-row { flex-direction: column; align-items: center; }
-            .t-card { width: 100%; max-width: 350px; }
-            .btn-green { font-size: 1.1rem; padding: 15px 20px; width: 100%; max-width: 350px; }
-            .hero-image { display: none; }
-        }
-    </style>
+            .whatsapp-btn { width: 55px; height: 55px; bottom: 15px; right: 15px; }
+            .whatsapp-btn svg { width: 30px; height: 30px; }
+            
+            .about { flex-direction: column; text-align: center; }
+            .about-stats { justify-content: center; flex-wrap: wrap; }
+            .section-title { font-size: 2.2rem; }
+            
+            .btn-whatsapp-large { 
+                padding: 15px 20px; 
+                font-size: 1rem; 
+                width: 100%; 
+                box-sizing: border-box; 
+                display: flex;
+                flex-direction: row; 
+            }
+            .btn-whatsapp-large svg { width: 24px; height: 24px; } 
+        }
+    </style>
 </head>
 <body>
 
-    <div class="page-wrapper">
-        <!-- Substitua o link em src="" pelo link da SUA IMAGEM RECORTADA do rapaz com o cartão -->
-        <img src="https://placehold.co/600x800/transparent/transparent?text=" 
-             alt="Homem sorrindo com cartão" 
-             class="hero-image">
+    <header>
+        <a href="#home" class="brand">
+            <img src="https://raw.githubusercontent.com/dantonmariapitanga-pixel/index/refs/heads/main/Gemini_Generated_Image_o0pb4do0pb4do0pb(1).png" alt="Logo DL DESIGN" class="logo-img">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#sobre">Agência</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#metodologia">Processo</a></li>
+                <li><a href="#depoimentos">Clientes</a></li>
+                <li><a href="#contato">Orçamento</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <header>
-            <a href="#" class="logo">
-                <svg viewBox="0 0 24 24" width="45" height="45" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 21.5C12 21.5 3.5 16.5 3.5 9.5V5.5L12 2.5L20.5 5.5V9.5C20.5 16.5 12 21.5 12 21.5Z" fill="#EBF4FA" stroke="#1D70B8" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M8.5 11.5L11 14L16.5 8.5" stroke="#00C853" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <div class="logo-text">
-                    <span>SOLUÇÃO</span>
-                    <span>CPF LIMPO</span>
-                </div>
-            </a>
-        </header>
+    <section id="home" class="hero">
+        <h1 class="fade-in-up delay-1">Construímos máquinas de<br>vendas na internet</h1>
+        <p class="fade-in-up delay-2">A DL DESIGN é especializada em criar sites premium, rápidos e focados em transformar visitantes comuns em clientes fiéis para o seu negócio.</p>
+        <a href="#contato" class="btn fade-in-up delay-3">Solicitar Orçamento Gratuito</a>
+    </section>
 
-        <main class="content-area">
-            <h1 class="headline">DESVINCULE SEU CPF DO LIMBO E<br>LIMPE SEU NOME DEFINITIVAMENTE!</h1>
-            <p class="subheadline">O Método Administrativo Exclusivo Amparado no Art. 43 do CDC para<br>Regularizar sua Situação Creditícia sem Burocracia!</p>
+    <section id="sobre" class="about">
+        <div class="about-text reveal">
+            <h4 style="color: var(--accent-color); letter-spacing: 2px; margin-bottom: 10px;">INTRODUCÃO</h4>
+            <h2>Não perca dinheiro</h2>
+            <p>No mercado digital atual, ter um site comum não é mais suficiente. Se a sua página for lenta, confusa ou mal posicionada no Google, você está perdendo dinheiro todos os dias para o seu concorrente.</p>
+            <p>Na <strong>DL DESIGN</strong>, unimos tecnologia de ponta, design psicológico e estratégias de conversão para entregar plataformas digitais que realmente geram valor e impacto visual.</p>
+            
+            <div class="about-stats">
+                <div class="stat">
+                    <h4><span class="num" data-val="100">0</span>%</h4>
+                    <p>Foco em Resultados</p>
+                </div>
+                <div class="stat">
+                    <h4>+<span class="num" data-val="100">0</span></h4>
+                    <p>Clientes Satisfeitos</p>
+                </div>
+                <div class="stat">
+                    <h4>+<span class="num" data-val="15">0</span></h4>
+                    <p>Anos de Experiência</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <div class="benefits-grid">
-                <!-- Ícone 1 (Cadeado Administrativo) -->
-                <div class="benefit-item">
-                    <svg class="svg-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="18" y="26" width="28" height="24" rx="4" fill="#00e032" stroke="#111" stroke-width="3"/>
-                        <path d="M22 26V16C22 10.4772 26.4772 6 32 6C37.5228 6 42 10.4772 42 16V26" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="32" cy="38" r="4" fill="#111"/>
-                        <circle cx="50" cy="45" r="8" fill="#e0e0e0" stroke="#111" stroke-width="3"/>
-                        <path d="M50 41V49M46 45H54" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-                    </svg>
-                    <h3>MÉTODO<br>ADMINISTRATIVO</h3>
-                    <p>Passo a Passo Validado Legalmente</p>
-                </div>
-                
-                <!-- Ícone 2 (Online e Rápido) -->
-                <div class="benefit-item">
-                    <svg class="svg-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M48 24C48 17.3726 42.6274 12 36 12C31.5034 12 27.5855 14.4748 25.4347 18.2389C24.341 17.4395 22.9737 16.96 21.5 16.96C17.9101 16.96 15 19.8702 15 23.46C15 23.7087 15.014 23.954 15.0411 24.1953C11.5891 25.5901 9 29.0064 9 33C9 37.9706 13.0294 42 18 42H50C54.4183 42 58 38.4183 58 34C58 29.8398 54.8258 26.421 50.7719 26.045C50.317 24.9084 49.3364 24.1352 48 24Z" fill="#1a7ebf" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="22" y="34" width="20" height="14" rx="2" fill="#fff" stroke="#111" stroke-width="3"/>
-                        <path d="M18 48H46V50C46 51.1046 45.1046 52 44 52H20C18.8954 52 18 51.1046 18 50V48Z" fill="#111"/>
-                    </svg>
-                    <h3>100% ONLINE<br>E RÁPIDO</h3>
-                    <p>Acesso Imediato ao Conteúdo</p>
-                </div>
+    <section id="servicos" class="services">
+        <h2 class="section-title reveal">Nossas especialidades</h2>
+        <h4 class="section-subtitle reveal">O que podemos fazer pela sua empresa:</h4>
+        <div class="services-grid">
+            <div class="service-card reveal delay-seq-1">
+                <div class="service-icon">💻</div>
+                <h3>Sites Institucionais</h3>
+                <p>A vitrine perfeita para a sua empresa. Criamos sites elegantes que transmitem autoridade, confiança e profissionalismo para seus clientes.</p>
+            </div>
+            <div class="service-card reveal delay-seq-2">
+                <div class="service-icon">🛒</div>
+                <h3>Lojas Virtuais (E-commerce)</h3>
+                <p>Venda 24 horas por dia com plataformas de e-commerce seguras, com gestão de estoque integrada e checkout facilitado.</p>
+            </div>
+            <div class="service-card reveal delay-seq-3">
+                <div class="service-icon">🚀</div>
+                <h3>Landing Pages de Venda</h3>
+                <p>Páginas de altíssima conversão feitas estrategicamente para lançamentos de produtos, cursos ou captação de leads (contatos).</p>
+            </div>
+            <div class="service-card reveal delay-seq-4">
+                <div class="service-icon">📱</div>
+                <h3>Design UI/UX Responsivo</h3>
+                <p>Seu site perfeito em qualquer tela. Otimizamos a experiência do usuário para garantir que o cliente navegue facilmente pelo celular.</p>
+            </div>
+            <div class="service-card reveal delay-seq-5">
+                <div class="service-icon">🔍</div>
+                <h3>Otimização SEO (Google)</h3>
+                <p>Aplicamos as melhores técnicas de SEO no código do seu site para ajudar sua empresa a aparecer nas primeiras páginas do Google.</p>
+            </div>
+            <div class="service-card reveal delay-seq-6">
+                <div class="service-icon">⚙️</div>
+                <h3>Suporte e Manutenção</h3>
+                <p>Não te abandonamos após a entrega. Oferecemos suporte técnico contínuo para garantir que seu site fique sempre no ar e seguro.</p>
+            </div>
+        </div>
+    </section>
 
-                <!-- Ícone 3 (Sem Advogados) -->
-                <div class="benefit-item">
-                    <svg class="svg-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="24" cy="20" r="8" fill="#e0e0e0" stroke="#111" stroke-width="3"/>
-                        <path d="M12 42C12 35.3726 17.3726 30 24 30C30.6274 30 36 35.3726 36 42H12Z" fill="#e0e0e0" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="36" y="24" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="3"/>
-                        <line x1="42" y1="32" x2="50" y2="32" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-                        <line x1="42" y1="38" x2="50" y2="38" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="48" cy="48" r="8" fill="#00d830" stroke="#111" stroke-width="2"/>
-                        <path d="M45 48L47 50L51 45" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <h3>SEM ADVOGADOS<br>OU PROCESSOS</h3>
-                    <p>Evite Gastos com Honorários Legais</p>
-                </div>
-            </div>
+    <section id="metodologia" class="process">
+        <h2 class="section-title reveal">Nossa metodologia:</h2>
+        <h4 class="section-subtitle reveal">Do zero ao site no ar</h4>
+        <div class="process-grid">
+            <div class="process-step reveal delay-seq-1">
+                <div class="step-number">01</div>
+                <h3>Descoberta</h3>
+                <p>Entendemos o seu negócio, seus objetivos e quem é o seu público-alvo para traçar a melhor estratégia.</p>
+            </div>
+            <div class="process-step reveal delay-seq-2">
+                <div class="step-number">02</div>
+                <h3>Design & UX</h3>
+                <p>Criamos o visual completo do site e enviamos para a sua aprovação antes de escrever qualquer linha de código.</p>
+            </div>
+            <div class="process-step reveal delay-seq-3">
+                <div class="step-number">03</div>
+                <h3>Desenvolvimento</h3>
+                <p>Transformamos o design em um site real, rápido e estruturado com as tecnologias mais modernas do mercado.</p>
+            </div>
+            <div class="process-step reveal delay-seq-4">
+                <div class="step-number">04</div>
+                <h3>Lançamento</h3>
+                <p>Fazemos rigorosos testes de qualidade, publicamos o site no seu domínio e entregamos as chaves para você!</p>
+            </div>
+        </div>
+    </section>
 
-            <div class="cta-wrapper">
-                <a href="#" class="btn-green">
-                    QUERO LIMPAR MEU CPF AGORA! 👉 (Apenas R$ 67,90)
-                </a>
-                
-                <div class="payment-security">
-                    <div class="badges">
-                        <svg width="45" height="16" viewBox="0 0 100 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M30.1 11.2L20.4 1.5C19.5 0.5 18.2 0 16.8 0C15.4 0 14 0.5 13.1 1.5L3.4 11.2C1.4 13.2 1.4 16.5 3.4 18.5L13.1 28.2C14.1 29.2 15.4 29.7 16.8 29.7C18.2 29.7 19.5 29.2 20.4 28.2L30.1 18.5C32.1 16.5 32.1 13.2 30.1 11.2ZM27.6 16L17.9 25.7C17.6 26 17.2 26.2 16.8 26.2C16.3 26.2 15.9 26 15.6 25.7L5.9 16C5.3 15.4 5.3 14.4 5.9 13.7L15.6 4C15.9 3.7 16.3 3.5 16.8 3.5C17.2 3.5 17.6 3.7 17.9 4L27.6 13.7C28.2 14.4 28.2 15.4 27.6 16Z" fill="#32BCAD"/>
-                            <text x="38" y="24" fill="#32BCAD" font-family="Arial" font-weight="900" font-size="22" letter-spacing="-1">pix</text>
-                        </svg>
-                        <svg width="35" height="12" viewBox="0 0 50 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19.7 0.3H13L8.3 15.7H14.8L16.1 11.8H24L24.9 15.7H31L19.7 0.3ZM17.8 6.7L20.8 6.7L22.3 10.2H16.3L17.8 6.7Z" fill="#1434CB"/>
-                            <path d="M37.7 0.3C35 0.3 33 1.6 33 4.1C33 6.8 36.8 7.3 36.8 8.7C36.8 9.5 35.7 10.2 34 10.2C31.8 10.2 30.6 9.2 30.6 9.2L29.5 14.3C29.5 14.3 31.4 15.6 34.3 15.6C37.3 15.6 39.5 14.1 39.5 11.5C39.5 8.5 35.7 8 35.7 6.7C35.7 6 36.6 5.3 37.8 5.3C39.5 5.3 40.8 6.1 40.8 6.1L41.8 1.1C41.8 1.1 40.2 0.3 37.7 0.3Z" fill="#1434CB"/>
-                            <path d="M48.7 0.3H43.3C42 0.3 41.2 1.1 40.8 2.2L34.9 15.7H41.5L42.8 11.8H49.8L50 15.7H56L48.7 0.3Z" fill="#1434CB"/>
-                            <path d="M8.2 0.3L5.4 11.2L2.8 2.3C2.5 1.1 1.5 0.3 0 0.3H-6V2.9H-1.5C-0.3 2.9 0.4 3.6 0.7 4.6L4.3 15.7H11.1L15.3 0.3H8.2Z" fill="#1434CB"/>
-                        </svg>
-                        <svg width="20" height="12" viewBox="0 0 36 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="11" cy="11" r="11" fill="#EB001B"/>
-                            <circle cx="25" cy="11" r="11" fill="#F79E1B"/>
-                            <path d="M18 20.4C19.7 18.2 20.7 15.4 20.7 12.3C20.7 9.2 19.7 6.4 18 4.2C16.3 6.4 15.3 9.2 15.3 12.3C15.3 15.4 16.3 18.2 18 20.4Z" fill="#FF5F00"/>
-                        </svg>
-                    </div>
-                    <p class="payment-text">Acesso Imediato via PIX | Pagamento Seguro</p>
-                    <p class="urgency">ÚLTIMAS VAGAS COM DESCONTO!</p>
-                </div>
-            </div>
+    <section id="depoimentos" class="testimonials">
+        <h2 class="section-title reveal">Histórias de sucesso</h2>
+        <h4 class="section-subtitle reveal">O que dizem os nossos clientes:</h4>
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal delay-seq-1">
+                <div>
+                    <div class="stars">★★★★★</div>
+                    <p>"A DL DESIGN transformou completamente a nossa presença online. Nosso site antigo era lento e não convertia. Após o lançamento do novo projeto, nossas solicitações de orçamento aumentaram em 150% logo no primeiro mês!"</p>
+                </div>
+                <div class="client-profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Mendes" class="client-avatar">
+                    <div class="client-info">
+                        <strong>Carlos Mendes</strong>
+                        <span>Diretor Comercial, TechMendes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal delay-seq-2">
+                <div>
+                    <div class="stars">★★★★★</div>
+                    <p>"Trabalho impecável! A equipe foi super atenciosa desde a primeira reunião. Entregaram nossa loja virtual antes do prazo e o design ficou de altíssimo nível. Recomendo de olhos fechados para quem busca qualidade."</p>
+                </div>
+                <div class="client-profile">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Juliana Torres" class="client-avatar">
+                    <div class="client-info">
+                        <strong>Juliana Masako</strong>
+                        <span>CEO, Masako Semijoias</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal delay-seq-3">
+                <div>
+                    <div class="stars">★★★★★</div>
+                    <p>"Estávamos perdendo muito espaço para a concorrência porque nosso site não funcionava bem no celular. A agência resolveu isso com maestria. Entregaram um site extremamente rápido, elegante e focado em vendas. Sensacional!"</p>
+                </div>
+                <div class="client-profile">
+                    <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Roberto Alves" class="client-avatar">
+                    <div class="client-info">
+                        <strong>Roberto Alves</strong>
+                        <span>Sócio-Fundador, Alves Advocacia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <!-- Coloque as imagens reais das fotos nos atributos src="" -->
-            <div class="testimonials-row">
-                <div class="t-card">
-                    <div class="t-header">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Marina S." class="t-avatar">
-                        <span class="t-name">Marina S.</span>
-                    </div>
-                    <p class="t-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Marina S.</p>
-                </div>
+    <section id="contato" class="contact">
+        <div class="contact-box">
+            <h2>Pronto para dominar o mercado?</h2>
+            <p>Pare de perder clientes por não ter uma presença digital profissional. Toque no botão abaixo e fale diretamente com nossa equipe de especialistas.</p>
+            
+            <a href="https://wa.me/5585991469859?text=Olá! Quero dar o próximo passo e criar um site profissional com a DL DESIGN." target="_blank" class="btn btn-whatsapp-large">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                <span class="btn-text">Iniciar meu Projeto Agora</span>
+            </a>
+        </div>
+    </section>
 
-                <div class="t-card">
-                    <div class="t-header">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos P." class="t-avatar">
-                        <span class="t-name">Carlos P.</span>
-                    </div>
-                    <p class="t-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Carlos P.</p>
-                </div>
+    <a href="https://wa.me/5585991469859?text=Olá! Quero criar um site com a DL DESIGN." class="whatsapp-btn" target="_blank" aria-label="Falar no WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </a>
 
-                <div class="t-card">
-                    <div class="t-header">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ana L." class="t-avatar">
-                        <span class="t-name">Ana L.</span>
-                    </div>
-                    <p class="t-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Ana L.</p>
-                </div>
-            </div>
-        </main>
-    </div>
+    <footer>
+        <p>&copy; 2026 DL DESIGN. Todos os direitos reservados.</p>
+    </footer>
 
-    <footer>
-        <h4>**AVISO LEGAL**</h4>
-        <p>Este método é educacional e consultivo. Não garantimos resultados financeiros ou a remoção imediata das restrições de crédito. Os resultados variam e dependem da aplicação do guia administrativo e da situação específica das dívidas nos órgãos de proteção ao crédito. O uso das informações é de inteira responsabilidade do usuário. Consulte sempre o CDC e busque orientação profissional se necessário.</p>
-        <p>&copy; 2024 CPF Limpo Agora. Todos os Direitos Reservados. <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
-    </footer>
+    <script>
+        const nums = document.querySelectorAll('.num');
+        const statsSection = document.querySelector('.about-stats');
+        let hasAnimated = false;
 
-</body>
-</html><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solução CPF Limpo</title>
-    
-    <!-- Tipografia Profissional -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !hasAnimated) {
+                hasAnimated = true; 
+                
+                nums.forEach((num) => {
+                    const target = parseInt(num.getAttribute('data-val'));
+                    const increment = target / 40; 
+                    let current = 0;
+                    
+                    const updateCounter = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            num.innerText = target;
+                            clearInterval(updateCounter);
+                        } else {
+                            num.innerText = Math.ceil(current); 
+                        }
+                    }, 40); 
+                });
+            }
+        }, { threshold: 0 }); 
 
-    <style>
-        /* ================= RESET E VARIÁVEIS ================= */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+        if(statsSection){
+            observer.observe(statsSection);
+        }
 
-        body {
-            background-color: #fcfcfc;
-            color: #111111;
-            overflow-x: hidden;
-            position: relative;
-        }
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            rootMargin: "0px 0px -20px 0px", 
+            threshold: 0 
+        });
 
-        /* ================= ESTRUTURA PRINCIPAL ================= */
-        .page-wrapper {
-            position: relative;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 30px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* O Rapaz do lado direito */
-        /* Utilizando um placeholder de alta qualidade com fundo transparente */
-        .hero-image {
-            position: absolute;
-            bottom: 0;
-            right: -20px;
-            height: 90vh;
-            max-height: 850px;
-            z-index: 0;
-            pointer-events: none;
-            filter: drop-shadow(-10px 10px 20px rgba(0,0,0,0.05));
-        }
-
-        /* ================= CABEÇALHO ================= */
-        header {
-            display: flex;
-            align-items: center;
-            padding: 25px 0;
-            z-index: 10;
-            position: relative;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1;
-        }
-
-        .logo-text span:first-child {
-            font-size: 0.95rem;
-            color: #1d70b8;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .logo-text span:last-child {
-            font-size: 1.6rem;
-            color: #0f2027;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-        }
-
-        /* ================= CONTEÚDO PRINCIPAL ================= */
-        .content-area {
-            position: relative;
-            z-index: 10;
-            width: 70%;
-            padding-top: 20px;
-            padding-bottom: 60px;
-            text-align: center;
-        }
-
-        .headline {
-            font-size: 3.2rem;
-            font-weight: 900;
-            line-height: 1.05;
-            margin-bottom: 18px;
-            text-transform: uppercase;
-            letter-spacing: -1.5px;
-            color: #111;
-        }
-
-        .subheadline {
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-bottom: 50px;
-            color: #333;
-            line-height: 1.4;
-        }
-
-        /* ================= ÍCONES VETORIAIS (Premium) ================= */
-        .benefits-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 45px;
-        }
-
-        .benefit-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 220px;
-        }
-
-        .svg-icon {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 15px;
-        }
-
-        .benefit-item h3 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            color: #111;
-        }
-
-        .benefit-item p {
-            font-size: 0.9rem;
-            color: #555;
-            font-weight: 500;
-            line-height: 1.3;
-        }
-
-        /* ================= BOTÃO DE ALTA CONVERSÃO ================= */
-        .cta-wrapper {
-            margin-bottom: 50px;
-        }
-
-        .btn-green {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: linear-gradient(180deg, #00e632 0%, #00c02a 100%);
-            color: #ffffff;
-            font-size: 1.3rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 20px 45px;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0, 216, 44, 0.4), inset 0 2px 0 rgba(255,255,255,0.3);
-            transition: all 0.3s ease;
-            letter-spacing: -0.5px;
-            border: 1px solid #00a825;
-        }
-
-        .btn-green:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 216, 44, 0.5), inset 0 2px 0 rgba(255,255,255,0.4);
-            filter: brightness(1.05);
-        }
-
-        .payment-security {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .badges {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            height: 24px;
-        }
-
-        .payment-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #222;
-        }
-
-        .urgency {
-            font-size: 1.15rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: #111;
-            margin-top: 10px;
-        }
-
-        /* ================= DEPOIMENTOS ================= */
-        .testimonials-row {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .t-card {
-            background: #ffffff;
-            border: 1px solid #f0f0f0;
-            border-radius: 12px;
-            padding: 25px 20px;
-            width: 32%;
-            text-align: left;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
-            position: relative;
-        }
-
-        .t-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 12px;
-        }
-
-        .t-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #f0f0f0;
-        }
-
-        .t-name {
-            font-weight: 800;
-            font-size: 1.05rem;
-            color: #111;
-        }
-
-        .t-text {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #444;
-            font-weight: 500;
-        }
-
-        /* ================= RODAPÉ ================= */
-        footer {
-            background-color: #151515;
-            color: #888;
-            padding: 40px 30px;
-            text-align: center;
-            font-size: 0.8rem;
-            line-height: 1.6;
-            border-top: 4px solid #000;
-        }
-
-        footer h4 {
-            color: #ffffff;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        footer p {
-            max-width: 1000px;
-            margin: 0 auto 15px auto;
-        }
-
-        footer a {
-            color: #aaa;
-            text-decoration: none;
-            border-bottom: 1px solid #555;
-            transition: color 0.2s;
-        }
-        
-        footer a:hover { color: #fff; }
-
-        /* ================= RESPONSIVO ================= */
-        @media (max-width: 1100px) {
-            .content-area { width: 100%; }
-            .hero-image { opacity: 0.15; z-index: -1; right: 0; }
-            .headline { font-size: 2.8rem; }
-        }
-
-        @media (max-width: 768px) {
-            .headline { font-size: 2.2rem; }
-            .subheadline { font-size: 1.1rem; }
-            .benefits-grid { flex-direction: column; align-items: center; gap: 30px; }
-            .testimonials-row { flex-direction: column; align-items: center; }
-            .t-card { width: 100%; max-width: 400px; }
-            .btn-green { font-size: 1.1rem; padding: 18px 25px; width: 100%; max-width: 400px; }
-            .hero-image { display: none; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="page-wrapper">
-        <!-- Imagem Profissional do Rapaz (Placeholder PNG Transparente) -->
-        <img src="https://images.unsplash.com/photo-1506803682981-6e718a9dd3ee?auto=format&fit=crop&w=800&q=80" 
-             style="mask-image: linear-gradient(to top, transparent 5%, black 40%); -webkit-mask-image: linear-gradient(to top, transparent 5%, black 40%); mix-blend-mode: multiply; opacity: 0.8; border-radius: 50%;" 
-             alt="Homem sorrindo com cartão" 
-             class="hero-image">
-
-        <header>
-            <a href="#" class="logo">
-                <!-- Logo SVG Profissional -->
-                <svg viewBox="0 0 24 24" width="50" height="50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 21.5C12 21.5 3.5 16.5 3.5 9.5V5.5L12 2.5L20.5 5.5V9.5C20.5 16.5 12 21.5 12 21.5Z" fill="#EBF4FA" stroke="#1D70B8" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M8.5 11.5L11 14L16.5 8.5" stroke="#00C853" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <div class="logo-text">
-                    <span>SOLUÇÃO</span>
-                    <span>CPF LIMPO</span>
-                </div>
-            </a>
-        </header>
-
-        <main class="content-area">
-            <h1 class="headline">DESVINCULE SEU CPF DO LIMBO E<br>LIMPE SEU NOME DEFINITIVAMENTE!</h1>
-            <p class="subheadline">O Método Administrativo Exclusivo Amparado no Art. 43 do CDC para<br>Regularizar sua Situação Creditícia sem Burocracia!</p>
-
-            <div class="benefits-grid">
-                <!-- Ícone 1 -->
-                <div class="benefit-item">
-                    <svg class="svg-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="16" y="28" width="32" height="26" rx="4" fill="#E8F3ED" stroke="#111" stroke-width="3"/>
-                        <path d="M22 28V18C22 12.4772 26.4772 8 32 8C37.5228 8 42 12.4772 42 18V28" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="32" cy="41" r="4" fill="#00C853"/>
-                        <circle cx="48" cy="48" r="8" fill="#fff" stroke="#111" stroke-width="3"/>
-                        <path d="M48 44V52M44 48H52" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-                    </svg>
-                    <h3>MÉTODO<br>ADMINISTRATIVO</h3>
-                    <p>Passo a Passo Validado Legalmente</p>
-                </div>
-                
-                <!-- Ícone 2 -->
-                <div class="benefit-item">
-                    <svg class="svg-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M48 24C48 17.3726 42.6274 12 36 12C31.5034 12 27.5855 14.4748 25.4347 18.2389C24.341 17.4395 22.9737 16.96 21.5 16.96C17.9101 16.96 15 19.8702 15 23.46C15 23.7087 15.014 23.954 15.0411 24.1953C11.5891 25.5901 9 29.0064 9 33C9 37.9706 13.0294 42 18 42H50C54.4183 42 58 38.4183 58 34C58 29.8398 54.8258 26.421 50.7719 26.045C50.317 24.9084 49.3364 24.1352 48 24Z" fill="#E6F2FF" stroke="#1D70B8" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="22" y="34" width="20" height="14" rx="2" fill="#fff" stroke="#111" stroke-width="3"/>
-                        <path d="M18 48H46V50C46 51.1046 45.1046 52 44 52H20C18.8954 52 18 51.1046 18 50V48Z" fill="#111"/>
-                    </svg>
-                    <h3>100% ONLINE<br>E RÁPIDO</h3>
-                    <p>Acesso Imediato ao Conteúdo</p>
-                </div>
-
-                <!-- Ícone 3 -->
-                <div class="benefit-item">
-                    <svg class="svg-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="24" cy="20" r="8" fill="#FCE8E8" stroke="#111" stroke-width="3"/>
-                        <path d="M12 42C12 35.3726 17.3726 30 24 30C30.6274 30 36 35.3726 36 42H12Z" fill="#FCE8E8" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="36" y="24" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="3"/>
-                        <line x1="42" y1="32" x2="50" y2="32" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-                        <line x1="42" y1="38" x2="50" y2="38" stroke="#111" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="48" cy="48" r="8" fill="#00C853" stroke="#fff" stroke-width="2"/>
-                        <path d="M45 48L47 50L51 45" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <h3>SEM ADVOGADOS<br>OU PROCESSOS</h3>
-                    <p>Evite Gastos com Honorários Legais</p>
-                </div>
-            </div>
-
-            <div class="cta-wrapper">
-                <a href="#" class="btn-green">
-                    QUERO LIMPAR MEU CPF AGORA! <span style="font-size: 1.5rem;">👉</span> (Apenas R$ 67,90)
-                </a>
-                
-                <div class="payment-security">
-                    <div class="badges">
-                        <!-- Pix SVG -->
-                        <svg width="65" height="24" viewBox="0 0 100 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M30.1 11.2L20.4 1.5C19.5 0.5 18.2 0 16.8 0C15.4 0 14 0.5 13.1 1.5L3.4 11.2C1.4 13.2 1.4 16.5 3.4 18.5L13.1 28.2C14.1 29.2 15.4 29.7 16.8 29.7C18.2 29.7 19.5 29.2 20.4 28.2L30.1 18.5C32.1 16.5 32.1 13.2 30.1 11.2ZM27.6 16L17.9 25.7C17.6 26 17.2 26.2 16.8 26.2C16.3 26.2 15.9 26 15.6 25.7L5.9 16C5.3 15.4 5.3 14.4 5.9 13.7L15.6 4C15.9 3.7 16.3 3.5 16.8 3.5C17.2 3.5 17.6 3.7 17.9 4L27.6 13.7C28.2 14.4 28.2 15.4 27.6 16Z" fill="#32BCAD"/>
-                            <path d="M16.8 8.7C16.3 8.7 15.9 8.9 15.6 9.2L10.8 14C10.5 14.3 10.3 14.7 10.3 15.1C10.3 15.6 10.5 16 10.8 16.3L15.6 21.1C15.9 21.4 16.3 21.6 16.8 21.6C17.2 21.6 17.6 21.4 17.9 21.1L22.7 16.3C23 16 23.2 15.6 23.2 15.1C23.2 14.7 23 14.3 22.7 14L17.9 9.2C17.6 8.9 17.2 8.7 16.8 8.7Z" fill="#32BCAD"/>
-                            <text x="38" y="24" fill="#32BCAD" font-family="Arial" font-weight="900" font-size="22" letter-spacing="-1">pix</text>
-                        </svg>
-                        
-                        <!-- Visa SVG -->
-                        <svg width="45" height="15" viewBox="0 0 50 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19.7 0.3H13L8.3 15.7H14.8L16.1 11.8H24L24.9 15.7H31L19.7 0.3ZM17.8 6.7L20.8 6.7L22.3 10.2H16.3L17.8 6.7Z" fill="#1434CB"/>
-                            <path d="M37.7 0.3C35 0.3 33 1.6 33 4.1C33 6.8 36.8 7.3 36.8 8.7C36.8 9.5 35.7 10.2 34 10.2C31.8 10.2 30.6 9.2 30.6 9.2L29.5 14.3C29.5 14.3 31.4 15.6 34.3 15.6C37.3 15.6 39.5 14.1 39.5 11.5C39.5 8.5 35.7 8 35.7 6.7C35.7 6 36.6 5.3 37.8 5.3C39.5 5.3 40.8 6.1 40.8 6.1L41.8 1.1C41.8 1.1 40.2 0.3 37.7 0.3Z" fill="#1434CB"/>
-                            <path d="M48.7 0.3H43.3C42 0.3 41.2 1.1 40.8 2.2L34.9 15.7H41.5L42.8 11.8H49.8L50 15.7H56L48.7 0.3Z" fill="#1434CB"/>
-                            <path d="M8.2 0.3L5.4 11.2L2.8 2.3C2.5 1.1 1.5 0.3 0 0.3H-6V2.9H-1.5C-0.3 2.9 0.4 3.6 0.7 4.6L4.3 15.7H11.1L15.3 0.3H8.2Z" fill="#1434CB"/>
-                        </svg>
-
-                        <!-- Mastercard SVG -->
-                        <svg width="25" height="15" viewBox="0 0 36 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="11" cy="11" r="11" fill="#EB001B"/>
-                            <circle cx="25" cy="11" r="11" fill="#F79E1B"/>
-                            <path d="M18 20.4C19.7 18.2 20.7 15.4 20.7 12.3C20.7 9.2 19.7 6.4 18 4.2C16.3 6.4 15.3 9.2 15.3 12.3C15.3 15.4 16.3 18.2 18 20.4Z" fill="#FF5F00"/>
-                        </svg>
-                    </div>
-                    <p class="payment-text">Acesso Imediato via PIX | Pagamento Seguro</p>
-                    <p class="urgency">ÚLTIMAS VAGAS COM DESCONTO!</p>
-                </div>
-            </div>
-
-            <!-- Imagens Reais da API RandomUser -->
-            <div class="testimonials-row">
-                <div class="t-card">
-                    <div class="t-header">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Marina S." class="t-avatar">
-                        <span class="t-name">Marina S.</span>
-                    </div>
-                    <p class="t-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Marina S.</p>
-                </div>
-
-                <div class="t-card">
-                    <div class="t-header">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos P." class="t-avatar">
-                        <span class="t-name">Carlos P.</span>
-                    </div>
-                    <p class="t-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Carlos P.</p>
-                </div>
-
-                <div class="t-card">
-                    <div class="t-header">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ana L." class="t-avatar">
-                        <span class="t-name">Ana L.</span>
-                    </div>
-                    <p class="t-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Ana L.</p>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <footer>
-        <h4>**AVISO LEGAL**</h4>
-        <p>Este método é educacional e consultivo. Não garantimos resultados financeiros ou a remoção imediata das restrições de crédito. Os resultados variam e dependem da aplicação do guia administrativo e da situação específica das dívidas nos órgãos de proteção ao crédito. O uso das informações é de inteira responsabilidade do usuário. Consulte sempre o CDC e busque orientação profissional se necessário.</p>
-        <p>&copy; 2026 CPF Limpo Agora. Todos os Direitos Reservados. <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
-    </footer>
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
 
 </body>
-</html>
+</html> 
