@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Nacional de Emissão de Protocolos - Oficial</title>
-    
-    <!-- Tipografia de Impacto -->
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Bibliotecas de Ícones -->
+    <!-- Fontes Oficiais: Montserrat e Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
             --primary: #1a3a5a;
@@ -19,97 +15,75 @@
             --light: #f4f7f6;
             --white: #ffffff;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--white); color: var(--dark); line-height: 1.6; overflow-x: hidden; }
-        
-        /* Títulos de Autoridade */
-        h1 { 
-            font-family: 'Bebas Neue', sans-serif; 
-            font-size: 4.5rem; 
-            line-height: 0.95; 
-            letter-spacing: -1px;
-            color: var(--primary); 
-            margin-bottom: 10px; 
-        }
-        h1 span { 
-            color: var(--secondary); 
-            display: block; 
-            font-size: 5rem;
-        }
-        h2, h3 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
-
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--white); color: var(--dark); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
         .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-        /* Navegação Profissional */
+        /* Header */
         header { padding: 15px 0; background: var(--white); border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-weight: 800; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
         .logo i { color: var(--secondary); }
         .secure { color: var(--secondary); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* Seção Hero e Painel de Interação */
+        /* Hero / Painel de Consulta */
         .hero { padding: 80px 0; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); }
         .hero-flex { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
         .hero-text { flex: 1.2; min-width: 300px; }
         .hero-panel { flex: 0.8; min-width: 300px; }
+        h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.1; color: var(--primary); margin-bottom: 25px; text-transform: uppercase; }
+        h1 span { color: var(--secondary); }
+        .subtitle { font-size: 1.1rem; font-weight: 700; color: #555; margin-bottom: 35px; text-transform: uppercase; }
 
-        .subtitle { font-size: 1.3rem; font-weight: 900; color: var(--primary); margin-bottom: 25px; text-transform: uppercase; }
-
-        /* Painel de Consulta Dinâmico */
+        /* Estilo do Painel */
         .consult-panel { background: var(--white); padding: 35px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid #ddd; }
         .panel-header { margin-bottom: 20px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .panel-header h3 { font-size: 1.5rem; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 8px; }
-        
+        .panel-header h3 { font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 8px; }
         .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.9rem; color: var(--primary); }
+        .input-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.85rem; color: var(--primary); }
         input[type="text"] { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; transition: 0.3s; }
         input[type="text"]:focus { border-color: var(--primary); }
-
-        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 18px; border: none; border-radius: 8px; font-weight: 900; font-size: 1.2rem; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 18px; border: none; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
         .btn-consult:hover { background: #132a41; }
 
-        /* Estados do Sistema (JS) */
+        /* Estados do Painel */
         #loading-state, #result-state { display: none; text-align: center; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 20px; border-radius: 10px; margin-top: 10px; text-align: center; }
-        .result-box h4 { color: var(--secondary); margin-bottom: 5px; font-size: 1.5rem; }
-        
-        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 20px; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1.3rem; margin-top: 20px; animation: pulse 2s infinite; text-align: center; }
+        .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 20px; border-radius: 10px; margin-top: 10px; }
+        .result-box h4 { color: var(--secondary); margin-bottom: 5px; font-family: 'Montserrat', sans-serif; }
+        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 18px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 1.2rem; margin-top: 20px; animation: pulse 2s infinite; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
-        /* Barra de Benefícios Rápidos */
+        /* Benefits Bar */
         .benefits-bar { padding: 30px 0; background: var(--primary); color: var(--white); text-align: center; }
         .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .benefit-item { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
-        .benefit-item i { color: var(--secondary); font-size: 1.4rem; }
+        .benefit-item { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        .benefit-item i { color: var(--secondary); font-size: 1.2rem; }
 
-        /* Mecanismo de Funcionamento */
+        /* Seção Profissional */
         .how-works { padding: 100px 0; background: var(--white); }
         .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-        .how-img img { width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .how-text h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        .how-img img { width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .how-text h2 { font-size: 2rem; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; }
 
-        /* Prova Social (Gatilho de Confiança) */
+        /* Social Proof */
         .social-proof { padding: 100px 0; background: var(--light); }
         .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .t-card { background: var(--white); padding: 35px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .t-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .t-header img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #eee; }
-        .t-info strong { display: block; font-size: 1.1rem; }
-        .t-info span { color: var(--secondary); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; }
+        .t-card { background: var(--white); padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .t-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .t-header img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; }
+        .t-info strong { display: block; font-size: 1rem; }
+        .t-info span { color: var(--secondary); font-size: 0.8rem; font-weight: 700; }
 
-        /* Rodapé com Blindagem Legal */
+        /* Footer */
         footer { background: var(--dark); color: #666; padding: 60px 0 20px; font-size: 0.8rem; text-align: center; }
         .legal { border-top: 1px solid #222; margin-top: 30px; padding-top: 30px; max-width: 800px; margin-inline: auto; font-size: 0.75rem; }
 
-        /* Ajustes para Dispositivos Móveis */
-        @media (max-width: 900px) {
-            h1 { font-size: 3rem; }
-            h1 span { font-size: 3.5rem; }
+        @media (max-width: 850px) {
             .hero-flex, .how-grid { flex-direction: column; text-align: center; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -119,7 +93,7 @@
     <div class="container">
         <div class="nav-wrapper">
             <div class="logo"><i class="fas fa-university"></i> EMISSOR DE PROTOCOLOS</div>
-            <div class="secure"><i class="fas fa-shield-check"></i> AMBIENTE SEGURO SSL</div>
+            <div class="secure"><i class="fas fa-lock"></i> AMBIENTE SEGURO SSL</div>
         </div>
     </div>
 </header>
@@ -128,13 +102,11 @@
     <div class="container">
         <div class="hero-flex">
             <div class="hero-text">
-                <h1>SISTEMA DE BAIXA: <span>LIMPE SEU CPF</span></h1>
-                <p class="subtitle">SEM PAGAR A DÍVIDA TOTAL</p>
-                <p style="margin-bottom: 30px; color: #555; font-weight: 600;">Emita agora seu Protocolo de Caducidade (Art. 43 CDC) e remova as restrições internas do seu CPF de forma administrativa.</p>
-                
+                <h1>SISTEMA DE BAIXA: <span style="color:var(--secondary)">LIMPE SEU CPF</span> SEM PAGAR A DÍVIDA!</h1>
+                <p class="subtitle">Emita o seu Protocolo de Caducidade (Art. 43 CDC) para remoção imediata de restrições internas.</p>
                 <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="30">
-                    <span style="font-weight: 900; color: var(--secondary); font-size: 1.1rem; text-transform: uppercase;">Liberação Imediata via PIX</span>
+                    <span style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">LIBERAÇÃO IMEDIATA</span>
                 </div>
             </div>
             
@@ -144,7 +116,6 @@
                         <h3><i class="fas fa-search"></i> CONSULTA DE DISPONIBILIDADE</h3>
                     </div>
 
-                    <!-- Etapa 1: Inserir CPF -->
                     <div id="initial-state">
                         <div class="input-group">
                             <label>Consulte a disponibilidade de limpeza para o seu CPF:</label>
@@ -153,19 +124,17 @@
                         <button class="btn-consult" onclick="startConsult()">VERIFICAR AGORA</button>
                     </div>
 
-                    <!-- Etapa 2: Simulando Processamento -->
                     <div id="loading-state">
                         <div class="loader"></div>
-                        <p id="loading-text" style="font-weight: 900; color: var(--primary); text-transform: uppercase; font-size: 0.9rem;">Acessando base de dados...</p>
+                        <p id="loading-text" style="font-weight: bold; color: var(--primary);">Acessando base de dados...</p>
                     </div>
 
-                    <!-- Etapa 3: Oferta Final -->
                     <div id="result-state">
                         <div class="result-box">
                             <h4><i class="fas fa-check-circle"></i> PROTOCOLO LOCALIZADO!</h4>
-                            <p style="font-weight: 700; color: #444; font-size: 0.9rem;">Seu CPF possui pendências administrativas passíveis de <strong>Baixa Imediata</strong>.</p>
+                            <p style="font-size: 0.85rem;">Seu CPF possui pendências administrativas passíveis de <strong>Baixa Imediata</strong>.</p>
                         </div>
-                        <a href="#link-de-checkout" class="btn-checkout">LIBERAR PROTOCOLO (R$ 30,00)</a>
+                        <a href="#checkout" class="btn-checkout">LIBERAR PROTOCOLO (R$ 30,00)</a>
                     </div>
                 </div>
             </div>
@@ -177,9 +146,9 @@
     <div class="container">
         <div class="benefits-grid">
             <div class="benefit-item"><i class="fas fa-bolt"></i> Emissão Instantânea</div>
-            <div class="benefit-item"><i class="fas fa-file-contract"></i> Fundamento Art. 43 CDC</div>
+            <div class="benefit-item"><i class="fas fa-file-invoice-dollar"></i> Sem Pagar a Dívida</div>
+            <div class="benefit-item"><i class="fas fa-gavel"></i> Fundamentação Art. 43 CDC</div>
             <div class="benefit-item"><i class="fas fa-user-slash"></i> Sem Consulta a Advogado</div>
-            <div class="benefit-item"><i class="fas fa-check-double"></i> Sem Pagar a Dívida</div>
         </div>
     </div>
 </div>
@@ -188,12 +157,12 @@
     <div class="container">
         <div class="how-grid">
             <div class="how-img">
-                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="Sistema Oficial">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="Sistema de Baixa">
             </div>
             <div class="how-text">
                 <h2>Como funciona a liberação?</h2>
-                <p>O sistema gera automaticamente o seu documento de retificação fundamentado na <strong>Lei Federal 8.078/90</strong>. Este protocolo atua na raiz do bloqueio interno, forçando a atualização do seu status creditício de forma definitiva.</p>
-                <p style="margin-top: 15px; font-weight: 700;">Basta apresentar o documento gerado via portal do consumidor para processar a limpeza administrativa em tempo recorde.</p>
+                <p>O sistema gera automaticamente o seu documento de retificação fundamentado no <strong>Código de Defesa do Consumidor</strong>. Este protocolo atua na raiz do bloqueio, forçando a atualização do seu status creditício nos sistemas internos.</p>
+                <p style="margin-top: 15px; font-weight: 700;">Basta apresentar o documento gerado para processar a limpeza em tempo recorde.</p>
             </div>
         </div>
     </div>
@@ -207,21 +176,21 @@
                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Cliente">
                     <div class="t-info"><strong>Ricardo Oliveira</strong><span>Status: Regularizado</span></div>
                 </div>
-                <p>"Caiu a restrição! Meu score subiu 230 pontos logo após apresentar o protocolo gerado pelo sistema. Incrível!"</p>
+                <p>"Caiu a restrição! Meu score subiu 230 pontos logo após apresentar o protocolo gerado pelo sistema."</p>
             </div>
             <div class="t-card">
                 <div class="t-header">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Cliente">
                     <div class="t-info"><strong>Mariana Souza</strong><span>Status: CPF Limpo</span></div>
                 </div>
-                <p>"Achei que o banco ia me bloquear para sempre, mas o documento oficial funcionou na hora. Finalmente consegui crédito."</p>
+                <p>"Achei que o banco ia me bloquear para sempre, mas o documento oficial funcionou na hora."</p>
             </div>
             <div class="t-card">
                 <div class="t-header">
                     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="Cliente">
                     <div class="t-info"><strong>André Costa</strong><span>Status: Crédito Ativo</span></div>
                 </div>
-                <p>"O sistema é muito rápido. Emiti o PDF em segundos e fiz o procedimento. Valeu cada centavo da taxa de emissão."</p>
+                <p>"O sistema é muito rápido. Emiti o PDF em segundos e fiz o procedimento. Valeu cada centavo."</p>
             </div>
         </div>
     </div>
@@ -230,14 +199,13 @@
 <footer>
     <div class="container">
         <div class="legal">
-            <p><strong>AVISO LEGAL:</strong> Este site oferece uma ferramenta de automação para emissão de documentos administrativos baseados no Código de Defesa do Consumidor. A eficácia da baixa depende do cumprimento dos requisitos legais específicos de cada caso. Não somos órgão governamental ou bancário.</p>
+            <p><strong>AVISO LEGAL:</strong> Este site oferece uma ferramenta de automação para emissão de documentos administrativos. A eficácia da baixa depende do cumprimento dos requisitos legais. Não somos órgão governamental ou bancário.</p>
             <p style="margin-top: 20px;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
         </div>
     </div>
 </footer>
 
 <script>
-    // Máscara Automática de CPF
     function mascaraCPF(i) {
         let v = i.value.replace(/\D/g, "");
         if (v.length > 3) v = v.replace(/^(\d{3})(\d)/, "$1.$2");
@@ -246,23 +214,17 @@
         i.value = v;
     }
 
-    // Lógica da Consulta Fictícia
     function startConsult() {
         const cpf = document.getElementById('cpf-input').value;
-        if(cpf.length < 14) { 
-            alert("Por favor, informe seu CPF completo para prosseguir."); 
-            return; 
-        }
+        if(cpf.length < 14) { alert("Informe um CPF válido."); return; }
 
         document.getElementById('initial-state').style.display = 'none';
         document.getElementById('loading-state').style.display = 'block';
 
         const txt = document.getElementById('loading-text');
-        
-        // Simulação de Etapas (Aumenta a percepção de valor)
         setTimeout(() => { txt.innerText = "Consultando base do Art. 43 do CDC..."; }, 1500);
         setTimeout(() => { txt.innerText = "Identificando pendências administrativas..."; }, 3000);
-        setTimeout(() => { txt.innerText = "Preparando Emissão de Protocolo Oficial..."; }, 4500);
+        setTimeout(() => { txt.innerText = "Preparando Emissão de Protocolo..."; }, 4500);
 
         setTimeout(() => {
             document.getElementById('loading-state').style.display = 'none';
