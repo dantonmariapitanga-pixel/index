@@ -63,13 +63,13 @@
         .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1.3rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* Benefits Bar */
+        /* Benefits Bar - Atualizada com ícones e textos persuasivos */
         .benefits-bar { padding: 40px 0; background: var(--primary); color: var(--white); }
         .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
         .benefit-item i { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; display: block; }
         .benefit-item strong { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Etapas de Processamento - Hover Efeito Movimento */
+        /* Etapas de Processamento */
         .how-works { padding: 100px 0; background: var(--white); }
         .section-title { text-align: center; margin-bottom: 60px; font-size: 2rem; color: var(--primary); }
         .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
@@ -153,6 +153,7 @@
                             <label>Informe o CPF para consulta de viabilidade:</label>
                             <!-- UX Melhorado: Abre teclado numérico em mobile -->
                             <input type="text" id="cpf-input" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)" inputmode="numeric" pattern="\d*">
+                            <p style="font-size: 0.7rem; color: #777; margin-top: 12px; text-align: center;"><i class="fas fa-user-shield"></i> Seus dados estão 100% protegidos pela LGPD.</p>
                         </div>
                         <button class="btn-consult" onclick="startConsult()">INICIAR VERIFICAÇÃO</button>
                     </div>
@@ -176,10 +177,14 @@
 <div class="benefits-bar">
     <div class="container">
         <div class="benefits-grid">
-            <div class="benefit-item"><i class="fas fa-bolt"></i> <strong>Envio Imediato</strong></div>
-            <div class="benefit-item"><i class="fas fa-file-signature"></i> <strong>Guia de Peticionamento</strong></div>
-            <div class="benefit-item"><i class="fas fa-gavel"></i> <strong>Art. 43 do CDC</strong></div>
-            <div class="benefit-item"><i class="fas fa-sync"></i> <strong>Acesso Vitalício</strong></div>
+            <!-- 1. Acesso Instantâneo -->
+            <div class="benefit-item"><i class="fas fa-bolt-lightning"></i> <strong>Liberação em 15 Segundos</strong></div>
+            <!-- 2. Dossiê de Retificação -->
+            <div class="benefit-item"><i class="fas fa-file-shield"></i> <strong>Dossiê Anti-Bloqueio</strong></div>
+            <!-- 3. Tese Jurídica Superior -->
+            <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Tese Jurídica Federal</strong></div>
+            <!-- 4. Restauração de Score -->
+            <div class="benefit-item"><i class="fas fa-chart-line"></i> <strong>Restauração de Score</strong></div>
         </div>
     </div>
 </div>
@@ -188,19 +193,16 @@
     <div class="container">
         <h2 class="section-title">Como Funciona</h2>
         <div class="tech-grid">
-            <!-- Card 1: Verificação -->
             <div class="tech-card">
                 <i class="fas fa-search"></i>
                 <h3>1. Verificação</h3>
                 <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios da Lei Federal 8.078/90.</p>
             </div>
-            <!-- Card 2: Emissão -->
             <div class="tech-card">
                 <i class="fas fa-envelope-open-text"></i>
                 <h3>2. Emissão do Protocolo</h3>
                 <p>Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade e o protocolo estruturado.</p>
             </div>
-            <!-- Card 3: Ativação -->
             <div class="tech-card">
                 <i class="fas fa-user-check"></i>
                 <h3>3. Ativação Administrativa</h3>
@@ -254,7 +256,6 @@
 <footer>
     <div class="container">
         <div class="footer-line">
-            <!-- Blindagem Jurídica Atualizada -->
             <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções e modelos de documentos administrativos fundamentados no CDC. A execução do protocolo nos órgãos competentes é de inteira responsabilidade do usuário. Não somos um órgão governamental, jurídico ou instituição financeira.</p>
             <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
         </div>
