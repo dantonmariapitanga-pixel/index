@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Nacional de Emissão de Protocolos - Portal do Consumidor</title>
-    <!-- Fontes Institucionais: Montserrat e Open Sans -->
+    <!-- Fontes Institucionais -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -30,7 +30,7 @@
         .secure-header { display: flex; align-items: center; gap: 10px; font-size: 0.75rem; font-weight: 700; color: #666; }
         .secure-header i { color: var(--secondary); }
 
-        /* Hero Split Section */
+        /* Hero Section */
         .hero { padding: 80px 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #eef2f7 100%); border-bottom: 1px solid #ddd; }
         .hero-flex { display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
         .hero-text { flex: 1.2; min-width: 300px; }
@@ -38,7 +38,7 @@
 
         h1 { font-size: 3rem; font-weight: 900; line-height: 1.05; color: var(--primary); margin-bottom: 25px; letter-spacing: -1px; }
         h1 span { color: var(--secondary); display: block; font-size: 3.5rem; }
-        .subtitle { font-size: 1.25rem; font-weight: 700; color: #444; margin-bottom: 30px; border-left: 5px solid var(--secondary); padding-left: 15px; }
+        .subtitle { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 30px; border-left: 5px solid var(--secondary); padding-left: 15px; text-transform: uppercase; }
 
         /* Painel de Consulta */
         .consult-panel { background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.12); border: 1px solid #e0e0e0; position: relative; }
@@ -69,7 +69,7 @@
         .benefit-item i { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; display: block; }
         .benefit-item strong { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Etapas de Processamento com Efeito de Movimento Restaurado */
+        /* Etapas de Processamento */
         .how-works { padding: 100px 0; background: var(--white); }
         .section-title { text-align: center; margin-bottom: 60px; font-size: 2rem; color: var(--primary); }
         .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
@@ -79,16 +79,14 @@
             background: var(--light); 
             border-radius: 12px; 
             border-top: 6px solid var(--primary); 
-            transition: all 0.3s ease; /* Transição para o movimento */
+            transition: all 0.3s ease;
             cursor: pointer;
         }
-
         .tech-card:hover { 
-            transform: translateY(-15px); /* Efeito de subir ao passar o mouse */
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1); /* Sombra ao subir */
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
             background: #ffffff;
         }
-
         .tech-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; transition: color 0.3s ease; }
         .tech-card:hover i { color: var(--secondary); }
         .tech-card h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--primary); }
@@ -136,12 +134,12 @@
     <div class="container">
         <div class="hero-flex">
             <div class="hero-text">
-                <h1>SISTEMA DE BAIXA: <span>LIMPE SEU CPF</span></h1>
-                <p class="subtitle">PROCEDIMENTO ADMINISTRATIVO DIRETO (ART. 43 CDC) PARA REMOÇÃO DE RESTRIÇÕES INTERNAS.</p>
-                <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem;">Utilize a via administrativa para forçar a atualização do seu status creditício. O sistema gera o dossiê de retificação fundamentado em tempo real.</p>
+                <h1>SISTEMA DE BAIXA: <span>LIMPE SEU CPF AGORA</span></h1>
+                <p class="subtitle">RESTABELEÇA SEU CRÉDITO E SEU SCORE EM MINUTOS COM O PROTOCOLO DE BAIXA IMEDIATA.</p>
+                <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem; font-weight: 600;">Chega de esperar por processos judiciais lentos. Utilize o motor de processamento administrativo para forçar a exclusão de apontamentos internos e restabelecer seu poder de compra hoje mesmo.</p>
                 <div style="display: flex; align-items: center; gap: 20px;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="30">
-                    <p style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Compensação e liberação instantânea</p>
+                    <p style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">PROTOCOLOU, LIMPOU. LIBERAÇÃO IMEDIATA.</p>
                 </div>
             </div>
             
@@ -155,7 +153,7 @@
                             <label>Informe o CPF para consulta de viabilidade:</label>
                             <input type="text" id="cpf-input" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
                         </div>
-                        <button class="btn-consult" onclick="startConsult()">INICIAR PROCESSAMENTO</button>
+                        <button class="btn-consult" onclick="startConsult()">VERIFICAR E LIMPAR AGORA</button>
                     </div>
                     <div id="loading-state">
                         <div class="loader"></div>
@@ -166,7 +164,7 @@
                             <h4><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
                             <p style="font-weight: 700; color: #444; font-size: 0.85rem;">Pendências administrativas passíveis de <strong>Baixa Imediata</strong> localizadas para este CPF.</p>
                         </div>
-                        <a href="#checkout" class="btn-checkout">LIBERAR PROTOCOLO (R$ 30,00)</a>
+                        <a href="#checkout" class="btn-checkout">LIBERAR MEU PROTOCOLO (R$ 30,00)</a>
                     </div>
                 </div>
             </div>
@@ -177,32 +175,32 @@
 <div class="benefits-bar">
     <div class="container">
         <div class="benefits-grid">
-            <div class="benefit-item"><i class="fas fa-bolt"></i> <strong>Emissão Instantânea</strong></div>
-            <div class="benefit-item"><i class="fas fa-file-signature"></i> <strong>Fundamento Art. 43 CDC</strong></div>
-            <div class="benefit-item"><i class="fas fa-user-slash"></i> <strong>Sem Consulta Jurídica</strong></div>
-            <div class="benefit-item"><i class="fas fa-sync"></i> <strong>Atualização de Status</strong></div>
+            <div class="benefit-item"><i class="fas fa-bolt"></i> <strong>Limpeza Hoje</strong></div>
+            <div class="benefit-item"><i class="fas fa-file-signature"></i> <strong>Exclusão de Registros</strong></div>
+            <div class="benefit-item"><i class="fas fa-chart-line"></i> <strong>Salto no Score</strong></div>
+            <div class="benefit-item"><i class="fas fa-sync"></i> <strong>Status Regularizado</strong></div>
         </div>
     </div>
 </div>
 
 <section class="how-works">
     <div class="container">
-        <h2 class="section-title">Etapas do Processamento</h2>
+        <h2 class="section-title">Como o Sistema Funciona</h2>
         <div class="tech-grid">
             <div class="tech-card">
                 <i class="fas fa-file-code"></i>
-                <h3>Geração de Protocolo</h3>
-                <p>O sistema processa os dados de incidência normativa e gera o Dossiê de Retificação Administrativa baseado na Lei Federal 8.078/90.</p>
+                <h3>Processamento Instantâneo</h3>
+                <p>O sistema cruza as informações do seu CPF e gera o Dossiê de Retificação Administrativa baseado na Lei Federal 8.078/90 para remoção imediata.</p>
             </div>
             <div class="tech-card">
+                <h3>Acesso às Teses de Baixa</h3>
                 <i class="fas fa-key"></i>
-                <h3>Chave de Acesso</h3>
-                <p>Após a compensação, a Chave de Acesso é liberada com os modelos de peticionamento extrajudicial e teses de caducidade pré-estruturadas.</p>
+                <p>Você recebe a Chave de Acesso com os protocolos pré-estruturados e as teses de caducidade que as instituições financeiras são obrigadas a aceitar.</p>
             </div>
             <div class="tech-card">
                 <i class="fas fa-check-double"></i>
-                <h3>Baixa Administrativa</h3>
-                <p>O procedimento utiliza os canais oficiais de retificação para forçar a remoção de registros de prejuízo em tempo recorde perante as instituições.</p>
+                <h3>Resultado Garantido</h3>
+                <p>O procedimento utiliza os canais oficiais para forçar a remoção dos registros de prejuízo, limpando seu histórico e devolvendo seu crédito.</p>
             </div>
         </div>
     </div>
@@ -210,7 +208,7 @@
 
 <section class="social-proof">
     <div class="container">
-        <h2 class="section-title">Relatórios de Êxito</h2>
+        <h2 class="section-title">Resultados Reais</h2>
         <div class="wp-grid">
             <div class="wp-item">
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
