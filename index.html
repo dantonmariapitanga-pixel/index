@@ -1,267 +1,400 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Método Nome Limpo | Recupere seu Crédito</title>
-    
+    <title>Solução CPF Limpo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS Reset & Variáveis */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-        :root { 
-            --primary-bg: #050505; 
-            --secondary-bg: #111111; 
-            --tertiary-bg: #1a1a1a; 
-            /* CORES DE ACENTO (VERDE CONVERSÃO) */
-            --accent-color: #00c853; 
-            --gradient-start: #009624; 
-            --text-light: #ffffff; 
-            --text-muted: #b3b3b3;
-            --header-bg: #000000;
+        /* ================= RESET E VARIÁVEIS ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
-        
-        body { 
-            background: var(--primary-bg);
-            color: var(--text-light); 
-            line-height: 1.6; 
-            scroll-behavior: smooth; 
-            overflow-x: hidden; 
+
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            overflow-x: hidden;
+            position: relative;
         }
-        
-        /* ================= ANIMAÇÕES GERAIS ================= */
-        .fade-in-up { opacity: 0; transform: translateY(30px); animation: fadeInUpAnim 0.8s ease-out forwards; }
-        @keyframes fadeInUpAnim { to { opacity: 1; transform: translateY(0); } }
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.3s; }
-        .delay-3 { animation-delay: 0.5s; }
 
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .delay-seq-1 { transition-delay: 0.1s; }
-        .delay-seq-2 { transition-delay: 0.2s; }
-        .delay-seq-3 { transition-delay: 0.3s; }
+        /* ================= ESTRUTURA PRINCIPAL ================= */
+        .page-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-        /* ================= CABEÇALHO ================= */
-        header { background-color: var(--header-bg); padding: 1rem 5%; display: flex; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--accent-color); }
-        .brand { color: var(--text-light); text-decoration: none; font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px;}
-        .brand span { color: var(--accent-color); }
+        /* Imagem do homem ao fundo (lado direito) */
+        .bg-person {
+            position: absolute;
+            bottom: 0;
+            right: -50px;
+            height: 85%;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-        /* ================= BOTÕES (Alta Conversão) ================= */
-        .btn { 
-            padding: 18px 40px; 
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--accent-color) 100%);
-            color: var(--text-light); 
-            text-decoration: none; 
-            font-weight: 900; 
-            border-radius: 6px; 
-            border: none; 
-            cursor: pointer; 
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: inline-flex; 
+        /* ================= CABEÇALHO (LOGO) ================= */
+        header {
+            display: flex;
+            align-items: center;
+            padding: 10px 0 30px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo svg {
+            width: 45px;
+            height: 45px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .logo-text span:first-child {
+            font-size: 0.9rem;
+            color: #2183c4;
+            font-weight: 800;
+        }
+
+        .logo-text span:last-child {
+            font-size: 1.4rem;
+            color: #000;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        /* ================= CONTEÚDO PRINCIPAL ================= */
+        .main-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .headline {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            color: #111;
+        }
+
+        .subheadline {
+            font-size: 1.35rem;
+            font-weight: 500;
+            margin-bottom: 40px;
+            color: #222;
+        }
+
+        /* ================= ÍCONES DE BENEFÍCIOS ================= */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .feature-item {
+            display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: 1.3rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            box-shadow: 0 10px 25px rgba(0, 200, 83, 0.4);
-            animation: pulse 2s infinite;
-        }
-        .btn span.subtext { font-size: 0.8rem; font-weight: 600; text-transform: none; margin-top: 5px; opacity: 0.9; }
-        
-        .btn:hover { 
-            transform: translateY(-3px) scale(1.02); 
-            box-shadow: 0 15px 35px rgba(0, 200, 83, 0.6); 
-            filter: brightness(1.1);
+            max-width: 250px;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 200, 83, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            /* Sombras ou filtros podem ser aplicados na imagem final do ícone */
         }
 
-        /* ================= SEÇÕES GERAIS ================= */
-        section { padding: 5rem 5%; }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 900; }
-        .section-subtitle { text-align: center; color: var(--accent-color); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 3rem; font-weight: 600; }
+        .feature-item h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
 
-        /* HERO - PROMESSA AGRESSIVA */
-        .hero { min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at center, #112a18 0%, var(--primary-bg) 70%); }
-        .hero h1 { font-size: 3.8rem; margin-bottom: 1.5rem; line-height: 1.1; font-weight: 900; text-transform: uppercase; }
-        .hero h1 span { color: var(--accent-color); text-decoration: underline; }
-        .hero p { font-size: 1.3rem; margin-bottom: 1.5rem; max-width: 800px; color: var(--text-light); }
-        .hero .legal-shield { font-size: 1rem; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 3rem; }
+        .feature-item p {
+            font-size: 0.9rem;
+            color: #444;
+            font-weight: 500;
+        }
 
-        /* SOLUÇÃO MÁGICA (PROCESSO) */
-        .process { background-color: var(--secondary-bg); border-top: 1px solid #222; border-bottom: 1px solid #222; }
-        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
-        .process-step { background-color: var(--tertiary-bg); padding: 3rem 2rem; border-radius: 12px; text-align: center; position: relative; border: 1px solid rgba(0, 200, 83, 0.1); transition: transform 0.3s ease; }
-        .process-step:hover { transform: translateY(-10px); border-color: var(--accent-color); }
-        .icon { font-size: 4rem; margin-bottom: 1rem; display: block; }
-        .process-step h3 { color: var(--accent-color); font-size: 1.5rem; margin-bottom: 1rem; text-transform: uppercase; }
-        .process-step p { color: var(--text-muted); font-size: 1.1rem; }
+        /* ================= BOTÃO E PAGAMENTO ================= */
+        .cta-container {
+            margin-bottom: 40px;
+        }
 
-        /* DEPOIMENTOS */
-        .testimonials { background-color: var(--primary-bg); text-align: center; }
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .testimonial-card { background-color: var(--secondary-bg); padding: 2.5rem; border-radius: 8px; border-left: 4px solid var(--accent-color); text-align: left; }
-        .stars { color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem; letter-spacing: 2px; }
-        .testimonial-card p { font-style: italic; color: var(--text-light); margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .client-info strong { color: var(--text-light); font-size: 1.2rem; display: block; }
-        .client-info span { color: var(--accent-color); font-size: 0.9rem; font-weight: 600; }
+        .cta-btn {
+            display: inline-block;
+            background-color: #00d82c; /* Verde brilhante */
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 18px 45px;
+            border-radius: 50px;
+            box-shadow: 0 0 30px rgba(0, 216, 44, 0.5); /* Efeito neon/brilho */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-        /* CONTATO / CTA FINAL */
-        .cta-section { text-align: center; background: linear-gradient(to bottom, var(--primary-bg), #061a0b); }
-        .cta-box { max-width: 800px; margin: 0 auto; }
-        .cta-box h2 { font-size: 3rem; margin-bottom: 1rem; font-weight: 900; }
-        .cta-box p { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2.5rem; }
+        .cta-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 40px rgba(0, 216, 44, 0.7);
+        }
 
-        /* RODAPÉ (AVISO LEGAL) */
-        footer { background-color: #000; padding: 3rem 5%; text-align: center; border-top: 1px solid #222; }
-        .legal-disclaimer { max-width: 900px; margin: 0 auto; color: #666; font-size: 0.75rem; text-align: justify; line-height: 1.5; margin-bottom: 1rem; }
-        .copyright { color: #888; font-size: 0.9rem; font-weight: 600; }
+        .payment-info {
+            margin-top: 15px;
+        }
 
-        /* RESPONSIVIDADE */
-        @media(max-width: 768px) {
-            .hero h1 { font-size: 2.3rem; }
-            .hero p { font-size: 1.1rem; padding: 0 10px; }
-            .hero .legal-shield { font-size: 0.85rem; padding: 8px 15px; }
-            .btn { width: 100%; font-size: 1.1rem; padding: 15px 20px; }
-            .section-title { font-size: 2rem; }
-            .cta-box h2 { font-size: 2.2rem; }
-            .process-step { padding: 2rem 1.5rem; }
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .payment-icons img {
+            height: 20px;
+        }
+
+        .payment-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .urgency-text {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        /* ================= DEPOIMENTOS ================= */
+        .testimonials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-card {
+            background: #ffffff;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            padding: 20px;
+            width: 280px;
+            text-align: left;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+
+        .testimonial-name {
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* ================= RODAPÉ ================= */
+        footer {
+            background-color: #1a1a1a;
+            color: #a0a0a0;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            position: relative;
+            z-index: 20;
+        }
+
+        footer h4 {
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            max-width: 900px;
+            margin: 0 auto 10px auto;
+        }
+
+        footer a {
+            color: #a0a0a0;
+            text-decoration: underline;
+        }
+
+        /* Estrela decorativa no rodapé (simulando a do print) */
+        .footer-star {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+            width: 50px;
+        }
+
+        /* ================= RESPONSIVO ================= */
+        @media (max-width: 992px) {
+            .bg-person { opacity: 0.2; right: 0; }
+            .headline { font-size: 2.2rem; }
+            .subheadline { font-size: 1.1rem; }
+        }
+
+        @media (max-width: 768px) {
+            .features { flex-direction: column; align-items: center; gap: 20px; }
+            .testimonials { flex-direction: column; align-items: center; }
+            .cta-btn { padding: 15px 30px; font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand">
-            🛡️ Método <span>Nome Limpo</span>
-        </div>
-    </header>
+    <div class="page-container">
+        <!-- Substitua o link abaixo pela foto real do homem segurando o cartão (fundo transparente) -->
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" 
+             style="opacity: 0;" alt="Homem sorrindo com cartão" class="bg-person">
 
-    <!-- 1. PROMESSA AGRESSIVA & PREÇO DE IMPULSO -->
-    <section class="hero">
-        <h1 class="fade-in-up delay-1"><span>Desvincule seu CPF</span> das dívidas em tempo recorde</h1>
-        <p class="fade-in-up delay-2">Volte a ter crédito no mercado, cartões aprovados e paz de espírito. Um passo a passo prático para blindar seu CPF sem precisar contratar advogados caros.</p>
-        
-        <!-- 2. BLINDAGEM JURÍDICA IMEDIATA -->
-        <div class="legal-shield fade-in-up delay-3">
-            ⚖️ Baseado no <strong>Método Administrativo</strong> garantido pelo <strong>Art. 43 do CDC</strong>.
-        </div>
-
-        <a href="#checkout" class="btn fade-in-up delay-3">
-            QUERO LIMPAR MEU NOME AGORA
-            <span class="subtext">Apenas R$ 67,90 à vista no PIX</span>
-        </a>
-    </section>
-
-    <!-- 3. A SOLUÇÃO MÁGICA E SIMPLES -->
-    <section class="process">
-        <h2 class="section-title reveal">Como funciona?</h2>
-        <h4 class="section-subtitle reveal">3 passos simples e organizados</h4>
-        
-        <div class="process-grid">
-            <div class="process-step reveal delay-seq-1">
-                <span class="icon">🔍</span>
-                <h3>Análise Imediata</h3>
-                <p>Identifique exatamente o que está travando o seu CPF nos órgãos de proteção utilizando nossas ferramentas recomendadas.</p>
-            </div>
-            <div class="process-step reveal delay-seq-2">
-                <span class="icon">📄</span>
-                <h3>Aplicação do Método</h3>
-                <p>Siga o script validado e utilize a brecha legal do Art. 43 do Código de Defesa do Consumidor. Tudo administrativo, sem burocracia.</p>
-            </div>
-            <div class="process-step reveal delay-seq-3">
-                <span class="icon">💳</span>
-                <h3>Crédito Liberado</h3>
-                <p>Com as restrições removidas ou prescritas de forma correta, seu Score volta a subir e as portas do crédito se abrem novamente.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. PROVA SOCIAL -->
-    <section class="testimonials">
-        <h2 class="section-title reveal">Quem aplica, aprova</h2>
-        <h4 class="section-subtitle reveal">Resultados reais de brasileiros que recuperaram a paz</h4>
-        
-        <div class="testimonials-grid">
-            <div class="testimonial-card reveal delay-seq-1">
-                <div class="stars">★★★★★</div>
-                <p>"Achei que era mais uma promessa falsa da internet, mas resolvi arriscar pelo valor. Em poucos dias apliquei o método e meu Score subiu 350 pontos. Na semana seguinte consegui financiar minha moto!"</p>
-                <div class="client-info">
-                    <strong>Marcos Oliveira</strong>
-                    <span>✅ Compra Verificada</span>
+        <header>
+            <a href="#" class="logo">
+                <!-- Ícone Escudo SVG -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22S4 16 4 9V5L12 2L20 5V9C20 16 12 22 12 22Z" fill="#2183c4" stroke="#0f4f8c" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M9 12L11 14L15 10" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="logo-text">
+                    <span>SOLUÇÃO</span>
+                    <span>CPF LIMPO</span>
                 </div>
-            </div>
-            <div class="testimonial-card reveal delay-seq-2">
-                <div class="stars">★★★★★</div>
-                <p>"Eu estava desesperada pagando juros abusivos. O material me mostrou exatamente como contestar as dívidas antigas direto no sistema. Fiz tudo pelo celular, sem pagar honorários para ninguém."</p>
-                <div class="client-info">
-                    <strong>Juliana Costa</strong>
-                    <span>✅ Compra Verificada</span>
-                </div>
-            </div>
-            <div class="testimonial-card reveal delay-seq-3">
-                <div class="stars">★★★★★</div>
-                <p>"Direto ao ponto. O guia ensina o que os bancos não querem que você saiba sobre o Código de Defesa do Consumidor. Consegui limpar meu nome de uma dívida de 2018 que ainda estava me travando."</p>
-                <div class="client-info">
-                    <strong>Roberto Almeida</strong>
-                    <span>✅ Compra Verificada</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PREÇO DE IMPULSO FINAL -->
-    <section class="cta-section">
-        <div class="cta-box reveal">
-            <h2>Sua liberdade financeira por R$ 67,90</h2>
-            <p>Não perca mais financiamentos, cartões e oportunidades por causa de apontamentos indevidos ou prescritos. O acesso é enviado na hora pro seu e-mail.</p>
-            <a href="#checkout-link-aqui" class="btn">
-                LIBERAR MEU ACESSO AGORA
-                <span class="subtext">Pagamento 100% Seguro via PIX ou Cartão</span>
             </a>
-        </div>
-    </section>
+        </header>
 
-    <!-- 5. RODAPÉ DE PROTEÇÃO (AVISO LEGAL) -->
+        <main class="main-content">
+            <h1 class="headline">DESVINCULE SEU CPF DO LIMBO E<br>LIMPE SEU NOME DEFINITIVAMENTE!</h1>
+            <p class="subheadline">O Método Administrativo Exclusivo Amparado no Art. 43 do CDC para<br>Regularizar sua Situação Creditícia sem Burocracia!</p>
+
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">🔓⚙️</div>
+                    <h3>MÉTODO<br>ADMINISTRATIVO</h3>
+                    <p>Passo a Passo Validado Legalmente</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">☁️💻</div>
+                    <h3>100% ONLINE<br>E RÁPIDO</h3>
+                    <p>Acesso Imediato ao Conteúdo</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">👨‍💼📝</div>
+                    <h3>SEM ADVOGADOS<br>OU PROCESSOS</h3>
+                    <p>Evite Gastos com Honorários Legais</p>
+                </div>
+            </div>
+
+            <div class="cta-container">
+                <a href="#" class="cta-btn">QUERO LIMPAR MEU CPF AGORA! 👉 (Apenas R$ 67,90)</a>
+                
+                <div class="payment-info">
+                    <div class="payment-icons">
+                        <!-- Logos genéricos de pagamento (Pix, Visa, Master) em base64/svg para simular a imagem -->
+                        <span style="color: #32bcad; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 2px;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.996 1.88a1.27 1.27 0 00-.916.39L1.442 11.906a1.32 1.32 0 000 1.838l9.638 9.638a1.267 1.267 0 001.838 0l9.638-9.638a1.32 1.32 0 000-1.838l-9.638-9.638a1.27 1.27 0 00-.922-.39zm0 6.641a3.486 3.486 0 110 6.973 3.486 3.486 0 010-6.973z"/></svg>
+                            pix
+                        </span>
+                        <span style="color: #1434CB; font-weight: 900; font-style: italic; font-size: 1.2rem; margin-left: 5px;">VISA</span>
+                        <svg width="30" height="18" viewBox="0 0 36 22" style="margin-left: 5px;">
+                            <circle cx="11" cy="11" r="11" fill="#EB001B"/>
+                            <circle cx="25" cy="11" r="11" fill="#F79E1B"/>
+                        </svg>
+                    </div>
+                    <p class="payment-text">Acesso Imediato via PIX | Pagamento Seguro</p>
+                    <p class="urgency-text">ÚLTIMAS VAGAS COM DESCONTO!</p>
+                </div>
+            </div>
+
+            <div class="testimonials">
+                <!-- Depoimento 1 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Marina S." class="testimonial-avatar">
+                        <span class="testimonial-name">Marina S.</span>
+                    </div>
+                    <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Marina S.</p>
+                </div>
+
+                <!-- Depoimento 2 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos P." class="testimonial-avatar">
+                        <span class="testimonial-name">Carlos P.</span>
+                    </div>
+                    <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Carlos P.</p>
+                </div>
+
+                <!-- Depoimento 3 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ana L." class="testimonial-avatar">
+                        <span class="testimonial-name">Ana L.</span>
+                    </div>
+                    <p class="testimonial-text">"Eu não acreditava, mas em 10 dias meu CPF sumiu das restrições! Melhor investimento!" – Ana L.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
     <footer>
-        <div class="legal-disclaimer">
-            <strong>AVISO LEGAL IMPORTANTE:</strong> Este site e o produto comercializado tratam-se de um material de caráter estritamente educacional e informativo. O "Método Nome Limpo" ensina estratégias administrativas baseadas no Código de Defesa do Consumidor (CDC) para negociação, revisão e contestação de débitos. <strong>NÃO</strong> somos um escritório de advocacia, <strong>NÃO</strong> realizamos o serviço por você e <strong>NÃO</strong> garantimos resultados absolutos, remoção mágica de dívidas legítimas ou aumento imediato de Score, pois cada caso é único e depende exclusivamente das instituições financeiras e dos órgãos de proteção ao crédito (SPC/Serasa/Boa Vista). Qualquer decisão tomada com base neste material é de total responsabilidade do usuário.
-        </div>
-        <div class="copyright">
-            &copy; 2026 Método Nome Limpo. Todos os direitos reservados.
-        </div>
+        <svg class="footer-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5z"/></svg>
+        <h4>**AVISO LEGAL**</h4>
+        <p>Este método é educacional e consultivo. Não garantimos resultados financeiros ou a remoção imediata das restrições de crédito. Os resultados variam e dependem da aplicação do guia administrativo e da situação específica das dívidas nos órgãos de proteção ao crédito. O uso das informações é de inteira responsabilidade do usuário. Consulte sempre o CDC e busque orientação profissional se necessário.</p>
+        <p>&copy; 2024 CPF Limpo Agora. Todos os Direitos Reservados. <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
     </footer>
-
-    <script>
-        // Script simples para animação de scroll
-        const revealElements = document.querySelectorAll('.reveal');
-        
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, {
-            rootMargin: "0px 0px -20px 0px", 
-            threshold: 0.1 
-        });
-
-        revealElements.forEach(el => {
-            revealObserver.observe(el);
-        });
-    </script>
 
 </body>
 </html>
-```
