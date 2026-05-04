@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sistema Nacional de Emissão de Protocolos - Portal do Consumidor</title>
     
+    <!-- Fontes e Ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -24,12 +25,14 @@
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
         .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
+        /* Header */
         header { padding: 15px 0; background: var(--white); border-bottom: 2px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-weight: 900; font-size: clamp(0.65rem, 2.5vw, 1.1rem); color: var(--primary); display: flex; align-items: center; gap: 8px; }
         .logo i { color: var(--secondary); font-size: clamp(1rem, 3vw, 1.4rem); }
         .secure-header { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700; color: #666; }
 
+        /* Hero */
         .hero { padding: clamp(30px, 5vw, 70px) 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #eef2f7 100%); }
         .hero-flex { display: flex; align-items: center; gap: clamp(20px, 5vw, 60px); flex-wrap: wrap; }
         .hero-text { flex: 1.2; min-width: 300px; }
@@ -40,15 +43,16 @@
         
         .subtitle { font-size: clamp(0.9rem, 4vw, 1.25rem); font-weight: 800; color: var(--primary); margin-bottom: 25px; border-left: 5px solid var(--secondary); padding-left: 15px; }
 
-        /* Selo PIX Corrigido para Mobile */
+        /* Selo PIX Corrigido */
         .pix-badge {
-            display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 15px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px;
+            display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 18px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px;
         }
-        .pix-badge img { height: 25px; width: auto; object-fit: contain; }
+        .pix-badge img { height: 25px; width: auto; }
         .pix-badge-text { text-align: left; }
         .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; }
-        .pix-badge-text span { font-size: 0.7rem; color: #444; }
+        .pix-badge-text span { font-size: 0.7rem; color: #444; font-weight: 600; }
 
+        /* Painel */
         .consult-panel { background: var(--white); padding: clamp(25px, 5vw, 40px); border-radius: 15px; box-shadow: 0 25px 50px rgba(0,0,0,0.1); border: 1px solid #e0e0e0; }
         .panel-header { margin-bottom: 25px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px; }
         .panel-header h3 { font-size: 0.85rem; color: var(--primary); letter-spacing: 1px; }
@@ -67,18 +71,19 @@
         
         .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 20px; border-radius: 10px; }
         .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 10px; text-decoration: none; font-weight: 900; font-size: 1.2rem; margin-top: 20px; animation: pulse 2s infinite; text-align: center; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
+        /* Benefícios */
         .benefits-bar { padding: 30px 0; background: var(--primary); color: var(--white); }
         .benefits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: center; }
         @media (min-width: 768px) { .benefits-grid { grid-template-columns: repeat(4, 1fr); } }
         .benefit-item i { font-size: 1.6rem; color: var(--secondary); margin-bottom: 10px; display: block; }
         .benefit-item strong { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
 
+        /* Relatórios de Utilização */
         .social-proof { padding: 60px 0; background: #eef2f7; }
         .wp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         .wp-item { display: flex; align-items: flex-start; gap: 12px; }
-        .wp-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+        .wp-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .wp-bubble { background: var(--whatsapp-bg); padding: 12px 16px; border-radius: 0 15px 15px 15px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 100%; font-size: 0.92rem; }
         .wp-name { font-weight: 800; color: #075e54; font-size: 0.85rem; margin-bottom: 4px; display: block; }
         .wp-footer { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 4px; font-size: 0.65rem; color: #777; }
@@ -117,11 +122,10 @@
                 <p style="margin-bottom: 25px; color: #555; font-size: 1.05rem; font-weight: 600;">Tenha em mãos as peças administrativas oficiais para solicitar a exclusão de apontamentos internos. O sistema envia automaticamente o dossiê de retificação pronto para ser protocolado.</p>
 
                 <div class="pix-badge">
-                    <!-- LINK DA IMAGEM ATUALIZADO PARA MAIOR COMPATIBILIDADE -->
                     <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
                     <div class="pix-badge-text">
                         <strong>ENVIO AUTOMÁTICO VIA WHATSAPP E E-MAIL</strong>
-                        <span>Seu protocolo é liberado instantaneamente após a compensação do PIX.</span>
+                        <span>O dossiê é liberado imediatamente após a compensação do PIX.</span>
                     </div>
                 </div>
             </div>
@@ -151,7 +155,7 @@
                             <h4 style="color: var(--secondary); font-size: 1.3rem;"><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
                             <p style="font-weight: 700; color: #444; font-size: 0.85rem;">Dossiê administrativo passível de <strong>Emissão Imediata</strong> localizado para este CPF.</p>
                         </div>
-                        <a href="SEU_LINK_AQUI" class="btn-checkout">LIBERAR MEU PROTOCOLO DE BAIXA (R$ 30,00)</a>
+                        <a href="SEU_LINK_DE_CHECKOUT" class="btn-checkout">LIBERAR MEU PROTOCOLO DE BAIXA (R$ 30,00)</a>
                     </div>
                 </div>
             </div>
@@ -174,20 +178,31 @@
     <div class="container">
         <h2 style="text-align: center; margin-bottom: 40px; font-size: 1.8rem; color: var(--primary);">Relatórios de Utilização</h2>
         <div class="wp-grid">
+            <!-- RICARDO OLIVEIRA -->
             <div class="wp-item">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80" class="wp-avatar" alt="Foto Ricardo">
                 <div class="wp-bubble">
                     <span class="wp-name">Ricardo Oliveira</span>
                     <p>Danton, o PDF chegou na hora! Segui o passo a passo do guia e meu status atualizou em 4 dias. Muito prático!</p>
                     <div class="wp-footer">14:22 <i class="fas fa-check-double"></i></div>
                 </div>
             </div>
+            <!-- MARIANA SOUZA -->
             <div class="wp-item">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" class="wp-avatar" alt="Foto Mariana">
                 <div class="wp-bubble">
                     <span class="wp-name">Mariana Souza</span>
                     <p>O guia é excelente. Usei o modelo de protocolo que veio no material e enviei no consumidor.gov. Deu tudo certo!</p>
                     <div class="wp-footer">10:05 <i class="fas fa-check-double"></i></div>
+                </div>
+            </div>
+            <!-- ANDRÉ COSTA (RESTAURADO) -->
+            <div class="wp-item">
+                <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?auto=format&fit=crop&w=150&q=80" class="wp-avatar" alt="Foto André">
+                <div class="wp-bubble">
+                    <span class="wp-name">André Costa</span>
+                    <p>Muito bom ter o material pronto pra usar. Economizei muito tempo e o resultado administrativo foi ótimo. Recomendo!</p>
+                    <div class="wp-footer">16:45 <i class="fas fa-check-double"></i></div>
                 </div>
             </div>
         </div>
@@ -196,7 +211,7 @@
 
 <footer>
     <div class="container">
-        <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções e modelos de documentos administrativos fundamentados no CDC.</p>
+        <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções fundamentadas no Art. 43 do CDC.</p>
         <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
     </div>
 </footer>
