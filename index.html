@@ -6,7 +6,7 @@
     <title>LIMPE SEU CPF !!!</title>
     
     <!-- Fontes e Ícones -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -45,19 +45,20 @@
 
         /* FONTE FORÇADA PARA FICAR GROSSA E PROFISSIONAL */
         h1 { 
-            font-family: 'Montserrat', Arial, sans-serif !important; 
+            font-family: 'Inter', Arial, sans-serif !important; 
             font-size: clamp(2.2rem, 4.5vw, 3.2rem) !important; 
             font-weight: 900 !important; 
             line-height: 1.15 !important; 
             color: var(--primary); 
             margin-bottom: 20px; 
-            letter-spacing: -1px; 
+            letter-spacing: -1.5px; 
         }
         h1 span { 
             color: var(--secondary); 
             display: block; 
-            font-size: clamp(2rem, 4.2vw, 3rem) !important; 
-            margin-top: 5px;
+            font-size: clamp(1.8rem, 4vw, 2.8rem) !important; 
+            margin-top: 8px;
+            line-height: 1.2 !important;
         }
         
         .subtitle { 
@@ -147,7 +148,6 @@
         /* AJUSTES MOBILE */
         @media (max-width: 991px) {
             .hero-text { text-align: center; }
-            h1 br { display: none; } /* Remove as quebras de linha manuais no celular */
             .subtitle { border-left: none; border-top: 4px solid var(--secondary); padding: 15px 0 0 0; max-width: 90%; margin: 0 auto 25px auto; }
             .desc-text { max-width: 100%; }
             .pix-badge { flex-direction: column; text-align: center; }
@@ -172,8 +172,8 @@
     <div class="container">
         <div class="hero-flex">
             <div class="hero-text">
-                <!-- Título ajustado com quebra de linha manual para não esticar no desktop -->
-                <h1>ESTÁ COM O NOME SUJO? <span>LIMPE O SEU NOME<br>COM O NOSSO PROTOCOLO</span></h1>
+                <!-- Quebra de linha manual removida para permitir responsividade natural -->
+                <h1>ESTÁ COM O NOME SUJO? <span>LIMPE O SEU NOME COM O NOSSO PROTOCOLO</span></h1>
                 
                 <p class="subtitle">LIBERE O PROTOCOLO DE LIBERAÇÃO DE CRÉDITO E BAIXA DE RESTRIÇÕES AGORA</p>
                 
