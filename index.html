@@ -36,22 +36,53 @@
         .hero { padding: clamp(30px, 5vw, 80px) 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #eef2f7 100%); border-bottom: 1px solid #ddd; }
         .hero-flex { display: flex; flex-direction: column; gap: 30px; }
         
-        /* AJUSTE DO ENQUADRAMENTO NO COMPUTADOR */
+        /* ENQUADRAMENTO EXATO PARA COMPUTADOR */
         @media (min-width: 992px) {
-            .hero-flex { flex-direction: row; align-items: center; gap: 50px; justify-content: space-between; }
-            .hero-text { flex: 1; padding-right: 40px; }
-            .hero-panel { flex: 0.85; max-width: 480px; margin-left: auto; }
+            .hero-flex { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; }
+            .hero-text { width: 55%; padding-right: 20px; }
+            .hero-panel { width: 45%; max-width: 450px; }
         }
 
-        /* AJUSTE DO TÍTULO (H1) E SUBTÍTULO */
-        h1 { font-size: clamp(2.4rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; color: var(--primary); margin-bottom: 25px; letter-spacing: -1px; max-width: 650px; }
-        h1 span { color: var(--secondary); display: block; font-size: clamp(2.2rem, 10vw, 3.5rem); }
-        .subtitle { font-family: 'Open Sans', sans-serif; font-size: clamp(1.1rem, 4vw, 1.3rem); font-weight: 600; line-height: 1.6; color: var(--primary); margin-bottom: 30px; border-left: 5px solid var(--secondary); padding-left: 15px; max-width: 550px; }
+        /* FONTE FORÇADA PARA FICAR GROSSA E PROFISSIONAL */
+        h1 { 
+            font-family: 'Montserrat', Arial, sans-serif !important; 
+            font-size: clamp(2.2rem, 4.5vw, 3.2rem) !important; 
+            font-weight: 900 !important; 
+            line-height: 1.15 !important; 
+            color: var(--primary); 
+            margin-bottom: 20px; 
+            letter-spacing: -1px; 
+        }
+        h1 span { 
+            color: var(--secondary); 
+            display: block; 
+            font-size: clamp(2rem, 4.2vw, 3rem) !important; 
+            margin-top: 5px;
+        }
+        
+        .subtitle { 
+            font-family: 'Open Sans', Arial, sans-serif !important; 
+            font-size: clamp(1.05rem, 2vw, 1.2rem) !important; 
+            font-weight: 700 !important; 
+            line-height: 1.5; 
+            color: var(--primary); 
+            margin-bottom: 25px; 
+            border-left: 5px solid var(--secondary); 
+            padding-left: 15px; 
+            max-width: 90%; 
+        }
+
+        .desc-text {
+            margin-bottom: 30px; 
+            color: #444; 
+            font-size: 1.1rem; 
+            font-weight: 400 !important; 
+            line-height: 1.6;
+            max-width: 95%;
+        }
 
         /* Selo Pix */
-        .pix-badge {
-            display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 18px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px;
-        }
+        .pix-badge { display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 18px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px; }
         .pix-badge img { height: 28px; width: auto; object-fit: contain; }
         .pix-badge-text { text-align: left; }
         .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; }
@@ -68,10 +99,7 @@
         input[type="text"] { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; font-weight: 700; outline: none; transition: all 0.3s ease; color: var(--primary); }
         input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(26, 58, 90, 0.1); }
 
-        .btn-consult { 
-            width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 8px; 
-            font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 15px;
-        }
+        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 8px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 15px; }
         .btn-consult:hover { background: #0a1929; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
         #loading-state, #result-state { display: none; text-align: center; }
@@ -79,10 +107,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 25px; border-radius: 10px; margin-top: 10px; }
-        .btn-checkout { 
-            display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; 
-            text-decoration: none; font-weight: 900; font-size: 1.3rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center;
-        }
+        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1.3rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center; }
 
         /* Benefícios */
         .benefits-bar { padding: 40px 0; background: var(--primary); color: var(--white); }
@@ -97,10 +122,7 @@
         .tech-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
         @media (min-width: 768px) { .tech-grid { grid-template-columns: repeat(3, 1fr); } }
         
-        .tech-card { 
-            padding: 35px; background: var(--light); border-radius: 12px; border-top: 6px solid var(--primary); 
-            transition: all 0.3s ease; text-align: center; cursor: pointer;
-        }
+        .tech-card { padding: 35px; background: var(--light); border-radius: 12px; border-top: 6px solid var(--primary); transition: all 0.3s ease; text-align: center; cursor: pointer; }
         .tech-card:hover { transform: translateY(-10px); background: #ffffff; box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
         .tech-card i { font-size: 2.3rem; color: var(--primary); margin-bottom: 15px; display: block; transition: color 0.3s ease; }
         .tech-card:hover i { color: var(--secondary); }
@@ -122,10 +144,12 @@
         footer { background: var(--dark); color: #777; padding: 60px 0 30px; font-size: 0.8rem; }
         .footer-line { border-top: 1px solid #1a2a3a; margin-top: 40px; padding-top: 40px; text-align: center; max-width: 900px; margin-inline: auto; line-height: 1.6; }
 
-        /* AJUSTES MOBILE EXTRAS (Borda elegante no subtitulo) */
-        @media (max-width: 900px) {
+        /* AJUSTES MOBILE */
+        @media (max-width: 991px) {
             .hero-text { text-align: center; }
-            .subtitle { border-left: none; border-top: 5px solid var(--secondary); padding: 15px 0 0 0; max-width: 85%; margin: 0 auto 25px auto; display: block; }
+            h1 br { display: none; } /* Remove as quebras de linha manuais no celular */
+            .subtitle { border-left: none; border-top: 4px solid var(--secondary); padding: 15px 0 0 0; max-width: 90%; margin: 0 auto 25px auto; }
+            .desc-text { max-width: 100%; }
             .pix-badge { flex-direction: column; text-align: center; }
             .pix-badge-text { text-align: center; }
         }
@@ -148,9 +172,12 @@
     <div class="container">
         <div class="hero-flex">
             <div class="hero-text">
-                <h1>ESTÁ COM O NOME SUJO? <span>LIMPE  O SEU NOME COM O NOSSO PROTOCOLO</span></h1>
+                <!-- Título ajustado com quebra de linha manual para não esticar no desktop -->
+                <h1>ESTÁ COM O NOME SUJO? <span>LIMPE O SEU NOME<br>COM O NOSSO PROTOCOLO</span></h1>
+                
                 <p class="subtitle">LIBERE O PROTOCOLO DE LIBERAÇÃO DE CRÉDITO E BAIXA DE RESTRIÇÕES AGORA</p>
-                <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem; font-weight: 300;">Receba acesso imediato ao protocolo fundamentado no Código de Defesa do Consumidor. Nosso sistema processa e disponibiliza seu dossiê de retificação em segundos para a exclusão de apontamentos prescritos (5 anos) e revisão de juros abusivos</p>
+                
+                <p class="desc-text">Receba acesso imediato ao protocolo fundamentado no Código de Defesa do Consumidor. Nosso sistema processa e disponibiliza seu dossiê de retificação em segundos para a exclusão de apontamentos prescritos (5 anos) e revisão de juros abusivos</p>
                 
                 <div class="pix-badge">
                     <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
