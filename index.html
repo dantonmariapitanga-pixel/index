@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- NOME DA PÁGINA RESTAURADO -->
     <title>Sistema Nacional de Emissão de Protocolos - Portal do Consumidor</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -27,8 +26,6 @@
 
         header { padding: 15px 0; background: var(--white); border-bottom: 2px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        
-        /* Logo ajustado para não quebrar no mobile mesmo sendo longo */
         .logo { font-weight: 900; font-size: clamp(0.65rem, 2.5vw, 1.1rem); color: var(--primary); display: flex; align-items: center; gap: 8px; }
         .logo i { color: var(--secondary); font-size: clamp(1rem, 3vw, 1.4rem); }
         .secure-header { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700; color: #666; }
@@ -43,11 +40,11 @@
         
         .subtitle { font-size: clamp(0.9rem, 4vw, 1.25rem); font-weight: 800; color: var(--primary); margin-bottom: 25px; border-left: 5px solid var(--secondary); padding-left: 15px; }
 
-        /* Selo PIX Otimizado */
+        /* Selo PIX Corrigido para Mobile */
         .pix-badge {
             display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 15px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px;
         }
-        .pix-badge img { height: 25px; }
+        .pix-badge img { height: 25px; width: auto; object-fit: contain; }
         .pix-badge-text { text-align: left; }
         .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; }
         .pix-badge-text span { font-size: 0.7rem; color: #444; }
@@ -63,7 +60,6 @@
         input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(26, 58, 90, 0.1); }
 
         .btn-consult { width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 10px; font-weight: 800; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .btn-consult:hover { background: #0a1929; transform: translateY(-2px); }
 
         #loading-state, #result-state { display: none; text-align: center; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 25px auto; }
@@ -79,12 +75,6 @@
         .benefit-item i { font-size: 1.6rem; color: var(--secondary); margin-bottom: 10px; display: block; }
         .benefit-item strong { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        .how-works { padding: 60px 0; background: var(--white); }
-        .section-title { text-align: center; margin-bottom: 40px; font-size: 1.8rem; color: var(--primary); }
-        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .tech-card { padding: 30px; background: var(--light); border-radius: 12px; border-top: 6px solid var(--primary); text-align: center; }
-        .tech-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 15px; }
-
         .social-proof { padding: 60px 0; background: #eef2f7; }
         .wp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         .wp-item { display: flex; align-items: flex-start; gap: 12px; }
@@ -95,7 +85,6 @@
         .wp-footer i { color: var(--whatsapp-blue); }
 
         footer { background: var(--dark); color: #777; padding: 60px 0 30px; font-size: 0.75rem; text-align: center; }
-        .footer-line { max-width: 900px; margin: 0 auto; line-height: 1.6; }
 
         @media (max-width: 600px) {
             .hero-text { text-align: center; }
@@ -111,7 +100,6 @@
     <div class="container">
         <div class="nav-wrapper">
             <div class="logo">
-                <!-- LOGO ORIGINAL RESTAURADO -->
                 <i class="fas fa-university"></i> SISTEMA DE PROTOCOLO IMEDIATO DE SOLICITACĀO DE LIMPEZA DE NOME
             </div>
             <div class="secure-header"><i class="fas fa-lock"></i> SSL 256-BIT</div>
@@ -124,13 +112,13 @@
         <div class="hero-flex">
             <div class="hero-text">
                 <h1>SISTEMA DE BAIXA: <span>LIMPE SEU CPF AGORA</span></h1>
-                <!-- SUBTÍTULO ORIGINAL RESTAURADO -->
                 <p class="subtitle">RECEBA O GUIA TÉCNICO E O PROTOCOLO DE BAIXA IMEDIATA FUNDAMENTADO NO ART. 43 DO CDC.</p>
                 
                 <p style="margin-bottom: 25px; color: #555; font-size: 1.05rem; font-weight: 600;">Tenha em mãos as peças administrativas oficiais para solicitar a exclusão de apontamentos internos. O sistema envia automaticamente o dossiê de retificação pronto para ser protocolado.</p>
 
                 <div class="pix-badge">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix">
+                    <!-- LINK DA IMAGEM ATUALIZADO PARA MAIOR COMPATIBILIDADE -->
+                    <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
                     <div class="pix-badge-text">
                         <strong>ENVIO AUTOMÁTICO VIA WHATSAPP E E-MAIL</strong>
                         <span>Seu protocolo é liberado instantaneamente após a compensação do PIX.</span>
@@ -182,34 +170,10 @@
     </div>
 </div>
 
-<section class="how-works">
-    <div class="container">
-        <h2 class="section-title">Como Funciona</h2>
-        <div class="tech-grid">
-            <div class="tech-card">
-                <i class="fas fa-search"></i>
-                <h3>1. Verificação</h3>
-                <p style="font-size: 0.9rem; color: #555;">O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios da Lei Federal 8.078/90.</p>
-            </div>
-            <div class="tech-card">
-                <i class="fas fa-envelope-open-text"></i>
-                <h3>2. Emissão</h3>
-                <p style="font-size: 0.9rem; color: #555;">Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade e o protocolo estruturado.</p>
-            </div>
-            <div class="tech-card">
-                <i class="fas fa-user-check"></i>
-                <h3>3. Ativação</h3>
-                <p style="font-size: 0.9rem; color: #555;">Com o dossiê em mãos, você realiza o protocolo administrativo nos canais oficiais indicados para forçar a regularização.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 <section class="social-proof">
     <div class="container">
-        <h2 class="section-title">Relatórios de Utilização</h2>
+        <h2 style="text-align: center; margin-bottom: 40px; font-size: 1.8rem; color: var(--primary);">Relatórios de Utilização</h2>
         <div class="wp-grid">
-            <!-- DEPOIMENTOS ORIGINAIS RESTAURADOS -->
             <div class="wp-item">
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
                 <div class="wp-bubble">
@@ -226,24 +190,14 @@
                     <div class="wp-footer">10:05 <i class="fas fa-check-double"></i></div>
                 </div>
             </div>
-            <div class="wp-item">
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
-                <div class="wp-bubble">
-                    <span class="wp-name">André Costa</span>
-                    <p>Muito bom ter o material pronto pra usar. Economizei muito tempo e o resultado administrativo foi ótimo. Recomendo!</p>
-                    <div class="wp-footer">16:45 <i class="fas fa-check-double"></i></div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
 
 <footer>
     <div class="container">
-        <div class="footer-line">
-            <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções e modelos de documentos administrativos fundamentados no CDC. A execução do protocolo nos órgãos competentes é de inteira responsabilidade do usuário.</p>
-            <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
-        </div>
+        <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções e modelos de documentos administrativos fundamentados no CDC.</p>
+        <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
     </div>
 </footer>
 
