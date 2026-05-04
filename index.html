@@ -5,153 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>LIMPE SEU CPF !!!</title>
     
-    <!-- Fontes e Ícones -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Fontes e Ícones: Montserrat removida, utilizando apenas Raleway e Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #1a3a5a;
+            --primary: #0a2540;
             --secondary: #28a745;
             --dark: #0a1929;
             --light: #f8f9fa;
             --white: #ffffff;
-            --whatsapp-bg: #dcf8c6;
-            --whatsapp-blue: #34b7f1;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Open Sans', sans-serif; background-color: var(--white); color: var(--dark); line-height: 1.6; overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
+        
+        /* TODOS OS TÍTULOS AGORA USAM A FONTE NOVA (RALEWAY) */
+        h1, h2, h3, h4 { font-family: 'Raleway', sans-serif; text-transform: uppercase; }
+        
         .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
         /* Header Oficial */
         header { padding: 15px 0; background: var(--white); border-bottom: 2px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 900; font-size: clamp(0.65rem, 2.5vw, 1.1rem); color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .logo { font-weight: 600; font-size: clamp(0.65rem, 2.5vw, 1.1rem); color: var(--primary); display: flex; align-items: center; gap: 8px; }
         .logo i { color: var(--secondary); font-size: clamp(1rem, 3vw, 1.4rem); }
-        .secure-header { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700; color: #666; }
+        .secure-header { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700; color: #666; font-family: 'Open Sans', sans-serif;}
 
         /* Hero Section */
-        .hero { padding: clamp(30px, 5vw, 80px) 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #eef2f7 100%); border-bottom: 1px solid #ddd; }
-        .hero-flex { display: flex; flex-direction: column; gap: 30px; }
+        .hero { padding: clamp(40px, 5vw, 80px) 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #f4f7f9 100%); border-bottom: 1px solid #ddd; }
+        .hero-flex { display: flex; flex-direction: column; gap: 40px; }
         
-        /* ENQUADRAMENTO EXATO PARA COMPUTADOR */
+        /* ENQUADRAMENTO PARA COMPUTADOR */
         @media (min-width: 992px) {
             .hero-flex { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; }
             .hero-text { width: 55%; padding-right: 20px; }
             .hero-panel { width: 45%; max-width: 450px; }
         }
 
-        /* FONTE FORÇADA PARA FICAR GROSSA E PROFISSIONAL */
+        /* TÍTULO PRINCIPAL (Fino e Elegante) */
         h1 { 
-            font-family: 'Inter', Arial, sans-serif !important; 
-            font-size: clamp(2.2rem, 4.5vw, 3.2rem) !important; 
-            font-weight: 900 !important; 
-            line-height: 1.15 !important; 
+            font-size: clamp(2rem, 4.5vw, 3.5rem) !important; 
+            font-weight: 300 !important; 
+            line-height: 1.3 !important; 
             color: var(--primary); 
-            margin-bottom: 20px; 
-            letter-spacing: -1.5px; 
+            margin-bottom: 25px; 
+            letter-spacing: 1px;
         }
         h1 span { 
             color: var(--secondary); 
-            display: block; 
-            font-size: clamp(1.8rem, 4vw, 2.8rem) !important; 
-            margin-top: 8px;
-            line-height: 1.2 !important;
+            display: inline-block; 
+            margin-top: 10px;
         }
         
         .subtitle { 
-            font-family: 'Open Sans', Arial, sans-serif !important; 
-            font-size: clamp(1.05rem, 2vw, 1.2rem) !important; 
-            font-weight: 700 !important; 
-            line-height: 1.5; 
+            font-size: clamp(1rem, 2vw, 1.15rem) !important; 
+            font-weight: 600 !important; 
+            line-height: 1.6; 
             color: var(--primary); 
             margin-bottom: 25px; 
-            border-left: 5px solid var(--secondary); 
+            border-left: 4px solid var(--secondary); 
             padding-left: 15px; 
-            max-width: 90%; 
         }
 
         .desc-text {
             margin-bottom: 30px; 
-            color: #444; 
-            font-size: 1.1rem; 
+            color: #555; 
+            font-size: 1.05rem; 
             font-weight: 400 !important; 
-            line-height: 1.6;
-            max-width: 95%;
+            line-height: 1.7;
         }
 
         /* Selo Pix */
         .pix-badge { display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 18px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px; }
         .pix-badge img { height: 28px; width: auto; object-fit: contain; }
         .pix-badge-text { text-align: left; }
-        .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; }
-        .pix-badge-text span { font-size: 0.7rem; color: #444; font-weight: 600; }
+        .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;}
+        .pix-badge-text span { font-size: 0.75rem; color: #444; font-weight: 400; }
 
         /* Painel de Consulta */
-        .consult-panel { background: var(--white); padding: 30px 20px; border-radius: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.12); border: 1px solid #e0e0e0; transition: transform 0.3s ease; }
+        .consult-panel { background: var(--white); padding: 30px 20px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; }
         @media (min-width: 768px) { .consult-panel { padding: 40px; } }
         
         .panel-header { margin-bottom: 25px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .panel-header h3 { font-size: 0.9rem; color: var(--primary); letter-spacing: 1px; }
+        .panel-header h3 { font-size: 1rem; font-weight: 600; color: var(--primary); letter-spacing: 1px; }
         
-        .input-group label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; }
-        input[type="text"] { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; font-weight: 700; outline: none; transition: all 0.3s ease; color: var(--primary); }
-        input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(26, 58, 90, 0.1); }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 10px; font-size: 0.85rem; color: var(--primary); }
+        input[type="text"] { width: 100%; padding: 16px; border: 1px solid #ccc; border-radius: 6px; font-size: 1.2rem; font-weight: 600; outline: none; transition: all 0.3s ease; color: var(--primary); font-family: 'Open Sans', sans-serif;}
+        input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.1); }
 
-        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 8px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 15px; }
-        .btn-consult:hover { background: #0a1929; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 18px; border: none; border-radius: 6px; font-weight: 700; font-size: 1.05rem; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 15px; font-family: 'Raleway', sans-serif; letter-spacing: 1px;}
+        .btn-consult:hover { background: #07192b; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
 
         #loading-state, #result-state { display: none; text-align: center; }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 25px auto; }
+        .loader { border: 3px solid #f3f3f3; border-top: 3px solid var(--secondary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 25px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 25px; border-radius: 10px; margin-top: 10px; }
-        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1.3rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center; }
+        .result-box { background: #e8f5e9; border: 1px solid var(--secondary); padding: 25px; border-radius: 8px; margin-top: 10px; }
+        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 20px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 1.2rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center; font-family: 'Raleway', sans-serif;}
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
 
         /* Benefícios */
         .benefits-bar { padding: 40px 0; background: var(--primary); color: var(--white); }
         .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: center; }
         @media (min-width: 768px) { .benefits-grid { grid-template-columns: repeat(4, 1fr); } }
-        .benefit-item i { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; display: block; }
-        .benefit-item strong { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .benefit-item i { font-size: 1.8rem; color: var(--secondary); margin-bottom: 12px; display: block; }
+        .benefit-item strong { font-family: 'Raleway', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase;}
 
         /* Como Funciona */
         .how-works { padding: 80px 0; background: var(--white); }
-        .section-title { text-align: center; margin-bottom: 50px; font-size: clamp(1.5rem, 5vw, 2rem); color: var(--primary); }
+        .section-title { text-align: center; margin-bottom: 50px; font-size: clamp(1.8rem, 4vw, 2.2rem); font-weight: 300; color: var(--primary); letter-spacing: 1px; }
         .tech-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
         @media (min-width: 768px) { .tech-grid { grid-template-columns: repeat(3, 1fr); } }
         
-        .tech-card { padding: 35px; background: var(--light); border-radius: 12px; border-top: 6px solid var(--primary); transition: all 0.3s ease; text-align: center; cursor: pointer; }
-        .tech-card:hover { transform: translateY(-10px); background: #ffffff; box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
-        .tech-card i { font-size: 2.3rem; color: var(--primary); margin-bottom: 15px; display: block; transition: color 0.3s ease; }
-        .tech-card:hover i { color: var(--secondary); }
-        .tech-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary); }
-        .tech-card p { font-size: 0.9rem; color: #555; text-align: center; }
+        .tech-card { padding: 35px; background: var(--light); border-radius: 8px; transition: all 0.3s ease; text-align: center; border: 1px solid #eee;}
+        .tech-card:hover { transform: translateY(-5px); background: #ffffff; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .tech-card i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; display: block; transition: color 0.3s ease; }
+        .tech-card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; color: var(--primary); }
+        .tech-card p { font-size: 0.95rem; color: #666; line-height: 1.6; font-family: 'Open Sans', sans-serif; text-transform: none;}
 
-        /* Perguntas Frequentes (FAQ) */
-        .faq-section { padding: 80px 0; background: #eef2f7; }
+        /* FAQ */
+        .faq-section { padding: 80px 0; background: #f9fafb; }
         .faq-grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }
-        .faq-item { background: var(--white); border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); transition: all 0.3s ease; }
-        .faq-item:hover { transform: translateX(5px); }
-        .faq-item summary { padding: 22px 20px; font-weight: 800; color: var(--primary); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 1rem; }
+        .faq-item { background: var(--white); border-radius: 8px; border: 1px solid #e5e7eb; transition: all 0.3s ease; }
+        .faq-item summary { font-family: 'Raleway', sans-serif; padding: 20px; font-weight: 600; color: var(--primary); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; }
         .faq-item summary::-webkit-details-marker { display: none; }
-        .faq-item summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--secondary); transition: transform 0.3s ease; }
+        .faq-item summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--secondary); transition: transform 0.3s ease; font-size: 0.8rem;}
         .faq-item[open] summary::after { transform: rotate(180deg); color: var(--primary); }
-        .faq-item p { padding: 0 20px 20px; color: #555; font-size: 0.95rem; line-height: 1.6; border-top: 1px dashed #ddd; margin-top: 5px; padding-top: 15px; }
+        .faq-item p { padding: 0 20px 20px; color: #555; font-size: 0.95rem; line-height: 1.6; font-family: 'Open Sans', sans-serif; text-transform: none;}
 
         /* Rodapé Oficial */
-        footer { background: var(--dark); color: #777; padding: 60px 0 30px; font-size: 0.8rem; }
-        .footer-line { border-top: 1px solid #1a2a3a; margin-top: 40px; padding-top: 40px; text-align: center; max-width: 900px; margin-inline: auto; line-height: 1.6; }
+        footer { background: var(--dark); color: #888; padding: 50px 0 30px; font-size: 0.85rem; }
+        .footer-line { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; text-align: center; max-width: 900px; margin-inline: auto; line-height: 1.6; }
 
         /* AJUSTES MOBILE */
         @media (max-width: 991px) {
-            .hero-text { text-align: center; }
-            .subtitle { border-left: none; border-top: 4px solid var(--secondary); padding: 15px 0 0 0; max-width: 90%; margin: 0 auto 25px auto; }
+            .hero-text { text-align: left; }
+            h1 { font-size: 2.2rem !important; }
+            .subtitle { border-left: 3px solid var(--secondary); border-top: none; padding: 0 0 0 15px; max-width: 100%; margin: 0 0 25px 0; }
             .desc-text { max-width: 100%; }
-            .pix-badge { flex-direction: column; text-align: center; }
-            .pix-badge-text { text-align: center; }
         }
     </style>
 </head>
@@ -161,9 +159,9 @@
     <div class="container">
         <div class="nav-wrapper">
             <div class="logo">
-                <i class="fas fa-university"></i> SISTEMA DE ACESSO AO PROTOCOLO DE SOLICITAÇÃO DE LIMPEZA DE NOME
+                <i class="fas fa-university"></i> SISTEMA DE ACESSO AO PROTOCOLO
             </div>
-            <div class="secure-header"><i class="fas fa-lock"></i> AMBIENTE CRIPTOGRAFADO 256-BIT SSL</div>
+            <div class="secure-header"><i class="fas fa-lock"></i> SSL SEGURO</div>
         </div>
     </div>
 </header>
@@ -172,18 +170,18 @@
     <div class="container">
         <div class="hero-flex">
             <div class="hero-text">
-                <!-- Quebra de linha manual removida para permitir responsividade natural -->
-                <h1>ESTÁ COM O NOME SUJO? <span>LIMPE O SEU NOME COM O NOSSO PROTOCOLO</span></h1>
+                <h1>ESTÁ COM O NOME<br>SUJO?<br>
+                <span>LIMPE O SEU NOME<br>COM O NOSSO<br>PROTOCOLO</span></h1>
                 
-                <p class="subtitle">LIBERE O PROTOCOLO DE LIBERAÇÃO DE CRÉDITO E BAIXA DE RESTRIÇÕES AGORA</p>
+                <p class="subtitle">LIBERE O PROTOCOLO DE RESTABELECIMENTO DE CRÉDITO AGORA MESMO</p>
                 
-                <p class="desc-text">Receba acesso imediato ao protocolo fundamentado no Código de Defesa do Consumidor. Nosso sistema processa e disponibiliza seu dossiê de retificação em segundos para a exclusão de apontamentos prescritos (5 anos) e revisão de juros abusivos</p>
+                <p class="desc-text">Receba acesso imediato ao protocolo fundamentado no Código de Defesa do Consumidor. Nosso sistema disponibiliza seu dossiê de retificação para a exclusão de apontamentos prescritos (5 anos) e revisão de juros abusivos de forma administrativa.</p>
                 
                 <div class="pix-badge">
                     <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
                     <div class="pix-badge-text">
                         <strong>ENVIO AUTOMÁTICO VIA E-MAIL</strong>
-                        <span>O acesso é liberado instantaneamente após a compensação do PIX ou outra forma de pagamento.</span>
+                        <span>O acesso é liberado instantaneamente após a compensação do PIX.</span>
                     </div>
                 </div>
             </div>
@@ -197,24 +195,24 @@
                         <div class="input-group">
                             <label>Informe o CPF para consulta de viabilidade:</label>
                             <input type="text" id="cpf-input" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)" inputmode="numeric">
-                            <p style="font-size: 0.7rem; color: #777; margin-top: 12px; text-align: center;">
-                                <i class="fas fa-user-shield"></i> SEUS DADOS ESTÃO PROTEGIDOS PELA LGPD.
+                            <p style="font-size: 0.75rem; color: #888; margin-top: 15px; text-align: center; font-family: 'Open Sans', sans-serif;">
+                                <i class="fas fa-user-shield"></i> Seus dados estão protegidos.
                             </p>
                         </div>
-                        <button class="btn-consult" onclick="startConsult()">CONSULTAR DIREITO AO NOME LIMPO</button>
+                        <button class="btn-consult" onclick="startConsult()">CONSULTAR MEU CPF</button>
                     </div>
                     
                     <div id="loading-state">
                         <div class="loader"></div>
-                        <p id="loading-text" style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Sincronizando registros...</p>
+                        <p id="loading-text" style="font-family: 'Raleway', sans-serif; font-weight: 600; color: var(--primary); font-size: 0.9rem; margin-top: 15px; text-transform: uppercase;">Acessando base de dados...</p>
                     </div>
 
                     <div id="result-state">
                         <div class="result-box">
-                            <h4 style="color: var(--secondary);"><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
-                            <p style="font-weight: 700; color: #444; font-size: 0.85rem;">Dossiê administrativo passível de <strong>Emissão Imediata</strong> localizado para este CPF.</p>
+                            <h4 style="color: var(--secondary); margin-bottom: 8px; font-weight: 600;"><i class="fas fa-check-circle"></i> STATUS: PROTOCOLO DISPONÍVEL</h4>
+                            <p style="color: #444; font-size: 0.9rem; font-family: 'Open Sans', sans-serif;">Dossiê administrativo de exclusão passível de <strong>Emissão Imediata</strong> localizado.</p>
                         </div>
-                        <a href="https://chk.eduzz.com/39VKO6PYWR" class="btn-checkout">QUERO LIBERAR MEU PROTOCOLO !!! (R$ 30,00)</a>
+                        <a href="https://chk.eduzz.com/39VKO6PYWR" class="btn-checkout">LIBERAR MEU PROTOCOLO (R$ 30,00)</a>
                     </div>
                 </div>
             </div>
@@ -225,10 +223,10 @@
 <div class="benefits-bar">
     <div class="container">
         <div class="benefits-grid">
-            <div class="benefit-item"><i class="fas fa-bolt-lightning"></i> <strong>Liberação Imediata do Protocolo</strong></div>
-            <div class="benefit-item"><i class="fas fa-file-shield"></i> <strong>Ambiente Seguro</strong></div>
-            <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Embasamento Jurídico</strong></div>
-            <div class="benefit-item"><i class="fas fa-chart-line"></i> <strong>Probabilidade de Aumento de Score</strong></div>
+            <div class="benefit-item"><i class="fas fa-bolt"></i> <strong>Acesso Imediato</strong></div>
+            <div class="benefit-item"><i class="fas fa-shield-alt"></i> <strong>100% Seguro</strong></div>
+            <div class="benefit-item"><i class="fas fa-gavel"></i> <strong>Baseado no CDC</strong></div>
+            <div class="benefit-item"><i class="fas fa-level-up-alt"></i> <strong>Melhora no Score</strong></div>
         </div>
     </div>
 </div>
@@ -240,17 +238,17 @@
             <div class="tech-card">
                 <i class="fas fa-search"></i>
                 <h3>1. Verificação</h3>
-                <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios de prescrição de 5 anos e práticas de juros abusivos.</p>
+                <p>Análise de viabilidade administrativa com base nos critérios de prescrição de 5 anos.</p>
             </div>
             <div class="tech-card">
-                <i class="fas fa-envelope-open-text"></i>
-                <h3>2. Emissão do Protocolo</h3>
-                <p>Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade, revisão de juros abusivos e o protocolo estruturado.</p>
+                <i class="fas fa-file-pdf"></i>
+                <h3>2. Emissão do Dossiê</h3>
+                <p>Receba automaticamente o Guia com as teses de caducidade e revisão de juros.</p>
             </div>
             <div class="tech-card">
-                <i class="fas fa-user-check"></i>
-                <h3>3. Ativação Administrativa</h3>
-                <p>Com o dossiê em mãos, você realiza o protocolo administrativo nos canais oficiais indicados para forçar a regularização do seu status.</p>
+                <i class="fas fa-paper-plane"></i>
+                <h3>3. Ativação</h3>
+                <p>Siga o passo a passo para protocolar a solicitação nos órgãos de proteção competentes.</p>
             </div>
         </div>
     </div>
@@ -260,32 +258,18 @@
     <div class="container">
         <h2 class="section-title">Perguntas Frequentes</h2>
         <div class="faq-grid">
-            
             <details class="faq-item">
-                <summary>O que é a caducidade de 5 anos?</summary>
-                <p>De acordo com o Código de Defesa do Consumidor (Art. 43, § 1º), informações negativas sobre dívidas não podem ser mantidas nos cadastros de proteção ao crédito (como SPC e Serasa) por um período superior a 5 anos. Nosso material orienta como exigir a baixa desses apontamentos caso o prazo tenha expirado.</p>
+                <summary>O que é a prescrição de 5 anos?</summary>
+                <p>Pelo Art. 43, § 1º do CDC, dívidas não podem manter o nome sujo por mais de 5 anos. Orientamos como exigir essa baixa.</p>
             </details>
-
             <details class="faq-item">
-                <summary>Com este protocolo, minha dívida deixa de existir?</summary>
-                <p>Não. A dívida em si não desaparece, mas após 5 anos ela <strong>prescreve</strong>. Isso significa que ela perde o direito de ser cobrada judicialmente e, o mais importante, não pode mais manter o seu nome negativado ou prejudicar o seu Score de crédito. Nosso foco é na remoção do apontamento restritivo.</p>
+                <summary>A dívida deixa de existir?</summary>
+                <p>Não, mas ela perde o direito de cobrança judicial e de negativar seu nome nos birôs de crédito.</p>
             </details>
-
             <details class="faq-item">
-                <summary>Como funciona a revisão por juros abusivos?</summary>
-                <p>Muitas instituições financeiras aplicam taxas que ultrapassam os limites permitidos pelo Banco Central. O Guia Técnico fornece embasamento e modelos administrativos para você questionar essas cobranças diretamente nos órgãos de defesa do consumidor, forçando a instituição a recalcular a dívida ou realizar um acordo justo.</p>
+                <summary>Preciso de advogado?</summary>
+                <p>Não! O material é voltado para resoluções administrativas que você mesmo pode fazer via internet (Procon, Consumidor.gov).</p>
             </details>
-
-            <details class="faq-item">
-                <summary>Em quanto tempo recebo acesso ao material?</summary>
-                <p>O envio é <strong>imediato</strong>. Assim que o pagamento for compensado, nosso sistema dispara automaticamente o Guia Técnico em PDF e os modelos de protocolo para o e-mail cadastrado.</p>
-            </details>
-
-            <details class="faq-item">
-                <summary>Eu preciso contratar um advogado para usar o guia?</summary>
-                <p>Não! O material foi estruturado justamente para que você consiga realizar as solicitações de forma <strong>administrativa</strong>, ou seja, diretamente nas plataformas oficiais (como o Consumidor.gov e Procon online), utilizando os textos e teses prontas do nosso PDF, sem a necessidade de intervenção jurídica imediata.</p>
-            </details>
-
         </div>
     </div>
 </section>
@@ -293,8 +277,8 @@
 <footer>
     <div class="container">
         <div class="footer-line">
-            <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções e modelos de documentos administrativos fundamentados no CDC. A execução do protocolo nos órgãos competentes é de inteira responsabilidade do usuário. Não somos um órgão governamental, jurídico ou instituição financeira.</p>
-            <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
+            <p style="font-family: 'Open Sans', sans-serif;"><strong>AVISO:</strong> Comercializamos um Guia Técnico educativo. A execução nos órgãos é de responsabilidade do usuário. Não somos instituição financeira.</p>
+            <p style="margin-top: 20px; opacity: 0.6; font-family: 'Open Sans', sans-serif;">© 2026 Plataforma de Protocolos - Todos os Direitos Reservados.</p>
         </div>
     </div>
 </footer>
@@ -310,23 +294,22 @@
 
     function startConsult() {
         const cpf = document.getElementById('cpf-input').value;
-        if(cpf.length < 14) { alert("Informe um CPF válido."); return; }
+        if(cpf.length < 14) { alert("Por favor, informe um CPF válido."); return; }
         
         document.getElementById('initial-state').style.display = 'none';
         document.getElementById('loading-state').style.display = 'block';
         
         const txt = document.getElementById('loading-text');
         
-        setTimeout(() => { txt.innerText = "Consultando base normativa de Caducidade (5 anos)..."; }, 1200);
-        setTimeout(() => { txt.innerText = "Analisando viabilidade de exclusão por Juros Abusivos..."; }, 2500);
-        setTimeout(() => { txt.innerText = "Mapeando canais de submissão administrativa..."; }, 3800);
-        setTimeout(() => { txt.innerText = "Estruturando Dossiê Técnico para o CPF informado..."; }, 5000);
+        setTimeout(() => { txt.innerText = "CONSULTANDO BASE DE CADUCIDADE (5 ANOS)..."; }, 1200);
+        setTimeout(() => { txt.innerText = "ANALISANDO HISTÓRICO DE JUROS..."; }, 2500);
+        setTimeout(() => { txt.innerText = "PREPARANDO LIBERAÇÃO DO DOSSIÊ..."; }, 3800);
         
         setTimeout(() => {
             if (navigator.vibrate) navigator.vibrate(200);
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('result-state').style.display = 'block';
-        }, 6500);
+        }, 5000);
     }
 </script>
 
