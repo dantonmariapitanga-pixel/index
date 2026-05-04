@@ -2,13 +2,11 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <!-- Essa tag abaixo é o que diz ao celular como se comportar. Não remova. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Nacional de Emissão de Protocolos - Portal do Consumidor</title>
-    
+    <!-- Fontes Institucionais -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
             --primary: #1a3a5a;
@@ -19,93 +17,96 @@
             --whatsapp-bg: #dcf8c6;
             --whatsapp-blue: #34b7f1;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Open Sans', sans-serif; background-color: var(--white); color: var(--dark); line-height: 1.6; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--white); color: var(--dark); line-height: 1.6; }
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
         .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-        /* Header */
+        /* Header Oficial */
         header { padding: 15px 0; background: var(--white); border-bottom: 2px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 900; font-size: clamp(0.65rem, 2.5vw, 1.1rem); color: var(--primary); display: flex; align-items: center; gap: 8px; }
-        .logo i { color: var(--secondary); font-size: clamp(1rem, 3vw, 1.4rem); }
-        .secure-header { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700; color: #666; }
+        .logo { font-weight: 900; font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--secondary); font-size: 1.5rem; }
+        .secure-header { display: flex; align-items: center; gap: 10px; font-size: 0.75rem; font-weight: 700; color: #666; }
+        .secure-header i { color: var(--secondary); }
 
-        /* Hero */
-        .hero { padding: 40px 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #eef2f7 100%); border-bottom: 1px solid #ddd; }
-        .hero-flex { display: flex; flex-direction: column; gap: 30px; }
-        
-        /* Ajuste para Computador */
-        @media (min-width: 992px) {
-            .hero { padding: 80px 0; }
-            .hero-flex { flex-direction: row; align-items: center; gap: 60px; }
-            .hero-text { flex: 1.2; }
-            .hero-panel { flex: 0.8; }
-        }
+        /* Hero Section */
+        .hero { padding: 80px 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #eef2f7 100%); border-bottom: 1px solid #ddd; }
+        .hero-flex { display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
+        .hero-text { flex: 1.2; min-width: 300px; }
+        .hero-panel { flex: 0.8; min-width: 350px; }
 
-        h1 { font-size: clamp(1.8rem, 8vw, 3rem); font-weight: 900; line-height: 1.05; color: var(--primary); margin-bottom: 20px; letter-spacing: -1px; }
-        h1 span { color: var(--secondary); display: block; font-size: clamp(2.2rem, 10vw, 3.5rem); }
-        .subtitle { font-size: clamp(0.9rem, 4vw, 1.25rem); font-weight: 800; color: var(--primary); margin-bottom: 25px; border-left: 5px solid var(--secondary); padding-left: 15px; }
-
-        /* Pix Badge */
-        .pix-badge {
-            display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 18px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px;
-        }
-        .pix-badge img { height: 28px; width: auto; }
-        .pix-badge-text { text-align: left; }
-        .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; }
-        .pix-badge-text span { font-size: 0.7rem; color: #444; font-weight: 600; }
+        h1 { font-size: 3rem; font-weight: 900; line-height: 1.05; color: var(--primary); margin-bottom: 25px; letter-spacing: -1px; }
+        h1 span { color: var(--secondary); display: block; font-size: 3.5rem; }
+        .subtitle { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 30px; border-left: 5px solid var(--secondary); padding-left: 15px; text-transform: uppercase; }
 
         /* Painel de Consulta */
-        .consult-panel { background: var(--white); padding: 30px 20px; border-radius: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.1); border: 1px solid #e0e0e0; }
-        @media (min-width: 768px) { .consult-panel { padding: 40px; } }
-        
+        .consult-panel { background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.12); border: 1px solid #e0e0e0; position: relative; }
         .panel-header { margin-bottom: 25px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .panel-header h3 { font-size: 0.85rem; color: var(--primary); }
+        .panel-header h3 { font-size: 0.9rem; color: var(--primary); letter-spacing: 1px; }
         
-        .input-group label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; }
-        input[type="text"] { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; font-weight: 700; outline: none; color: var(--primary); }
-        
-        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 8px; font-weight: 800; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; margin-top: 15px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; }
+        input[type="text"] { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; font-weight: 700; outline: none; transition: 0.3s; color: var(--primary); }
+        input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(26, 58, 90, 0.1); }
 
+        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 8px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .btn-consult:hover { background: #0a1929; transform: translateY(-2px); }
+
+        /* Estados do Sistema */
         #loading-state, #result-state { display: none; text-align: center; }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 25px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 20px; border-radius: 10px; margin-top: 10px; }
-        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1.2rem; margin-top: 20px; animation: pulse 2s infinite; text-align: center; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+        .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 25px; border-radius: 10px; margin-top: 10px; }
+        .result-box h4 { color: var(--secondary); margin-bottom: 8px; font-size: 1.4rem; }
+        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1.3rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* Benefícios */
-        .benefits-bar { padding: 30px 0; background: var(--primary); color: var(--white); }
-        .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center; }
-        @media (min-width: 768px) { .benefits-grid { grid-template-columns: repeat(4, 1fr); } }
-        .benefit-item i { font-size: 1.5rem; color: var(--secondary); margin-bottom: 10px; display: block; }
-        .benefit-item strong { font-size: 0.7rem; text-transform: uppercase; display: block; }
+        /* Benefits Bar */
+        .benefits-bar { padding: 40px 0; background: var(--primary); color: var(--white); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+        .benefit-item i { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; display: block; }
+        .benefit-item strong { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Como Funciona */
-        .how-works { padding: 60px 0; background: var(--white); }
-        .section-title { text-align: center; margin-bottom: 40px; font-size: 1.6rem; color: var(--primary); }
-        .tech-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
-        @media (min-width: 768px) { .tech-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; } }
-        .tech-card { padding: 30px; background: var(--light); border-radius: 12px; border-top: 6px solid var(--primary); text-align: center; }
-        .tech-card i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; display: block; }
-        .tech-card h3 { font-size: 1rem; margin-bottom: 10px; }
-        .tech-card p { font-size: 0.85rem; color: #555; }
+        /* Etapas de Processamento */
+        .how-works { padding: 100px 0; background: var(--white); }
+        .section-title { text-align: center; margin-bottom: 60px; font-size: 2rem; color: var(--primary); }
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        
+        .tech-card { 
+            padding: 40px; 
+            background: var(--light); 
+            border-radius: 12px; 
+            border-top: 6px solid var(--primary); 
+            transition: all 0.3s ease;
+        }
+        .tech-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; display: block; }
+        .tech-card h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--primary); }
+        .tech-card p { font-size: 0.9rem; color: #555; }
 
-        /* Depoimentos */
-        .social-proof { padding: 60px 0; background: #eef2f7; }
-        .wp-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
-        @media (min-width: 992px) { .wp-grid { grid-template-columns: repeat(3, 1fr); } }
+        /* Feedbacks WhatsApp */
+        .social-proof { padding: 100px 0; background: #eef2f7; }
+        .wp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
         .wp-item { display: flex; align-items: flex-start; gap: 12px; }
-        .wp-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; flex-shrink: 0; }
-        .wp-bubble { background: var(--whatsapp-bg); padding: 12px 16px; border-radius: 0 15px 15px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 100%; font-size: 0.9rem; }
-        .wp-name { font-weight: 800; color: #075e54; font-size: 0.8rem; display: block; margin-bottom: 3px; }
-        .wp-footer { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 5px; font-size: 0.65rem; color: #777; }
-        .wp-footer i { color: var(--whatsapp-blue); }
+        .wp-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+        .wp-bubble { background: var(--whatsapp-bg); padding: 12px 16px; border-radius: 0 15px 15px 15px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 100%; }
+        .wp-name { font-weight: 800; color: #075e54; font-size: 0.85rem; margin-bottom: 4px; display: block; }
+        .wp-text { font-size: 0.92rem; color: #111; line-height: 1.4; }
+        .wp-footer { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 4px; }
+        .wp-time { font-size: 0.65rem; color: #777; }
+        .wp-footer i { font-size: 0.8rem; color: var(--whatsapp-blue); }
 
-        footer { background: var(--dark); color: #777; padding: 40px 0; font-size: 0.75rem; text-align: center; }
+        /* Footer */
+        footer { background: var(--dark); color: #777; padding: 80px 0 30px; font-size: 0.8rem; }
+        .footer-line { border-top: 1px solid #1a2a3a; margin-top: 40px; padding-top: 40px; text-align: center; max-width: 900px; margin-inline: auto; }
+
+        @media (max-width: 900px) {
+            .hero-flex { flex-direction: column; text-align: center; }
+            h1 { font-size: 2.5rem; }
+            h1 span { font-size: 2.8rem; }
+            .subtitle { border-left: none; border-top: 5px solid var(--secondary); padding: 15px 0; }
+        }
     </style>
 </head>
 <body>
@@ -114,9 +115,9 @@
     <div class="container">
         <div class="nav-wrapper">
             <div class="logo">
-                <i class="fas fa-university"></i> SISTEMA DE PROTOCOLO IMEDIATO
+                <i class="fas fa-university"></i> SISTEMA NACIONAL DE PROTOCOLOS
             </div>
-            <div class="secure-header"><i class="fas fa-lock"></i> SSL 256-BIT</div>
+            <div class="secure-header"><i class="fas fa-lock"></i> AMBIENTE CRIPTOGRAFADO SSL</div>
         </div>
     </div>
 </header>
@@ -126,40 +127,37 @@
         <div class="hero-flex">
             <div class="hero-text">
                 <h1>SISTEMA DE BAIXA: <span>LIMPE SEU CPF AGORA</span></h1>
-                <p class="subtitle">RECEBA O GUIA TÉCNICO E O PROTOCOLO DE BAIXA FUNDAMENTADO NO ART. 43 DO CDC.</p>
-                <p style="margin-bottom: 25px; color: #555; font-weight: 600;">Tenha em mãos as peças administrativas oficiais para solicitar a exclusão de apontamentos internos.</p>
-                
-                <div class="pix-badge">
-                    <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
-                    <div class="pix-badge-text">
-                        <strong>ENTREGA IMEDIATA NO WHATSAPP</strong>
-                        <span>O dossiê é liberado logo após a compensação do PIX.</span>
-                    </div>
+                <p class="subtitle">RECEBA O PROTOCOLO DE BAIXA IMEDIATA FUNDAMENTADO NO ART. 43 DO CDC.</p>
+                <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem; font-weight: 600;">O sistema envia automaticamente o dossiê de retificação administrativa para exclusão de apontamentos internos e restauração do seu poder de compra.</p>
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="30">
+                    <p style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Envio automático via PIX.</p>
                 </div>
             </div>
             
             <div class="hero-panel">
                 <div class="consult-panel">
                     <div class="panel-header">
-                        <h3><i class="fas fa-database"></i> CONSULTA DE VIABILIDADE</h3>
+                        <h3><i class="fas fa-database"></i> CONSULTA DE DISPONIBILIDADE</h3>
                     </div>
                     <div id="initial-state">
                         <div class="input-group">
-                            <label>Informe seu CPF:</label>
+                            <label>Informe o CPF para verificação:</label>
                             <input type="text" id="cpf-input" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)" inputmode="numeric">
+                            <p style="font-size: 0.7rem; color: #777; margin-top: 12px; text-align: center;"><i class="fas fa-user-shield"></i> PROTEGIDO PELA LGPD.</p>
                         </div>
                         <button class="btn-consult" onclick="startConsult()">INICIAR VERIFICAÇÃO</button>
                     </div>
                     <div id="loading-state">
                         <div class="loader"></div>
-                        <p id="loading-text" style="font-weight: 800; color: var(--primary); font-size: 0.7rem; text-transform: uppercase;">Sincronizando registros...</p>
+                        <p id="loading-text" style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Estabelecendo conexão segura...</p>
                     </div>
                     <div id="result-state">
                         <div class="result-box">
-                            <h4 style="color: var(--secondary); font-size: 1.1rem;"><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
-                            <p style="font-weight: 700; color: #444; font-size: 0.8rem;">Dossiê localizado para emissão imediata.</p>
+                            <h4><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
+                            <p style="font-weight: 700; color: #444; font-size: 0.85rem;">Protocolo de <strong>Baixa Imediata</strong> localizado para este CPF.</p>
                         </div>
-                        <a href="SEU_LINK_AQUI" class="btn-checkout">LIBERAR MEU PROTOCOLO (R$ 30,00)</a>
+                        <a href="#checkout" class="btn-checkout">LIBERAR MEU PROTOCOLO (R$ 30,00)</a>
                     </div>
                 </div>
             </div>
@@ -170,10 +168,10 @@
 <div class="benefits-bar">
     <div class="container">
         <div class="benefits-grid">
-            <div class="benefit-item"><i class="fas fa-bolt-lightning"></i> <strong>Acesso em 15s</strong></div>
-            <div class="benefit-item"><i class="fas fa-file-shield"></i> <strong>Dossiê Seguro</strong></div>
-            <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Tese Federal</strong></div>
-            <div class="benefit-item"><i class="fas fa-chart-line"></i> <strong>Restaura Score</strong></div>
+            <div class="benefit-item"><i class="fas fa-bolt-lightning"></i> <strong>Acesso Instantâneo</strong></div>
+            <div class="benefit-item"><i class="fas fa-file-shield"></i> <strong>Dossiê Anti-Bloqueio</strong></div>
+            <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Fundamentação Federal</strong></div>
+            <div class="benefit-item"><i class="fas fa-chart-line"></i> <strong>Restauração de Score</strong></div>
         </div>
     </div>
 </div>
@@ -185,17 +183,17 @@
             <div class="tech-card">
                 <i class="fas fa-search"></i>
                 <h3>1. Verificação</h3>
-                <p>Analisamos a viabilidade da retificação administrativa com base na Lei Federal 8.078/90.</p>
+                <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base no Art. 43 do CDC.</p>
             </div>
             <div class="tech-card">
-                <i class="fas fa-file-invoice"></i>
+                <i class="fas fa-envelope-open-text"></i>
                 <h3>2. Emissão</h3>
-                <p>Você recebe o Guia Técnico e o protocolo estruturado pronto para ser utilizado.</p>
+                <p>Você recebe o dossiê técnico com as teses de caducidade e os modelos de notificação prontos para uso.</p>
             </div>
             <div class="tech-card">
-                <i class="fas fa-check-double"></i>
-                <h3>3. Ativação</h3>
-                <p>Você realiza o protocolo nos canais oficiais para regularizar seu status de crédito.</p>
+                <i class="fas fa-user-check"></i>
+                <h3>3. Regularização</h3>
+                <p>Com o protocolo em mãos, você solicita a baixa administrativa nos canais oficiais para limpar seu status.</p>
             </div>
         </div>
     </div>
@@ -203,30 +201,28 @@
 
 <section class="social-proof">
     <div class="container">
-        <h2 class="section-title">Relatórios de Utilização</h2>
+        <h2 class="section-title">Feedbacks Recentes</h2>
         <div class="wp-grid">
             <div class="wp-item">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100" class="wp-avatar">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
                 <div class="wp-bubble">
                     <span class="wp-name">Ricardo Oliveira</span>
-                    <p>O PDF chegou na hora! Segui o guia e meu status atualizou em 4 dias. Muito prático!</p>
-                    <div class="wp-footer">14:22 <i class="fas fa-check-double"></i></div>
+                    <p class="wp-text">Danton, o material chegou na hora! Segui o passo a passo e meu status atualizou em poucos dias. Valeu!</p>
+                    <div class="wp-footer">
+                        <span class="wp-time">14:22</span>
+                        <i class="fas fa-check-double"></i>
+                    </div>
                 </div>
             </div>
             <div class="wp-item">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100" class="wp-avatar">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
                 <div class="wp-bubble">
                     <span class="wp-name">Mariana Souza</span>
-                    <p>O guia é excelente. Usei o modelo de protocolo e deu tudo certo no consumidor.gov!</p>
-                    <div class="wp-footer">10:05 <i class="fas fa-check-double"></i></div>
-                </div>
-            </div>
-            <div class="wp-item">
-                <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=100" class="wp-avatar">
-                <div class="wp-bubble">
-                    <span class="wp-name">André Costa</span>
-                    <p>Muito bom ter o material pronto. Economizei tempo e o resultado foi ótimo. Recomendo!</p>
-                    <div class="wp-footer">16:45 <i class="fas fa-check-double"></i></div>
+                    <p class="wp-text">O guia é excelente. Usei o modelo de protocolo no consumidor.gov e meu nome já está limpo.</p>
+                    <div class="wp-footer">
+                        <span class="wp-time">10:05</span>
+                        <i class="fas fa-check-double"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -235,8 +231,10 @@
 
 <footer>
     <div class="container">
-        <p><strong>AVISO:</strong> Comercializamos uma Licença de Uso para um Guia Técnico (PDF) fundamentado no CDC.</p>
-        <p style="margin-top: 15px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos.</p>
+        <div class="footer-line">
+            <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa um Guia Técnico (PDF) contendo modelos de documentos administrativos fundamentados no CDC. A execução do protocolo é de responsabilidade do usuário. Não somos um órgão governamental ou bancário.</p>
+            <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
+        </div>
     </div>
 </footer>
 
@@ -252,13 +250,23 @@
     function startConsult() {
         const cpf = document.getElementById('cpf-input').value;
         if(cpf.length < 14) { alert("Informe um CPF válido."); return; }
+        
         document.getElementById('initial-state').style.display = 'none';
         document.getElementById('loading-state').style.display = 'block';
-        setTimeout(() => { 
-            document.getElementById('loading-state').style.display = 'none'; 
-            document.getElementById('result-state').style.display = 'block'; 
-            if (navigator.vibrate) navigator.vibrate(200);
-        }, 4000);
+        
+        const txt = document.getElementById('loading-text');
+        
+        setTimeout(() => { txt.innerText = "Estabelecendo conexão segura com gateways de dados..."; }, 1500);
+        setTimeout(() => { txt.innerText = "Sincronizando com a base normativa do Art. 43 do CDC..."; }, 3500);
+        setTimeout(() => { txt.innerText = "Cruzando registros em listas de apontamentos internos e SCR..."; }, 5500);
+        setTimeout(() => { txt.innerText = "Mapeando canais de submissão administrativa..."; }, 7500);
+        setTimeout(() => { txt.innerText = "Estruturando Dossiê Técnico e Peças de Retificação..."; }, 9500);
+        setTimeout(() => { txt.innerText = "Finalizando geração do protocolo de baixa..."; }, 11000);
+        
+        setTimeout(() => {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('result-state').style.display = 'block';
+        }, 12500);
     }
 </script>
 
