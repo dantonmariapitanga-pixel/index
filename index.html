@@ -6,7 +6,7 @@
     <title>LIMPE SEU CPF !!!</title>
     
     <!-- Fontes e Ícones -->
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -21,17 +21,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Open Sans', sans-serif; background-color: var(--white); color: var(--dark); line-height: 1.6; overflow-x: hidden; }
         
-        /* TÍTULOS COM FONTE DE IMPACTO */
-        h1, h2, h3, .btn-consult, .btn-checkout { font-family: 'Anton', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        /* TÍTULOS COM ARCHIVO BLACK (Sólida, Profissional e de Alto Impacto) */
+        h1, h2, h3, .btn-consult, .btn-checkout { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; letter-spacing: -1px; }
         
         .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-        /* Header */
+        /* Header Oficial */
         header { padding: 15px 0; background: var(--white); border-bottom: 2px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: clamp(0.7rem, 2.5vw, 1.1rem); color: var(--primary); display: flex; align-items: center; gap: 8px; font-family: 'Open Sans', sans-serif; }
+        .logo { font-weight: 900; font-size: clamp(0.65rem, 2.5vw, 1.1rem); color: var(--primary); display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; }
         .logo i { color: var(--secondary); font-size: clamp(1rem, 3vw, 1.4rem); }
-        .secure-header { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700; color: #666; text-align: right; }
+        .secure-header { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700; color: #666; text-align: right; font-family: 'Inter', sans-serif; }
 
         /* Hero Section */
         .hero { padding: clamp(40px, 5vw, 80px) 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #eef2f7 100%); border-bottom: 1px solid #ddd; }
@@ -43,11 +43,10 @@
             .hero-panel { width: 45%; max-width: 450px; }
         }
 
-        /* TÍTULO DE IMPACTO CORRIGIDO */
+        /* TÍTULO COM QUEBRA CONFORME IMAGEM */
         h1 { 
-            font-size: clamp(2.8rem, 10vw, 4.5rem) !important; 
-            font-weight: 400 !important; 
-            line-height: 1.0 !important; 
+            font-size: clamp(2.2rem, 4.8vw, 3.8rem) !important; 
+            line-height: 1.05 !important; 
             color: var(--primary); 
             margin-bottom: 25px; 
             text-align: left;
@@ -55,50 +54,46 @@
         h1 span { 
             color: var(--secondary); 
             display: block; 
-            margin-top: 10px;
+            margin-top: 5px;
         }
         
-        /* Ajuste de quebra para mobile conforme a imagem */
-        @media (max-width: 768px) {
-            h1 { line-height: 1.1 !important; }
-        }
-
         .subtitle { 
-            font-family: 'Open Sans', sans-serif !important; 
+            font-family: 'Inter', sans-serif !important; 
             font-size: clamp(1.05rem, 2vw, 1.2rem) !important; 
-            font-weight: 800 !important; 
+            font-weight: 900 !important; 
             line-height: 1.4; 
             color: var(--primary); 
             margin-bottom: 25px; 
             border-left: 6px solid var(--secondary); 
             padding-left: 15px; 
+            text-transform: uppercase;
         }
 
-        .desc-text { margin-bottom: 30px; color: #444; font-size: 1.1rem; line-height: 1.6; }
+        .desc-text { margin-bottom: 30px; color: #444; font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
 
         /* Selo Pix */
         .pix-badge { display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 18px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px; }
         .pix-badge img { height: 28px; width: auto; }
-        .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; }
+        .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .pix-badge-text span { font-size: 0.7rem; color: #444; font-weight: 600; }
 
         /* Painel de Consulta */
         .consult-panel { background: var(--white); padding: 30px 20px; border-radius: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.12); border: 1px solid #e0e0e0; }
         .panel-header { margin-bottom: 25px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        .panel-header h3 { font-size: 1.2rem; color: var(--primary); font-family: 'Anton', sans-serif; }
+        .panel-header h3 { font-size: 1rem; color: var(--primary); letter-spacing: 1px; }
         
-        .input-group label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; }
-        input[type="text"] { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.4rem; font-weight: 800; outline: none; transition: 0.3s; text-align: center; color: var(--primary); }
+        .input-group label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; font-family: 'Inter', sans-serif; }
+        input[type="text"] { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.4rem; font-weight: 900; outline: none; text-align: center; color: var(--primary); font-family: 'Inter', sans-serif; }
 
-        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 8px; font-size: 1.5rem; cursor: pointer; transition: 0.3s; margin-top: 15px; }
-        .btn-consult:hover { background: #000; transform: translateY(-3px); }
+        .btn-consult { width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 8px; font-size: 1.2rem; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .btn-consult:hover { background: #0a1929; transform: translateY(-3px); }
 
         #loading-state, #result-state { display: none; text-align: center; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 25px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 25px; border-radius: 10px; margin-top: 10px; }
-        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; text-decoration: none; font-size: 1.8rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center; }
+        .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; text-decoration: none; font-size: 1.4rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center; }
 
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
@@ -107,32 +102,34 @@
         .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: center; }
         @media (min-width: 768px) { .benefits-grid { grid-template-columns: repeat(4, 1fr); } }
         .benefit-item i { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; display: block; }
-        .benefit-item strong { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-family: 'Anton', sans-serif; font-weight: 400;}
+        .benefit-item strong { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Inter', sans-serif; }
 
         /* Como Funciona */
         .how-works { padding: 80px 0; background: var(--white); }
-        .section-title { text-align: center; margin-bottom: 50px; font-size: 3rem; color: var(--primary); }
+        .section-title { text-align: center; margin-bottom: 50px; font-size: clamp(1.8rem, 5vw, 2.5rem); color: var(--primary); }
         .tech-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
         @media (min-width: 768px) { .tech-grid { grid-template-columns: repeat(3, 1fr); } }
         .tech-card { padding: 35px; background: var(--light); border-radius: 12px; border-top: 6px solid var(--primary); text-align: center; }
         .tech-card i { font-size: 2.3rem; color: var(--primary); margin-bottom: 15px; display: block; }
-        .tech-card h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--primary); }
+        .tech-card h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--primary); }
+        .tech-card p { font-size: 0.95rem; color: #555; font-family: 'Open Sans', sans-serif; }
 
         /* FAQ */
         .faq-section { padding: 80px 0; background: #eef2f7; }
         .faq-grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }
         .faq-item { background: var(--white); border-radius: 10px; border-left: 5px solid var(--primary); }
-        .faq-item summary { padding: 22px 20px; font-weight: 800; color: var(--primary); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; }
+        .faq-item summary { padding: 22px 20px; font-weight: 800; color: var(--primary); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 1rem; font-family: 'Inter', sans-serif; }
         .faq-item summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--secondary); }
         .faq-item[open] summary::after { transform: rotate(180deg); }
-        .faq-item p { padding: 0 20px 20px; color: #555; font-size: 0.95rem; border-top: 1px dashed #ddd; padding-top: 15px; }
+        .faq-item p { padding: 0 20px 20px; color: #555; font-size: 0.95rem; border-top: 1px dashed #ddd; padding-top: 15px; font-family: 'Open Sans', sans-serif; }
 
-        footer { background: var(--dark); color: #777; padding: 60px 0 30px; font-size: 0.8rem; }
+        footer { background: var(--dark); color: #777; padding: 60px 0 30px; font-size: 0.8rem; font-family: 'Open Sans', sans-serif; }
         .footer-line { border-top: 1px solid #1a2a3a; margin-top: 40px; padding-top: 40px; text-align: center; max-width: 900px; margin-inline: auto; }
 
+        /* AJUSTE MOBILE */
         @media (max-width: 991px) {
             .hero-text { text-align: left; }
-            .subtitle { max-width: 100%; margin-bottom: 25px; }
+            .subtitle { border-left: 5px solid var(--secondary); padding-left: 15px; }
             .pix-badge { flex-direction: column; text-align: center; }
         }
     </style>
@@ -154,13 +151,12 @@
     <div class="container">
         <div class="hero-flex">
             <div class="hero-text">
-                <!-- Título com quebras manuais para forçar o visual da imagem -->
                 <h1>ESTÁ COM O<br>NOME SUJO?<br>
                 <span>LIMPE O SEU NOME<br>COM O NOSSO<br>PROTOCOLO</span></h1>
                 
                 <p class="subtitle">LIBERE O PROTOCOLO DE LIBERAÇÃO DE CRÉDITO E BAIXA DE RESTRIÇÕES AGORA</p>
                 
-                <p class="desc-text">Receba acesso imediato ao protocolo fundamentado no Código de Defesa do Consumidor. Nosso sistema processa e disponibiliza seu dossiê de retificação em segundos para a exclusão de apontamentos prescritos (5 anos) e revisão de juros abusivos</p>
+                <p class="desc-text">Receba acesso imediato ao protocolo fundamentado no Código de Defesa do Consumidor. Nosso sistema processa e disponibiliza seu dossiê de retificação em segundos para a exclusão de apontamentos prescritos (5 anos) e revisão de juros abusivos[cite: 1]</p>
                 
                 <div class="pix-badge">
                     <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
@@ -189,12 +185,12 @@
                     
                     <div id="loading-state">
                         <div class="loader"></div>
-                        <p id="loading-text" style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Sincronizando registros...</p>
+                        <p id="loading-text" style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem; font-family: 'Inter', sans-serif;">Sincronizando registros...</p>
                     </div>
 
                     <div id="result-state">
                         <div class="result-box">
-                            <h4 style="color: var(--secondary); font-family: 'Anton'; font-size: 1.5rem;"><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
+                            <h4 style="color: var(--secondary); font-size: 1.2rem;"><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
                             <p style="font-weight: 700; color: #444; font-size: 0.85rem;">Dossiê administrativo passível de <strong>Emissão Imediata</strong> localizado para este CPF.</p>
                         </div>
                         <a href="https://chk.eduzz.com/39VKO6PYWR" class="btn-checkout">QUERO LIBERAR MEU PROTOCOLO !!! (R$ 30,00)</a>
@@ -223,17 +219,17 @@
             <div class="tech-card">
                 <i class="fas fa-search"></i>
                 <h3>1. Verificação</h3>
-                <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios de prescrição de 5 anos e práticas de juros abusivos.</p>
+                <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios de prescrição de 5 anos e práticas de juros abusivos[cite: 1]</p>
             </div>
             <div class="tech-card">
                 <i class="fas fa-envelope-open-text"></i>
                 <h3>2. Emissão do Protocolo</h3>
-                <p>Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade, revisão de juros abusivos e o protocolo estruturado.</p>
+                <p>Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade, revisão de juros abusivos e o protocolo estruturado[cite: 1]</p>
             </div>
             <div class="tech-card">
                 <i class="fas fa-user-check"></i>
                 <h3>3. Ativação Administrativa</h3>
-                <p>Com o dossiê in mãos, você realiza o protocolo administrativo nos canais oficiais indicados para forçar a regularização do seu status.</p>
+                <p>Com o dossiê em mãos, você realiza o protocolo administrativo nos canais oficiais indicados para forçar a regularização do seu status[cite: 1]</p>
             </div>
         </div>
     </div>
@@ -245,23 +241,23 @@
         <div class="faq-grid">
             <details class="faq-item">
                 <summary>O que é a caducidade de 5 anos?</summary>
-                <p>De acordo com o Código de Defesa do Consumidor (Art. 43, § 1º), informações negativas sobre dívidas não podem ser mantidas nos cadastros de proteção ao crédito (como SPC e Serasa) por um período superior a 5 anos. Nosso material orienta como exigir a baixa desses apontamentos caso o prazo tenha expirado.</p>
+                <p>De acordo com o Código de Defesa do Consumidor (Art. 43, § 1º), informações negativas sobre dívidas não podem ser mantidas nos cadastros de proteção ao crédito (como SPC e Serasa) por um período superior a 5 anos[cite: 1]. Nosso material orienta como exigir a baixa desses apontamentos caso o prazo tenha expirado[cite: 1]</p>
             </details>
             <details class="faq-item">
                 <summary>Com este protocolo, minha dívida deixa de existir?</summary>
-                <p>Não. A dívida em si não desaparece, mas após 5 anos ela <strong>prescreve</strong>. Isso significa que ela perde o direito de ser cobrada judicialmente e, o mais importante, não pode mais manter o seu nome negativado ou prejudicar o seu Score de crédito. Nosso foco é na remoção do apontamento restritivo.</p>
+                <p>Não. A dívida em si não desaparece, mas após 5 anos ela <strong>prescreve</strong>[cite: 1]. Isso significa que ela perde o direito de ser cobrada judicialmente e não pode mais manter o seu nome negativado[cite: 1]</p>
             </details>
             <details class="faq-item">
                 <summary>Como funciona a revisão por juros abusivos?</summary>
-                <p>Muitas instituições financeiras aplicam taxas que ultrapassam os limites permitidos pelo Banco Central. O Guia Técnico fornece embasamento e modelos administrativos para você questionar essas cobranças diretamente nos órgãos de defesa do consumidor, forçando a instituição a recalcular a dívida ou realizar um acordo justo.</p>
+                <p>Muitas instituições financeiras aplicam taxas que ultrapassam os limites permitidos pelo Banco Central. O Guia Técnico fornece modelos administrativos para você questionar essas cobranças diretamente nos órgãos de defesa do consumidor[cite: 1]</p>
             </details>
             <details class="faq-item">
                 <summary>Em quanto tempo recebo acesso ao material?</summary>
-                <p>O envio é <strong>imediato</strong>. Assim que o pagamento for compensado, nosso sistema dispara automaticamente o Guia Técnico em PDF e os modelos de protocolo para o e-mail cadastrado.</p>
+                <p>O envio é <strong>imediato</strong>. Assim que o pagamento for compensado, nosso sistema dispara o Guia Técnico em PDF e os modelos de protocolo para o e-mail cadastrado[cite: 1]</p>
             </details>
             <details class="faq-item">
                 <summary>Eu preciso contratar um advogado para usar o guia?</summary>
-                <p>Não! O material foi estruturado justamente para que você consiga realizar as solicitações de forma <strong>administrativa</strong>, ou seja, diretamente nas plataformas oficiais (como o Consumidor.gov e Procon online), utilizando os textos e teses prontas do nosso PDF, sem a necessidade de intervenção jurídica imediata.</p>
+                <p>Não! O material foi estruturado para que você consiga realizar as solicitações de forma <strong>administrativa</strong> diretamente nas plataformas oficiais[cite: 1]</p>
             </details>
         </div>
     </div>
@@ -270,8 +266,8 @@
 <footer>
     <div class="container">
         <div class="footer-line">
-            <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções e modelos de documentos administrativos fundamentados no CDC. A execução do protocolo nos órgãos competentes é de inteira responsabilidade do usuário. Não somos um órgão governamental, jurídico ou instituição financeira.</p>
-            <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
+            <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções fundamentadas no CDC. A execução do protocolo é de inteira responsabilidade do usuário[cite: 1]</p>
+            <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados[cite: 1]</p>
         </div>
     </div>
 </footer>
