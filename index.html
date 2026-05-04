@@ -46,7 +46,7 @@
         /* AJUSTE DO TÍTULO (H1) E SUBTÍTULO */
         h1 { font-size: clamp(2.4rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; color: var(--primary); margin-bottom: 25px; letter-spacing: -1px; max-width: 650px; }
         h1 span { color: var(--secondary); display: block; font-size: clamp(2.2rem, 10vw, 3.5rem); }
-        .subtitle { font-size: clamp(0.95rem, 3vw, 1.15rem); font-weight: 700; line-height: 1.4; color: var(--primary); margin-bottom: 25px; border-left: 4px solid var(--secondary); padding-left: 15px; }
+        .subtitle { font-family: 'Open Sans', sans-serif; font-size: clamp(1.1rem, 4vw, 1.3rem); font-weight: 600; line-height: 1.6; color: var(--primary); margin-bottom: 30px; border-left: 5px solid var(--secondary); padding-left: 15px; max-width: 550px; }
 
         /* Selo Pix */
         .pix-badge {
@@ -125,7 +125,7 @@
         /* AJUSTES MOBILE EXTRAS (Borda elegante no subtitulo) */
         @media (max-width: 900px) {
             .hero-text { text-align: center; }
-            .subtitle { border-left: none; border-bottom: 3px solid var(--secondary); border-top: none; padding: 0 0 15px 0; display: inline-block; }
+            .subtitle { border-left: none; border-top: 5px solid var(--secondary); padding: 15px 0 0 0; max-width: 85%; margin: 0 auto 25px auto; display: block; }
             .pix-badge { flex-direction: column; text-align: center; }
             .pix-badge-text { text-align: center; }
         }
