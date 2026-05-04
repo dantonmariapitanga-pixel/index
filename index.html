@@ -63,7 +63,7 @@
         .btn-checkout { display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1.3rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* Benefits Bar - Atualizada com ícones e textos persuasivos */
+        /* Benefits Bar */
         .benefits-bar { padding: 40px 0; background: var(--primary); color: var(--white); }
         .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
         .benefit-item i { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; display: block; }
@@ -80,25 +80,17 @@
             border-radius: 12px; 
             border-top: 6px solid var(--primary); 
             transition: all 0.3s ease;
-            cursor: pointer;
         }
-        .tech-card:hover { 
-            transform: translateY(-15px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            background: #ffffff;
-        }
-        .tech-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; display: block; transition: color 0.3s ease; }
-        .tech-card:hover i { color: var(--secondary); }
+        .tech-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; display: block; }
         .tech-card h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--primary); }
-        .tech-card p { font-size: 0.9rem; color: #555; text-align: justify; }
+        .tech-card p { font-size: 0.9rem; color: #555; }
 
         /* Feedbacks WhatsApp */
         .social-proof { padding: 100px 0; background: #eef2f7; }
         .wp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
         .wp-item { display: flex; align-items: flex-start; gap: 12px; }
-        .wp-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .wp-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
         .wp-bubble { background: var(--whatsapp-bg); padding: 12px 16px; border-radius: 0 15px 15px 15px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 100%; }
-        .wp-bubble::before { content: ""; position: absolute; top: 0; left: -10px; width: 0; height: 0; border-style: solid; border-width: 0 10px 10px 0; border-color: transparent var(--whatsapp-bg) transparent transparent; }
         .wp-name { font-weight: 800; color: #075e54; font-size: 0.85rem; margin-bottom: 4px; display: block; }
         .wp-text { font-size: 0.92rem; color: #111; line-height: 1.4; }
         .wp-footer { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 4px; }
@@ -107,7 +99,7 @@
 
         /* Footer */
         footer { background: var(--dark); color: #777; padding: 80px 0 30px; font-size: 0.8rem; }
-        .footer-line { border-top: 1px solid #1a2a3a; margin-top: 40px; padding-top: 40px; text-align: center; max-width: 900px; margin-inline: auto; line-height: 1.6; }
+        .footer-line { border-top: 1px solid #1a2a3a; margin-top: 40px; padding-top: 40px; text-align: center; max-width: 900px; margin-inline: auto; }
 
         @media (max-width: 900px) {
             .hero-flex { flex-direction: column; text-align: center; }
@@ -123,9 +115,9 @@
     <div class="container">
         <div class="nav-wrapper">
             <div class="logo">
-                <i class="fas fa-university"></i> SISTEMA DE PROTOCOLO IMEDIATO DE SOLICITACĀO DE LIMPEZA DE NOME
+                <i class="fas fa-university"></i> SISTEMA NACIONAL DE PROTOCOLOS
             </div>
-            <div class="secure-header"><i class="fas fa-lock"></i> AMBIENTE CRIPTOGRAFADO 256-BIT SSL</div>
+            <div class="secure-header"><i class="fas fa-lock"></i> AMBIENTE CRIPTOGRAFADO SSL</div>
         </div>
     </div>
 </header>
@@ -135,11 +127,11 @@
         <div class="hero-flex">
             <div class="hero-text">
                 <h1>SISTEMA DE BAIXA: <span>LIMPE SEU CPF AGORA</span></h1>
-                <p class="subtitle">RECEBA O GUIA TÉCNICO E O PROTOCOLO DE BAIXA IMEDIATA FUNDAMENTADO NO ART. 43 DO CDC.</p>
-                <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem; font-weight: 600;">Tenha em mãos as peças administrativas oficiais para solicitar a exclusão de apontamentos internos. O sistema envia automaticamente o dossiê de retificação pronto para ser protocolado.</p>
+                <p class="subtitle">RECEBA O PROTOCOLO DE BAIXA IMEDIATA FUNDAMENTADO NO ART. 43 DO CDC.</p>
+                <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem; font-weight: 600;">O sistema envia automaticamente o dossiê de retificação administrativa para exclusão de apontamentos internos e restauração do seu poder de compra.</p>
                 <div style="display: flex; align-items: center; gap: 20px;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94Pix.png/1200px-Logo%E2%80%94Pix.png" alt="Pix" height="30">
-                    <p style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Envio automático após compensação via PIX.</p>
+                    <p style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Envio automático via PIX.</p>
                 </div>
             </div>
             
@@ -150,23 +142,22 @@
                     </div>
                     <div id="initial-state">
                         <div class="input-group">
-                            <label>Informe o CPF para consulta de viabilidade:</label>
-                            <!-- UX Melhorado: Abre teclado numérico em mobile -->
-                            <input type="text" id="cpf-input" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)" inputmode="numeric" pattern="\d*">
-                            <p style="font-size: 0.7rem; color: #777; margin-top: 12px; text-align: center;"><i class="fas fa-user-shield"></i> SEUS DADOS ESTÃO PROTEGIDOS PELA LGPD.</p>
+                            <label>Informe o CPF para verificação:</label>
+                            <input type="text" id="cpf-input" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)" inputmode="numeric">
+                            <p style="font-size: 0.7rem; color: #777; margin-top: 12px; text-align: center;"><i class="fas fa-user-shield"></i> PROTEGIDO PELA LGPD.</p>
                         </div>
                         <button class="btn-consult" onclick="startConsult()">INICIAR VERIFICAÇÃO</button>
                     </div>
                     <div id="loading-state">
                         <div class="loader"></div>
-                        <p id="loading-text" style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Sincronizando registros...</p>
+                        <p id="loading-text" style="font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.8rem;">Estabelecendo conexão segura...</p>
                     </div>
                     <div id="result-state">
                         <div class="result-box">
                             <h4><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
-                            <p style="font-weight: 700; color: #444; font-size: 0.85rem;">Dossiê administrativo passível de <strong>Emissão Imediata</strong> localizado para este CPF.</p>
+                            <p style="font-weight: 700; color: #444; font-size: 0.85rem;">Protocolo de <strong>Baixa Imediata</strong> localizado para este CPF.</p>
                         </div>
-                        <a href="#checkout" class="btn-checkout">LIBERAR MEU PROTOCOLO DE BAIXA (R$ 30,00)</a>
+                        <a href="#checkout" class="btn-checkout">LIBERAR MEU PROTOCOLO (R$ 30,00)</a>
                     </div>
                 </div>
             </div>
@@ -177,13 +168,9 @@
 <div class="benefits-bar">
     <div class="container">
         <div class="benefits-grid">
-            <!-- 1. Acesso Instantâneo -->
-            <div class="benefit-item"><i class="fas fa-bolt-lightning"></i> <strong>Liberação em 15 Segundos</strong></div>
-            <!-- 2. Dossiê de Retificação -->
+            <div class="benefit-item"><i class="fas fa-bolt-lightning"></i> <strong>Acesso Instantâneo</strong></div>
             <div class="benefit-item"><i class="fas fa-file-shield"></i> <strong>Dossiê Anti-Bloqueio</strong></div>
-            <!-- 3. Tese Jurídica Superior -->
-            <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Tese Jurídica Federal</strong></div>
-            <!-- 4. Restauração de Score -->
+            <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Fundamentação Federal</strong></div>
             <div class="benefit-item"><i class="fas fa-chart-line"></i> <strong>Restauração de Score</strong></div>
         </div>
     </div>
@@ -196,17 +183,17 @@
             <div class="tech-card">
                 <i class="fas fa-search"></i>
                 <h3>1. Verificação</h3>
-                <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios da Lei Federal 8.078/90.</p>
+                <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base no Art. 43 do CDC.</p>
             </div>
             <div class="tech-card">
                 <i class="fas fa-envelope-open-text"></i>
-                <h3>2. Emissão do Protocolo</h3>
-                <p>Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade e o protocolo estruturado.</p>
+                <h3>2. Emissão</h3>
+                <p>Você recebe o dossiê técnico com as teses de caducidade e os modelos de notificação prontos para uso.</p>
             </div>
             <div class="tech-card">
                 <i class="fas fa-user-check"></i>
-                <h3>3. Ativação Administrativa</h3>
-                <p>Com o dossiê em mãos, você realiza o protocolo administrativo nos canais oficiais indicados para forçar a regularização do seu status.</p>
+                <h3>3. Regularização</h3>
+                <p>Com o protocolo em mãos, você solicita a baixa administrativa nos canais oficiais para limpar seu status.</p>
             </div>
         </div>
     </div>
@@ -214,13 +201,13 @@
 
 <section class="social-proof">
     <div class="container">
-        <h2 class="section-title">Relatórios de Utilização</h2>
+        <h2 class="section-title">Feedbacks Recentes</h2>
         <div class="wp-grid">
             <div class="wp-item">
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
                 <div class="wp-bubble">
                     <span class="wp-name">Ricardo Oliveira</span>
-                    <p class="wp-text">Danton, o PDF chegou na hora! Segui o passo a passo do guia e meu status atualizou em 4 dias. Muito prático!</p>
+                    <p class="wp-text">Danton, o material chegou na hora! Segui o passo a passo e meu status atualizou em poucos dias. Valeu!</p>
                     <div class="wp-footer">
                         <span class="wp-time">14:22</span>
                         <i class="fas fa-check-double"></i>
@@ -231,20 +218,9 @@
                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
                 <div class="wp-bubble">
                     <span class="wp-name">Mariana Souza</span>
-                    <p class="wp-text">O guia é excelente. Usei o modelo de protocolo que veio no material e enviei no consumidor.gov. Deu tudo certo!</p>
+                    <p class="wp-text">O guia é excelente. Usei o modelo de protocolo no consumidor.gov e meu nome já está limpo.</p>
                     <div class="wp-footer">
                         <span class="wp-time">10:05</span>
-                        <i class="fas fa-check-double"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="wp-item">
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" class="wp-avatar">
-                <div class="wp-bubble">
-                    <span class="wp-name">André Costa</span>
-                    <p class="wp-text">Muito bom ter o material pronto pra usar. Economizei muito tempo e o resultado administrativo foi ótimo. Recomendo!</p>
-                    <div class="wp-footer">
-                        <span class="wp-time">16:45</span>
                         <i class="fas fa-check-double"></i>
                     </div>
                 </div>
@@ -256,7 +232,7 @@
 <footer>
     <div class="container">
         <div class="footer-line">
-            <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções e modelos de documentos administrativos fundamentados no CDC. A execução do protocolo nos órgãos competentes é de inteira responsabilidade do usuário. Não somos um órgão governamental, jurídico ou instituição financeira.</p>
+            <p><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa um Guia Técnico (PDF) contendo modelos de documentos administrativos fundamentados no CDC. A execução do protocolo é de responsabilidade do usuário. Não somos um órgão governamental ou bancário.</p>
             <p style="margin-top: 25px; opacity: 0.5;">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
         </div>
     </div>
@@ -280,15 +256,17 @@
         
         const txt = document.getElementById('loading-text');
         
-        // Mensagens Técnicas SaaS Atualizadas
-        setTimeout(() => { txt.innerText = "Sincronizando com a base normativa do Art. 43 do CDC..."; }, 1200);
-        setTimeout(() => { txt.innerText = "Mapeando canais de submissão administrativa e órgãos de controle..."; }, 2400);
-        setTimeout(() => { txt.innerText = "Estruturando Dossiê Técnico para o CPF informado..."; }, 3600);
+        setTimeout(() => { txt.innerText = "Estabelecendo conexão segura com gateways de dados..."; }, 1500);
+        setTimeout(() => { txt.innerText = "Sincronizando com a base normativa do Art. 43 do CDC..."; }, 3500);
+        setTimeout(() => { txt.innerText = "Cruzando registros em listas de apontamentos internos e SCR..."; }, 5500);
+        setTimeout(() => { txt.innerText = "Mapeando canais de submissão administrativa..."; }, 7500);
+        setTimeout(() => { txt.innerText = "Estruturando Dossiê Técnico e Peças de Retificação..."; }, 9500);
+        setTimeout(() => { txt.innerText = "Finalizando geração do protocolo de baixa..."; }, 11000);
         
         setTimeout(() => {
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('result-state').style.display = 'block';
-        }, 5000);
+        }, 12500);
     }
 </script>
 
