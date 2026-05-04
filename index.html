@@ -137,7 +137,7 @@
     <div class="container">
         <div class="nav-wrapper">
             <div class="logo">
-                <i class="fas fa-university"></i> SISTEMA DE PROTOCOLO IMEDIATO DE SOLICITACĀO DE LIMPEZA DE NOME
+                <i class="fas fa-university"></i> SISTEMA DE PROTOCOLO IMEDIATO DE SOLICITAÇÃO DE LIMPEZA DE NOME
             </div>
             <div class="secure-header"><i class="fas fa-lock"></i> AMBIENTE CRIPTOGRAFADO 256-BIT SSL</div>
         </div>
@@ -149,8 +149,8 @@
         <div class="hero-flex">
             <div class="hero-text">
                 <h1>SISTEMA DE BAIXA: <span>LIMPE SEU CPF AGORA</span></h1>
-                <p class="subtitle">RECEBA O GUIA TÉCNICO E O PROTOCOLO DE BAIXA IMEDIATA FUNDAMENTADO NO ART. 43 DO CDC.</p>
-                <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem; font-weight: 600;">Tenha em mãos as peças administrativas oficiais para solicitar a exclusão de apontamentos internos. O sistema envia automaticamente o dossiê de retificação pronto para ser protocolado.</p>
+                <p class="subtitle">RECEBA O GUIA TÉCNICO E O PROTOCOLO DE BAIXA IMEDIATA FUNDAMENTADO NA CADUCIDADE DE 5 ANOS E REVISÃO DE JUROS ABUSIVOS.</p>
+                <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem; font-weight: 600;">Tenha em mãos as peças administrativas oficiais para solicitar a exclusão de apontamentos internos por caducidade (limite de 5 anos) ou pela incidência de juros abusivos em suas dívidas. O sistema envia automaticamente o dossiê de retificação pronto para ser protocolado.</p>
                 
                 <div class="pix-badge">
                     <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
@@ -200,7 +200,7 @@
         <div class="benefits-grid">
             <div class="benefit-item"><i class="fas fa-bolt-lightning"></i> <strong>Liberação em 15 Segundos</strong></div>
             <div class="benefit-item"><i class="fas fa-file-shield"></i> <strong>Dossiê Anti-Bloqueio</strong></div>
-            <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Tese Jurídica Federal</strong></div>
+            <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Caducidade & Juros Abusivos</strong></div>
             <div class="benefit-item"><i class="fas fa-chart-line"></i> <strong>Restauração de Score</strong></div>
         </div>
     </div>
@@ -213,12 +213,12 @@
             <div class="tech-card">
                 <i class="fas fa-search"></i>
                 <h3>1. Verificação</h3>
-                <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios da Lei Federal 8.078/90.</p>
+                <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios de prescrição de 5 anos e práticas de juros abusivos.</p>
             </div>
             <div class="tech-card">
                 <i class="fas fa-envelope-open-text"></i>
                 <h3>2. Emissão do Protocolo</h3>
-                <p>Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade e o protocolo estruturado.</p>
+                <p>Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade, revisão de juros abusivos e o protocolo estruturado.</p>
             </div>
             <div class="tech-card">
                 <i class="fas fa-user-check"></i>
@@ -245,7 +245,7 @@
                 <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop" class="wp-avatar">
                 <div class="wp-bubble">
                     <span class="wp-name">Mariana Souza</span>
-                    <p class="wp-text">O guia é excelente. Usei o modelo de protocolo que veio no material e enviei no consumidor.gov. Deu tudo certo!</p>
+                    <p class="wp-text">O guia é excelente. Usei o modelo de protocolo que veio no material questionando os juros que estavam me cobrando e enviei no consumidor.gov. Deu tudo certo!</p>
                     <div class="wp-footer"><i class="fas fa-check-double"></i></div>
                 </div>
             </div>
@@ -288,15 +288,16 @@
         
         const txt = document.getElementById('loading-text');
         
-        setTimeout(() => { txt.innerText = "Consultando base normativa do Art. 43 do CDC..."; }, 1200);
-        setTimeout(() => { txt.innerText = "Mapeando canais de submissão administrativa..."; }, 2400);
-        setTimeout(() => { txt.innerText = "Estruturando Dossiê Técnico para o CPF informado..."; }, 3600);
+        setTimeout(() => { txt.innerText = "Consultando base normativa de Caducidade (5 anos)..."; }, 1200);
+        setTimeout(() => { txt.innerText = "Analisando viabilidade de exclusão por Juros Abusivos..."; }, 2500);
+        setTimeout(() => { txt.innerText = "Mapeando canais de submissão administrativa..."; }, 3800);
+        setTimeout(() => { txt.innerText = "Estruturando Dossiê Técnico para o CPF informado..."; }, 5000);
         
         setTimeout(() => {
             if (navigator.vibrate) navigator.vibrate(200);
             document.getElementById('loading-state').style.display = 'none';
             document.getElementById('result-state').style.display = 'block';
-        }, 5000);
+        }, 6500);
     }
 </script>
 
