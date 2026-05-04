@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Sistema Nacional de Emissão de Protocolos - Portal do Consumidor</title>
     
+    <!-- Fontes e Ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -24,25 +25,14 @@
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
         .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-        /* --- ANIMAÇÕES DE ENTRADA --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate { animation: fadeInUp 0.8s ease backwards; }
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-
-        /* Header */
+        /* Header Oficial */
         header { padding: 15px 0; background: var(--white); border-bottom: 2px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-weight: 900; font-size: clamp(0.65rem, 2.5vw, 1.1rem); color: var(--primary); display: flex; align-items: center; gap: 8px; }
         .logo i { color: var(--secondary); font-size: clamp(1rem, 3vw, 1.4rem); }
         .secure-header { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; font-weight: 700; color: #666; }
 
-        /* Hero */
+        /* Hero Section */
         .hero { padding: clamp(30px, 5vw, 80px) 0; background: radial-gradient(circle at 100% 0%, #ffffff 0%, #eef2f7 100%); border-bottom: 1px solid #ddd; }
         .hero-flex { display: flex; flex-direction: column; gap: 30px; }
         
@@ -56,41 +46,41 @@
         h1 span { color: var(--secondary); display: block; font-size: clamp(2.2rem, 10vw, 3.5rem); }
         .subtitle { font-size: clamp(0.9rem, 4vw, 1.25rem); font-weight: 800; color: var(--primary); margin-bottom: 30px; border-left: 5px solid var(--secondary); padding-left: 15px; }
 
-        /* Pix Badge */
+        /* Selo Pix */
         .pix-badge {
             display: flex; align-items: center; gap: 15px; background: #f0fdf4; padding: 18px; border-radius: 12px; border: 1px dashed var(--secondary); margin-bottom: 25px;
-            transition: all 0.3s ease;
         }
-        .pix-badge:active { transform: scale(0.98); background: #e2f9e9; }
-        .pix-badge img { height: 28px; width: auto; }
+        .pix-badge img { height: 28px; width: auto; object-fit: contain; }
+        .pix-badge-text { text-align: left; }
         .pix-badge-text strong { display: block; color: #166534; font-size: 0.75rem; text-transform: uppercase; }
         .pix-badge-text span { font-size: 0.7rem; color: #444; font-weight: 600; }
 
-        /* Painel */
-        .consult-panel { background: var(--white); padding: 30px 20px; border-radius: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.12); border: 1px solid #e0e0e0; }
+        /* Painel de Consulta */
+        .consult-panel { background: var(--white); padding: 30px 20px; border-radius: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.12); border: 1px solid #e0e0e0; transition: transform 0.3s ease; }
         @media (min-width: 768px) { .consult-panel { padding: 40px; } }
         
+        .panel-header { margin-bottom: 25px; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .panel-header h3 { font-size: 0.9rem; color: var(--primary); letter-spacing: 1px; }
+        
         .input-group label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 0.85rem; color: var(--primary); text-transform: uppercase; }
-        input[type="text"] { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; font-weight: 700; outline: none; transition: 0.2s; color: var(--primary); }
+        input[type="text"] { width: 100%; padding: 18px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; font-weight: 700; outline: none; transition: all 0.3s ease; color: var(--primary); }
         input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(26, 58, 90, 0.1); }
 
         .btn-consult { 
             width: 100%; background: var(--primary); color: white; padding: 20px; border: none; border-radius: 8px; 
-            font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.2s ease; text-transform: uppercase; margin-top: 15px;
+            font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; margin-top: 15px;
         }
-        .btn-consult:hover { background: #0a1929; transform: translateY(-3px); }
-        .btn-consult:active { transform: scale(0.95); opacity: 0.9; }
+        .btn-consult:hover { background: #0a1929; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
         #loading-state, #result-state { display: none; text-align: center; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--secondary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 25px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 25px; border-radius: 10px; }
+        .result-box { background: #e8f5e9; border: 2px solid var(--secondary); padding: 25px; border-radius: 10px; margin-top: 10px; }
         .btn-checkout { 
             display: block; background: var(--secondary); color: white; padding: 22px; border-radius: 8px; 
             text-decoration: none; font-weight: 900; font-size: 1.3rem; margin-top: 25px; animation: pulse 2s infinite; text-align: center;
         }
-        .btn-checkout:active { transform: scale(0.96); }
 
         /* Benefícios */
         .benefits-bar { padding: 40px 0; background: var(--primary); color: var(--white); }
@@ -110,31 +100,34 @@
             transition: all 0.3s ease; text-align: center; cursor: pointer;
         }
         .tech-card:hover { transform: translateY(-10px); background: #ffffff; box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
-        .tech-card:active { transform: scale(0.96); background: #fff; }
         .tech-card i { font-size: 2.3rem; color: var(--primary); margin-bottom: 15px; display: block; transition: color 0.3s ease; }
         .tech-card:hover i { color: var(--secondary); }
+        .tech-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary); }
+        .tech-card p { font-size: 0.9rem; color: #555; text-align: center; }
 
         /* Depoimentos */
         .social-proof { padding: 80px 0; background: #eef2f7; }
         .wp-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
         @media (min-width: 992px) { .wp-grid { grid-template-columns: repeat(3, 1fr); } }
-        .wp-item { display: flex; align-items: flex-start; gap: 12px; transition: 0.3s; }
-        .wp-item:active { transform: scale(0.98); }
+        
+        .wp-item { display: flex; align-items: flex-start; gap: 12px; transition: transform 0.3s ease; }
+        .wp-item:hover { transform: scale(1.02); }
         .wp-avatar { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 2px solid #fff; }
-        .wp-bubble { background: var(--whatsapp-bg); padding: 12px 16px; border-radius: 0 15px 15px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 100%; }
+        .wp-bubble { background: var(--whatsapp-bg); padding: 12px 16px; border-radius: 0 15px 15px 15px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); width: 100%; }
         .wp-name { font-weight: 800; color: #075e54; font-size: 0.85rem; margin-bottom: 4px; display: block; }
-        .wp-text { font-size: 0.92rem; color: #111; }
-        .wp-footer { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 4px; font-size: 0.65rem; color: #777; }
-        .wp-footer i { color: var(--whatsapp-blue); }
+        .wp-text { font-size: 0.92rem; color: #111; line-height: 1.4; }
+        .wp-footer { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 4px; }
+        .wp-footer i { font-size: 0.8rem; color: var(--whatsapp-blue); }
 
-        /* Rodapé */
-        footer { background: var(--dark); color: #777; padding: 60px 0 30px; font-size: 0.8rem; text-align: center; }
-        .footer-line { border-top: 1px solid #1a2a3a; margin-top: 40px; padding-top: 40px; max-width: 900px; margin-inline: auto; line-height: 1.6; }
+        /* Rodapé Oficial */
+        footer { background: var(--dark); color: #777; padding: 60px 0 30px; font-size: 0.8rem; }
+        .footer-line { border-top: 1px solid #1a2a3a; margin-top: 40px; padding-top: 40px; text-align: center; max-width: 900px; margin-inline: auto; line-height: 1.6; }
 
         @media (max-width: 900px) {
             .hero-text { text-align: center; }
             .subtitle { border-left: none; border-top: 5px solid var(--secondary); padding: 15px 0; }
             .pix-badge { flex-direction: column; text-align: center; }
+            .pix-badge-text { text-align: center; }
         }
     </style>
 </head>
@@ -146,7 +139,7 @@
             <div class="logo">
                 <i class="fas fa-university"></i> SISTEMA DE PROTOCOLO IMEDIATO DE SOLICITACĀO DE LIMPEZA DE NOME
             </div>
-            <div class="secure-header"><i class="fas fa-lock"></i> SSL 256-BIT</div>
+            <div class="secure-header"><i class="fas fa-lock"></i> AMBIENTE CRIPTOGRAFADO 256-BIT SSL</div>
         </div>
     </div>
 </header>
@@ -154,7 +147,7 @@
 <section class="hero">
     <div class="container">
         <div class="hero-flex">
-            <div class="hero-text animate delay-1">
+            <div class="hero-text">
                 <h1>SISTEMA DE BAIXA: <span>LIMPE SEU CPF AGORA</span></h1>
                 <p class="subtitle">RECEBA O GUIA TÉCNICO E O PROTOCOLO DE BAIXA IMEDIATA FUNDAMENTADO NO ART. 43 DO CDC.</p>
                 <p style="margin-bottom: 30px; color: #555; font-size: 1.1rem; font-weight: 600;">Tenha em mãos as peças administrativas oficiais para solicitar a exclusão de apontamentos internos. O sistema envia automaticamente o dossiê de retificação pronto para ser protocolado.</p>
@@ -163,12 +156,12 @@
                     <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
                     <div class="pix-badge-text">
                         <strong>ENVIO AUTOMÁTICO VIA WHATSAPP E E-MAIL</strong>
-                        <span>O acesso ao material é liberado instantaneamente após o PIX.</span>
+                        <span>O acesso ao material é liberado instantaneamente após a compensação do PIX.</span>
                     </div>
                 </div>
             </div>
             
-            <div class="hero-panel animate delay-2">
+            <div class="hero-panel">
                 <div class="consult-panel">
                     <div class="panel-header">
                         <h3><i class="fas fa-database"></i> CONSULTA DE DISPONIBILIDADE</h3>
@@ -194,7 +187,7 @@
                             <h4 style="color: var(--secondary);"><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
                             <p style="font-weight: 700; color: #444; font-size: 0.85rem;">Dossiê administrativo passível de <strong>Emissão Imediata</strong> localizado para este CPF.</p>
                         </div>
-                        <a href="SEU_LINK_AQUI" class="btn-checkout">LIBERAR MEU PROTOCOLO DE BAIXA (R$ 30,00)</a>
+                        <a href="SEU_LINK_DE_PAGAMENTO" class="btn-checkout">LIBERAR MEU PROTOCOLO DE BAIXA (R$ 30,00)</a>
                     </div>
                 </div>
             </div>
@@ -204,7 +197,7 @@
 
 <div class="benefits-bar">
     <div class="container">
-        <div class="benefits-grid animate delay-3">
+        <div class="benefits-grid">
             <div class="benefit-item"><i class="fas fa-bolt-lightning"></i> <strong>Liberação em 15 Segundos</strong></div>
             <div class="benefit-item"><i class="fas fa-file-shield"></i> <strong>Dossiê Anti-Bloqueio</strong></div>
             <div class="benefit-item"><i class="fas fa-scale-balanced"></i> <strong>Tese Jurídica Federal</strong></div>
@@ -217,20 +210,20 @@
     <div class="container">
         <h2 class="section-title">Como Funciona</h2>
         <div class="tech-grid">
-            <div class="tech-card animate delay-1">
+            <div class="tech-card">
                 <i class="fas fa-search"></i>
                 <h3>1. Verificação</h3>
                 <p>O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios da Lei Federal 8.078/90.</p>
             </div>
-            <div class="tech-card animate delay-2">
+            <div class="tech-card">
                 <i class="fas fa-envelope-open-text"></i>
                 <h3>2. Emissão do Protocolo</h3>
                 <p>Após a ativação da licença, você recebe automaticamente o Guia Técnico com as teses de caducidade e o protocolo estruturado.</p>
             </div>
-            <div class="tech-card animate delay-3">
+            <div class="tech-card">
                 <i class="fas fa-user-check"></i>
                 <h3>3. Ativação Administrativa</h3>
-                <p>Com o dossiê em mãos, você realiza o protocolo administrativo nos canais oficiais indicados para forçar a regularização.</p>
+                <p>Com o dossiê em mãos, você realiza o protocolo administrativo nos canais oficiais indicados para forçar a regularização do seu status.</p>
             </div>
         </div>
     </div>
@@ -240,28 +233,28 @@
     <div class="container">
         <h2 class="section-title">Relatórios de Utilização</h2>
         <div class="wp-grid">
-            <div class="wp-item animate delay-1">
+            <div class="wp-item">
                 <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop" class="wp-avatar">
                 <div class="wp-bubble">
                     <span class="wp-name">Ricardo Oliveira</span>
-                    <p class="wp-text">Danton, o PDF chegou na hora! Segui o passo a passo do guia e meu status atualizou em 4 dias. Muito prático!</p>
-                    <div class="wp-footer">14:22 <i class="fas fa-check-double"></i></div>
+                    <p class="wp-text">O PDF chegou na hora! Segui o passo a passo do guia e meu status atualizou em 4 dias. Muito prático!</p>
+                    <div class="wp-footer"><i class="fas fa-check-double"></i></div>
                 </div>
             </div>
-            <div class="wp-item animate delay-2">
+            <div class="wp-item">
                 <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop" class="wp-avatar">
                 <div class="wp-bubble">
                     <span class="wp-name">Mariana Souza</span>
                     <p class="wp-text">O guia é excelente. Usei o modelo de protocolo que veio no material e enviei no consumidor.gov. Deu tudo certo!</p>
-                    <div class="wp-footer">10:05 <i class="fas fa-check-double"></i></div>
+                    <div class="wp-footer"><i class="fas fa-check-double"></i></div>
                 </div>
             </div>
-            <div class="wp-item animate delay-3">
+            <div class="wp-item">
                 <img src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=150&h=150&fit=crop" class="wp-avatar">
                 <div class="wp-bubble">
                     <span class="wp-name">André Costa</span>
                     <p class="wp-text">Muito bom ter o material pronto pra usar. Economizei muito tempo e o resultado administrativo foi ótimo. Recomendo!</p>
-                    <div class="wp-footer">16:45 <i class="fas fa-check-double"></i></div>
+                    <div class="wp-footer"><i class="fas fa-check-double"></i></div>
                 </div>
             </div>
         </div>
