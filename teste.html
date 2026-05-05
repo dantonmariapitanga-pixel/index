@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Protocolo de Limpeza de Nome</title>
+    
+    <!-- Fonte Poppins do Concorrente -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 (O mesmo framework do concorrente) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Paleta de Cores do Concorrente */
+            --green-600: #059669;
+            --green-700: #047857;
+            --indigo-700: #4338ca;
+            --indigo-800: #3730a3;
+            --grey-100: #f3f4f6;
+            --grey-200: #e5e7eb;
+            --dark: #111827;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Utilidades de Cor */
+        .bg-green-600 { background-color: var(--green-600) !important; }
+        .bg-green-700 { background-color: var(--green-700) !important; }
+        .bg-indigo-700 { background-color: var(--indigo-700) !important; }
+        .bg-indigo-800 { background-color: var(--indigo-800) !important; }
+        .bg-grey-100 { background-color: var(--grey-100) !important; }
+        
+        .color-green-700 { color: var(--green-700) !important; }
+        .color-indigo-800 { color: var(--indigo-800) !important; }
+        
+        /* Header */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .logo-text {
+            font-weight: 700;
+            color: var(--indigo-800);
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            line-height: 1.2;
+        }
+        .secure-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-align: right;
+            line-height: 1.2;
+        }
+
+        /* Divisores Angulados (O Segredo do Design Moderno) */
+        section { position: relative; }
+        .svg-border-angled {
+            position: absolute;
+            width: 100%;
+            height: 4vw;
+            min-height: 40px;
+            z-index: 1;
+        }
+        .svg-border-angled svg { width: 100%; height: 100%; }
+        .top-left { top: -1px; }
+        .bottom-right { bottom: -1px; transform: rotate(180deg); }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 100px 0;
+            color: white;
+        }
+        .hero h1 {
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+        .hero h1 span { color: #a7f3d0; }
+        .hero .lead { font-weight: 300; font-size: 1.15rem; }
+
+        /* Selo Pix Redesenhado */
+        .pix-badge {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .pix-badge img { height: 30px; filter: brightness(0) invert(1); }
+        .pix-badge div strong { display: block; font-size: 0.85rem; color: #a7f3d0; }
+        .pix-badge div span { font-size: 0.8rem; opacity: 0.9; }
+
+        /* PAINEL DE CONSULTA DE CPF (Seu Diferencial) */
+        .consult-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            color: var(--dark);
+            position: relative;
+            z-index: 2;
+        }
+        .panel-header h3 { font-size: 1.1rem; font-weight: 700; color: var(--indigo-800); text-align: center; margin-bottom: 25px; }
+        .input-group label { font-weight: 600; font-size: 0.9rem; color: var(--indigo-800); margin-bottom: 8px; display: block;}
+        .form-control-lg { border: 2px solid var(--grey-200); font-weight: 600; font-size: 1.2rem; padding: 15px; text-align: center;}
+        .form-control-lg:focus { border-color: var(--green-600); box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1); }
+        
+        .btn-action {
+            background-color: var(--green-600);
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 18px;
+            border-radius: 8px;
+            width: 100%;
+            border: none;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            letter-spacing: 0.5px;
+        }
+        .btn-action:hover { background-color: var(--green-700); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(4, 120, 87, 0.2); color: white;}
+
+        #loading-state, #result-state { display: none; text-align: center; }
+        .loader { border: 4px solid var(--grey-200); border-top: 4px solid var(--green-600); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 25px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .result-box { background: #ecfdf5; border: 2px solid var(--green-600); padding: 20px; border-radius: 12px; margin-top: 15px; }
+        .result-box h4 { color: var(--green-700); font-weight: 700; font-size: 1.1rem; }
+        .result-box p { font-size: 0.9rem; margin-bottom: 0; color: #065f46; }
+
+        .btn-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(5, 150, 105, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+        }
+
+        /* Seção de Números */
+        .numbers-section h3 { font-size: 2.5rem; font-weight: 800; color: white; margin-top: 15px;}
+        .numbers-section p { font-size: 1rem; color: #c7d2fe; font-weight: 500; text-transform: uppercase;}
+        
+        /* Listas e Passos */
+        .step-number { font-size: 2.5rem; font-weight: 800; color: var(--green-600); line-height: 1; }
+        
+        /* FAQ (Estilo Bootstrap Accordion) */
+        .accordion-button:not(.collapsed) { background-color: #ecfdf5; color: var(--green-700); font-weight: 600; }
+        .accordion-button { font-weight: 500; color: var(--dark); padding: 20px; }
+        .accordion-button:focus { box-shadow: none; border-color: rgba(0,0,0,.125); }
+        .accordion-body { color: #4b5563; line-height: 1.7; padding: 20px; }
+
+        footer { background-color: var(--green-700); color: white; padding: 40px 0; }
+        footer p { color: #a7f3d0; font-size: 0.85rem; }
+
+        @media (max-width: 991px) {
+            .hero h1 { font-size: 2.2rem !important; }
+            .consult-panel { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER IGUAL AO DO CONCORRENTE -->
+<header class="sticky-top">
+    <div class="container py-3 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+            <i class="fas fa-university fa-2x color-green-700"></i>
+            <div class="logo-text">SISTEMA DE ACESSO<br>AO PROTOCOLO</div>
+        </div>
+        <div class="secure-badge d-flex align-items-center gap-2">
+            <div class="text-end d-none d-md-block">AMBIENTE SEGURO<br>256-BIT SSL</div>
+            <div class="text-end d-md-none">SSL<br>SEGURO</div>
+            <i class="fas fa-lock fa-2x color-green-700"></i>
+        </div>
+    </div>
+</header>
+
+<!-- HERO SECTION (ESTILO CONCORRENTE, COM O SEU PAINEL) -->
+<section id="contrate-agora" class="hero bg-green-600">
+    <div class="svg-border-angled top-left" style="color: #ffffff;">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor"><polygon points="0,100 100,0 100,100"></polygon></svg>
+    </div>
+    
+    <div class="container">
+        <div class="row justify-content-between align-items-center g-5">
+            <div class="col-lg-6">
+                <h1 class="display-4 text-uppercase">Está com o nome sujo?<br><span>Limpe o seu nome com o nosso protocolo</span></h1>
+                <p class="lead mt-4">Libere o protocolo de restabelecimento de crédito e baixa de restrições agora. Receba acesso imediato ao dossiê fundamentado no Código de Defesa do Consumidor.</p>
+                
+                <div class="pix-badge">
+                    <img src="https://logopng.com.br/logos/pix-106.png" alt="Pix Logo">
+                    <div>
+                        <strong>ENVIO AUTOMÁTICO VIA E-MAIL</strong>
+                        <span>Acesso liberado instantaneamente após a compensação do pagamento.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-5">
+                <!-- SEU PAINEL DE CONSULTA ENTRA AQUI COMO "ISCA" -->
+                <div class="consult-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-search me-2"></i> CONSULTA DE DISPONIBILIDADE</h3>
+                    </div>
+                    <div id="initial-state">
+                        <div class="input-group-custom">
+                            <label>Digite seu CPF para consultar viabilidade:</label>
+                            <input type="tel" id="cpf-input" class="form-control form-control-lg" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
+                            <p class="text-center mt-3 text-muted" style="font-size: 0.75rem;">
+                                <i class="fas fa-shield-alt color-green-700"></i> Seus dados estão protegidos pela LGPD.
+                            </p>
+                        </div>
+                        <button class="btn-action" onclick="startConsult()">Verificar Meu CPF</button>
+                    </div>
+                    
+                    <div id="loading-state">
+                        <div class="loader"></div>
+                        <p id="loading-text" class="fw-bold color-indigo-800 text-uppercase small mt-3">Conectando aos servidores...</p>
+                    </div>
+
+                    <div id="result-state">
+                        <div class="result-box">
+                            <h4><i class="fas fa-check-circle"></i> STATUS: DISPONÍVEL</h4>
+                            <p>Dossiê administrativo passível de <strong>Emissão Imediata</strong> localizado para este CPF.</p>
+                        </div>
+                        <a href="https://chk.eduzz.com/39VKO6PYWR" class="btn-action btn-pulse d-block text-center text-decoration-none mt-4">LIBERAR MEU PROTOCOLO (R$ 30,00)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="svg-border-angled bottom-right" style="color: var(--indigo-700);">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor"><polygon points="0,100 100,0 100,100"></polygon></svg>
+    </div>
+</section>
+
+<!-- SEÇÃO DE NÚMEROS (PROVA SOCIAL) -->
+<section class="bg-indigo-700 py-5 numbers-section text-center">
+    <div class="container py-4">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <i class="fas fa-file-pdf fa-3x text-light opacity-75"></i>
+                <h3>+4.850</h3>
+                <p>Protocolos Emitidos</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-scale-balanced fa-3x text-light opacity-75"></i>
+                <h3>100%</h3>
+                <p>Baseado no CDC</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-user-check fa-3x text-light opacity-75"></i>
+                <h3>+2.100</h3>
+                <p>CPFs Restabelecidos</p>
+            </div>
+        </div>
+    </div>
+    <div class="svg-border-angled bottom-right" style="color: #ffffff;">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor"><polygon points="0,100 100,0 100,100"></polygon></svg>
+    </div>
+</section>
+
+<!-- COMO FUNCIONA (PASSO A PASSO) -->
+<section class="py-5 bg-white" id="como-funciona">
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <h2 class="display-6 fw-bold color-indigo-800 mb-5">Passo a passo para <span class="color-green-700 d-block">Limpar seu Nome:</span></h2>
+                
+                <div class="d-flex mb-4 gap-4 align-items-start">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h4 class="fw-bold color-dark">Verificação</h4>
+                        <p class="text-muted">O sistema analisa a viabilidade da retificação administrativa para o CPF informado com base nos critérios de prescrição de 5 anos.</p>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-4 gap-4 align-items-start">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h4 class="fw-bold color-dark">Emissão do Protocolo</h4>
+                        <p class="text-muted">Após a ativação da licença, você recebe automaticamente o Guia Técnico em PDF com as teses de caducidade prontas.</p>
+                    </div>
+                </div>
+                
+                <div class="d-flex gap-4 align-items-start">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h4 class="fw-bold color-dark">Ativação Administrativa</h4>
+                        <p class="text-muted">Com o dossiê em mãos, você realiza o protocolo nos canais oficiais indicados para forçar a regularização do seu status sem precisar de advogado.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="card border-0 bg-grey-100 p-5 rounded-4 shadow-sm">
+                    <i class="fas fa-shield-check fa-5x color-green-600 mb-4"></i>
+                    <h3 class="fw-bold color-indigo-800">Pronto para começar?</h3>
+                    <p class="text-muted mb-4">Volte ao topo da página, informe seu CPF e descubra imediatamente se você tem direito à emissão do dossiê.</p>
+                    <a href="#contrate-agora" class="btn btn-action w-auto px-5">FAZER MINHA CONSULTA</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="svg-border-angled bottom-right" style="color: var(--grey-100);">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor"><polygon points="0,100 100,0 100,100"></polygon></svg>
+    </div>
+</section>
+
+<!-- PERGUNTAS FREQUENTES (FAQ BOOTSTRAP) -->
+<section class="py-5 bg-grey-100" id="faq">
+    <div class="container py-5">
+        <h2 class="display-6 fw-bold color-indigo-800 text-center mb-5 text-uppercase">Perguntas <span class="color-green-700">Frequentes</span></h2>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion shadow-sm" id="accordionFAQ">
+                    
+                    <div class="accordion-item border-0 border-bottom">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                O que é a caducidade de 5 anos?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body">
+                                De acordo com o Código de Defesa do Consumidor (Art. 43, § 1º), informações negativas sobre dívidas não podem ser mantidas nos cadastros de proteção ao crédito (como SPC e Serasa) por um período superior a 5 anos. Nosso material orienta como exigir a baixa desses apontamentos.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item border-0 border-bottom">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Com este protocolo, minha dívida deixa de existir?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body">
+                                Não. A dívida em si não desaparece, mas após 5 anos ela <strong>prescreve</strong>. Isso significa que ela perde o direito de ser cobrada judicialmente e, o mais importante, não pode mais manter o seu nome negativado ou prejudicar o seu Score de crédito.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border-0 border-bottom">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Eu preciso contratar um advogado para usar o guia?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body">
+                                Não! O material foi estruturado justamente para que você consiga realizar as solicitações de forma <strong>administrativa</strong>, ou seja, diretamente nas plataformas oficiais (como o Consumidor.gov e Procon online), utilizando os textos prontos do nosso PDF.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Em quanto tempo recebo acesso ao material?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body">
+                                O envio é <strong>imediato</strong>. Assim que o pagamento for compensado (em caso de PIX é na mesma hora), nosso sistema dispara automaticamente o Guia Técnico em PDF e os modelos de protocolo para o seu e-mail.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="text-center">
+    <div class="container">
+        <i class="fas fa-shield-check fa-3x mb-4 opacity-50"></i>
+        <h4 class="fw-bold mb-3 text-white">SISTEMA DE ACESSO AO PROTOCOLO</h4>
+        <p class="mb-4 col-lg-8 mx-auto"><strong>AVISO DE CONFORMIDADE:</strong> Este site comercializa uma Licença de Uso para um Guia Técnico (PDF) contendo instruções e modelos de documentos administrativos fundamentados no CDC. A execução do protocolo nos órgãos competentes é de inteira responsabilidade do usuário. Não somos instituição financeira.</p>
+        <p class="mb-0 opacity-50 small">© 2026 Processamento de Protocolos Administrativos - Todos os Direitos Reservados.</p>
+    </div>
+</footer>
+
+<!-- Scripts Necessários -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function mascaraCPF(i) {
+        let v = i.value.replace(/\D/g, "");
+        if (v.length > 3) v = v.replace(/^(\d{3})(\d)/, "$1.$2");
+        if (v.length > 6) v = v.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+        if (v.length > 9) v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+        i.value = v;
+    }
+
+    function startConsult() {
+        const cpf = document.getElementById('cpf-input').value;
+        if(cpf.length < 14) { alert("Por favor, informe um CPF válido para iniciar."); return; }
+        
+        document.getElementById('initial-state').style.display = 'none';
+        document.getElementById('loading-state').style.display = 'block';
+        
+        const txt = document.getElementById('loading-text');
+        
+        setTimeout(() => { txt.innerText = "Consultando base de Caducidade (5 anos)..."; }, 1200);
+        setTimeout(() => { txt.innerText = "Analisando histórico de restrições..."; }, 2500);
+        setTimeout(() => { txt.innerText = "Preparando Dossiê Técnico para emissão..."; }, 3800);
+        
+        setTimeout(() => {
+            if (navigator.vibrate) navigator.vibrate(200);
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('result-state').style.display = 'block';
+        }, 5500);
+    }
+</script>
+
+</body>
+</html>
