@@ -1,445 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18141767424"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'AW-18141767424');
 </script>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Portal de Acesso ao Protocolo Técnico de Limpeza de Nome</title>
+    <title>Limpeza de Nome Imediata - Protocolo Administrativo</title>
     
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- FontAwesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* CORES BASE EXATAS DO SEU PRINT */
         :root {
-            --verde-principal: #3f9b44;
-            --verde-escuro: #317d35;
-            --texto-cinza: #666666;
-            --azul-marinho: #1a3a5a;
-            --fundo-cinza: #f8f9fa;
+            --verde-venda: #25d366;
+            --verde-escuro: #128c7e;
+            --azul-autoridade: #0a1f33;
+            --laranja-alerta: #ff8c00;
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #ffffff;
-            color: #333;
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; }
+
+        /* HEADER COMPACTO */
+        .top-bar { background: #fff; padding: 10px 0; border-bottom: 2px solid var(--verde-venda); }
+        .secure-badge { color: #555; font-size: 12px; font-weight: bold; }
+
+        /* HERO AGRESSIVO */
+        .hero { background: var(--azul-autoridade); color: white; padding: 40px 0; border-bottom: 5px solid var(--verde-venda); }
+        .hero h1 { font-weight: 800; font-size: 32px; color: #fff; text-transform: uppercase; line-height: 1.1; }
+        .hero .highlight { color: var(--verde-venda); }
+
+        /* CARD DE OFERTA */
+        .offer-card { 
+            background: #fff; 
+            border-radius: 12px; 
+            padding: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+            margin-top: -20px;
+            border-top: 5px solid var(--verde-venda);
         }
-
-        /* TIPOGRAFIA E ESTRUTURA GERAL */
-        h2.section-title {
-            color: var(--azul-marinho);
-            font-weight: 700;
-            font-size: 32px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
+        .price-tag { font-size: 48px; font-weight: 900; color: #333; margin: 10px 0; }
+        .price-tag small { font-size: 18px; font-weight: normal; }
+        
+        .btn-cta { 
+            background: var(--verde-venda); 
+            color: white; 
+            font-size: 22px; 
+            font-weight: 900; 
+            padding: 20px; 
+            border-radius: 8px; 
+            text-transform: uppercase; 
+            width: 100%; 
+            display: block; 
+            text-decoration: none;
+            transition: 0.3s;
+            border-bottom: 4px solid #16a34a;
+            text-align: center;
         }
-        .section-subtitle {
-            color: var(--texto-cinza);
-            font-size: 18px;
-            margin-bottom: 50px;
-            line-height: 1.6;
-        }
-        section { padding: 80px 0; }
-        .bg-light-gray { background-color: var(--fundo-cinza); }
+        .btn-cta:hover { background: var(--verde-escuro); color: #fff; transform: scale(1.02); }
 
-        /* CABEÇALHO */
-        .custom-header {
-            background-color: #ffffff;
-            padding: 15px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .header-logo-text { color: var(--azul-marinho); font-weight: 900; font-size: 18px; line-height: 1.1; text-transform: uppercase; }
-        .header-logo-sub { font-size: 13px; font-weight: normal; color: var(--texto-cinza); }
-        .nav-links a { color: var(--texto-cinza); font-weight: 700; text-decoration: none; font-size: 13px; padding: 5px 10px; text-transform: uppercase; }
-        .nav-links a:hover { color: var(--verde-principal); }
-        .btn-header { background-color: var(--white); color: white; font-weight: bold; border: none; padding: 10px 20px; border-radius: 4px; font-size: 15px; text-decoration: none;}
-        .btn-header:hover { background-color: var(--white); color: white; }
+        .urgent-badge { background: #fff3cd; color: #856404; padding: 8px; border-radius: 5px; font-size: 13px; font-weight: bold; margin-bottom: 15px; text-align: center; }
 
-        /* HERO SECTION */
-        .hero-section { background-color: var(--verde-principal); position: relative; padding: 60px 0 80px 0; overflow: hidden; }
-        .hero-section::before { content: ""; position: absolute; top: -50px; left: -100px; width: 120%; height: 150px; background-color: rgba(0,0,0,0.05); transform: rotate(-3deg); z-index: 0; }
-        .hero-content { position: relative; z-index: 1; }
-        .hero-title { color: #ffffff; font-weight: 700; font-size: clamp(28px, 4vw, 42px); line-height: 1.2; margin-bottom: 25px; text-transform: uppercase; }
-        .hero-text { color: rgba(255, 255, 255, 0.85); font-size: 18px; line-height: 1.6; margin-bottom: 20px; }
-        .hero-text strong { color: #ffffff; }
-
-        /* CARD DO CPF */
-        .form-card { background-color: #ffffff; border-radius: 4px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .form-card h3 { font-size: 20px; color: #333; margin-bottom: 20px; font-weight: normal; }
-        .form-label { font-size: 14px; color: #333; margin-bottom: 5px; font-weight: bold;}
-        .form-control { border-radius: 4px; border: 1px solid #ccc; padding: 12px 15px; font-size: 18px; font-weight: bold; text-align: center; color: var(--azul-marinho);}
-        .form-control:focus { border-color: var(--verde-principal); box-shadow: 0 0 0 0.2rem rgba(63, 155, 68, 0.25); }
-        .btn-submit { background-color: var(--verde-principal); color: white; font-weight: bold; border: none; padding: 15px; border-radius: 4px; width: 100%; font-size: 16px; margin-top: 15px; text-transform: uppercase; transition: 0.3s;}
-        .btn-submit:hover { background-color: var(--verde-escuro); color: white; transform: translateY(-2px);}
-
-        /* Estados do CPF */
-        #loading-state, #result-state { display: none; text-align: center; }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--verde-principal); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .result-box { background: #e8f5e9; border: 1px solid var(--verde-principal); padding: 20px; border-radius: 4px; margin-top: 15px; }
-
-        /* SEÇÃO COMO FUNCIONA (Copiar e Colar) */
-        .step-box { background: #fff; padding: 30px; border-radius: 4px; border: 1px solid #e0e0e0; height: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.02);}
-        .step-number { font-size: 48px; font-weight: 900; color: var(--verde-principal); line-height: 1; margin-bottom: 15px; }
-        .step-title { font-size: 18px; font-weight: bold; color: var(--azul-marinho); margin-bottom: 10px; }
-        .step-text { font-size: 15px; color: var(--texto-cinza); line-height: 1.6; }
-
-        /* SEÇÃO EMBASAMENTO JURÍDICO */
-        .legal-box { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 30px; }
-        .legal-icon { background: var(--verde-principal); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
-        .legal-content h4 { font-size: 18px; font-weight: bold; color: var(--azul-marinho); }
-        .legal-content p { font-size: 15px; color: var(--texto-cinza); line-height: 1.6; }
-
-        /* SEÇÃO DEPOIMENTOS */
-        .testimonial-card { background: #fff; padding: 30px; border-radius: 4px; border-left: 4px solid var(--verde-principal); box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px;}
-        .testimonial-text { font-style: italic; font-size: 16px; color: #444; margin-bottom: 15px; }
-        .testimonial-author { font-weight: bold; color: var(--azul-marinho); font-size: 14px; text-transform: uppercase; }
-        .stars { color: #ffc107; font-size: 14px; margin-bottom: 10px; }
-
-        /* FAQ */
-        .accordion-button:not(.collapsed) { background-color: #e8f5e9; color: var(--verde-escuro); font-weight: bold; box-shadow: none;}
-        .accordion-button { font-weight: bold; color: var(--azul-marinho); padding: 20px; }
-        .accordion-button:focus { box-shadow: none; }
-        .accordion-body { color: var(--texto-cinza); font-size: 15px; line-height: 1.7; padding: 20px; }
-
+        /* PROVA SOCIAL RÁPIDA */
+        .proof-box { font-size: 14px; color: #666; margin-top: 20px; }
+        
         /* FOOTER */
-        .custom-footer { background-color: var(--azul-marinho); color: rgba(255,255,255,0.7); padding: 40px 0 20px; font-size: 14px; }
-        .custom-footer strong { color: #fff; }
-
-        @media (max-width: 991px) {
-            .nav-links { display: none !important; }
-            .hero-section { text-align: left; padding: 40px 0; }
-            .form-card { margin-top: 30px; }
-            section { padding: 50px 0; }
-        }
+        footer { background: #eee; padding: 30px 0; color: #777; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <!-- CABEÇALHO -->
-    <header class="custom-header">
+    <div class="top-bar">
         <div class="container d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <div style="background-color: #ffffff; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                    <i class="fas fa-file-contract" style="color: var(--verde-principal); font-size: 24px;"></i>
-                </div>
-                <div class="header-logo-text">
-                    PORTAL DE ACESSO<br>
-                    <span class="header-logo-sub">AO PROTOCOLO TÉCNICO DE LIMPEZA DE NOME</span>
-                </div>
-            </div>
-            <nav class="nav-links d-flex gap-3 align-items-center">
-                <a href="#como-funciona">COMO FUNCIONA</a>
-                <a href="#embasamento">EMBASAMENTO</a>
-                <a href="#depoimentos">DEPOIMENTOS</a>
-                <a href="#faq">DÚVIDAS</a>
-                <a href="#contrate-agora" class="btn-header ms-3"><i class="fas fa-lock me-2"></i> Ambiente Seguro</a>
-            </nav>
+            <span class="secure-badge"><i class="fas fa-lock text-success"></i> CONEXÃO SEGURA E CRIPTOGRAFADA</span>
+            <img src="https://logodownload.org/wp-content/uploads/2019/08/selo-google-safe-browsing.png" height="20" alt="Google Safe">
         </div>
-    </header>
+    </div>
 
-    <!-- HERO SECTION -->
-    <section class="hero-section" id="contrate-agora">
-        <div class="container hero-content">
-            <div class="row align-items-center">
-                <div class="col-lg-6 pe-lg-5">
-                    <h1 class="hero-title">ESTÁ COM O NOME SUJO? LIMPE O SEU NOME COM O NOSSO PROTOCOLO</h1>
-                    <p class="hero-text">Bem-vindo ao nosso portal. Libere o protocolo administrativo de liberação de crédito e baixa de restrições agora mesmo.</p>
-                    <p class="hero-text">Receba acesso imediato ao <strong>Protocolo Técnico de Limpeza de Nome</strong> fundamentado no Código de Defesa do Consumidor. Nosso dossiê contém as petições prontas para a exclusão de apontamentos prescritos (5 anos) e revisão de juros abusivos.</p>
-                    <p class="hero-text">O envio é automático via e-mail. <strong>O acesso é liberado instantaneamente após a compensação do pagamento.</strong></p>
-                </div>
+    <section class="hero">
+        <div class="container text-center">
+            <h1>LIMPE SEU NOME EM ATÉ <span class="highlight">7 DIAS</span> SEM PRECISAR DE ADVOGADOS</h1>
+            <p class="mt-3 opacity-75">Use o Protocolo Administrativo de Caducidade fundamentado no Art. 43 do CDC.</p>
+        </div>
+    </section>
 
-                <div class="col-lg-6">
-                    <div class="form-card">
-                        <div id="initial-state">
-                            <h3>1. Consulta de Disponibilidade</h3>
-                            <div class="mb-3">
-                                <label class="form-label">Informe seu CPF para iniciar:</label>
-                                <input type="tel" id="cpf-input" class="form-control" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
-                            </div>
-                            <p style="font-size: 12px; color: #777; margin-top: 10px; text-align: center;">
-                                <i class="fas fa-shield-alt"></i> Seus dados estão protegidos pela LGPD.
-                            </p>
-                            <button class="btn-submit" onclick="startConsult()">Verificar Disponibilidade</button>
-                        </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="offer-card">
+                    <div class="urgent-badge">
+                        <i class="fas fa-clock"></i> OFERTA DISPONÍVEL POR TEMPO LIMITADO
+                    </div>
+                    
+                    <h3 class="text-center mb-4">Acesso Imediato ao Protocolo</h3>
+                    
+                    <ul class="list-unstyled mb-4">
+                        <li><i class="fas fa-check text-success"></i> <strong>Petições Prontas:</strong> Só copiar e colar.</li>
+                        <li><i class="fas fa-check text-success"></i> <strong>Dívidas de 5 Anos:</strong> Saiba como remover.</li>
+                        <li><i class="fas fa-check text-success"></i> <strong>Score:</strong> Instruções para destravar a pontuação.</li>
+                        <li><i class="fas fa-check text-success"></i> <strong>Envio Imediato:</strong> No seu e-mail após o Pix.</li>
+                    </ul>
 
-                        <div id="loading-state">
-                            <h3 style="margin-bottom: 5px; color: var(--azul-marinho);">Analisando base de dados...</h3>
-                            <div class="loader"></div>
-                            <p id="loading-text" style="color: #666; font-size: 14px; font-weight: bold;">Sincronizando registros normativos (5 anos)...</p>
-                        </div>
+                    <div class="text-center">
+                        <span class="text-muted text-decoration-line-through">De R$ 67,00</span>
+                        <div class="price-tag"><small>R$</small> 27,90</div>
+                        <p class="text-muted mb-4">Pagamento único. Sem mensalidades.</p>
+                    </div>
 
-                        <div id="result-state">
-                            <h3 style="color: var(--azul-marinho); text-align: center;">Consulta Finalizada</h3>
-                            <div class="result-box">
-                                <h4 style="color: var(--verde-principal); font-size: 18px; font-weight: bold; margin-bottom: 10px;">
-                                    <i class="fas fa-check-circle"></i> STATUS: PROTOCOLO DISPONÍVEL
-                                </h4>
-                                <p style="color: #333; font-size: 14px; margin-bottom: 0; line-height: 1.5;">
-                                    Dossiê administrativo de exclusão passível de <strong>Emissão Imediata</strong> localizado para o CPF informado.
-                                </p>
-                            </div>
-                            <a href="https://chk.eduzz.com/39VKO6PYWR" class="btn-submit d-block text-center text-decoration-none mt-3">
-                                Emitir Dossiê Agora (R$ 67,00)
-                            </a>
+                    <a href="https://chk.eduzz.com/39VKO6PYWR" class="btn-cta">
+                        QUERO LIMPAR MEU NOME AGORA
+                    </a>
+
+                    <div class="proof-box text-center">
+                        <i class="fas fa-users"></i> +1.427 pessoas regularizaram o CPF este mês.
+                        <div class="mt-2">
+                            <img src="https://www.compraexpert.com/wp-content/uploads/2019/02/selo-site-seguro-google.png" height="40" alt="Compra Segura">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- COMO FUNCIONA (COPIAR E COLAR) -->
-    <section class="bg-light-gray" id="como-funciona">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-title">Sem Advogados. Só Copiar e Colar.</h2>
-                <p class="section-subtitle">O processo administrativo foi desenhado para ser realizado por qualquer pessoa,<br> direto do celular ou computador, de forma rápida e 100% online.</p>
-            </div>
-
+    <section class="py-5">
+        <div class="container text-center">
+            <h4 class="mb-4">COMO FUNCIONA?</h4>
             <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="step-box">
-                        <div class="step-number">01</div>
-                        <h4 class="step-title">Receba o Material</h4>
-                        <p class="step-text">Após a aprovação do pagamento, você recebe imediatamente no seu e-mail o <strong>Protocolo Técnico de Caducidade</strong> em PDF, contendo toda a base legal já estruturada.</p>
-                    </div>
+                <div class="col-md-4">
+                    <i class="fas fa-paper-plane fa-3x text-success mb-3"></i>
+                    <h5>1. RECEBA</h5>
+                    <p>O material chega no seu e-mail na hora.</p>
                 </div>
-                <div class="col-lg-4">
-                    <div class="step-box">
-                        <div class="step-number">02</div>
-                        <h4 class="step-title">Copie os Textos Prontos</h4>
-                        <p class="step-text">Você não precisa inventar palavras difíceis. Dentro do PDF, existem blocos de texto para exclusão de dívidas de 5 anos e para revisão de juros abusivos. Basta copiar a tese aplicável e preencher seus dados básicos.</p>
-                    </div>
+                <div class="col-md-4">
+                    <i class="fas fa-copy fa-3x text-success mb-3"></i>
+                    <h5>2. COPIE</h5>
+                    <p>Escolha o modelo pronto de acordo com sua dívida.</p>
                 </div>
-                <div class="col-lg-4">
-                    <div class="step-box">
-                        <div class="step-number">03</div>
-                        <h4 class="step-title">Cole nos Portais Oficiais</h4>
-                        <p class="step-text">Acesse as plataformas oficiais de defesa do consumidor (como Consumidor.gov.br ou Procon Online), cole a fundamentação e abra sua solicitação. As empresas têm prazo curto para remover a restrição ou revisar a dívida.</p>
-                    </div>
+                <div class="col-md-4">
+                    <i class="fas fa-check-double fa-3x text-success mb-3"></i>
+                    <h5>3. RESOLVA</h5>
+                    <p>Cole nos portais oficiais e aguarde a baixa.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- EMBASAMENTO JURÍDICO -->
-    <section id="embasamento">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 pe-lg-5 mb-5 mb-lg-0">
-                    <h2 class="section-title">A Lei Está do Seu Lado</h2>
-                    <p class="section-subtitle">Nós não inventamos regras. Nosso Dossiê Técnico apenas organiza o que a legislação brasileira já garante ao cidadão, forçando as instituições a cumprirem a lei.</p>
-
-                    <div class="legal-box">
-                        <div class="legal-icon"><i class="fas fa-balance-scale"></i></div>
-                        <div class="legal-content">
-                            <h4>Artigo 43, § 1º do CDC (5 Anos)</h4>
-                            <p>O Código de Defesa do Consumidor é claro: nenhuma informação negativa sobre inadimplência pode ser mantida em cadastros de proteção ao crédito (SPC, Serasa, Boa Vista) por um período superior a 5 anos.</p>
-                        </div>
-                    </div>
-
-                    <div class="legal-box">
-                        <div class="legal-icon"><i class="fas fa-gavel"></i></div>
-                        <div class="legal-content">
-                            <h4>Prazo de Contagem Correto</h4>
-                            <p>Muitas empresas tentam "renovar" a dívida vendendo-a para empresas de cobrança. O nosso protocolo ensina como exigir que a contagem dos 5 anos seja feita a partir da data de vencimento da dívida original, anulando essas manobras.</p>
-                        </div>
-                    </div>
-
-                    <div class="legal-box">
-                        <div class="legal-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                        <div class="legal-content">
-                            <h4>Revisão de Juros Abusivos</h4>
-                            <p>Instituições financeiras frequentemente aplicam taxas que ultrapassam os limites permitidos ou cobram juros sobre juros de forma irregular. Nossas teses ensinam como forçar o recálculo da dívida para um valor justo e dentro da lei, facilitando acordos.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <div style="background-color: var(--fundo-cinza); border: 1px solid #ddd; border-radius: 4px; padding: 60px; box-shadow: inset 0 0 20px rgba(0,0,0,0.05);">
-                        <i class="fas fa-file-signature" style="font-size: 120px; color: var(--verde-principal); opacity: 0.8;"></i>
-                        <h4 style="margin-top: 30px; color: var(--azul-marinho); font-weight: bold;">Reivindique Seus Direitos</h4>
-                        <p style="color: var(--texto-cinza); font-size: 15px; margin-top: 10px;">A via administrativa é a forma mais rápida de forçar a regularização e revisão de valores sem gastar com honorários advocatícios.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DEPOIMENTOS -->
-    <section class="bg-light-gray" id="depoimentos">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-title">Casos de Sucesso</h2>
-                <p class="section-subtitle">Pessoas comuns que utilizaram nossos modelos para restabelecer seu crédito.</p>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="testimonial-text">"Tinha uma dívida de cartão de crédito de 2019 que ainda estava sujando meu nome. Achei que precisava processar o banco, mas só comprei o protocolo, colei o texto no Consumidor.gov e em 7 dias meu Serasa atualizou!"</p>
-                        <p class="testimonial-author">— Ricardo Mendes</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="testimonial-text">"O banco estava me cobrando um juros absurdo em um empréstimo atrasado. Usei o modelo de revisão de juros abusivos do material de vocês. Eles foram obrigados a recalcular e a dívida caiu pela metade. Consegui pagar e limpar o nome."</p>
-                        <p class="testimonial-author">— Juliana C.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="testimonial-card">
-                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="testimonial-text">"O melhor investimento. Eu ia pagar R$ 800 para um advogado fazer uma carta extrajudicial. Comprei o dossiê por trinta reais e mandei eu mesmo. Resolvido. O nome já está limpo e o score subindo."</p>
-                        <p class="testimonial-author">— Marcos V. Almeida</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-title">Perguntas Frequentes</h2>
-                <p class="section-subtitle">Tire suas dúvidas antes de emitir o seu protocolo.</p>
-            </div>
-
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="accordion" id="accordionFAQ">
-                        
-                        <div class="accordion-item mb-3" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden;">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                    Usando o protocolo, minha dívida perdoa ou some?
-                                </button>
-                            </h2>
-                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ">
-                                <div class="accordion-body">
-                                    <strong>Não. É importante ser honesto:</strong> a dívida em si não some e a empresa ainda pode tentar fazer cobranças amigáveis. No entanto, após 5 anos, ela <strong>prescreve (caduca)</strong>. Isso significa que ela perde o direito de te cobrar judicialmente e é OBRIGADA por lei a retirar o apontamento negativo do seu CPF (SPC/Serasa/Boa Vista). O nosso foco é garantir que eles tirem seu nome da restrição e liberem seu Score.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item mb-3" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden;">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                    Como funciona a parte de revisão de juros abusivos?
-                                </button>
-                            </h2>
-                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
-                                <div class="accordion-body">
-                                    Muitas dívidas se tornam impagáveis devido à cobrança de taxas ilegais ou acima do teto permitido pelo Banco Central. Nosso material inclui modelos prontos para você questionar administrativamente os valores cobrados, forçando a instituição a recalcular a dívida para um valor justo e dentro da lei, o que facilita muito fechar um acordo de quitação.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item mb-3" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden;">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                    Preciso entender de leis ou contratar um advogado?
-                                </button>
-                            </h2>
-                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
-                                <div class="accordion-body">
-                                    De forma alguma. O <strong>Protocolo Técnico de Caducidade</strong> já foi redigido com todo o embasamento jurídico necessário. Seu único trabalho será abrir o PDF, copiar o texto que já preparamos, inserir seus dados (Nome, CPF e Empresa) e colar nos portais oficiais de reclamação administrativa indicados no guia.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item mb-3" style="border: 1px solid #ddd; border-radius: 4px; overflow: hidden;">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                                    Como e quando vou receber o material?
-                                </button>
-                            </h2>
-                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
-                                <div class="accordion-body">
-                                    O envio é feito para o seu e-mail de forma 100% automática. Se você realizar o pagamento via PIX ou Cartão de Crédito, o acesso ao PDF com as petições prontas chega na sua caixa de entrada em poucos minutos.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="custom-footer">
-        <div class="container text-center text-md-start">
-            <div class="row align-items-center">
-                <div class="col-md-8 mb-3 mb-md-0">
-                    <h5 style="color: #fff; font-weight: bold; margin-bottom: 15px; text-transform: uppercase;">Processamento de Protocolos Administrativos</h5>
-                    <p style="margin-bottom: 10px;">
-                        <strong>Aviso de Conformidade Legal:</strong> Comercializamos uma Licença de Uso para um Guia Técnico (Infoproduto em PDF) contendo instruções e modelos de textos administrativos fundamentados no Código de Defesa do Consumidor (Art. 43) e normativas de revisão de juros. 
-                    </p>
-                    <p style="margin-bottom: 0; font-size: 13px;">
-                        A execução do protocolo nos órgãos competentes é de responsabilidade do usuário. Não somos um órgão governamental, escritório jurídico ou instituição financeira.
-                    </p>
-                </div>
-                <div class="col-md-4 text-center text-md-end">
-                    <p style="margin-bottom: 5px;"><strong>Suporte Técnico:</strong></p>
-                    <p style="margin-bottom: 20px;">suportesisltemadeimpeza@protonmail.com
-</p>
-                    <p style="margin-bottom: 0;">© 2026 Protocolo de Caducidade.<br>Todos os direitos reservados.</p>
-                </div>
-            </div>
+    <footer>
+        <div class="container text-center">
+            <p><strong>Atenção:</strong> Este material é um guia técnico com modelos administrativos. A execução depende do usuário. Não somos advogados ou órgãos públicos.</p>
+            <p>© 2026 Protocolo de Caducidade - Todos os direitos reservados.</p>
         </div>
     </footer>
 
-<!-- Scripts do Sistema -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    function mascaraCPF(i) {
-        let v = i.value.replace(/\D/g, "");
-        if (v.length > 3) v = v.replace(/^(\d{3})(\d)/, "$1.$2");
-        if (v.length > 6) v = v.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
-        if (v.length > 9) v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
-        i.value = v;
-    }
-
-    function startConsult() {
-        const cpf = document.getElementById('cpf-input').value;
-        if(cpf.length < 14) { alert("Por favor, informe um CPF válido para prosseguir."); return; }
-        
-        // Esconde o formulário, mostra o carregamento
-        document.getElementById('initial-state').style.display = 'none';
-        document.getElementById('loading-state').style.display = 'block';
-        
-        const txt = document.getElementById('loading-text');
-        
-        // Simulador de carregamento focado em mostrar credibilidade
-        setTimeout(() => { txt.innerText = "Consultando base normativa de Caducidade (5 anos)..."; }, 1500);
-        setTimeout(() => { txt.innerText = "Analisando histórico de juros e pendências..."; }, 3000);
-        setTimeout(() => { txt.innerText = "Estruturando Dossiê Técnico..."; }, 4500);
-        
-        // Finaliza e mostra o resultado
-        setTimeout(() => {
-            if (navigator.vibrate) navigator.vibrate(200);
-            document.getElementById('loading-state').style.display = 'none';
-            document.getElementById('result-state').style.display = 'block';
-        }, 6000);
-    }
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
