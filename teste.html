@@ -243,6 +243,7 @@
             border-collapse: collapse;
             margin-top: 10px;
             text-align: left;
+            white-space: nowrap; /* Ajuda no scroll do celular */
         }
 
         th {
@@ -289,6 +290,61 @@
         
         .select-resultado option[value="Green"] { color: #34d399; }
         .select-resultado option[value="Red"] { color: #f87171; }
+
+        /* =========================================
+           OTIMIZAÇÃO PARA DISPOSITIVOS MÓVEIS (CELULAR)
+           ========================================= */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 16px;
+            }
+
+            .column-left, .column-right {
+                width: 100%;
+                display: block;
+                padding: 0;
+            }
+
+            .column-left {
+                margin-bottom: 20px;
+            }
+
+            .card {
+                min-height: auto;
+                padding: 15px;
+            }
+
+            .form-group {
+                width: 100%;
+                display: block;
+                margin-left: 0 !important;
+            }
+
+            .metric-box {
+                width: 100%;
+                display: block;
+                margin-right: 0 !important;
+                margin-bottom: 10px;
+            }
+
+            .metric-box:last-child {
+                margin-bottom: 0;
+            }
+
+            .decisao-box {
+                font-size: 20px;
+                padding: 15px;
+            }
+
+            th, td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
