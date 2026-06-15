@@ -1,53 +1,847 @@
-Perfeito. Agora tenho tudo que preciso. Vou construir um sistema robusto para **Resultado 1X2 live entre 15-30 min**, com todos os dados da AI Score e uma lógica de scoring muito mais inteligente.Agora vou construir o HTML completo com lógica robusta de 1X2 live.Aqui está o terminal completo, reformulado do zero. As principais mudanças em relação ao anterior:
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Terminal 1X2 — AI Score Live</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-**Visual**
-- Texto dos inputs agora totalmente visível — fundo `#080c14` com texto `#dde6f5`, sem conflito de contraste
-- Fontes monoespaçadas reais (Consolas/JetBrains Mono) como em terminais Bloomberg/TradingView
-- Layout corrigido: painel de critérios à direita com scroll próprio
+:root {
+  --bg:       #080c14;
+  --s1:       #0d1320;
+  --s2:       #111a2e;
+  --s3:       #162038;
+  --border:   #1c2d48;
+  --border2:  #243352;
+  --accent:   #3b82f6;
+  --accent-d: #1d4ed8;
+  --text:     #dde6f5;
+  --muted:    #4e6587;
+  --muted2:   #2d4060;
+  --green:    #22c55e;
+  --gbg:      #031a0f;
+  --gbr:      #14532d;
+  --red:      #ef4444;
+  --rbg:      #1a0303;
+  --rbr:      #7f1d1d;
+  --yellow:   #f59e0b;
+  --ybg:      #1a1003;
+  --cyan:     #06b6d4;
+}
 
-**Lógica muito mais robusta para 1X2**
-O sistema agora usa **score ponderado de 0–19 pontos** ao invés de um simples contador:
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Consolas', 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  overflow-x: hidden;
+}
 
-| Critério | Peso | Threshold |
-|---|---|---|
-| AP/Minuto | 3 | ≥ 0.55/min |
-| Eficiência AP (AP÷Total) | 3 | ≥ 55% |
-| Posse de Bola | 3 | ≥ 55% |
-| Pressão Alta | 3 | Sim/Não |
-| Finalizações | 2 | ≥ 3 |
-| Escanteios | 2 | ≥ 2 |
-| Precisão de Passes | 2 | ≥ 80% |
-| Cartões do adversário | 1 | ≥ 2 |
+/* ── TOPBAR ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  height: 38px;
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.wm-dots { display: flex; gap: 6px; margin-right: 6px; }
+.wm-dot  { width: 10px; height: 10px; border-radius: 50%; }
+.wm-red    { background: #ff5f57; }
+.wm-yellow { background: #febc2e; }
+.wm-green  { background: #28c840; }
+.top-title { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+.top-right { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+.live-pill {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 10px; color: var(--green); letter-spacing: 1.5px;
+  border: 1px solid var(--gbr);
+  background: var(--gbg);
+  padding: 3px 8px; border-radius: 2px;
+}
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 1.4s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+.top-clock { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+.top-market {
+  font-size: 10px; color: var(--cyan); letter-spacing: 1px;
+  border: 1px solid #164e5a; background: #031e26; padding: 3px 8px; border-radius: 2px;
+}
 
-**Alertas inteligentes**
-- Bloqueia entrada se odd < 1.25 (value inexistente)
-- Alerta se muitos ataques não perigosos — time que pressiona sem qualidade é armadilha clássica de red
-- Sinaliza quando está fora da janela 15–30 min
+/* ── LAYOUT ── */
+.app { display: grid; grid-template-columns: 1fr 300px; min-height: calc(100vh - 38px); }
+.panel-left  { border-right: 1px solid var(--border); }
+.panel-right { display: flex; flex-direction: column; }
 
-**Novos campos da AI Score:** Posse %, Passes completos, Precisão de passes %, Ataques Não Perigosos, Faltas sofridas, Cartões do adversárioPerfeito. Agora tenho tudo que preciso. Vou construir um sistema robusto para **Resultado 1X2 live entre 15-30 min**, com todos os dados da AI Score e uma lógica de scoring muito mais inteligente.Agora vou construir o HTML completo com lógica robusta de 1X2 live.Aqui está o terminal completo, reformulado do zero. As principais mudanças em relação ao anterior:
+/* ── SEC HEADER ── */
+.sec-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 14px;
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase;
+}
+.sec-hdr span { margin-left: auto; font-size: 9px; color: var(--muted2); }
 
-**Visual**
-- Texto dos inputs agora totalmente visível — fundo `#080c14` com texto `#dde6f5`, sem conflito de contraste
-- Fontes monoespaçadas reais (Consolas/JetBrains Mono) como em terminais Bloomberg/TradingView
-- Layout corrigido: painel de critérios à direita com scroll próprio
+/* ── FORM GRID ── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.f-cell { background: var(--s1); padding: 10px 14px; }
+.f-cell.span2 { grid-column: span 2; }
+.f-cell.span3 { grid-column: span 3; }
+.f-lbl {
+  font-size: 9px; color: var(--muted); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 6px;
+  display: flex; align-items: center; gap: 5px;
+}
+.f-lbl .tip {
+  display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--s3); color: var(--muted); text-align: center;
+  line-height: 14px; font-size: 9px; cursor: default; flex-shrink: 0;
+}
+.f-inp {
+  width: 100%; background: var(--bg);
+  border: 1px solid var(--border2); border-radius: 2px;
+  color: var(--text); font-family: inherit;
+  font-size: 14px; padding: 8px 10px;
+  outline: none; transition: border .15s, background .15s;
+  -moz-appearance: textfield;
+}
+.f-inp::-webkit-outer-spin-button,
+.f-inp::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.f-inp:focus { border-color: var(--accent); background: #0a1220; }
+.f-inp::placeholder { color: var(--muted2); }
+.f-inp option { background: #0d1320; }
 
-**Lógica muito mais robusta para 1X2**
-O sistema agora usa **score ponderado de 0–19 pontos** ao invés de um simples contador:
+/* ── WEIGHT LEGEND ── */
+.weight-row {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px 14px;
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+}
+.w-tag {
+  font-size: 9px; letter-spacing: 1px; padding: 3px 8px; border-radius: 2px;
+  color: var(--muted); border: 1px solid var(--border2);
+}
+.w-tag.hi { color: var(--green); border-color: var(--gbr); background: var(--gbg); }
+.w-tag.md { color: var(--yellow); border-color: #6b4c00; background: var(--ybg); }
+.w-tag.lo { color: var(--muted); border-color: var(--border2); background: var(--s2); }
 
-| Critério | Peso | Threshold |
-|---|---|---|
-| AP/Minuto | 3 | ≥ 0.55/min |
-| Eficiência AP (AP÷Total) | 3 | ≥ 55% |
-| Posse de Bola | 3 | ≥ 55% |
-| Pressão Alta | 3 | Sim/Não |
-| Finalizações | 2 | ≥ 3 |
-| Escanteios | 2 | ≥ 2 |
-| Precisão de Passes | 2 | ≥ 80% |
-| Cartões do adversário | 1 | ≥ 2 |
+/* ── METRICS BAR ── */
+.metrics-bar {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 1px; background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.m-cell { background: var(--s2); padding: 10px 14px; }
+.m-lbl { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.m-val { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -1px; }
+.m-val.accent { color: var(--accent); }
+.m-sub { font-size: 9px; color: var(--muted2); margin-top: 2px; }
 
-**Alertas inteligentes**
-- Bloqueia entrada se odd < 1.25 (value inexistente)
-- Alerta se muitos ataques não perigosos — time que pressiona sem qualidade é armadilha clássica de red
-- Sinaliza quando está fora da janela 15–30 min
+/* ── SCORE BAR ── */
+.score-track {
+  height: 4px; background: var(--s3);
+  margin-top: 6px; border-radius: 2px; overflow: hidden;
+}
+.score-fill {
+  height: 100%; border-radius: 2px;
+  transition: width .4s, background .4s;
+}
 
-**Novos campos da AI Score:** Posse %, Passes completos, Precisão de passes %, Ataques Não Perigosos, Faltas sofridas, Cartões do adversário
+/* ── CRITERIA LIST ── */
+.crit-list { flex: 1; overflow-y: auto; }
+.crit-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--s1);
+  transition: background .2s;
+}
+.crit-row:hover { background: var(--s2); }
+.c-icon {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; margin-top: 1px;
+}
+.c-ok    { background: var(--gbg); border: 1px solid var(--gbr); color: var(--green); }
+.c-fail  { background: var(--rbg); border: 1px solid var(--rbr); color: var(--red); }
+.c-warn  { background: var(--ybg); border: 1px solid #6b4c00; color: var(--yellow); }
+.c-neu   { background: var(--s3); border: 1px solid var(--border2); color: var(--muted); }
+.c-body  { flex: 1; }
+.c-name  { font-size: 11px; color: var(--text); margin-bottom: 1px; }
+.c-desc  { font-size: 10px; color: var(--muted); }
+.c-val   { font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.ok-v    { color: var(--green); }
+.fail-v  { color: var(--red); }
+.warn-v  { color: var(--yellow); }
+.neu-v   { color: var(--muted); }
+
+/* ── VERDICT ── */
+.verdict {
+  padding: 18px 14px;
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  transition: background .3s, border-color .3s;
+  min-height: 120px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+.v-eyebrow { font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+.v-main { font-size: 18px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+.v-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+.v-neutral { color: var(--muted); }
+.v-green { color: var(--green); }
+.v-red   { color: var(--red); }
+.v-yellow { color: var(--yellow); }
+.verdict.st-green { background: var(--gbg); border-color: var(--gbr); }
+.verdict.st-red   { background: var(--rbg); border-color: var(--rbr); }
+.verdict.st-warn  { background: var(--ybg); border-color: #6b4c00; }
+
+/* ── RISK METER ── */
+.risk-meter { padding: 10px 14px; background: var(--s1); border-bottom: 1px solid var(--border); }
+.risk-lbl { font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.risk-bar { height: 6px; background: var(--s3); border-radius: 3px; overflow: hidden; }
+.risk-fill { height: 100%; border-radius: 3px; transition: width .4s, background .4s; }
+.risk-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+.risk-labels span { font-size: 9px; color: var(--muted2); }
+
+/* ── LOG BTN ── */
+.btn-log {
+  width: 100%; padding: 13px;
+  background: var(--accent); color: #fff;
+  border: none; font-family: inherit;
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; transition: background .15s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-log:hover { background: var(--accent-d); }
+
+/* ── ALERTA ── */
+.alert-banner {
+  display: none; padding: 8px 14px;
+  font-size: 10px; letter-spacing: 1px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.alert-banner.show { display: block; }
+.alert-red    { background: var(--rbg); color: var(--red); border-color: var(--rbr); }
+.alert-yellow { background: var(--ybg); color: var(--yellow); border-color: #6b4c00; }
+
+/* ── LOG TABLE ── */
+.log-wrap { background: var(--s1); border-top: 1px solid var(--border); }
+.log-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+th {
+  background: var(--bg); color: var(--muted);
+  padding: 8px 10px; text-align: left;
+  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+  border-bottom: 1px solid var(--border); font-weight: 400;
+}
+td { padding: 8px 10px; border-bottom: 1px solid #0a1220; color: #7a9ab8; font-size: 11px; }
+tr:hover td { background: var(--s2); }
+.badge {
+  display: inline-block; padding: 2px 7px; border-radius: 2px;
+  font-size: 9px; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;
+}
+.b-enter { background: var(--gbg); color: var(--green); border: 1px solid var(--gbr); }
+.b-fora  { background: var(--rbg); color: var(--red);   border: 1px solid var(--rbr); }
+.b-wait  { background: var(--ybg); color: var(--yellow); border: 1px solid #6b4c00; }
+.res-sel {
+  background: var(--bg); border: 1px solid var(--border2);
+  color: var(--muted); padding: 3px 6px;
+  font-size: 10px; font-family: inherit; border-radius: 2px; cursor: pointer;
+}
+.empty-log {
+  text-align: center; color: var(--muted2);
+  padding: 28px; font-size: 11px; letter-spacing: 1px;
+}
+
+/* ── ALERTS ── */
+.field-flag { font-size: 9px; color: var(--red); margin-top: 4px; display: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .app { grid-template-columns: 1fr; }
+  .panel-left { border-right: none; border-bottom: 1px solid var(--border); }
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .f-cell.span3 { grid-column: span 2; }
+  .metrics-bar { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="wm-dots">
+    <div class="wm-dot wm-red"></div>
+    <div class="wm-dot wm-yellow"></div>
+    <div class="wm-dot wm-green"></div>
+  </div>
+  <span class="top-title">Sport Trade Terminal</span>
+  <div class="top-right">
+    <span class="top-market">&#9679; 1X2 LIVE</span>
+    <span class="live-pill"><span class="live-dot"></span>LIVE</span>
+    <span class="top-clock" id="clock">--:--:--</span>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- PAINEL ESQUERDO -->
+  <div class="panel-left">
+
+    <div class="sec-hdr">
+      &#9632; Entrada de dados — AI Score Live
+      <span>Janela ideal: 15–30 min</span>
+    </div>
+
+    <!-- LEGENDA DE PESOS -->
+    <div class="weight-row">
+      <span style="font-size:9px;color:var(--muted);letter-spacing:1px;align-self:center">PESO:</span>
+      <span class="w-tag hi">&#9650;&#9650; ALTO — AP, Posse, Pressão</span>
+      <span class="w-tag md">&#9650; MÉDIO — Finalizações, Escanteios, Passes</span>
+      <span class="w-tag lo">&#9644; BAIXO — Faltas, Cartões</span>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-grid">
+
+      <!-- linha 1 -->
+      <div class="f-cell span3">
+        <div class="f-lbl">Identificação do Jogo <span class="tip" title="Ex: Flamengo x Vasco — Rodada 12">?</span></div>
+        <input class="f-inp" id="jogo" type="text" placeholder="Ex: Flamengo x Vasco — Rodada 12" oninput="calcular()">
+      </div>
+
+      <!-- linha 2 -->
+      <div class="f-cell">
+        <div class="f-lbl">Minuto Atual <span class="tip" title="Use entre 15 e 30 para máxima eficácia">?</span></div>
+        <input class="f-inp" id="minuto" type="number" min="1" max="90" placeholder="22" oninput="calcular()">
+        <div class="field-flag" id="flag-min">⚠ Ideal: 15–30 min</div>
+      </div>
+      <div class="f-cell">
+        <div class="f-lbl">Ataques Perigosos <span class="tip" title="Peso ALTO. ≥12 é sinal forte">?</span></div>
+        <input class="f-inp" id="ap" type="number" min="0" placeholder="12" oninput="calcular()">
+      </div>
+      <div class="f-cell">
+        <div class="f-lbl">Ataques Não Perigosos <span class="tip" title="Contexto de domínio. Alto ANP + baixo AP = pressão ineficaz">?</span></div>
+        <input class="f-inp" id="anp" type="number" min="0" placeholder="8" oninput="calcular()">
+      </div>
+
+      <!-- linha 3 -->
+      <div class="f-cell">
+        <div class="f-lbl">Finalizações (total) <span class="tip" title="No gol + fora. Peso MÉDIO. ≥3 conta ponto">?</span></div>
+        <input class="f-inp" id="fin" type="number" min="0" placeholder="3" oninput="calcular()">
+      </div>
+      <div class="f-cell">
+        <div class="f-lbl">Escanteios <span class="tip" title="≥2 em boa janela reforça domínio">?</span></div>
+        <input class="f-inp" id="esc" type="number" min="0" placeholder="2" oninput="calcular()">
+      </div>
+      <div class="f-cell">
+        <div class="f-lbl">Posse de Bola % <span class="tip" title="Peso ALTO. ≥55% é domínio claro">?</span></div>
+        <input class="f-inp" id="posse" type="number" min="0" max="100" placeholder="62" oninput="calcular()">
+      </div>
+
+      <!-- linha 4 -->
+      <div class="f-cell">
+        <div class="f-lbl">Passes Completos <span class="tip" title="Volume indica ritmo. ≥120 em 20min = dominância">?</span></div>
+        <input class="f-inp" id="passes" type="number" min="0" placeholder="145" oninput="calcular()">
+      </div>
+      <div class="f-cell">
+        <div class="f-lbl">Precisão de Passes % <span class="tip" title="≥80% + alta posse = time no controle total">?</span></div>
+        <input class="f-inp" id="precisao" type="number" min="0" max="100" placeholder="83" oninput="calcular()">
+      </div>
+      <div class="f-cell">
+        <div class="f-lbl">Pressão / Recup. Rápida <span class="tip" title="Peso ALTO. Sim/Não. Pressão alta = gol mais provável">?</span></div>
+        <select class="f-inp" id="pressao" onchange="calcular()">
+          <option value="0">Não</option>
+          <option value="1">Sim</option>
+        </select>
+      </div>
+
+      <!-- linha 5 -->
+      <div class="f-cell">
+        <div class="f-lbl">Faltas Sofridas <span class="tip" title="Alto número = adversário na retranca. Contexto útil">?</span></div>
+        <input class="f-inp" id="faltas" type="number" min="0" placeholder="5" oninput="calcular()">
+      </div>
+      <div class="f-cell">
+        <div class="f-lbl">Cartões Amarelos (adv.) <span class="tip" title="≥2 cartões do adversário = time sob pressão defensiva">?</span></div>
+        <input class="f-inp" id="cartoes" type="number" min="0" placeholder="1" oninput="calcular()">
+      </div>
+      <div class="f-cell">
+        <div class="f-lbl">Odd Atual do Mercado <span class="tip" title="Odd muito baixa (&lt;1.25) é risco de value ruim">?</span></div>
+        <input class="f-inp" id="odd" type="number" step="0.01" min="1.01" placeholder="1.65" oninput="calcular()">
+      </div>
+
+    </div><!-- /form-grid -->
+
+    <!-- METRICS BAR -->
+    <div class="metrics-bar">
+      <div class="m-cell">
+        <div class="m-lbl">AP / Min</div>
+        <div class="m-val accent" id="m-appm">—</div>
+        <div class="m-sub">thresh ≥ 0.55</div>
+      </div>
+      <div class="m-cell">
+        <div class="m-lbl">Eficiência AP</div>
+        <div class="m-val" id="m-efic">—</div>
+        <div class="m-sub">AP ÷ (AP+ANP)</div>
+      </div>
+      <div class="m-cell">
+        <div class="m-lbl">Score Bruto</div>
+        <div class="m-val" id="m-score">0</div>
+        <div class="m-sub">de 14 pts</div>
+        <div class="score-track"><div class="score-fill" id="score-fill" style="width:0%;background:var(--muted2)"></div></div>
+      </div>
+      <div class="m-cell">
+        <div class="m-lbl">Score %</div>
+        <div class="m-val" id="m-pct">0%</div>
+        <div class="m-sub">entrada ≥ 65%</div>
+      </div>
+      <div class="m-cell">
+        <div class="m-lbl">Odd</div>
+        <div class="m-val" id="m-odd">—</div>
+        <div class="m-sub">mercado atual</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-left -->
+
+  <!-- PAINEL DIREITO -->
+  <div class="panel-right">
+
+    <div class="sec-hdr">&#9632; Análise de critérios</div>
+
+    <div class="crit-list" id="crit-list">
+
+      <div class="crit-row" id="cr-appm">
+        <div class="c-icon c-neu" id="ci-appm">—</div>
+        <div class="c-body">
+          <div class="c-name">AP por Minuto ≥ 0.55</div>
+          <div class="c-desc">Peso alto · ritmo de pressão ofensiva</div>
+        </div>
+        <span class="c-val neu-v" id="cv-appm">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-efic">
+        <div class="c-icon c-neu" id="ci-efic">—</div>
+        <div class="c-body">
+          <div class="c-name">Eficiência AP ≥ 55%</div>
+          <div class="c-desc">Peso alto · qualidade > quantidade</div>
+        </div>
+        <span class="c-val neu-v" id="cv-efic">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-posse">
+        <div class="c-icon c-neu" id="ci-posse">—</div>
+        <div class="c-body">
+          <div class="c-name">Posse de Bola ≥ 55%</div>
+          <div class="c-desc">Peso alto · controle territorial</div>
+        </div>
+        <span class="c-val neu-v" id="cv-posse">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-press">
+        <div class="c-icon c-neu" id="ci-press">—</div>
+        <div class="c-body">
+          <div class="c-name">Pressão Alta / Recup. Rápida</div>
+          <div class="c-desc">Peso alto · domínio tático e físico</div>
+        </div>
+        <span class="c-val neu-v" id="cv-press">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-fin">
+        <div class="c-icon c-neu" id="ci-fin">—</div>
+        <div class="c-body">
+          <div class="c-name">Finalizações ≥ 3</div>
+          <div class="c-desc">Peso médio · conversão em chutes</div>
+        </div>
+        <span class="c-val neu-v" id="cv-fin">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-esc">
+        <div class="c-icon c-neu" id="ci-esc">—</div>
+        <div class="c-body">
+          <div class="c-name">Escanteios ≥ 2</div>
+          <div class="c-desc">Peso médio · pressão na área</div>
+        </div>
+        <span class="c-val neu-v" id="cv-esc">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-passes">
+        <div class="c-icon c-neu" id="ci-passes">—</div>
+        <div class="c-body">
+          <div class="c-name">Precisão de Passes ≥ 80%</div>
+          <div class="c-desc">Peso médio · fluidez e controle</div>
+        </div>
+        <span class="c-val neu-v" id="cv-passes">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-cart">
+        <div class="c-icon c-neu" id="ci-cart">—</div>
+        <div class="c-body">
+          <div class="c-name">Cartões adversário ≥ 2</div>
+          <div class="c-desc">Peso baixo · retranca sob pressão</div>
+        </div>
+        <span class="c-val neu-v" id="cv-cart">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-janela">
+        <div class="c-icon c-neu" id="ci-janela">—</div>
+        <div class="c-body">
+          <div class="c-name">Janela 15–30 min</div>
+          <div class="c-desc">Contexto · odd ainda com valor</div>
+        </div>
+        <span class="c-val neu-v" id="cv-janela">—</span>
+      </div>
+
+      <div class="crit-row" id="cr-odd">
+        <div class="c-icon c-neu" id="ci-odd">—</div>
+        <div class="c-body">
+          <div class="c-name">Odd entre 1.25 e 2.20</div>
+          <div class="c-desc">Value · não muito seca nem muito alta</div>
+        </div>
+        <span class="c-val neu-v" id="cv-odd">—</span>
+      </div>
+
+    </div><!-- /crit-list -->
+
+    <!-- VEREDITO -->
+    <div class="verdict" id="verdict">
+      <div class="v-eyebrow">Veredito do Algoritmo</div>
+      <div class="v-main v-neutral" id="v-main">AGUARDANDO</div>
+      <div class="v-sub" id="v-sub">preencha os dados ao lado</div>
+    </div>
+
+    <!-- RISK METER -->
+    <div class="risk-meter">
+      <div class="risk-lbl">Nível de Risco da Operação</div>
+      <div class="risk-bar"><div class="risk-fill" id="risk-fill" style="width:0%;background:var(--muted2)"></div></div>
+      <div class="risk-labels"><span>BAIXO</span><span>MÉDIO</span><span>ALTO</span></div>
+    </div>
+
+    <!-- ALERTAS CONTEXTUAIS -->
+    <div class="alert-banner" id="alert-odd">⚠ Odd muito baixa — value comprometido. Evitar entrada.</div>
+    <div class="alert-banner" id="alert-efic">⚠ Muitos ataques não perigosos — time pressiona sem qualidade.</div>
+    <div class="alert-banner" id="alert-min">⚠ Fora da janela ideal (15–30 min) — recalcule o risco.</div>
+
+    <button class="btn-log" onclick="salvar()">&#9632; Registrar Operação no Log</button>
+
+  </div><!-- /panel-right -->
+</div><!-- /app -->
+
+<!-- LOG -->
+<div class="log-wrap">
+  <div class="sec-hdr">
+    &#9632; Log de Operações da Sessão
+    <span id="log-count">0 entradas</span>
+  </div>
+  <div class="log-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Jogo</th>
+          <th>Min</th>
+          <th>AP/m</th>
+          <th>Efic%</th>
+          <th>Posse%</th>
+          <th>Pressão</th>
+          <th>Fin</th>
+          <th>Esc</th>
+          <th>Pass%</th>
+          <th>Cart</th>
+          <th>Score%</th>
+          <th>Decisão</th>
+          <th>Odd</th>
+          <th>Resultado</th>
+        </tr>
+      </thead>
+      <tbody id="log-body">
+        <tr><td colspan="15" class="empty-log">— Nenhuma operação registrada nesta sessão —</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// ── PESOS ──────────────────────────────────────────────────
+const PESOS = {
+  appm:   3,  // AP/min ≥ 0.55
+  efic:   3,  // eficiência AP ≥ 55%
+  posse:  3,  // posse ≥ 55%
+  press:  3,  // pressão alta
+  fin:    2,  // finalizações ≥ 3
+  esc:    2,  // escanteios ≥ 2
+  passes: 2,  // precisão passes ≥ 80%
+  cart:   1,  // cartões adv ≥ 2
+  janela: 0,  // contexto (não soma, só sinaliza)
+  odd:    0,  // contexto (não soma, só sinaliza)
+};
+const MAX_SCORE = 3+3+3+3+2+2+2+1; // 19... usaremos 14 displayados
+
+function g(id){ return document.getElementById(id); }
+
+function setCrit(id, estado, valTxt){
+  // estado: 'ok' | 'fail' | 'warn' | 'neu'
+  const icon = g('ci-'+id);
+  const val  = g('cv-'+id);
+  const map = {
+    ok:   { cls:'c-ok',   vcls:'ok-v',   sym:'✓' },
+    fail: { cls:'c-fail', vcls:'fail-v', sym:'✗' },
+    warn: { cls:'c-warn', vcls:'warn-v', sym:'!' },
+    neu:  { cls:'c-neu',  vcls:'neu-v',  sym:'—' },
+  };
+  const m = map[estado] || map.neu;
+  icon.className = 'c-icon ' + m.cls;
+  icon.textContent = m.sym;
+  val.className  = 'c-val ' + m.vcls;
+  val.textContent = valTxt || '—';
+}
+
+function showAlert(id, show){
+  const el = g(id);
+  el.classList.toggle('show', show);
+  el.classList.toggle('alert-red',    show && id !== 'alert-min');
+  el.classList.toggle('alert-yellow', show && id === 'alert-min');
+}
+
+let logN = 0;
+
+function calcular(){
+  const min    = parseFloat(g('minuto').value)   || 0;
+  const ap     = parseFloat(g('ap').value)       || 0;
+  const anp    = parseFloat(g('anp').value)      || 0;
+  const fin    = parseFloat(g('fin').value)      || 0;
+  const esc    = parseFloat(g('esc').value)      || 0;
+  const posse  = parseFloat(g('posse').value)    || 0;
+  const passes = parseFloat(g('passes').value)   || 0;
+  const prec   = parseFloat(g('precisao').value) || 0;
+  const press  = parseInt(g('pressao').value)    || 0;
+  const faltas = parseFloat(g('faltas').value)   || 0;
+  const cart   = parseFloat(g('cartoes').value)  || 0;
+  const odd    = parseFloat(g('odd').value)      || 0;
+
+  // Odd display
+  g('m-odd').textContent = odd ? odd.toFixed(2) : '—';
+
+  if(min <= 0 && ap === 0){
+    resetUI(); return;
+  }
+
+  // ── CÁLCULOS ──
+  const appm = min > 0 ? ap / min : 0;
+  const totalAt = ap + anp;
+  const efic = totalAt > 0 ? (ap / totalAt) * 100 : 0;
+
+  g('m-appm').textContent = appm.toFixed(2);
+  g('m-efic').textContent = totalAt > 0 ? efic.toFixed(0) + '%' : '—';
+
+  // ── CRITÉRIOS ──
+  const c = {
+    appm:   appm  >= 0.55,
+    efic:   totalAt > 0 && efic >= 55,
+    posse:  posse  >= 55,
+    press:  press  === 1,
+    fin:    fin    >= 3,
+    esc:    esc    >= 2,
+    passes: prec   >= 80,
+    cart:   cart   >= 2,
+    janela: min >= 15 && min <= 30,
+    odd:    odd >= 1.25 && odd <= 2.20,
+  };
+
+  setCrit('appm',   c.appm   ? 'ok' : (appm>0?'fail':'neu'),  appm>0  ? appm.toFixed(2)        : '—');
+  setCrit('efic',   c.efic   ? 'ok' : (totalAt>0?'fail':'neu'), totalAt>0? efic.toFixed(0)+'%' : '—');
+  setCrit('posse',  c.posse  ? 'ok' : (posse>0?'fail':'neu'),  posse>0 ? posse+'%'              : '—');
+  setCrit('press',  c.press  ? 'ok' : 'fail',                            c.press ? 'Sim'         : 'Não');
+  setCrit('fin',    c.fin    ? 'ok' : (fin>0?'fail':'neu'),    fin>0   ? fin+' chutes'           : '—');
+  setCrit('esc',    c.esc    ? 'ok' : (esc>0?'fail':'neu'),    esc>0   ? esc+' cantos'           : '—');
+  setCrit('passes', c.passes ? 'ok' : (prec>0?'fail':'neu'),   prec>0  ? prec+'%'               : '—');
+  setCrit('cart',   c.cart   ? 'ok' : (cart>0?'warn':'neu'),   cart>0  ? cart+' cart.'           : '—');
+  setCrit('janela', c.janela ? 'ok' : (min>0?'warn':'neu'),    min>0   ? min+"'"                 : '—');
+  setCrit('odd',    odd===0?'neu': (c.odd?'ok':(odd<1.25?'warn':'fail')), odd>0?odd.toFixed(2):'—');
+
+  // ── SCORE ──
+  let score = 0;
+  if(c.appm)   score += PESOS.appm;
+  if(c.efic)   score += PESOS.efic;
+  if(c.posse)  score += PESOS.posse;
+  if(c.press)  score += PESOS.press;
+  if(c.fin)    score += PESOS.fin;
+  if(c.esc)    score += PESOS.esc;
+  if(c.passes) score += PESOS.passes;
+  if(c.cart)   score += PESOS.cart;
+
+  const maxS = 19;
+  const pct  = Math.round((score / maxS) * 100);
+
+  g('m-score').textContent = score;
+  g('m-pct').textContent   = pct + '%';
+
+  const fillColor = pct >= 65 ? 'var(--green)' : pct >= 40 ? 'var(--yellow)' : 'var(--red)';
+  const sf = g('score-fill');
+  sf.style.width = pct + '%';
+  sf.style.background = fillColor;
+
+  // ── RISK METER ──
+  const critAlt = [c.appm, c.posse, c.press, c.efic].filter(Boolean).length;
+  const riskPct = Math.max(0, Math.min(100, 100 - pct + (c.janela?0:20) + (c.odd||odd===0?0:15)));
+  const rf = g('risk-fill');
+  rf.style.width = riskPct + '%';
+  rf.style.background = riskPct < 35 ? 'var(--green)' : riskPct < 65 ? 'var(--yellow)' : 'var(--red)';
+
+  // ── ALERTAS ──
+  showAlert('alert-odd',  odd > 0 && !c.odd && odd < 1.25);
+  showAlert('alert-efic', totalAt > 5 && efic < 40);
+  showAlert('alert-min',  min > 0 && !c.janela);
+
+  // ── JANELA FLAG ──
+  const flagMin = g('flag-min');
+  if(min > 0 && !c.janela){ flagMin.style.display='block'; }
+  else { flagMin.style.display='none'; }
+
+  // ── VEREDITO ──
+  const v     = g('verdict');
+  const vMain = g('v-main');
+  const vSub  = g('v-sub');
+
+  // Condições bloqueantes
+  const bloqueio = (odd > 0 && odd < 1.25);
+  const altoRisco = totalAt > 5 && efic < 40;
+
+  if(bloqueio){
+    v.className  = 'verdict st-red';
+    vMain.className = 'v-main v-red';
+    vMain.textContent = '▪ EVITAR ENTRADA';
+    vSub.textContent  = 'odd seca demais — value insuficiente';
+  } else if(altoRisco && pct < 65){
+    v.className  = 'verdict st-warn';
+    vMain.className = 'v-main v-yellow';
+    vMain.textContent = '▪ AGUARDAR';
+    vSub.textContent  = 'pressão sem qualidade — risco elevado';
+  } else if(pct >= 65 && c.janela !== false){
+    v.className  = 'verdict st-green';
+    vMain.className = 'v-main v-green';
+    vMain.textContent = '▶ ENTRAR — ' + pct + '%';
+    vSub.textContent  = 'score ' + score + '/19 · ' + [c.appm&&'AP',c.posse&&'Posse',c.press&&'Pressão'].filter(Boolean).join(', ') + ' OK';
+  } else if(pct >= 50){
+    v.className  = 'verdict st-warn';
+    vMain.className = 'v-main v-yellow';
+    vMain.textContent = '▪ SETUP FRACO — ' + pct + '%';
+    vSub.textContent  = 'score ' + score + '/19 · aguardar mais critérios';
+  } else {
+    v.className  = 'verdict st-red';
+    vMain.className = 'v-main v-red';
+    vMain.textContent = '■ FICAR DE FORA — ' + pct + '%';
+    vSub.textContent  = 'score ' + score + '/19 · setup insuficiente';
+  }
+}
+
+function resetUI(){
+  ['appm','efic','posse','press','fin','esc','passes','cart','janela','odd']
+    .forEach(id => setCrit(id,'neu','—'));
+  g('m-appm').textContent  = '—';
+  g('m-efic').textContent  = '—';
+  g('m-score').textContent = '0';
+  g('m-pct').textContent   = '0%';
+  g('m-odd').textContent   = '—';
+  g('score-fill').style.width = '0%';
+  g('risk-fill').style.width  = '0%';
+  g('verdict').className   = 'verdict';
+  g('v-main').className    = 'v-main v-neutral';
+  g('v-main').textContent  = 'AGUARDANDO';
+  g('v-sub').textContent   = 'preencha os dados ao lado';
+  ['alert-odd','alert-efic','alert-min'].forEach(id=>showAlert(id,false));
+}
+
+function salvar(){
+  const min = g('minuto').value;
+  const ap  = g('ap').value;
+  if(!min || !ap){ alert('Preencha ao menos Minuto e Ataques Perigosos.'); return; }
+
+  const jogo    = g('jogo').value || 'Sem nome';
+  const anp     = g('anp').value || '0';
+  const fin     = g('fin').value || '0';
+  const esc     = g('esc').value || '0';
+  const posse   = g('posse').value || '—';
+  const prec    = g('precisao').value || '—';
+  const press   = g('pressao').value === '1' ? 'Sim' : 'Não';
+  const cart    = g('cartoes').value || '0';
+  const odd     = g('odd').value || '—';
+
+  const appm = g('m-appm').textContent;
+  const efic = g('m-efic').textContent;
+  const pct  = g('m-pct').textContent;
+  const vTxt = g('v-main').textContent;
+
+  const isEnter = vTxt.includes('ENTRAR');
+  const isWait  = vTxt.includes('AGUARDAR') || vTxt.includes('FRACO');
+  const badgeCls = isEnter ? 'b-enter' : isWait ? 'b-wait' : 'b-fora';
+
+  const tbody = g('log-body');
+  if(tbody.querySelector('.empty-log')) tbody.innerHTML = '';
+
+  logN++;
+  g('log-count').textContent = logN + (logN===1?' entrada':' entradas');
+
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="color:var(--muted2)">${logN}</td>
+    <td style="color:var(--text);font-weight:700">${jogo}</td>
+    <td>${min}'</td>
+    <td style="color:${parseFloat(appm)>=0.55?'var(--green)':'var(--red)'}">${appm}</td>
+    <td>${efic}</td>
+    <td>${posse}${posse!=='—'?'%':''}</td>
+    <td>${press}</td>
+    <td>${fin}</td>
+    <td>${esc}</td>
+    <td>${prec}${prec!=='—'?'%':''}</td>
+    <td>${cart}</td>
+    <td><span class="badge ${badgeCls}">${pct}</span></td>
+    <td style="font-size:10px;letter-spacing:.5px">${vTxt}</td>
+    <td>${odd!=='—'?parseFloat(odd).toFixed(2):'—'}</td>
+    <td>
+      <select class="res-sel" onchange="colorRes(this)">
+        <option value="">Aberto ⏳</option>
+        <option value="g">Green ✅</option>
+        <option value="r">Red ❌</option>
+        <option value="v">Reembolso ↩</option>
+      </select>
+    </td>`;
+  tbody.insertBefore(tr, tbody.firstChild);
+
+  ['minuto','ap','anp','fin','esc','posse','passes','precisao','faltas','cartoes','odd']
+    .forEach(id => g(id).value = '');
+  g('pressao').value = '0';
+  calcular();
+}
+
+function colorRes(sel){
+  const map = { g:'var(--green)', r:'var(--red)', v:'var(--yellow)', '':'var(--muted)' };
+  sel.style.color = map[sel.value];
+  sel.style.borderColor = map[sel.value];
+}
+
+function tick(){
+  const n = new Date();
+  g('clock').textContent = n.toTimeString().slice(0,8);
+}
+tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>
