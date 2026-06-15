@@ -1,285 +1,237 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trade Terminal 1X2 — AI Score Live</title>
+<title>Trade Terminal 1X2 v2 — AI Score Live</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg:       #080c14;
-  --s1:       #0d1320;
-  --s2:       #111a2e;
-  --s3:       #162038;
-  --border:   #1c2d48;
-  --border2:  #243352;
-  --accent:   #3b82f6;
-  --accent-d: #1d4ed8;
-  --text:     #dde6f5;
-  --muted:    #4e6587;
-  --muted2:   #2d4060;
-  --green:    #22c55e;
-  --gbg:      #031a0f;
-  --gbr:      #14532d;
-  --red:      #ef4444;
-  --rbg:      #1a0303;
-  --rbr:      #7f1d1d;
-  --yellow:   #f59e0b;
-  --ybg:      #1a1003;
-  --cyan:     #06b6d4;
+  --bg:     #07090f;
+  --s1:     #0c1018;
+  --s2:     #101520;
+  --s3:     #141c28;
+  --bd:     #1a2535;
+  --bd2:    #1f2e42;
+  --acc:    #3b82f6;
+  --acc2:   #1d4ed8;
+  --txt:    #cdd8ea;
+  --txt2:   #8fa3be;
+  --mu:     #3d5470;
+  --mu2:    #243040;
+  --grn:    #22c55e;
+  --gbg:    #02150a;
+  --gbr:    #134d28;
+  --red:    #f87171;
+  --rbg:    #150203;
+  --rbr:    #6b1c1c;
+  --yel:    #fbbf24;
+  --ybg:    #140d01;
+  --ybr:    #6b4d00;
+  --cyn:    #22d3ee;
 }
-
-html, body { height: 100%; }
+html,body { height:100%; }
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Consolas', 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-  font-size: 13px;
-  line-height: 1.4;
-  overflow-x: hidden;
+  background:var(--bg); color:var(--txt);
+  font-family:'Consolas','JetBrains Mono','Fira Code','Courier New',monospace;
+  font-size:13px; line-height:1.4; overflow-x:hidden;
 }
 
-/* ── TOPBAR ── */
+/* TOPBAR */
 .topbar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 16px;
-  height: 38px;
-  background: var(--s1);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  display:flex; align-items:center; gap:10px;
+  padding:0 16px; height:36px;
+  background:var(--s1); border-bottom:1px solid var(--bd);
+  position:sticky; top:0; z-index:100;
 }
-.wm-dots { display: flex; gap: 6px; margin-right: 6px; }
-.wm-dot  { width: 10px; height: 10px; border-radius: 50%; }
-.wm-red    { background: #ff5f57; }
-.wm-yellow { background: #febc2e; }
-.wm-green  { background: #28c840; }
-.top-title { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
-.top-right { margin-left: auto; display: flex; align-items: center; gap: 20px; }
-.live-pill {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 10px; color: var(--green); letter-spacing: 1.5px;
-  border: 1px solid var(--gbr);
-  background: var(--gbg);
-  padding: 3px 8px; border-radius: 2px;
+.wm { display:flex; gap:5px; margin-right:4px; }
+.wm span { width:10px; height:10px; border-radius:50%; }
+.tr { background:#ff5f57; } .ty { background:#febc2e; } .tg { background:#28c840; }
+.top-title { font-size:10px; color:var(--mu); letter-spacing:2px; text-transform:uppercase; }
+.top-r { margin-left:auto; display:flex; align-items:center; gap:14px; }
+.pill {
+  display:flex; align-items:center; gap:5px;
+  font-size:9px; letter-spacing:1.5px; padding:3px 8px; border-radius:2px;
 }
-.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 1.4s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-.top-clock { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
-.top-market {
-  font-size: 10px; color: var(--cyan); letter-spacing: 1px;
-  border: 1px solid #164e5a; background: #031e26; padding: 3px 8px; border-radius: 2px;
-}
+.pill-live { color:var(--grn); border:1px solid var(--gbr); background:var(--gbg); }
+.pill-mkt  { color:var(--cyn); border:1px solid #0a3d47; background:#020e12; }
+.live-dot  { width:6px; height:6px; border-radius:50%; background:var(--grn); animation:blink 1.4s infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.15} }
+.tclock { font-size:11px; color:var(--mu); letter-spacing:1px; }
 
-/* ── LAYOUT ── */
-.app { display: grid; grid-template-columns: 1fr 300px; min-height: calc(100vh - 38px); }
-.panel-left  { border-right: 1px solid var(--border); }
-.panel-right { display: flex; flex-direction: column; }
+/* LAYOUT */
+.wrap { display:grid; grid-template-columns:1fr 310px; min-height:calc(100vh - 36px); }
+.left  { border-right:1px solid var(--bd); display:flex; flex-direction:column; }
+.right { display:flex; flex-direction:column; }
 
-/* ── SEC HEADER ── */
-.sec-hdr {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 14px;
-  background: var(--s1);
-  border-bottom: 1px solid var(--border);
-  font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase;
+/* SEC HEADER */
+.sh {
+  display:flex; align-items:center; gap:8px;
+  padding:6px 14px; background:var(--s1); border-bottom:1px solid var(--bd);
+  font-size:9px; color:var(--mu); letter-spacing:2px; text-transform:uppercase; flex-shrink:0;
 }
-.sec-hdr span { margin-left: auto; font-size: 9px; color: var(--muted2); }
+.sh em { margin-left:auto; font-style:normal; color:var(--mu2); font-size:9px; }
 
-/* ── FORM GRID ── */
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
-  border-bottom: 1px solid var(--border);
+/* GRID FORM */
+.fg {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--bd); border-bottom:1px solid var(--bd);
 }
-.f-cell { background: var(--s1); padding: 10px 14px; }
-.f-cell.span2 { grid-column: span 2; }
-.f-cell.span3 { grid-column: span 3; }
-.f-lbl {
-  font-size: 9px; color: var(--muted); letter-spacing: 1.5px;
-  text-transform: uppercase; margin-bottom: 6px;
-  display: flex; align-items: center; gap: 5px;
+.fc { background:var(--s1); padding:9px 12px; }
+.fc.s2 { grid-column:span 2; }
+.fc.s3 { grid-column:span 3; }
+.fc.s4 { grid-column:span 4; }
+.fl {
+  font-size:8.5px; color:var(--mu); letter-spacing:1.5px;
+  text-transform:uppercase; margin-bottom:5px;
+  display:flex; align-items:center; gap:4px;
 }
-.f-lbl .tip {
-  display: inline-block; width: 14px; height: 14px; border-radius: 50%;
-  background: var(--s3); color: var(--muted); text-align: center;
-  line-height: 14px; font-size: 9px; cursor: default; flex-shrink: 0;
+.fl .w { /* peso badge */
+  padding:1px 5px; border-radius:2px; font-size:8px; font-weight:700;
 }
-.f-inp {
-  width: 100%; background: var(--bg);
-  border: 1px solid var(--border2); border-radius: 2px;
-  color: var(--text); font-family: inherit;
-  font-size: 14px; padding: 8px 10px;
-  outline: none; transition: border .15s, background .15s;
-  -moz-appearance: textfield;
+.w-h { background:var(--gbg); color:var(--grn); border:1px solid var(--gbr); }
+.w-m { background:var(--ybg); color:var(--yel); border:1px solid var(--ybr); }
+.w-l { background:var(--s3); color:var(--mu); border:1px solid var(--bd2); }
+.fi {
+  width:100%; background:var(--bg); border:1px solid var(--bd2); border-radius:2px;
+  color:var(--txt); font-family:inherit; font-size:14px; padding:8px 10px;
+  outline:none; transition:border .15s, background .15s;
+  -moz-appearance:textfield;
 }
-.f-inp::-webkit-outer-spin-button,
-.f-inp::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.f-inp:focus { border-color: var(--accent); background: #0a1220; }
-.f-inp::placeholder { color: var(--muted2); }
-.f-inp option { background: #0d1320; }
+.fi::-webkit-outer-spin-button,.fi::-webkit-inner-spin-button { -webkit-appearance:none; }
+.fi:focus { border-color:var(--acc); background:#08101c; }
+.fi::placeholder { color:var(--mu2); }
+.fi option { background:#0c1018; }
+.fi-hint { font-size:9px; color:var(--mu2); margin-top:4px; }
+.fi-flag { font-size:9px; color:var(--yel); margin-top:4px; display:none; }
 
-/* ── WEIGHT LEGEND ── */
-.weight-row {
-  display: flex; flex-wrap: wrap; gap: 6px;
-  padding: 10px 14px;
-  background: var(--s1);
-  border-bottom: 1px solid var(--border);
+/* RAZOES BLOCK */
+.razoes {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--bd); border-bottom:1px solid var(--bd);
 }
-.w-tag {
-  font-size: 9px; letter-spacing: 1px; padding: 3px 8px; border-radius: 2px;
-  color: var(--muted); border: 1px solid var(--border2);
-}
-.w-tag.hi { color: var(--green); border-color: var(--gbr); background: var(--gbg); }
-.w-tag.md { color: var(--yellow); border-color: #6b4c00; background: var(--ybg); }
-.w-tag.lo { color: var(--muted); border-color: var(--border2); background: var(--s2); }
+.rz { background:var(--s2); padding:9px 12px; }
+.rz-lbl { font-size:8.5px; color:var(--mu); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.rz-val { font-size:18px; font-weight:700; color:var(--txt); letter-spacing:-1px; }
+.rz-bar { height:3px; background:var(--s3); border-radius:2px; margin-top:5px; overflow:hidden; }
+.rz-fill { height:100%; border-radius:2px; transition:width .4s, background .4s; }
+.rz-sub { font-size:8.5px; color:var(--mu2); margin-top:3px; }
 
-/* ── METRICS BAR ── */
-.metrics-bar {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: 1px; background: var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.m-cell { background: var(--s2); padding: 10px 14px; }
-.m-lbl { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-.m-val { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -1px; }
-.m-val.accent { color: var(--accent); }
-.m-sub { font-size: 9px; color: var(--muted2); margin-top: 2px; }
+/* SITUACAO DO JOGO */
+.sj { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--bd); border-bottom:1px solid var(--bd); }
+.sj-cell { background:var(--s1); padding:9px 12px; }
 
-/* ── SCORE BAR ── */
-.score-track {
-  height: 4px; background: var(--s3);
-  margin-top: 6px; border-radius: 2px; overflow: hidden;
+/* CRIT LIST */
+.crit-list { flex:1; overflow-y:auto; }
+.cr {
+  display:flex; align-items:flex-start; gap:9px;
+  padding:8px 13px; border-bottom:1px solid var(--bd); background:var(--s1);
 }
-.score-fill {
-  height: 100%; border-radius: 2px;
-  transition: width .4s, background .4s;
+.cr:hover { background:var(--s2); }
+.ci {
+  width:18px; height:18px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:9px; margin-top:1px;
 }
+.ok  { background:var(--gbg); border:1px solid var(--gbr); color:var(--grn); }
+.fl2 { background:var(--rbg); border:1px solid var(--rbr); color:var(--red); }
+.wn  { background:var(--ybg); border:1px solid var(--ybr); color:var(--yel); }
+.ne  { background:var(--s3);  border:1px solid var(--bd2); color:var(--mu);  }
+.cb  { flex:1; }
+.cn  { font-size:11px; color:var(--txt); margin-bottom:1px; }
+.cd  { font-size:9.5px; color:var(--mu); }
+.cv  { font-size:11px; font-weight:700; flex-shrink:0; margin-top:1px; }
+.ok-v { color:var(--grn); } .fl-v { color:var(--red); } .wn-v { color:var(--yel); } .ne-v { color:var(--mu); }
 
-/* ── CRITERIA LIST ── */
-.crit-list { flex: 1; overflow-y: auto; }
-.crit-row {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 9px 14px;
-  border-bottom: 1px solid var(--border);
-  background: var(--s1);
-  transition: background .2s;
+/* SECAO RAZOES CRUZADAS */
+.razao-cruzada {
+  padding:10px 13px; background:var(--s2); border-bottom:1px solid var(--bd);
 }
-.crit-row:hover { background: var(--s2); }
-.c-icon {
-  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; margin-top: 1px;
-}
-.c-ok    { background: var(--gbg); border: 1px solid var(--gbr); color: var(--green); }
-.c-fail  { background: var(--rbg); border: 1px solid var(--rbr); color: var(--red); }
-.c-warn  { background: var(--ybg); border: 1px solid #6b4c00; color: var(--yellow); }
-.c-neu   { background: var(--s3); border: 1px solid var(--border2); color: var(--muted); }
-.c-body  { flex: 1; }
-.c-name  { font-size: 11px; color: var(--text); margin-bottom: 1px; }
-.c-desc  { font-size: 10px; color: var(--muted); }
-.c-val   { font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-.ok-v    { color: var(--green); }
-.fail-v  { color: var(--red); }
-.warn-v  { color: var(--yellow); }
-.neu-v   { color: var(--muted); }
+.rc-title { font-size:8.5px; color:var(--mu); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+.rc-row { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+.rc-lbl { font-size:9.5px; color:var(--txt2); width:130px; flex-shrink:0; }
+.rc-bar { flex:1; height:5px; background:var(--s3); border-radius:2px; overflow:hidden; }
+.rc-bar-fill { height:100%; border-radius:2px; transition:width .4s; }
+.rc-num { font-size:10px; font-weight:700; width:36px; text-align:right; }
 
-/* ── VERDICT ── */
+/* ALERTA SITUACIONAL */
+.sit-alert {
+  padding:8px 13px; font-size:9.5px; letter-spacing:.5px;
+  border-bottom:1px solid var(--bd); display:none;
+}
+.sit-alert.show { display:block; }
+.sa-red    { background:var(--rbg); color:var(--red); border-color:var(--rbr); }
+.sa-yellow { background:var(--ybg); color:var(--yel); border-color:var(--ybr); }
+.sa-cyan   { background:#020e12; color:var(--cyn); border-color:#0a3d47; }
+
+/* VERDICT */
 .verdict {
-  padding: 18px 14px;
-  background: var(--s1);
-  border-bottom: 1px solid var(--border);
-  text-align: center;
-  transition: background .3s, border-color .3s;
-  min-height: 120px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  padding:16px 13px; background:var(--s1); border-bottom:1px solid var(--bd);
+  text-align:center; transition:background .3s, border-color .3s;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  min-height:110px;
 }
-.v-eyebrow { font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
-.v-main { font-size: 18px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-.v-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
-.v-neutral { color: var(--muted); }
-.v-green { color: var(--green); }
-.v-red   { color: var(--red); }
-.v-yellow { color: var(--yellow); }
-.verdict.st-green { background: var(--gbg); border-color: var(--gbr); }
-.verdict.st-red   { background: var(--rbg); border-color: var(--rbr); }
-.verdict.st-warn  { background: var(--ybg); border-color: #6b4c00; }
+.ve { font-size:8.5px; color:var(--mu); letter-spacing:2px; text-transform:uppercase; }
+.vm { font-size:17px; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+.vs { font-size:9.5px; color:var(--mu); letter-spacing:.5px; }
+.vn { color:var(--mu); } .vg { color:var(--grn); } .vr { color:var(--red); } .vy { color:var(--yel); }
+.verdict.st-g { background:var(--gbg); border-color:var(--gbr); }
+.verdict.st-r { background:var(--rbg); border-color:var(--rbr); }
+.verdict.st-y { background:var(--ybg); border-color:var(--ybr); }
 
-/* ── RISK METER ── */
-.risk-meter { padding: 10px 14px; background: var(--s1); border-bottom: 1px solid var(--border); }
-.risk-lbl { font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
-.risk-bar { height: 6px; background: var(--s3); border-radius: 3px; overflow: hidden; }
-.risk-fill { height: 100%; border-radius: 3px; transition: width .4s, background .4s; }
-.risk-labels { display: flex; justify-content: space-between; margin-top: 4px; }
-.risk-labels span { font-size: 9px; color: var(--muted2); }
+/* SCORE / RISK */
+.bottom-meters { padding:10px 13px; background:var(--s1); border-bottom:1px solid var(--bd); }
+.bm-row { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.bm-lbl { font-size:8.5px; color:var(--mu); letter-spacing:1px; text-transform:uppercase; width:80px; }
+.bm-track { flex:1; height:5px; background:var(--s3); border-radius:2px; overflow:hidden; }
+.bm-fill { height:100%; border-radius:2px; transition:width .4s, background .4s; }
+.bm-num { font-size:10px; font-weight:700; width:36px; text-align:right; color:var(--txt); }
 
-/* ── LOG BTN ── */
+/* BTN */
 .btn-log {
-  width: 100%; padding: 13px;
-  background: var(--accent); color: #fff;
-  border: none; font-family: inherit;
-  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-  cursor: pointer; transition: background .15s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width:100%; padding:12px;
+  background:var(--acc); color:#fff; border:none;
+  font-family:inherit; font-size:9.5px; letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; transition:background .15s;
 }
-.btn-log:hover { background: var(--accent-d); }
+.btn-log:hover { background:var(--acc2); }
 
-/* ── ALERTA ── */
-.alert-banner {
-  display: none; padding: 8px 14px;
-  font-size: 10px; letter-spacing: 1px;
-  border-top: 1px solid var(--border);
-  text-align: center;
+/* SCORE BAR (left side) */
+.score-summary {
+  display:grid; grid-template-columns:repeat(5,1fr);
+  gap:1px; background:var(--bd); border-bottom:1px solid var(--bd);
 }
-.alert-banner.show { display: block; }
-.alert-red    { background: var(--rbg); color: var(--red); border-color: var(--rbr); }
-.alert-yellow { background: var(--ybg); color: var(--yellow); border-color: #6b4c00; }
+.ss { background:var(--s2); padding:9px 12px; }
+.ss-lbl { font-size:8px; color:var(--mu); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.ss-val { font-size:19px; font-weight:700; letter-spacing:-1px; }
+.ss-val.a { color:var(--acc); }
+.ss-sub { font-size:8.5px; color:var(--mu2); margin-top:2px; }
 
-/* ── LOG TABLE ── */
-.log-wrap { background: var(--s1); border-top: 1px solid var(--border); }
-.log-scroll { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; white-space: nowrap; }
-th {
-  background: var(--bg); color: var(--muted);
-  padding: 8px 10px; text-align: left;
-  font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
-  border-bottom: 1px solid var(--border); font-weight: 400;
-}
-td { padding: 8px 10px; border-bottom: 1px solid #0a1220; color: #7a9ab8; font-size: 11px; }
-tr:hover td { background: var(--s2); }
-.badge {
-  display: inline-block; padding: 2px 7px; border-radius: 2px;
-  font-size: 9px; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;
-}
-.b-enter { background: var(--gbg); color: var(--green); border: 1px solid var(--gbr); }
-.b-fora  { background: var(--rbg); color: var(--red);   border: 1px solid var(--rbr); }
-.b-wait  { background: var(--ybg); color: var(--yellow); border: 1px solid #6b4c00; }
-.res-sel {
-  background: var(--bg); border: 1px solid var(--border2);
-  color: var(--muted); padding: 3px 6px;
-  font-size: 10px; font-family: inherit; border-radius: 2px; cursor: pointer;
-}
-.empty-log {
-  text-align: center; color: var(--muted2);
-  padding: 28px; font-size: 11px; letter-spacing: 1px;
-}
+/* LOG */
+.log-wrap { border-top:1px solid var(--bd); }
+.log-scroll { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; white-space:nowrap; }
+th { background:var(--bg); color:var(--mu); padding:7px 9px; text-align:left; font-size:8.5px; letter-spacing:1.5px; text-transform:uppercase; border-bottom:1px solid var(--bd); font-weight:400; }
+td { padding:7px 9px; border-bottom:1px solid #09111c; color:var(--txt2); font-size:11px; }
+tr:hover td { background:var(--s2); }
+.badge { display:inline-block; padding:2px 6px; border-radius:2px; font-size:8.5px; letter-spacing:1px; font-weight:700; text-transform:uppercase; }
+.b-g { background:var(--gbg); color:var(--grn); border:1px solid var(--gbr); }
+.b-r { background:var(--rbg); color:var(--red); border:1px solid var(--rbr); }
+.b-y { background:var(--ybg); color:var(--yel); border:1px solid var(--ybr); }
+.res-sel { background:var(--bg); border:1px solid var(--bd2); color:var(--mu); padding:3px 5px; font-size:10px; font-family:inherit; border-radius:2px; cursor:pointer; }
+.log-empty { text-align:center; color:var(--mu2); padding:24px; font-size:10px; letter-spacing:1px; }
 
-/* ── ALERTS ── */
-.field-flag { font-size: 9px; color: var(--red); margin-top: 4px; display: none; }
+/* SEPARADOR DE SEÇÃO NO FORM */
+.fsep { grid-column:1/-1; background:var(--s3); padding:5px 12px; border-bottom:1px solid var(--bd); border-top:1px solid var(--bd); }
+.fsep span { font-size:8.5px; color:var(--mu); letter-spacing:2px; text-transform:uppercase; }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .app { grid-template-columns: 1fr; }
-  .panel-left { border-right: none; border-bottom: 1px solid var(--border); }
-  .form-grid { grid-template-columns: 1fr 1fr; }
-  .f-cell.span3 { grid-column: span 2; }
-  .metrics-bar { grid-template-columns: repeat(3, 1fr); }
+@media(max-width:800px){
+  .wrap { grid-template-columns:1fr; }
+  .left { border-right:none; border-bottom:1px solid var(--bd); }
+  .fg { grid-template-columns:1fr 1fr; }
+  .fc.s3,.fc.s4 { grid-column:span 2; }
+  .razoes { grid-template-columns:1fr 1fr; }
+  .score-summary { grid-template-columns:repeat(3,1fr); }
 }
 </style>
 </head>
@@ -287,559 +239,683 @@ tr:hover td { background: var(--s2); }
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="wm-dots">
-    <div class="wm-dot wm-red"></div>
-    <div class="wm-dot wm-yellow"></div>
-    <div class="wm-dot wm-green"></div>
-  </div>
-  <span class="top-title">Sport Trade Terminal</span>
-  <div class="top-right">
-    <span class="top-market">&#9679; 1X2 LIVE</span>
-    <span class="live-pill"><span class="live-dot"></span>LIVE</span>
-    <span class="top-clock" id="clock">--:--:--</span>
+  <div class="wm"><span class="tr"></span><span class="ty"></span><span class="tg"></span></div>
+  <span class="top-title">Sport Trade Terminal v2</span>
+  <div class="top-r">
+    <span class="pill pill-mkt">&#9679; 1X2 LIVE</span>
+    <span class="pill pill-live"><span class="live-dot"></span>LIVE</span>
+    <span class="tclock" id="clock">--:--:--</span>
   </div>
 </div>
 
-<div class="app">
+<div class="wrap">
+<!-- ══════════════ PAINEL ESQUERDO ══════════════ -->
+<div class="left">
 
-  <!-- PAINEL ESQUERDO -->
-  <div class="panel-left">
+  <div class="sh">&#9632; Dados em tempo real — AI Score <em>Janela ideal: 15–30 min</em></div>
 
-    <div class="sec-hdr">
-      &#9632; Entrada de dados — AI Score Live
-      <span>Janela ideal: 15–30 min</span>
+  <div class="fg">
+    <!-- Identificação -->
+    <div class="fc s4">
+      <div class="fl">Identificação do Jogo</div>
+      <input class="fi" id="jogo" type="text" placeholder="Ex: Flamengo x Vasco — 22'" oninput="calc()">
     </div>
 
-    <!-- LEGENDA DE PESOS -->
-    <div class="weight-row">
-      <span style="font-size:9px;color:var(--muted);letter-spacing:1px;align-self:center">PESO:</span>
-      <span class="w-tag hi">&#9650;&#9650; ALTO — AP, Posse, Pressão</span>
-      <span class="w-tag md">&#9650; MÉDIO — Finalizações, Escanteios, Passes</span>
-      <span class="w-tag lo">&#9644; BAIXO — Faltas, Cartões</span>
+    <!-- SITUAÇÃO -->
+    <div class="fsep"><span>&#9632; Situação atual do jogo</span></div>
+
+    <div class="fc">
+      <div class="fl">Minuto <span class="w w-h">ALTO</span></div>
+      <input class="fi" id="min" type="number" min="1" max="90" placeholder="22" oninput="calc()">
+      <div class="fi-flag" id="flag-min">&#9651; Fora da janela 15–30</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Placar — Time A</div>
+      <input class="fi" id="gol-a" type="number" min="0" placeholder="0" oninput="calc()">
+      <div class="fi-hint">time que você quer apostar</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Placar — Time B</div>
+      <input class="fi" id="gol-b" type="number" min="0" placeholder="1" oninput="calc()">
+      <div class="fi-hint">adversário</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Contexto Tático Adv. <span class="w w-h">ALTO</span></div>
+      <select class="fi" id="tatico" onchange="calc()">
+        <option value="aberto">Aberto / Trocando bolas</option>
+        <option value="medio">Médio bloco</option>
+        <option value="fechado">Bloco baixo / Retranca</option>
+        <option value="10">Adversário com 10</option>
+      </select>
+      <div class="fi-hint">estilo defensivo do adversário</div>
     </div>
 
-    <!-- FORM -->
-    <div class="form-grid">
+    <!-- PRESSAO OFENSIVA -->
+    <div class="fsep"><span>&#9632; Pressão ofensiva</span></div>
 
-      <!-- linha 1 -->
-      <div class="f-cell span3">
-        <div class="f-lbl">Identificação do Jogo <span class="tip" title="Ex: Flamengo x Vasco — Rodada 12">?</span></div>
-        <input class="f-inp" id="jogo" type="text" placeholder="Ex: Flamengo x Vasco — Rodada 12" oninput="calcular()">
-      </div>
-
-      <!-- linha 2 -->
-      <div class="f-cell">
-        <div class="f-lbl">Minuto Atual <span class="tip" title="Use entre 15 e 30 para máxima eficácia">?</span></div>
-        <input class="f-inp" id="minuto" type="number" min="1" max="90" placeholder="22" oninput="calcular()">
-        <div class="field-flag" id="flag-min">⚠ Ideal: 15–30 min</div>
-      </div>
-      <div class="f-cell">
-        <div class="f-lbl">Ataques Perigosos <span class="tip" title="Peso ALTO. ≥12 é sinal forte">?</span></div>
-        <input class="f-inp" id="ap" type="number" min="0" placeholder="12" oninput="calcular()">
-      </div>
-      <div class="f-cell">
-        <div class="f-lbl">Ataques Não Perigosos <span class="tip" title="Contexto de domínio. Alto ANP + baixo AP = pressão ineficaz">?</span></div>
-        <input class="f-inp" id="anp" type="number" min="0" placeholder="8" oninput="calcular()">
-      </div>
-
-      <!-- linha 3 -->
-      <div class="f-cell">
-        <div class="f-lbl">Finalizações (total) <span class="tip" title="No gol + fora. Peso MÉDIO. ≥3 conta ponto">?</span></div>
-        <input class="f-inp" id="fin" type="number" min="0" placeholder="3" oninput="calcular()">
-      </div>
-      <div class="f-cell">
-        <div class="f-lbl">Escanteios <span class="tip" title="≥2 em boa janela reforça domínio">?</span></div>
-        <input class="f-inp" id="esc" type="number" min="0" placeholder="2" oninput="calcular()">
-      </div>
-      <div class="f-cell">
-        <div class="f-lbl">Posse de Bola % <span class="tip" title="Peso ALTO. ≥55% é domínio claro">?</span></div>
-        <input class="f-inp" id="posse" type="number" min="0" max="100" placeholder="62" oninput="calcular()">
-      </div>
-
-      <!-- linha 4 -->
-      <div class="f-cell">
-        <div class="f-lbl">Passes Completos <span class="tip" title="Volume indica ritmo. ≥120 em 20min = dominância">?</span></div>
-        <input class="f-inp" id="passes" type="number" min="0" placeholder="145" oninput="calcular()">
-      </div>
-      <div class="f-cell">
-        <div class="f-lbl">Precisão de Passes % <span class="tip" title="≥80% + alta posse = time no controle total">?</span></div>
-        <input class="f-inp" id="precisao" type="number" min="0" max="100" placeholder="83" oninput="calcular()">
-      </div>
-      <div class="f-cell">
-        <div class="f-lbl">Pressão / Recup. Rápida <span class="tip" title="Peso ALTO. Sim/Não. Pressão alta = gol mais provável">?</span></div>
-        <select class="f-inp" id="pressao" onchange="calcular()">
-          <option value="0">Não</option>
-          <option value="1">Sim</option>
-        </select>
-      </div>
-
-      <!-- linha 5 -->
-      <div class="f-cell">
-        <div class="f-lbl">Faltas Sofridas <span class="tip" title="Alto número = adversário na retranca. Contexto útil">?</span></div>
-        <input class="f-inp" id="faltas" type="number" min="0" placeholder="5" oninput="calcular()">
-      </div>
-      <div class="f-cell">
-        <div class="f-lbl">Cartões Amarelos (adv.) <span class="tip" title="≥2 cartões do adversário = time sob pressão defensiva">?</span></div>
-        <input class="f-inp" id="cartoes" type="number" min="0" placeholder="1" oninput="calcular()">
-      </div>
-      <div class="f-cell">
-        <div class="f-lbl">Odd Atual do Mercado <span class="tip" title="Odd muito baixa (&lt;1.25) é risco de value ruim">?</span></div>
-        <input class="f-inp" id="odd" type="number" step="0.01" min="1.01" placeholder="1.65" oninput="calcular()">
-      </div>
-
-    </div><!-- /form-grid -->
-
-    <!-- METRICS BAR -->
-    <div class="metrics-bar">
-      <div class="m-cell">
-        <div class="m-lbl">AP / Min</div>
-        <div class="m-val accent" id="m-appm">—</div>
-        <div class="m-sub">thresh ≥ 0.55</div>
-      </div>
-      <div class="m-cell">
-        <div class="m-lbl">Eficiência AP</div>
-        <div class="m-val" id="m-efic">—</div>
-        <div class="m-sub">AP ÷ (AP+ANP)</div>
-      </div>
-      <div class="m-cell">
-        <div class="m-lbl">Score Bruto</div>
-        <div class="m-val" id="m-score">0</div>
-        <div class="m-sub">de 14 pts</div>
-        <div class="score-track"><div class="score-fill" id="score-fill" style="width:0%;background:var(--muted2)"></div></div>
-      </div>
-      <div class="m-cell">
-        <div class="m-lbl">Score %</div>
-        <div class="m-val" id="m-pct">0%</div>
-        <div class="m-sub">entrada ≥ 65%</div>
-      </div>
-      <div class="m-cell">
-        <div class="m-lbl">Odd</div>
-        <div class="m-val" id="m-odd">—</div>
-        <div class="m-sub">mercado atual</div>
-      </div>
+    <div class="fc">
+      <div class="fl">Ataques Perigosos <span class="w w-h">ALTO</span></div>
+      <input class="fi" id="ap" type="number" min="0" placeholder="12" oninput="calc()">
+      <div class="fi-hint">AP &ge; 10 em 20min = forte</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Ataques Não Perigosos <span class="w w-m">MÉD</span></div>
+      <input class="fi" id="anp" type="number" min="0" placeholder="8" oninput="calc()">
+      <div class="fi-hint">contexto de eficiência</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Chutes No Gol <span class="w w-h">ALTO</span></div>
+      <input class="fi" id="cng" type="number" min="0" placeholder="3" oninput="calc()">
+      <div class="fi-hint">finalizações exigindo defesa</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Chutes Fora <span class="w w-m">MÉD</span></div>
+      <input class="fi" id="cf" type="number" min="0" placeholder="2" oninput="calc()">
+      <div class="fi-hint">volume de finalizações</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Escanteios <span class="w w-m">MÉD</span></div>
+      <input class="fi" id="esc" type="number" min="0" placeholder="3" oninput="calc()">
+      <div class="fi-hint">&ge; 2 reforça pressão real</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Pressão Alta / Rec. Rápida <span class="w w-h">ALTO</span></div>
+      <select class="fi" id="press" onchange="calc()">
+        <option value="0">Não</option>
+        <option value="1">Sim</option>
+      </select>
     </div>
 
-  </div><!-- /panel-left -->
+    <!-- CONTROLE DE JOGO -->
+    <div class="fsep"><span>&#9632; Controle e fluência</span></div>
 
-  <!-- PAINEL DIREITO -->
-  <div class="panel-right">
-
-    <div class="sec-hdr">&#9632; Análise de critérios</div>
-
-    <div class="crit-list" id="crit-list">
-
-      <div class="crit-row" id="cr-appm">
-        <div class="c-icon c-neu" id="ci-appm">—</div>
-        <div class="c-body">
-          <div class="c-name">AP por Minuto ≥ 0.55</div>
-          <div class="c-desc">Peso alto · ritmo de pressão ofensiva</div>
-        </div>
-        <span class="c-val neu-v" id="cv-appm">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-efic">
-        <div class="c-icon c-neu" id="ci-efic">—</div>
-        <div class="c-body">
-          <div class="c-name">Eficiência AP ≥ 55%</div>
-          <div class="c-desc">Peso alto · qualidade > quantidade</div>
-        </div>
-        <span class="c-val neu-v" id="cv-efic">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-posse">
-        <div class="c-icon c-neu" id="ci-posse">—</div>
-        <div class="c-body">
-          <div class="c-name">Posse de Bola ≥ 55%</div>
-          <div class="c-desc">Peso alto · controle territorial</div>
-        </div>
-        <span class="c-val neu-v" id="cv-posse">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-press">
-        <div class="c-icon c-neu" id="ci-press">—</div>
-        <div class="c-body">
-          <div class="c-name">Pressão Alta / Recup. Rápida</div>
-          <div class="c-desc">Peso alto · domínio tático e físico</div>
-        </div>
-        <span class="c-val neu-v" id="cv-press">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-fin">
-        <div class="c-icon c-neu" id="ci-fin">—</div>
-        <div class="c-body">
-          <div class="c-name">Finalizações ≥ 3</div>
-          <div class="c-desc">Peso médio · conversão em chutes</div>
-        </div>
-        <span class="c-val neu-v" id="cv-fin">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-esc">
-        <div class="c-icon c-neu" id="ci-esc">—</div>
-        <div class="c-body">
-          <div class="c-name">Escanteios ≥ 2</div>
-          <div class="c-desc">Peso médio · pressão na área</div>
-        </div>
-        <span class="c-val neu-v" id="cv-esc">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-passes">
-        <div class="c-icon c-neu" id="ci-passes">—</div>
-        <div class="c-body">
-          <div class="c-name">Precisão de Passes ≥ 80%</div>
-          <div class="c-desc">Peso médio · fluidez e controle</div>
-        </div>
-        <span class="c-val neu-v" id="cv-passes">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-cart">
-        <div class="c-icon c-neu" id="ci-cart">—</div>
-        <div class="c-body">
-          <div class="c-name">Cartões adversário ≥ 2</div>
-          <div class="c-desc">Peso baixo · retranca sob pressão</div>
-        </div>
-        <span class="c-val neu-v" id="cv-cart">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-janela">
-        <div class="c-icon c-neu" id="ci-janela">—</div>
-        <div class="c-body">
-          <div class="c-name">Janela 15–30 min</div>
-          <div class="c-desc">Contexto · odd ainda com valor</div>
-        </div>
-        <span class="c-val neu-v" id="cv-janela">—</span>
-      </div>
-
-      <div class="crit-row" id="cr-odd">
-        <div class="c-icon c-neu" id="ci-odd">—</div>
-        <div class="c-body">
-          <div class="c-name">Odd entre 1.25 e 2.20</div>
-          <div class="c-desc">Value · não muito seca nem muito alta</div>
-        </div>
-        <span class="c-val neu-v" id="cv-odd">—</span>
-      </div>
-
-    </div><!-- /crit-list -->
-
-    <!-- VEREDITO -->
-    <div class="verdict" id="verdict">
-      <div class="v-eyebrow">Veredito do Algoritmo</div>
-      <div class="v-main v-neutral" id="v-main">AGUARDANDO</div>
-      <div class="v-sub" id="v-sub">preencha os dados ao lado</div>
+    <div class="fc">
+      <div class="fl">Posse de Bola % <span class="w w-h">ALTO</span></div>
+      <input class="fi" id="posse" type="number" min="0" max="100" placeholder="62" oninput="calc()">
+    </div>
+    <div class="fc">
+      <div class="fl">Precisão de Passes % <span class="w w-m">MÉD</span></div>
+      <input class="fi" id="prec" type="number" min="0" max="100" placeholder="83" oninput="calc()">
+    </div>
+    <div class="fc">
+      <div class="fl">Faltas Sofridas <span class="w w-l">BAIXO</span></div>
+      <input class="fi" id="faltas" type="number" min="0" placeholder="5" oninput="calc()">
+      <div class="fi-hint">alto = adv. na retranca</div>
+    </div>
+    <div class="fc">
+      <div class="fl">Cartões Adv. <span class="w w-l">BAIXO</span></div>
+      <input class="fi" id="cart" type="number" min="0" placeholder="1" oninput="calc()">
     </div>
 
-    <!-- RISK METER -->
-    <div class="risk-meter">
-      <div class="risk-lbl">Nível de Risco da Operação</div>
-      <div class="risk-bar"><div class="risk-fill" id="risk-fill" style="width:0%;background:var(--muted2)"></div></div>
-      <div class="risk-labels"><span>BAIXO</span><span>MÉDIO</span><span>ALTO</span></div>
+    <!-- MERCADO -->
+    <div class="fsep"><span>&#9632; Mercado</span></div>
+
+    <div class="fc s2">
+      <div class="fl">Odd Atual do Mercado <span class="w w-h">ALTO</span></div>
+      <input class="fi" id="odd" type="number" step="0.01" min="1.01" placeholder="1.65" oninput="calc()">
+      <div class="fi-hint">ideal: 1.30 – 2.10</div>
+      <div class="fi-flag" id="flag-odd">&#9651; Odd fora da faixa de value</div>
+    </div>
+    <div class="fc s2">
+      <div class="fl">Estilo ofensivo do time A</div>
+      <select class="fi" id="estilo-a" onchange="calc()">
+        <option value="conv">Conversor — Pouco, mas marca</option>
+        <option value="dom">Dominador — Pressiona e marca</option>
+        <option value="inic">Ineficiente — Domina mas não marca</option>
+      </select>
+      <div class="fi-hint">histórico do time que você aposta</div>
+    </div>
+  </div><!-- /fg -->
+
+  <!-- RAZÕES CRUZADAS (calculadas) -->
+  <div class="razoes" id="razoes">
+    <div class="rz">
+      <div class="rz-lbl">AP / Minuto</div>
+      <div class="rz-val" id="r-appm">—</div>
+      <div class="rz-bar"><div class="rz-fill" id="rf-appm" style="width:0%;background:var(--mu2)"></div></div>
+      <div class="rz-sub">thresh &ge; 0.50/min</div>
+    </div>
+    <div class="rz">
+      <div class="rz-lbl">Eficiência AP %</div>
+      <div class="rz-val" id="r-efic">—</div>
+      <div class="rz-bar"><div class="rz-fill" id="rf-efic" style="width:0%;background:var(--mu2)"></div></div>
+      <div class="rz-sub">AP ÷ (AP+ANP) &ge;55%</div>
+    </div>
+    <div class="rz">
+      <div class="rz-lbl">Conversão Chutes %</div>
+      <div class="rz-val" id="r-conv">—</div>
+      <div class="rz-bar"><div class="rz-fill" id="rf-conv" style="width:0%;background:var(--mu2)"></div></div>
+      <div class="rz-sub">CNG ÷ TotalChutes &ge;40%</div>
+    </div>
+    <div class="rz">
+      <div class="rz-lbl">Pressão Real %</div>
+      <div class="rz-val" id="r-preal">—</div>
+      <div class="rz-bar"><div class="rz-fill" id="rf-preal" style="width:0%;background:var(--mu2)"></div></div>
+      <div class="rz-sub">AP÷(AP+ANP) × CNG÷Chutes</div>
+    </div>
+  </div>
+
+  <!-- SCORE SUMMARY -->
+  <div class="score-summary">
+    <div class="ss">
+      <div class="ss-lbl">Score Bruto</div>
+      <div class="ss-val a" id="ss-score">0</div>
+      <div class="ss-sub">de 22 pts</div>
+    </div>
+    <div class="ss">
+      <div class="ss-lbl">Score %</div>
+      <div class="ss-val" id="ss-pct">0%</div>
+      <div class="ss-sub">entrada &ge;65%</div>
+    </div>
+    <div class="ss">
+      <div class="ss-lbl">Pressão Real</div>
+      <div class="ss-val" id="ss-preal">—</div>
+      <div class="ss-sub">&ge;25% = qualidade</div>
+    </div>
+    <div class="ss">
+      <div class="ss-lbl">Odd</div>
+      <div class="ss-val" id="ss-odd">—</div>
+      <div class="ss-sub">mercado atual</div>
+    </div>
+    <div class="ss">
+      <div class="ss-lbl">Contexto</div>
+      <div class="ss-val" id="ss-ctx" style="font-size:13px;margin-top:3px">—</div>
+      <div class="ss-sub">situação do jogo</div>
+    </div>
+  </div>
+
+</div><!-- /left -->
+
+<!-- ══════════════ PAINEL DIREITO ══════════════ -->
+<div class="right">
+
+  <div class="sh">&#9632; Análise de critérios</div>
+
+  <!-- RAZÕES CRUZADAS VISUAIS -->
+  <div class="razao-cruzada">
+    <div class="rc-title">&#9632; Razões Cruzadas — Qualidade da Pressão</div>
+    <div class="rc-row">
+      <span class="rc-lbl">AP vs ANP</span>
+      <div class="rc-bar"><div class="rc-bar-fill" id="rcf-efic" style="width:0%;background:var(--mu2)"></div></div>
+      <span class="rc-num ne-v" id="rcn-efic">—</span>
+    </div>
+    <div class="rc-row">
+      <span class="rc-lbl">Chutes No Gol vs Total</span>
+      <div class="rc-bar"><div class="rc-bar-fill" id="rcf-conv" style="width:0%;background:var(--mu2)"></div></div>
+      <span class="rc-num ne-v" id="rcn-conv">—</span>
+    </div>
+    <div class="rc-row">
+      <span class="rc-lbl">AP por Minuto</span>
+      <div class="rc-bar"><div class="rc-bar-fill" id="rcf-appm" style="width:0%;background:var(--mu2)"></div></div>
+      <span class="rc-num ne-v" id="rcn-appm">—</span>
+    </div>
+    <div class="rc-row">
+      <span class="rc-lbl">Pressão Real (composta)</span>
+      <div class="rc-bar"><div class="rc-bar-fill" id="rcf-preal" style="width:0%;background:var(--mu2)"></div></div>
+      <span class="rc-num ne-v" id="rcn-preal">—</span>
+    </div>
+  </div>
+
+  <div class="crit-list">
+
+    <div class="cr">
+      <div class="ci ne" id="ci-appm">—</div>
+      <div class="cb"><div class="cn">AP/min &ge; 0.50</div><div class="cd">Peso alto · ritmo de pressão</div></div>
+      <span class="cv ne-v" id="cv-appm">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-efic">—</div>
+      <div class="cb"><div class="cn">Eficiência AP &ge; 55%</div><div class="cd">Peso alto · AP÷(AP+ANP) — qualidade</div></div>
+      <span class="cv ne-v" id="cv-efic">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-conv">—</div>
+      <div class="cb"><div class="cn">Conversão Chutes &ge; 40%</div><div class="cd">Peso alto · CNG÷TotalChutes</div></div>
+      <span class="cv ne-v" id="cv-conv">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-preal">—</div>
+      <div class="cb"><div class="cn">Pressão Real &ge; 25%</div><div class="cd">Peso alto · métrica composta</div></div>
+      <span class="cv ne-v" id="cv-preal">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-posse">—</div>
+      <div class="cb"><div class="cn">Posse &ge; 55%</div><div class="cd">Peso alto · controle territorial</div></div>
+      <span class="cv ne-v" id="cv-posse">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-press">—</div>
+      <div class="cb"><div class="cn">Pressão Alta / Rec. Rápida</div><div class="cd">Peso alto · domínio tático</div></div>
+      <span class="cv ne-v" id="cv-press">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-esc">—</div>
+      <div class="cb"><div class="cn">Escanteios &ge; 2</div><div class="cd">Peso médio · pressão na área</div></div>
+      <span class="cv ne-v" id="cv-esc">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-prec">—</div>
+      <div class="cb"><div class="cn">Precisão Passes &ge; 80%</div><div class="cd">Peso médio · fluência</div></div>
+      <span class="cv ne-v" id="cv-prec">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-tatico">—</div>
+      <div class="cb"><div class="cn">Contexto Tático Favorável</div><div class="cd">Peso alto · adversário aberto/10</div></div>
+      <span class="cv ne-v" id="cv-tatico">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-placar">—</div>
+      <div class="cb"><div class="cn">Placar Favorável</div><div class="cd">Peso alto · ganhar / empate buscando</div></div>
+      <span class="cv ne-v" id="cv-placar">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-estilo">—</div>
+      <div class="cb"><div class="cn">Estilo do Time A Favorável</div><div class="cd">Peso médio · histórico de conversão</div></div>
+      <span class="cv ne-v" id="cv-estilo">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-cart">—</div>
+      <div class="cb"><div class="cn">Cartões Adv. &ge; 2</div><div class="cd">Peso baixo · retranca sob pressão</div></div>
+      <span class="cv ne-v" id="cv-cart">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-janela">—</div>
+      <div class="cb"><div class="cn">Janela 15–30 min</div><div class="cd">Contexto · odd com value</div></div>
+      <span class="cv ne-v" id="cv-janela">—</span>
+    </div>
+    <div class="cr">
+      <div class="ci ne" id="ci-odd">—</div>
+      <div class="cb"><div class="cn">Odd 1.30–2.10</div><div class="cd">Value · não seca nem alta demais</div></div>
+      <span class="cv ne-v" id="cv-odd">—</span>
     </div>
 
-    <!-- ALERTAS CONTEXTUAIS -->
-    <div class="alert-banner" id="alert-odd">⚠ Odd muito baixa — value comprometido. Evitar entrada.</div>
-    <div class="alert-banner" id="alert-efic">⚠ Muitos ataques não perigosos — time pressiona sem qualidade.</div>
-    <div class="alert-banner" id="alert-min">⚠ Fora da janela ideal (15–30 min) — recalcule o risco.</div>
+  </div>
 
-    <button class="btn-log" onclick="salvar()">&#9632; Registrar Operação no Log</button>
+  <!-- ALERTAS SITUACIONAIS -->
+  <div class="sit-alert sa-red" id="al-oddlow">&#9650; Odd &lt; 1.30 — value inexistente. Não entrar.</div>
+  <div class="sit-alert sa-red" id="al-inefic">&#9650; Alta pressão sem qualidade — AP ineficaz, chutes fracos.</div>
+  <div class="sit-alert sa-red" id="al-estilo">&#9650; Time A historicamente ineficiente — pressão não vira gol.</div>
+  <div class="sit-alert sa-yellow" id="al-placar">&#9651; Perdendo — dados inflados por desespero, não domínio.</div>
+  <div class="sit-alert sa-yellow" id="al-janela">&#9651; Fora da janela 15–30 min — recalcule risco.</div>
+  <div class="sit-alert sa-cyan" id="al-10">&#9432; Adversário com 10 — odd pode estar seca demais.</div>
 
-  </div><!-- /panel-right -->
-</div><!-- /app -->
+  <!-- VEREDITO -->
+  <div class="verdict" id="verdict">
+    <div class="ve">Veredito do Algoritmo</div>
+    <div class="vm vn" id="vm">AGUARDANDO</div>
+    <div class="vs" id="vs">preencha os dados ao lado</div>
+  </div>
+
+  <!-- METERS -->
+  <div class="bottom-meters">
+    <div class="bm-row">
+      <span class="bm-lbl">Score</span>
+      <div class="bm-track"><div class="bm-fill" id="bm-score" style="width:0%;background:var(--mu2)"></div></div>
+      <span class="bm-num" id="bm-score-n">0%</span>
+    </div>
+    <div class="bm-row">
+      <span class="bm-lbl">Risco</span>
+      <div class="bm-track"><div class="bm-fill" id="bm-risk" style="width:0%;background:var(--mu2)"></div></div>
+      <span class="bm-num" id="bm-risk-n">—</span>
+    </div>
+  </div>
+
+  <button class="btn-log" onclick="salvar()">&#9632; Registrar Operação no Log</button>
+
+</div><!-- /right -->
+</div><!-- /wrap -->
 
 <!-- LOG -->
 <div class="log-wrap">
-  <div class="sec-hdr">
-    &#9632; Log de Operações da Sessão
-    <span id="log-count">0 entradas</span>
-  </div>
+  <div class="sh">&#9632; Log de Operações <em id="log-count">0 entradas</em></div>
   <div class="log-scroll">
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Jogo</th>
-          <th>Min</th>
-          <th>AP/m</th>
-          <th>Efic%</th>
-          <th>Posse%</th>
-          <th>Pressão</th>
-          <th>Fin</th>
-          <th>Esc</th>
-          <th>Pass%</th>
-          <th>Cart</th>
-          <th>Score%</th>
-          <th>Decisão</th>
-          <th>Odd</th>
-          <th>Resultado</th>
+          <th>#</th><th>Jogo</th><th>Min</th><th>Placar</th>
+          <th>AP/m</th><th>Efic%</th><th>Conv%</th><th>Preal%</th>
+          <th>Posse</th><th>Pressão</th><th>Tático</th>
+          <th>Esc</th><th>Passes%</th><th>Cart</th>
+          <th>Score%</th><th>Decisão</th><th>Odd</th><th>Resultado</th>
         </tr>
       </thead>
       <tbody id="log-body">
-        <tr><td colspan="15" class="empty-log">— Nenhuma operação registrada nesta sessão —</td></tr>
+        <tr><td colspan="18" class="log-empty">— Nenhuma operação registrada nesta sessão —</td></tr>
       </tbody>
     </table>
   </div>
 </div>
 
 <script>
-// ── PESOS ──────────────────────────────────────────────────
-const PESOS = {
-  appm:   3,  // AP/min ≥ 0.55
-  efic:   3,  // eficiência AP ≥ 55%
-  posse:  3,  // posse ≥ 55%
-  press:  3,  // pressão alta
-  fin:    2,  // finalizações ≥ 3
-  esc:    2,  // escanteios ≥ 2
-  passes: 2,  // precisão passes ≥ 80%
-  cart:   1,  // cartões adv ≥ 2
-  janela: 0,  // contexto (não soma, só sinaliza)
-  odd:    0,  // contexto (não soma, só sinaliza)
+// ── PESOS ────────────────────────────────────────
+const P = {
+  appm:3, efic:3, conv:3, preal:3,
+  posse:3, press:3,
+  esc:2, prec:2, tatico:3, placar:3, estilo:2,
+  cart:1
 };
-const MAX_SCORE = 3+3+3+3+2+2+2+1; // 19... usaremos 14 displayados
+const MAX = Object.values(P).reduce((a,b)=>a+b,0); // 31
 
 function g(id){ return document.getElementById(id); }
 
-function setCrit(id, estado, valTxt){
-  // estado: 'ok' | 'fail' | 'warn' | 'neu'
-  const icon = g('ci-'+id);
-  const val  = g('cv-'+id);
-  const map = {
-    ok:   { cls:'c-ok',   vcls:'ok-v',   sym:'✓' },
-    fail: { cls:'c-fail', vcls:'fail-v', sym:'✗' },
-    warn: { cls:'c-warn', vcls:'warn-v', sym:'!' },
-    neu:  { cls:'c-neu',  vcls:'neu-v',  sym:'—' },
-  };
-  const m = map[estado] || map.neu;
-  icon.className = 'c-icon ' + m.cls;
-  icon.textContent = m.sym;
-  val.className  = 'c-val ' + m.vcls;
-  val.textContent = valTxt || '—';
+function bar(fillId, pct, thresh){
+  const el = g(fillId);
+  if(!el) return;
+  const p = Math.min(100, pct);
+  el.style.width = p+'%';
+  el.style.background = p>=thresh ? 'var(--grn)' : p>=(thresh*0.6) ? 'var(--yel)' : 'var(--red)';
 }
 
-function showAlert(id, show){
+function setCrit(id, estado, val){
+  const ci = g('ci-'+id), cv = g('cv-'+id);
+  if(!ci||!cv) return;
+  const map = {
+    ok:  {c:'ci ok',  vc:'cv ok-v',  s:'✓'},
+    fl:  {c:'ci fl2', vc:'cv fl-v',  s:'✗'},
+    wn:  {c:'ci wn',  vc:'cv wn-v',  s:'!'},
+    ne:  {c:'ci ne',  vc:'cv ne-v',  s:'—'},
+  };
+  const m = map[estado]||map.ne;
+  ci.className = m.c; ci.textContent = m.s;
+  cv.className = m.vc; cv.textContent = val||'—';
+}
+
+function showAl(id, show){
   const el = g(id);
-  el.classList.toggle('show', show);
-  el.classList.toggle('alert-red',    show && id !== 'alert-min');
-  el.classList.toggle('alert-yellow', show && id === 'alert-min');
+  if(!el) return;
+  el.classList.toggle('show', !!show);
 }
 
 let logN = 0;
 
-function calcular(){
-  const min    = parseFloat(g('minuto').value)   || 0;
-  const ap     = parseFloat(g('ap').value)       || 0;
-  const anp    = parseFloat(g('anp').value)      || 0;
-  const fin    = parseFloat(g('fin').value)      || 0;
-  const esc    = parseFloat(g('esc').value)      || 0;
-  const posse  = parseFloat(g('posse').value)    || 0;
-  const passes = parseFloat(g('passes').value)   || 0;
-  const prec   = parseFloat(g('precisao').value) || 0;
-  const press  = parseInt(g('pressao').value)    || 0;
-  const faltas = parseFloat(g('faltas').value)   || 0;
-  const cart   = parseFloat(g('cartoes').value)  || 0;
-  const odd    = parseFloat(g('odd').value)      || 0;
+function calc(){
+  const min    = parseFloat(g('min').value)   || 0;
+  const golA   = parseFloat(g('gol-a').value) ?? 0;
+  const golB   = parseFloat(g('gol-b').value) ?? 0;
+  const ap     = parseFloat(g('ap').value)    || 0;
+  const anp    = parseFloat(g('anp').value)   || 0;
+  const cng    = parseFloat(g('cng').value)   || 0;
+  const cf     = parseFloat(g('cf').value)    || 0;
+  const esc    = parseFloat(g('esc').value)   || 0;
+  const press  = parseInt(g('press').value)   || 0;
+  const posse  = parseFloat(g('posse').value) || 0;
+  const prec   = parseFloat(g('prec').value)  || 0;
+  const faltas = parseFloat(g('faltas').value)|| 0;
+  const cart   = parseFloat(g('cart').value)  || 0;
+  const odd    = parseFloat(g('odd').value)   || 0;
+  const tatico = g('tatico').value;
+  const estiloA= g('estilo-a').value;
 
-  // Odd display
-  g('m-odd').textContent = odd ? odd.toFixed(2) : '—';
+  const golAv = g('gol-a').value !== '';
+  const golBv = g('gol-b').value !== '';
+  const placarOk = golAv && golBv;
 
-  if(min <= 0 && ap === 0){
-    resetUI(); return;
+  // ── RAZÕES CRUZADAS ──────────────────────────
+  const totalAt  = ap + anp;
+  const totalCh  = cng + cf;
+  const appm     = min > 0 ? ap / min : 0;
+  const efic     = totalAt > 0 ? (ap / totalAt) * 100 : -1;
+  const conv     = totalCh > 0 ? (cng / totalCh) * 100 : -1;
+  // Pressão Real = eficiência de ataque × precisão de finalização (composta)
+  const preal    = (efic >= 0 && conv >= 0) ? (efic / 100) * (conv / 100) * 100 : -1;
+
+  // Exibir nas métricas superiores
+  g('r-appm').textContent  = appm > 0 ? appm.toFixed(2) : '—';
+  g('r-efic').textContent  = efic >= 0 ? efic.toFixed(0)+'%' : '—';
+  g('r-conv').textContent  = conv >= 0 ? conv.toFixed(0)+'%' : '—';
+  g('r-preal').textContent = preal >= 0 ? preal.toFixed(0)+'%' : '—';
+
+  bar('rf-appm', (appm/1.2)*100, 42); // 0.50 de 1.2 = 42%
+  bar('rf-efic', efic>=0?efic:0, 55);
+  bar('rf-conv', conv>=0?conv:0, 40);
+  bar('rf-preal', preal>=0?preal:0, 25);
+
+  // Painel direito razões cruzadas
+  const rcColor = (v, thresh) => v>=thresh?'var(--grn)':v>=(thresh*0.6)?'var(--yel)':'var(--red)';
+  const setRC = (fillId, numId, val, thresh, fmt) => {
+    const el = g(fillId); const ne = g(numId);
+    if(!el||!ne) return;
+    if(val < 0){ el.style.width='0%'; el.style.background='var(--mu2)'; ne.textContent='—'; ne.className='rc-num ne-v'; return; }
+    el.style.width = Math.min(100,val)+'%';
+    el.style.background = rcColor(val,thresh);
+    ne.textContent = fmt(val);
+    ne.className = 'rc-num '+(val>=thresh?'ok-v':val>=(thresh*0.6)?'wn-v':'fl-v');
+  };
+  setRC('rcf-efic','rcn-efic', efic, 55, v=>v.toFixed(0)+'%');
+  setRC('rcf-conv','rcn-conv', conv, 40, v=>v.toFixed(0)+'%');
+  setRC('rcf-appm','rcn-appm', (appm/1.2)*100, 42, v=>appm.toFixed(2));
+  setRC('rcf-preal','rcn-preal', preal, 25, v=>v.toFixed(0)+'%');
+
+  // Score summary
+  g('ss-odd').textContent   = odd > 0 ? odd.toFixed(2) : '—';
+  g('ss-preal').textContent = preal >= 0 ? preal.toFixed(0)+'%' : '—';
+
+  // ── AVALIAÇÃO DE CRITÉRIOS ──────────────────
+  // Contexto tático
+  const taticoOk = tatico === 'aberto' || tatico === '10';
+  const taticoWn = tatico === 'medio';
+
+  // Placar
+  let placarStatus = 'ne';
+  let placarTxt = '—';
+  if(placarOk){
+    if(golA > golB){ placarStatus='ok'; placarTxt=golA+'-'+golB+' ▲'; }
+    else if(golA === golB){ placarStatus='ok'; placarTxt=golA+'-'+golB+' ●'; }
+    else { placarStatus='wn'; placarTxt=golA+'-'+golB+' ▼'; }
   }
 
-  // ── CÁLCULOS ──
-  const appm = min > 0 ? ap / min : 0;
-  const totalAt = ap + anp;
-  const efic = totalAt > 0 ? (ap / totalAt) * 100 : 0;
+  // Estilo do time A
+  const estiloOk = estiloA === 'dom';
+  const estiloWn = estiloA === 'conv';
+  const estiloFl = estiloA === 'inic';
 
-  g('m-appm').textContent = appm.toFixed(2);
-  g('m-efic').textContent = totalAt > 0 ? efic.toFixed(0) + '%' : '—';
-
-  // ── CRITÉRIOS ──
   const c = {
-    appm:   appm  >= 0.55,
-    efic:   totalAt > 0 && efic >= 55,
-    posse:  posse  >= 55,
-    press:  press  === 1,
-    fin:    fin    >= 3,
-    esc:    esc    >= 2,
-    passes: prec   >= 80,
-    cart:   cart   >= 2,
+    appm:   appm >= 0.50,
+    efic:   efic >= 55,
+    conv:   conv >= 40,
+    preal:  preal >= 25,
+    posse:  posse >= 55,
+    press:  press === 1,
+    esc:    esc >= 2,
+    prec:   prec >= 80,
+    tatico: taticoOk,
+    placar: placarOk && (golA >= golB),
+    estilo: estiloOk,
+    cart:   cart >= 2,
     janela: min >= 15 && min <= 30,
-    odd:    odd >= 1.25 && odd <= 2.20,
+    odd:    odd >= 1.30 && odd <= 2.10,
   };
 
-  setCrit('appm',   c.appm   ? 'ok' : (appm>0?'fail':'neu'),  appm>0  ? appm.toFixed(2)        : '—');
-  setCrit('efic',   c.efic   ? 'ok' : (totalAt>0?'fail':'neu'), totalAt>0? efic.toFixed(0)+'%' : '—');
-  setCrit('posse',  c.posse  ? 'ok' : (posse>0?'fail':'neu'),  posse>0 ? posse+'%'              : '—');
-  setCrit('press',  c.press  ? 'ok' : 'fail',                            c.press ? 'Sim'         : 'Não');
-  setCrit('fin',    c.fin    ? 'ok' : (fin>0?'fail':'neu'),    fin>0   ? fin+' chutes'           : '—');
-  setCrit('esc',    c.esc    ? 'ok' : (esc>0?'fail':'neu'),    esc>0   ? esc+' cantos'           : '—');
-  setCrit('passes', c.passes ? 'ok' : (prec>0?'fail':'neu'),   prec>0  ? prec+'%'               : '—');
-  setCrit('cart',   c.cart   ? 'ok' : (cart>0?'warn':'neu'),   cart>0  ? cart+' cart.'           : '—');
-  setCrit('janela', c.janela ? 'ok' : (min>0?'warn':'neu'),    min>0   ? min+"'"                 : '—');
-  setCrit('odd',    odd===0?'neu': (c.odd?'ok':(odd<1.25?'warn':'fail')), odd>0?odd.toFixed(2):'—');
+  setCrit('appm',   appm>0?(c.appm?'ok':'fl'):'ne', appm>0?appm.toFixed(2):'—');
+  setCrit('efic',   efic>=0?(c.efic?'ok':'fl'):'ne', efic>=0?efic.toFixed(0)+'%':'—');
+  setCrit('conv',   conv>=0?(c.conv?'ok':'fl'):'ne', conv>=0?conv.toFixed(0)+'%':'—');
+  setCrit('preal',  preal>=0?(c.preal?'ok':'fl'):'ne', preal>=0?preal.toFixed(0)+'%':'—');
+  setCrit('posse',  posse>0?(c.posse?'ok':'fl'):'ne', posse>0?posse+'%':'—');
+  setCrit('press',  press>=0?(c.press?'ok':'fl'):'ne', c.press?'Sim':'Não');
+  setCrit('esc',    esc>0?(c.esc?'ok':'fl'):'ne', esc>0?esc+' cant.':'—');
+  setCrit('prec',   prec>0?(c.prec?'ok':'fl'):'ne', prec>0?prec+'%':'—');
+  setCrit('tatico', taticoOk?'ok':(taticoWn?'wn':'fl'), tatico==='aberto'?'Aberto':tatico==='10'?'c/10':tatico==='medio'?'Médio bloco':'Retranca');
+  setCrit('placar', placarStatus, placarTxt);
+  setCrit('estilo', estiloOk?'ok':(estiloWn?'wn':'fl'), estiloA==='dom'?'Conversor+':'Ineficiente' );
+  setCrit('cart',   cart>0?(c.cart?'ok':'wn'):'ne', cart>0?cart+' cart.':'—');
+  setCrit('janela', min>0?(c.janela?'ok':'wn'):'ne', min>0?min+"'":'—');
+  setCrit('odd',    odd>0?(c.odd?'ok':(odd<1.30?'wn':'fl')):'ne', odd>0?odd.toFixed(2):'—');
 
-  // ── SCORE ──
+  // ── SCORE ────────────────────────────────────
   let score = 0;
-  if(c.appm)   score += PESOS.appm;
-  if(c.efic)   score += PESOS.efic;
-  if(c.posse)  score += PESOS.posse;
-  if(c.press)  score += PESOS.press;
-  if(c.fin)    score += PESOS.fin;
-  if(c.esc)    score += PESOS.esc;
-  if(c.passes) score += PESOS.passes;
-  if(c.cart)   score += PESOS.cart;
+  if(c.appm)   score += P.appm;
+  if(c.efic)   score += P.efic;
+  if(c.conv)   score += P.conv;
+  if(c.preal)  score += P.preal;
+  if(c.posse)  score += P.posse;
+  if(c.press)  score += P.press;
+  if(c.esc)    score += P.esc;
+  if(c.prec)   score += P.prec;
+  if(c.tatico) score += P.tatico;
+  if(c.placar) score += P.placar;
+  if(c.estilo) score += P.estilo;
+  if(c.cart)   score += P.cart;
 
-  const maxS = 19;
-  const pct  = Math.round((score / maxS) * 100);
+  // Penalidades
+  if(placarOk && golA < golB) score = Math.max(0, score - 4); // perdendo = punição grave
+  if(estiloFl) score = Math.max(0, score - 3);                // ineficiente = punição
+  if(tatico === 'fechado') score = Math.max(0, score - 2);    // retranca = punição
 
-  g('m-score').textContent = score;
-  g('m-pct').textContent   = pct + '%';
+  const pct = Math.round((score / MAX) * 100);
 
-  const fillColor = pct >= 65 ? 'var(--green)' : pct >= 40 ? 'var(--yellow)' : 'var(--red)';
-  const sf = g('score-fill');
-  sf.style.width = pct + '%';
-  sf.style.background = fillColor;
+  g('ss-score').textContent = score;
+  g('ss-pct').textContent = pct+'%';
 
-  // ── RISK METER ──
-  const critAlt = [c.appm, c.posse, c.press, c.efic].filter(Boolean).length;
-  const riskPct = Math.max(0, Math.min(100, 100 - pct + (c.janela?0:20) + (c.odd||odd===0?0:15)));
-  const rf = g('risk-fill');
-  rf.style.width = riskPct + '%';
-  rf.style.background = riskPct < 35 ? 'var(--green)' : riskPct < 65 ? 'var(--yellow)' : 'var(--red)';
-
-  // ── ALERTAS ──
-  showAlert('alert-odd',  odd > 0 && !c.odd && odd < 1.25);
-  showAlert('alert-efic', totalAt > 5 && efic < 40);
-  showAlert('alert-min',  min > 0 && !c.janela);
-
-  // ── JANELA FLAG ──
-  const flagMin = g('flag-min');
-  if(min > 0 && !c.janela){ flagMin.style.display='block'; }
-  else { flagMin.style.display='none'; }
-
-  // ── VEREDITO ──
-  const v     = g('verdict');
-  const vMain = g('v-main');
-  const vSub  = g('v-sub');
-
-  // Condições bloqueantes
-  const bloqueio = (odd > 0 && odd < 1.25);
-  const altoRisco = totalAt > 5 && efic < 40;
-
-  if(bloqueio){
-    v.className  = 'verdict st-red';
-    vMain.className = 'v-main v-red';
-    vMain.textContent = '▪ EVITAR ENTRADA';
-    vSub.textContent  = 'odd seca demais — value insuficiente';
-  } else if(altoRisco && pct < 65){
-    v.className  = 'verdict st-warn';
-    vMain.className = 'v-main v-yellow';
-    vMain.textContent = '▪ AGUARDAR';
-    vSub.textContent  = 'pressão sem qualidade — risco elevado';
-  } else if(pct >= 65 && c.janela !== false){
-    v.className  = 'verdict st-green';
-    vMain.className = 'v-main v-green';
-    vMain.textContent = '▶ ENTRAR — ' + pct + '%';
-    vSub.textContent  = 'score ' + score + '/19 · ' + [c.appm&&'AP',c.posse&&'Posse',c.press&&'Pressão'].filter(Boolean).join(', ') + ' OK';
-  } else if(pct >= 50){
-    v.className  = 'verdict st-warn';
-    vMain.className = 'v-main v-yellow';
-    vMain.textContent = '▪ SETUP FRACO — ' + pct + '%';
-    vSub.textContent  = 'score ' + score + '/19 · aguardar mais critérios';
-  } else {
-    v.className  = 'verdict st-red';
-    vMain.className = 'v-main v-red';
-    vMain.textContent = '■ FICAR DE FORA — ' + pct + '%';
-    vSub.textContent  = 'score ' + score + '/19 · setup insuficiente';
+  // Contexto summary
+  let ctxTxt = '—';
+  if(placarOk){
+    if(golA > golB) ctxTxt = 'Ganhando';
+    else if(golA === golB) ctxTxt = 'Empate';
+    else ctxTxt = 'Perdendo';
   }
-}
+  g('ss-ctx').textContent = ctxTxt;
+  g('ss-ctx').style.color = (!placarOk)?'var(--mu)':(golA>=golB?'var(--grn)':'var(--red)');
 
-function resetUI(){
-  ['appm','efic','posse','press','fin','esc','passes','cart','janela','odd']
-    .forEach(id => setCrit(id,'neu','—'));
-  g('m-appm').textContent  = '—';
-  g('m-efic').textContent  = '—';
-  g('m-score').textContent = '0';
-  g('m-pct').textContent   = '0%';
-  g('m-odd').textContent   = '—';
-  g('score-fill').style.width = '0%';
-  g('risk-fill').style.width  = '0%';
-  g('verdict').className   = 'verdict';
-  g('v-main').className    = 'v-main v-neutral';
-  g('v-main').textContent  = 'AGUARDANDO';
-  g('v-sub').textContent   = 'preencha os dados ao lado';
-  ['alert-odd','alert-efic','alert-min'].forEach(id=>showAlert(id,false));
+  // Meters
+  const sc = g('bm-score'); sc.style.width=pct+'%';
+  sc.style.background = pct>=65?'var(--grn)':pct>=45?'var(--yel)':'var(--red)';
+  g('bm-score-n').textContent = pct+'%';
+
+  const riscoBase = 100 - pct;
+  const riscoFinal = Math.min(100, riscoBase + (c.janela?0:15) + (odd>0&&!c.odd?15:0));
+  const rf = g('bm-risk'); rf.style.width=riscoFinal+'%';
+  rf.style.background = riscoFinal<35?'var(--grn)':riscoFinal<65?'var(--yel)':'var(--red)';
+  g('bm-risk-n').textContent = riscoFinal<35?'BAIXO':riscoFinal<65?'MÉDIO':'ALTO';
+
+  // Flags
+  g('flag-min').style.display = (min>0&&!c.janela)?'block':'none';
+  g('flag-odd').style.display = (odd>0&&!c.odd)?'block':'none';
+
+  // Alertas
+  showAl('al-oddlow', odd>0 && odd<1.30);
+  showAl('al-inefic', efic>=0 && conv>=0 && efic<45 && conv<30);
+  showAl('al-estilo', estiloFl);
+  showAl('al-placar', placarOk && golA < golB);
+  showAl('al-janela', min>0 && !c.janela);
+  showAl('al-10',     tatico==='10');
+
+  // ── VEREDITO ─────────────────────────────────
+  const v   = g('verdict');
+  const vm  = g('vm');
+  const vs  = g('vs');
+
+  const bloqOdd     = odd > 0 && odd < 1.30;
+  const bloqInefic  = efic>=0 && conv>=0 && efic<40 && conv<25 && preal<15;
+  const bloqEstilo  = estiloFl && pct < 55;
+  const bloqPlacar  = placarOk && golA < golB && pct < 55;
+
+  const okCores = [c.appm, c.efic, c.conv, c.preal, c.posse, c.press].filter(Boolean).length;
+
+  if(bloqOdd){
+    v.className='verdict st-r'; vm.className='vm vr';
+    vm.textContent='▪ NÃO ENTRAR';
+    vs.textContent='odd seca — sem value. Pule esse jogo.';
+  } else if(bloqInefic){
+    v.className='verdict st-r'; vm.className='vm vr';
+    vm.textContent='▪ ARMADILHA';
+    vs.textContent='pressão sem qualidade — padrão clássico de red.';
+  } else if(bloqPlacar || bloqEstilo){
+    v.className='verdict st-r'; vm.className='vm vr';
+    vm.textContent='■ FICAR DE FORA — '+pct+'%';
+    vs.textContent= bloqPlacar ? 'perdendo + pressão inflada por desespero.' : 'time ineficiente — pressão não vira gol.';
+  } else if(pct >= 65 && okCores >= 4){
+    v.className='verdict st-g'; vm.className='vm vg';
+    vm.textContent='▶ ENTRAR — '+pct+'%';
+    vs.textContent='score '+score+'/'+MAX+' · '+okCores+'/6 critérios principais OK';
+  } else if(pct >= 50){
+    v.className='verdict st-y'; vm.className='vm vy';
+    vm.textContent='▪ SETUP FRACO — '+pct+'%';
+    vs.textContent='score '+score+'/'+MAX+' · aguardar mais 1–2 critérios';
+  } else if(min>0||ap>0){
+    v.className='verdict st-r'; vm.className='vm vr';
+    vm.textContent='■ FICAR DE FORA — '+pct+'%';
+    vs.textContent='score '+score+'/'+MAX+' · setup insuficiente';
+  } else {
+    v.className='verdict'; vm.className='vm vn';
+    vm.textContent='AGUARDANDO';
+    vs.textContent='preencha os dados ao lado';
+  }
 }
 
 function salvar(){
-  const min = g('minuto').value;
-  const ap  = g('ap').value;
-  if(!min || !ap){ alert('Preencha ao menos Minuto e Ataques Perigosos.'); return; }
+  const min = g('min').value; const ap = g('ap').value;
+  if(!min||!ap){ alert('Preencha ao menos Minuto e Ataques Perigosos.'); return; }
 
-  const jogo    = g('jogo').value || 'Sem nome';
-  const anp     = g('anp').value || '0';
-  const fin     = g('fin').value || '0';
-  const esc     = g('esc').value || '0';
-  const posse   = g('posse').value || '—';
-  const prec    = g('precisao').value || '—';
-  const press   = g('pressao').value === '1' ? 'Sim' : 'Não';
-  const cart    = g('cartoes').value || '0';
-  const odd     = g('odd').value || '—';
+  const jogo   = g('jogo').value   || 'Sem nome';
+  const golA   = g('gol-a').value !== '' ? g('gol-a').value : '—';
+  const golB   = g('gol-b').value !== '' ? g('gol-b').value : '—';
+  const anp    = g('anp').value    || '0';
+  const cng    = g('cng').value    || '0';
+  const cf     = g('cf').value     || '0';
+  const esc    = g('esc').value    || '0';
+  const posse  = g('posse').value  || '—';
+  const prec   = g('prec').value   || '—';
+  const press  = g('press').value==='1'?'Sim':'Não';
+  const cart   = g('cart').value   || '0';
+  const odd    = g('odd').value    || '—';
+  const tatico = g('tatico').value;
 
-  const appm = g('m-appm').textContent;
-  const efic = g('m-efic').textContent;
-  const pct  = g('m-pct').textContent;
-  const vTxt = g('v-main').textContent;
+  const appm  = g('r-appm').textContent;
+  const efic  = g('r-efic').textContent;
+  const conv  = g('r-conv').textContent;
+  const preal = g('r-preal').textContent;
+  const pct   = g('ss-pct').textContent;
+  const vTxt  = g('vm').textContent;
 
-  const isEnter = vTxt.includes('ENTRAR');
-  const isWait  = vTxt.includes('AGUARDAR') || vTxt.includes('FRACO');
-  const badgeCls = isEnter ? 'b-enter' : isWait ? 'b-wait' : 'b-fora';
+  const isG = vTxt.includes('ENTRAR');
+  const isY = vTxt.includes('FRACO')||vTxt.includes('AGUARDANDO');
+  const bc  = isG?'b-g':isY?'b-y':'b-r';
 
   const tbody = g('log-body');
-  if(tbody.querySelector('.empty-log')) tbody.innerHTML = '';
+  if(tbody.querySelector('.log-empty')) tbody.innerHTML='';
 
   logN++;
-  g('log-count').textContent = logN + (logN===1?' entrada':' entradas');
+  g('log-count').textContent = logN+(logN===1?' entrada':' entradas');
 
   const tr = document.createElement('tr');
   tr.innerHTML = `
-    <td style="color:var(--muted2)">${logN}</td>
-    <td style="color:var(--text);font-weight:700">${jogo}</td>
+    <td style="color:var(--mu2)">${logN}</td>
+    <td style="color:var(--txt);font-weight:700">${jogo}</td>
     <td>${min}'</td>
-    <td style="color:${parseFloat(appm)>=0.55?'var(--green)':'var(--red)'}">${appm}</td>
-    <td>${efic}</td>
+    <td>${golA}-${golB}</td>
+    <td style="color:${parseFloat(appm)>=0.50?'var(--grn)':'var(--red)'}">${appm}</td>
+    <td>${efic}</td><td>${conv}</td><td>${preal}</td>
     <td>${posse}${posse!=='—'?'%':''}</td>
     <td>${press}</td>
-    <td>${fin}</td>
+    <td>${tatico}</td>
     <td>${esc}</td>
     <td>${prec}${prec!=='—'?'%':''}</td>
     <td>${cart}</td>
-    <td><span class="badge ${badgeCls}">${pct}</span></td>
-    <td style="font-size:10px;letter-spacing:.5px">${vTxt}</td>
+    <td><span class="badge ${bc}">${pct}</span></td>
+    <td style="font-size:10px">${vTxt}</td>
     <td>${odd!=='—'?parseFloat(odd).toFixed(2):'—'}</td>
-    <td>
-      <select class="res-sel" onchange="colorRes(this)">
-        <option value="">Aberto ⏳</option>
-        <option value="g">Green ✅</option>
-        <option value="r">Red ❌</option>
-        <option value="v">Reembolso ↩</option>
-      </select>
-    </td>`;
+    <td><select class="res-sel" onchange="colorRes(this)">
+      <option value="">Aberto ⏳</option>
+      <option value="g">Green ✅</option>
+      <option value="r">Red ❌</option>
+      <option value="v">Reembolso ↩</option>
+    </select></td>`;
   tbody.insertBefore(tr, tbody.firstChild);
 
-  ['minuto','ap','anp','fin','esc','posse','passes','precisao','faltas','cartoes','odd']
-    .forEach(id => g(id).value = '');
-  g('pressao').value = '0';
-  calcular();
+  ['min','ap','anp','cng','cf','esc','posse','prec','faltas','cart','odd','gol-a','gol-b']
+    .forEach(id=>{ const el=g(id); if(el) el.value=''; });
+  g('press').value='0'; g('tatico').value='aberto'; g('estilo-a').value='conv';
+  calc();
 }
 
 function colorRes(sel){
-  const map = { g:'var(--green)', r:'var(--red)', v:'var(--yellow)', '':'var(--muted)' };
-  sel.style.color = map[sel.value];
-  sel.style.borderColor = map[sel.value];
+  const m={g:'var(--grn)',r:'var(--red)',v:'var(--yel)','':'var(--mu)'};
+  sel.style.color=m[sel.value]; sel.style.borderColor=m[sel.value];
 }
 
 function tick(){
-  const n = new Date();
-  g('clock').textContent = n.toTimeString().slice(0,8);
+  const n=new Date();
+  g('clock').textContent=n.toTimeString().slice(0,8);
 }
 tick(); setInterval(tick,1000);
 </script>
