@@ -1,135 +1,53 @@
-<!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elite Analyzer — Análise de Trades Esportivos</title>
+Perfeito. Agora tenho tudo que preciso. Vou construir um sistema robusto para **Resultado 1X2 live entre 15-30 min**, com todos os dados da AI Score e uma lógica de scoring muito mais inteligente.Agora vou construir o HTML completo com lógica robusta de 1X2 live.Aqui está o terminal completo, reformulado do zero. As principais mudanças em relação ao anterior:
 
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          fontFamily: { mono: ["JetBrains Mono", "Fira Code", "monospace"] },
-        },
-      },
-    };
-  </script>
+**Visual**
+- Texto dos inputs agora totalmente visível — fundo `#080c14` com texto `#dde6f5`, sem conflito de contraste
+- Fontes monoespaçadas reais (Consolas/JetBrains Mono) como em terminais Bloomberg/TradingView
+- Layout corrigido: painel de critérios à direita com scroll próprio
 
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet" />
+**Lógica muito mais robusta para 1X2**
+O sistema agora usa **score ponderado de 0–19 pontos** ao invés de um simples contador:
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
+| Critério | Peso | Threshold |
+|---|---|---|
+| AP/Minuto | 3 | ≥ 0.55/min |
+| Eficiência AP (AP÷Total) | 3 | ≥ 55% |
+| Posse de Bola | 3 | ≥ 55% |
+| Pressão Alta | 3 | Sim/Não |
+| Finalizações | 2 | ≥ 3 |
+| Escanteios | 2 | ≥ 2 |
+| Precisão de Passes | 2 | ≥ 80% |
+| Cartões do adversário | 1 | ≥ 2 |
 
-<body class="font-mono text-slate-200 antialiased">
+**Alertas inteligentes**
+- Bloqueia entrada se odd < 1.25 (value inexistente)
+- Alerta se muitos ataques não perigosos — time que pressiona sem qualidade é armadilha clássica de red
+- Sinaliza quando está fora da janela 15–30 min
 
-  <!-- ══ LAYOUT PRINCIPAL ═══════════════════════════════════ -->
-  <div class="min-h-screen flex flex-col items-center justify-start px-4 py-10 gap-6">
+**Novos campos da AI Score:** Posse %, Passes completos, Precisão de passes %, Ataques Não Perigosos, Faltas sofridas, Cartões do adversárioPerfeito. Agora tenho tudo que preciso. Vou construir um sistema robusto para **Resultado 1X2 live entre 15-30 min**, com todos os dados da AI Score e uma lógica de scoring muito mais inteligente.Agora vou construir o HTML completo com lógica robusta de 1X2 live.Aqui está o terminal completo, reformulado do zero. As principais mudanças em relação ao anterior:
 
-    <!-- ── Header ── -->
-    <header class="w-full max-w-xl text-center space-y-1">
-      <p class="text-xs text-sky-400 font-bold tracking-[0.25em] uppercase">Sistema Profissional de Análise</p>
-      <h1 class="text-3xl font-black tracking-tight text-white">ELITE <span class="text-sky-400">ANALYZER</span></h1>
-      <p class="text-xs text-slate-500">Score dinâmico • Travas de risco modulares • Histórico persistente</p>
-    </header>
+**Visual**
+- Texto dos inputs agora totalmente visível — fundo `#080c14` com texto `#dde6f5`, sem conflito de contraste
+- Fontes monoespaçadas reais (Consolas/JetBrains Mono) como em terminais Bloomberg/TradingView
+- Layout corrigido: painel de critérios à direita com scroll próprio
 
-    <!-- ── Card Principal ── -->
-    <main class="card w-full max-w-xl p-6 space-y-6">
+**Lógica muito mais robusta para 1X2**
+O sistema agora usa **score ponderado de 0–19 pontos** ao invés de um simples contador:
 
-      <!-- Inputs dos times -->
-      <div class="grid grid-cols-2 gap-5">
+| Critério | Peso | Threshold |
+|---|---|---|
+| AP/Minuto | 3 | ≥ 0.55/min |
+| Eficiência AP (AP÷Total) | 3 | ≥ 55% |
+| Posse de Bola | 3 | ≥ 55% |
+| Pressão Alta | 3 | Sim/Não |
+| Finalizações | 2 | ≥ 3 |
+| Escanteios | 2 | ≥ 2 |
+| Precisão de Passes | 2 | ≥ 80% |
+| Cartões do adversário | 1 | ≥ 2 |
 
-        <!-- TIME CASA -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-2 pb-2 border-b border-white/10">
-            <span class="w-2 h-2 rounded-full bg-sky-400 shrink-0"></span>
-            <span class="text-xs font-bold tracking-widest text-sky-400 uppercase">Time Casa</span>
-          </div>
-          <div>
-            <label class="field-label" for="ap1">Ações Perigosas %</label>
-            <input class="field-input" type="number" id="ap1" placeholder="ex: 58" min="0" max="100" />
-          </div>
-          <div>
-            <label class="field-label" for="fin1">Finalizações</label>
-            <input class="field-input" type="number" id="fin1" placeholder="ex: 5" min="0" />
-          </div>
-        </div>
+**Alertas inteligentes**
+- Bloqueia entrada se odd < 1.25 (value inexistente)
+- Alerta se muitos ataques não perigosos — time que pressiona sem qualidade é armadilha clássica de red
+- Sinaliza quando está fora da janela 15–30 min
 
-        <!-- TIME VISITANTE -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-2 pb-2 border-b border-white/10">
-            <span class="w-2 h-2 rounded-full bg-rose-400 shrink-0"></span>
-            <span class="text-xs font-bold tracking-widest text-rose-400 uppercase">Visitante</span>
-          </div>
-          <div>
-            <label class="field-label" for="ap2">Ações Perigosas %</label>
-            <input class="field-input" type="number" id="ap2" placeholder="ex: 42" min="0" max="100" />
-          </div>
-          <div>
-            <label class="field-label" for="fin2">Finalizações</label>
-            <input class="field-input" type="number" id="fin2" placeholder="ex: 2" min="0" />
-          </div>
-        </div>
-      </div>
-
-      <!-- CTA Button -->
-      <button
-        id="btn-analyze"
-        onclick="window._app.analisar()"
-        class="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 active:scale-95 transition-all duration-150 text-white font-black tracking-widest text-sm uppercase shadow-lg shadow-sky-500/20"
-      >
-        ▶ Processar Dados
-      </button>
-
-      <!-- Resultado (injetado via JS) -->
-      <div id="result-section"></div>
-
-    </main>
-
-    <!-- ── Card Histórico ── -->
-    <section class="card w-full max-w-xl p-6 space-y-4">
-
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-xs font-bold text-slate-400 tracking-widest uppercase">Histórico de Sinais</p>
-          <p class="text-xs text-slate-600 mt-0.5">Persiste entre sessões via localStorage</p>
-        </div>
-        <button
-          onclick="window._app.limparHistorico()"
-          class="text-xs text-slate-500 hover:text-rose-400 transition-colors font-semibold tracking-wide uppercase"
-        >
-          Limpar
-        </button>
-      </div>
-
-      <!-- Estado vazio -->
-      <p id="history-empty" class="text-center text-slate-600 text-sm py-6">
-        Nenhum sinal gerado ainda.<br/>
-        <span class="text-slate-700">Processe seus primeiros dados acima.</span>
-      </p>
-
-      <!-- Lista de sinais -->
-      <div id="history-list" class="space-y-0 max-h-72 overflow-y-auto pr-1"></div>
-
-    </section>
-
-    <footer class="text-xs text-slate-700 text-center pb-4">
-      Elite Analyzer v2.0 &bull; Estrutura modular &bull; Adicione travas em <code class="text-slate-600">js/riskEngine.js</code>
-    </footer>
-
-  </div>
-
-  <!-- ── Scripts (ES Modules) ── -->
-  <script type="module">
-    import { analisar, limparHistorico } from "./js/app.js";
-    // Expõe ao onclick inline do HTML
-    window._app = { analisar, limparHistorico };
-  </script>
-
-</body>
-</html>
+**Novos campos da AI Score:** Posse %, Passes completos, Precisão de passes %, Ataques Não Perigosos, Faltas sofridas, Cartões do adversário
