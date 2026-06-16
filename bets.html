@@ -1,389 +1,341 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scanner In-Play - Análise de Pressão</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Scanner Betfair - Análise de Pressão</title>
     <style>
-        :root {
-            --b365-dark-green: #003b2b;
-            --b365-header-green: #005a42;
-            --b365-yellow: #ffdf1b;
-            --b365-bg: #1a1a1a;
-            --b365-card: #282828;
-            --b365-input-bg: #333333;
-            --b365-border: #444444;
-            --text-white: #ffffff;
-            --text-muted: #a7a7a7;
-            
-            --sinal-back: #00a86b;
-            --sinal-lay: #dc3545;
-            --sinal-neutro: #007bff;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
+        /* Estilos Globais e Reset */
+        * { box-sizing: border-box; }
         body {
-            background-color: var(--b365-bg);
-            color: var(--text-white);
-            padding: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            margin: 0;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
-
-        .header-bar {
-            background-color: var(--b365-header-green);
-            width: 100%;
-            max-width: 600px;
-            padding: 15px;
-            text-align: center;
-            border-radius: 8px 8px 0 0;
-            border-bottom: 3px solid var(--b365-yellow);
-        }
-
-        .header-bar h1 {
-            font-size: 1.4rem;
-            color: var(--text-white);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
+        h2 { color: #ffb703; text-align: center; margin-bottom: 20px; font-size: 1.5em; }
+        
         .container {
-            background-color: var(--b365-card);
+            background-color: #242424;
+            padding: 15px;
+            border-radius: 12px;
             width: 100%;
             max-width: 600px;
+        }
+
+        /* Tempo de Jogo */
+        .header-inputs {
+            background-color: #2f2f2f;
             padding: 15px;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-        .time-section {
-            background-color: var(--b365-dark-green);
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .time-section label {
-            font-size: 0.85rem;
-            color: var(--b365-yellow);
-            margin-bottom: 6px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .time-section input {
-            width: 100%;
-            max-width: 150px;
-            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
             text-align: center;
-            font-size: 1.1rem;
+        }
+        .header-inputs label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0b0;
             font-weight: bold;
-            border: 1px solid var(--b365-border);
-            border-radius: 4px;
-            background-color: var(--b365-bg);
-            color: var(--text-white);
+            font-size: 0.9em;
+        }
+        .header-inputs input {
+            width: 100px;
+            padding: 10px;
+            font-size: 1.1em;
+            text-align: center;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background-color: #1a1a1a;
+            color: white;
         }
 
-        .teams-container {
+        /* Grelha de Equipas */
+        .teams-grid {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         .team-card {
-            background-color: #222222;
-            border: 1px solid var(--b365-border);
-            border-radius: 6px;
-            padding: 12px;
+            background-color: #2f2f2f;
+            padding: 15px;
+            border-radius: 10px;
+            border-top: 4px solid;
         }
-
-        .team-title {
-            font-size: 1rem;
-            font-weight: bold;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--b365-border);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .team-a { border-color: #219ebc; }
+        .team-b { border-color: #fb8500; }
+        .team-card h3 { 
+            margin: 0 0 15px 0; 
+            font-size: 1.1em; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
         }
+        .team-a h3::before { content: "🔹"; }
+        .team-b h3::before { content: "🔸"; }
 
-        .team-a-title { color: #4ba3e3; }
-        .team-b-title { color: #ff9f43; }
-
+        /* Linhas de Estatística com layout fixo (não quebra) */
         .stat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #3a3a3a;
         }
+        .stat-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .stat-row label { color: #d0d0d0; font-size: 0.95em; flex: 1; }
 
-        .stat-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .stat-row label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
+        /* Controlos de + e - */
         .input-controls {
             display: flex;
             align-items: center;
-            gap: 5px;
+            background-color: #1a1a1a;
+            border-radius: 6px;
+            border: 1px solid #444;
+            overflow: hidden;
+            flex-shrink: 0; /* Impede que o bloco encolha e quebre */
         }
-
-        .btn-counter {
-            width: 32px;
-            height: 32px;
-            background-color: var(--b365-input-bg);
-            border: 1px solid var(--b365-border);
-            color: var(--text-white);
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 4px;
+        .input-controls button {
+            background-color: #3a3a3a;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            font-size: 1.2em;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        .btn-counter:active {
-            background-color: var(--b365-header-green);
-        }
-
-        .stat-input {
-            width: 50px;
-            height: 32px;
+        .input-controls button:active { background-color: #555; }
+        .input-controls input {
+            width: 40px;
+            height: 35px;
+            background-color: transparent;
+            color: white;
+            border: none;
             text-align: center;
-            background-color: var(--b365-bg);
-            border: 1px solid var(--b365-border);
-            color: var(--text-white);
-            font-size: 1rem;
             font-weight: bold;
-            border-radius: 4px;
+            font-size: 1em;
+            /* Esconde as setas padrão do navegador */
+            -moz-appearance: textfield;
         }
-
-        /* Desativar setas nativas do input de número */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
+        .input-controls input::-webkit-outer-spin-button,
+        .input-controls input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        .btn-analyze {
+        /* Botão Principal */
+        .btn-analisar {
             width: 100%;
-            padding: 14px;
-            background-color: var(--b365-yellow);
-            color: #000000;
+            padding: 16px;
+            background-color: #ffd166;
+            color: #111;
             border: none;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 15px;
-            text-transform: uppercase;
-            transition: background 0.2s;
-        }
-
-        .btn-analyze:active {
-            background-color: #e0c215;
-        }
-
-        #result-box {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 1.1rem;
+            border-radius: 8px;
+            font-size: 1.1em;
             font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+        .btn-analisar:active { background-color: #e0b045; }
+
+        /* Caixa de Resultado */
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.05em;
+            font-weight: 500;
             line-height: 1.4;
             display: none;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .sinal-back { background-color: #06d6a0; color: #111; }
+        .sinal-lay { background-color: #ef476f; color: white; }
+        .sinal-neutro { background-color: #118ab2; color: white; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .bg-back { background-color: var(--sinal-back); color: white; }
-        .bg-lay { background-color: var(--sinal-lay); color: white; }
-        .bg-neutro { background-color: var(--sinal-neutro); color: white; }
+        /* Responsividade para Tablet/Desktop (lado a lado) */
+        @media (min-width: 768px) {
+            .teams-grid { flex-direction: row; }
+            .team-card { width: 50%; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="header-bar">
-        <h1>Scanner In-Play</h1>
-    </div>
+    <h2>Scanner Betfair</h2>
     
     <div class="container">
-        <div class="time-section">
-            <label for="tempoJogo">Minuto Atual do Jogo</label>
-            <input type="number" id="tempoJogo" step="1" min="1" max="95" placeholder="Ex: 25">
+        <div class="header-inputs">
+            <label for="tempoJogo">Minuto do Jogo (ex: 25.5)</label>
+            <input type="number" id="tempoJogo" step="0.1" placeholder="0.0">
         </div>
 
-        <div class="teams-container">
-            <div class="team-card">
-                <div class="team-title team-a-title">🔹 Equipe A (Casa)</div>
+        <div class="teams-grid">
+            <!-- Equipa A -->
+            <div class="team-card team-a">
+                <h3>Equipe A (Casa)</h3>
                 
                 <div class="stat-row">
                     <label>Ataques Perigosos</label>
                     <div class="input-controls">
-                        <button class="btn-counter" onclick="changeVal('apA', -1)">-</button>
-                        <input type="number" id="apA" class="stat-input" value="0">
-                        <button class="btn-counter" onclick="changeVal('apA', 1)">+</button>
+                        <button onclick="mudarValor('apA', -1)">-</button>
+                        <input type="number" id="apA" value="0" readonly>
+                        <button onclick="mudarValor('apA', 1)">+</button>
                     </div>
                 </div>
-
+                
                 <div class="stat-row">
                     <label>Chutes no Alvo</label>
                     <div class="input-controls">
-                        <button class="btn-counter" onclick="changeVal('caA', -1)">-</button>
-                        <input type="number" id="caA" class="stat-input" value="0">
-                        <button class="btn-counter" onclick="changeVal('caA', 1)">+</button>
+                        <button onclick="mudarValor('raA', -1)">-</button>
+                        <input type="number" id="raA" value="0" readonly>
+                        <button onclick="mudarValor('raA', 1)">+</button>
                     </div>
                 </div>
 
                 <div class="stat-row">
                     <label>Chutes Para Fora</label>
                     <div class="input-controls">
-                        <button class="btn-counter" onclick="changeVal('cfA', -1)">-</button>
-                        <input type="number" id="cfA" class="stat-input" value="0">
-                        <button class="btn-counter" onclick="changeVal('cfA', 1)">+</button>
+                        <button onclick="mudarValor('rfA', -1)">-</button>
+                        <input type="number" id="rfA" value="0" readonly>
+                        <button onclick="mudarValor('rfA', 1)">+</button>
                     </div>
                 </div>
 
                 <div class="stat-row">
                     <label>Escanteios</label>
                     <div class="input-controls">
-                        <button class="btn-counter" onclick="changeVal('escA', -1)">-</button>
-                        <input type="number" id="escA" class="stat-input" value="0">
-                        <button class="btn-counter" onclick="changeVal('escA', 1)">+</button>
+                        <button onclick="mudarValor('caA', -1)">-</button>
+                        <input type="number" id="caA" value="0" readonly>
+                        <button onclick="mudarValor('caA', 1)">+</button>
                     </div>
                 </div>
             </div>
 
-            <div class="team-card">
-                <div class="team-title team-b-title">🔸 Equipe B (Visitante)</div>
+            <!-- Equipa B -->
+            <div class="team-card team-b">
+                <h3>Equipe B (Visitante)</h3>
                 
                 <div class="stat-row">
                     <label>Ataques Perigosos</label>
                     <div class="input-controls">
-                        <button class="btn-counter" onclick="changeVal('apB', -1)">-</button>
-                        <input type="number" id="apB" class="stat-input" value="0">
-                        <button class="btn-counter" onclick="changeVal('apB', 1)">+</button>
+                        <button onclick="mudarValor('apB', -1)">-</button>
+                        <input type="number" id="apB" value="0" readonly>
+                        <button onclick="mudarValor('apB', 1)">+</button>
                     </div>
                 </div>
-
+                
                 <div class="stat-row">
                     <label>Chutes no Alvo</label>
                     <div class="input-controls">
-                        <button class="btn-counter" onclick="changeVal('caB', -1)">-</button>
-                        <input type="number" id="caB" class="stat-input" value="0">
-                        <button class="btn-counter" onclick="changeVal('caB', 1)">+</button>
+                        <button onclick="mudarValor('raB', -1)">-</button>
+                        <input type="number" id="raB" value="0" readonly>
+                        <button onclick="mudarValor('raB', 1)">+</button>
                     </div>
                 </div>
 
                 <div class="stat-row">
                     <label>Chutes Para Fora</label>
-                    <div class="input-controls); container">
-                        <button class="btn-counter" onclick="changeVal('cfB', -1)">-</button>
-                        <input type="number" id="cfB" class="stat-input" value="0">
-                        <button class="btn-counter" onclick="changeVal('cfB', 1)">+</button>
+                    <div class="input-controls">
+                        <button onclick="mudarValor('rfB', -1)">-</button>
+                        <input type="number" id="rfB" value="0" readonly>
+                        <button onclick="mudarValor('rfB', 1)">+</button>
                     </div>
                 </div>
 
                 <div class="stat-row">
                     <label>Escanteios</label>
                     <div class="input-controls">
-                        <button class="btn-counter" onclick="changeVal('escB', -1)">-</button>
-                        <input type="number" id="escB" class="stat-input" value="0">
-                        <button class="btn-counter" onclick="changeVal('escB', 1)">+</button>
+                        <button onclick="mudarValor('caB', -1)">-</button>
+                        <input type="number" id="caB" value="0" readonly>
+                        <button onclick="mudarValor('caB', 1)">+</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <button class="btn-analyze" onclick="calcularSinal()">Analisar Cenário</button>
+        <button class="btn-analisar" onclick="analisarMercado()">Analisar Cenário</button>
 
-        <div id="result-box"></div>
+        <div id="resultado"></div>
     </div>
 
     <script>
-        // Função auxiliar para os botões de + e - facilitarem o uso no celular
-        function changeVal(id, amount) {
-            const el = document.getElementById(id);
-            let current = parseInt(el.value) || 0;
-            current += amount;
-            if (current < 0) current = 0;
-            el.value = current;
+        // Função para os botões de + e -
+        function mudarValor(id, delta) {
+            const input = document.getElementById(id);
+            let valorAtual = parseInt(input.value) || 0;
+            let novoValor = valorAtual + delta;
+            if (novoValor >= 0) {
+                input.value = novoValor;
+            }
         }
 
-        function calcularSinal() {
+        // Função Principal de Análise
+        function analisarMercado() {
             const tempo = parseFloat(document.getElementById('tempoJogo').value);
             
             if (!tempo || tempo <= 0) {
-                alert("Por favor, digite o minuto atual do jogo.");
+                alert("⚠️ Por favor, insira o minuto atual do jogo.");
                 return;
             }
 
-            // Dados da Equipe A
-            const apA = parseFloat(document.getElementById('apA').value) || 0;
-            const caA = parseFloat(document.getElementById('caA').value) || 0;
-            const cfA = parseFloat(document.getElementById('cfA').value) || 0;
-            const escA = parseFloat(document.getElementById('escA').value) || 0;
+            // Dados A
+            const apA = parseInt(document.getElementById('apA').value);
+            const raA = parseInt(document.getElementById('raA').value);
+            const rfA = parseInt(document.getElementById('rfA').value);
+            const caA = parseInt(document.getElementById('caA').value);
 
-            // Dados da Equipe B
-            const apB = parseFloat(document.getElementById('apB').value) || 0;
-            const caB = parseFloat(document.getElementById('caB').value) || 0;
-            const cfB = parseFloat(document.getElementById('cfB').value) || 0;
-            const escB = parseFloat(document.getElementById('escB').value) || 0;
+            // Dados B
+            const apB = parseInt(document.getElementById('apB').value);
+            const raB = parseInt(document.getElementById('raB').value);
+            const rfB = parseInt(document.getElementById('rfB').value);
+            const caB = parseInt(document.getElementById('caB').value);
 
-            // Métrica de Ataques Perigosos por Minuto (APPM)
+            // Cálculos
             const appmA = apA / tempo;
             const appmB = apB / tempo;
 
-            // Cálculo do Índice de Pressão Hidráulica/Ofensiva
-            const pressaoA = appmA + (caA * 0.4) + (escA * 0.2) + (cfA * 0.1);
-            const pressaoB = appmB + (caB * 0.4) + (escB * 0.2) + (cfB * 0.1);
+            const indicePerigoA = appmA + (raA * 0.4) + (caA * 0.2) + (rfA * 0.1);
+            const indicePerigoB = appmB + (raB * 0.4) + (caB * 0.2) + (rfB * 0.1);
 
-            const resultBox = document.getElementById('result-box');
-            resultBox.style.display = 'block';
-            resultBox.className = ''; // Limpa estilos anteriores
+            const divResultado = document.getElementById('resultado');
+            divResultado.style.display = 'block';
+            divResultado.className = ''; // Reset
 
-            // Regras de Entrada baseadas em Padrões de Intercâmbio (Betfair Exchange)
-            if (tempo < 15 && pressaoA < 0.5 && pressaoB < 0.5) {
-                resultBox.innerHTML = "⏱️ Jogo em fase de estudo inicial.<br>Recomendação: <b>NÃO ENTRAR</b> ou buscar <b>LAY ao Gol (Under Inicial)</b> se as odds estiverem esticadas.";
-                resultBox.classList.add('bg-neutro');
+            if (tempo < 15 && (indicePerigoA < 0.5 && indicePerigoB < 0.5)) {
+                divResultado.innerHTML = "⏱️ <b>Início de jogo estudado.</b><br>Recomendação: NÃO ENTRAR ou tentar um <b>LAY ao Golo</b> (Scalping).";
+                divResultado.classList.add('sinal-neutro');
             } 
-            else if (pressaoA >= 1.4 && pressaoA > (pressaoB * 2)) {
-                resultBox.innerHTML = `🔥 Domínio absoluto da Equipe A!<br>Recomendação: <b>BACK Equipe A</b> ou fazer <b>LAY Equipe B</b>.`;
-                resultBox.classList.add('bg-back');
+            else if (indicePerigoA >= 1.5 && indicePerigoA > (indicePerigoB * 2)) {
+                divResultado.innerHTML = `🔥 <b>Forte domínio da Equipe A!</b><br>Recomendação: <b>BACK Equipe A</b> ou <b>LAY Equipe B</b>.`;
+                divResultado.classList.add('sinal-back');
             }
-            else if (pressaoB >= 1.4 && pressaoB > (pressaoA * 2)) {
-                resultBox.innerHTML = `🔥 Domínio absoluto da Equipe B!<br>Recomendação: <b>BACK Equipe B</b> ou fazer <b>LAY Equipe A</b>.`;
-                resultBox.classList.add('bg-back');
+            else if (indicePerigoB >= 1.5 && indicePerigoB > (indicePerigoA * 2)) {
+                divResultado.innerHTML = `🔥 <b>Forte domínio da Equipe B!</b><br>Recomendação: <b>BACK Equipe B</b> ou <b>LAY Equipe A</b>.`;
+                divResultado.classList.add('sinal-back');
             }
-            else if (appmA > 0.85 && appmB > 0.85 && (caA + caB) >= 2) {
-                resultBox.innerHTML = "⚔️ Jogo aberto no estilo 'Lá e Cá' com alta intensidade!<br>Recomendação: <b>BACK Over Gols</b> na linha atual do mercado.";
-                resultBox.classList.add('bg-back');
-            }
-            else if (tempo > 75 && pressaoA < 0.4 && pressaoB < 0.4) {
-                resultBox.innerHTML = "📉 Jogo morto e sem criatividade no final da partida.<br>Recomendação: <b>LAY à zebra (se houver empate)</b> ou manter posição no <b>Under Gols</b>.";
-                resultBox.classList.add('bg-lay');
+            else if (appmA > 0.8 && appmB > 0.8 && (raA + raB) >= 2) {
+                divResultado.innerHTML = "⚔️ <b>Jogo 'Lá e Cá' aberto.</b><br>Recomendação: <b>BACK Over Gols</b>. Fuja do Match Odds.";
+                divResultado.classList.add('sinal-lay');
             }
             else {
-                resultBox.innerHTML = "⚖️ Partida equilibrada ou sem volume de finalizações contundente.<br>Recomendação: <b>AGUARDAR</b> e monitorar os próximos minutos.";
-                resultBox.classList.add('bg-neutro');
+                divResultado.innerHTML = "⚖️ <b>Partida equilibrada ou sem volume de finalizações contundente.</b><br>Recomendação: AGUARDAR e monitorar os próximos minutos.";
+                divResultado.classList.add('sinal-neutro');
             }
         }
     </script>
