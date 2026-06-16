@@ -46,6 +46,7 @@
             font-size: 13px;
         }
 
+        /* Layout Principal usando Flexbox */
         .main-layout {
             display: flex;
             gap: 20px;
@@ -54,11 +55,11 @@
         }
 
         .column-left {
-            flex: 1.4;
+            flex: 1.4; /* Ocupa um pouco mais de espaço no PC */
         }
 
         .column-right {
-            flex: 1;
+            flex: 1; /* Ocupa o restante no PC */
         }
 
         .card {
@@ -81,6 +82,7 @@
             letter-spacing: 0.5px;
         }
 
+        /* Grid para o formulário */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -88,7 +90,7 @@
         }
 
         .form-group.full-width {
-            grid-column: 1 / -1;
+            grid-column: 1 / -1; /* Ocupa as duas colunas */
         }
 
         label {
@@ -118,6 +120,7 @@
             background-color: #111827;
         }
 
+        /* Grid para o painel de métricas */
         .metrics-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -161,7 +164,7 @@
         }
 
         .decisao-box {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
             padding: 20px;
             border-radius: 8px;
@@ -191,14 +194,6 @@
             text-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
         }
 
-        /* NOVA CLASSE DE ALERTA PARA OS FILTROS DE SEGURANÇA */
-        .status-alerta {
-            background-color: #78350f;
-            color: #fbbf24;
-            border: 2px solid #b45309;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
-        }
-
         .btn-salvar {
             width: 100%;
             background-color: #3b82f6;
@@ -217,6 +212,7 @@
             background-color: #2563eb;
         }
 
+        /* Tabela de Histórico */
         .history-section {
             background-color: #1e293b;
             border-radius: 10px;
@@ -269,7 +265,6 @@
 
         .badge-entrar { background-color: #065f46; color: #34d399; }
         .badge-fora { background-color: #991b1b; color: #f87171; }
-        .badge-alerta { background-color: #78350f; color: #fbbf24; }
 
         .select-resultado {
             background-color: #0f172a;
@@ -284,15 +279,44 @@
         .select-resultado option[value="Green"] { color: #34d399; }
         .select-resultado option[value="Red"] { color: #f87171; }
 
+        /* =========================================
+           A MÁGICA DO CELULAR (MEDIA QUERIES)
+           ========================================= */
         @media (max-width: 768px) {
-            body { padding: 12px; }
-            header { padding: 15px; }
-            header h1 { font-size: 18px; }
-            .main-layout { flex-direction: column; gap: 15px; }
-            .card { padding: 20px; }
-            .form-grid { grid-template-columns: 1fr; }
-            .form-group.full-width { grid-column: 1; }
-            .decisao-box { font-size: 18px; }
+            body {
+                padding: 12px; /* Reduz margens do celular */
+            }
+
+            header {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 18px;
+            }
+
+            /* Força as duas grandes colunas a empilharem */
+            .main-layout {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            /* Força o formulário a ficar em uma coluna só no celular */
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: 1; /* Reseta a grade no celular */
+            }
+
+            .decisao-box {
+                font-size: 20px; /* Adapta a fonte da decisão */
+            }
         }
     </style>
 </head>
@@ -323,17 +347,12 @@
 
                     <div class="form-group">
                         <label for="ap">Ataques Perigosos (AP)</label>
-                        <input type="number" id="ap" min="0" placeholder="Ex: 25" oninput="calcular()">
+                        <input type="number" id="ap" min="0" placeholder="Ex: 12" oninput="calcular()">
                     </div>
 
                     <div class="form-group">
-                        <label for="finalizacoes">Total de Finalizações</label>
-                        <input type="number" id="finalizacoes" min="0" placeholder="Ex: 5" oninput="calcular()">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="chutes_alvo">Chutes no Alvo (No Gol)</label>
-                        <input type="number" id="chutes_alvo" min="0" placeholder="Ex: 2" oninput="calcular()">
+                        <label for="finalizacoes">Finalizações (No Gol + Fora)</label>
+                        <input type="number" id="finalizacoes" min="0" placeholder="Ex: 2" oninput="calcular()">
                     </div>
 
                     <div class="form-group">
@@ -393,7 +412,7 @@
                         <th>Jogo</th>
                         <th>Minuto</th>
                         <th>APPM</th>
-                        <th>Chutes (Alvo/Total)</th>
+                        <th>Chutes</th>
                         <th>Cantos</th>
                         <th>Pressão</th>
                         <th>Pontos</th>
@@ -414,11 +433,9 @@
         const minuto = parseFloat(document.getElementById('minuto').value) || 0;
         const ap = parseFloat(document.getElementById('ap').value) || 0;
         const finalizacoes = parseFloat(document.getElementById('finalizacoes').value) || 0;
-        const chutes_alvo = parseFloat(document.getElementById('chutes_alvo').value) || 0;
         const escanteios = parseFloat(document.getElementById('escanteios').value) || 0;
         const pressao = document.getElementById('pressao').value;
 
-        // Reset inicial se não houver dados suficientes
         if (minuto <= 0 || ap === 0) {
             document.getElementById('out-appm').innerText = "0.00";
             document.getElementById('out-pontos').innerText = "0 / 4";
@@ -428,39 +445,21 @@
             return;
         }
 
-        // Cálculo de APPM
         const appm = ap / minuto;
         document.getElementById('out-appm').innerText = appm.toFixed(2);
 
-        // Cálculo de Eficiência dos Chutes
-        let eficiencia = 0;
-        if (finalizacoes > 0) {
-            eficiencia = (chutes_alvo / finalizacoes) * 100;
-        }
-
-        // Sistema de Pontuação Atualizado
         let pontos = 0;
-        if (appm >= 1.10) pontos += 1;        // Gatilho mais rigoroso (antes era 0.70)
-        if (chutes_alvo >= 2) pontos += 1;    // Agora exige alvo, não apenas chutes para fora
+        if (appm >= 0.70) pontos += 1;       
+        if (finalizacoes >= 2) pontos += 1;  
         if (pressao === 'Sim') pontos += 1;   
-        if (escanteios >= 1) pontos += 1;     
+        if (escanteios >= 1) pontos += 1;    
 
         document.getElementById('out-pontos').innerText = pontos + " / 4";
 
         const decisaoBox = document.getElementById('decisao-box');
-        
-        // Lógica de Decisão com Travas de Segurança
         if (pontos >= 3) {
-            if (minuto < 20) {
-                decisaoBox.innerText = "🟡 JOGO CEDO (ESPERE OS 20')";
-                decisaoBox.className = "decisao-box status-alerta";
-            } else if (eficiencia < 30) {
-                decisaoBox.innerText = `🟡 BAIXA EFICIÊNCIA (${eficiencia.toFixed(0)}%)`;
-                decisaoBox.className = "decisao-box status-alerta";
-            } else {
-                decisaoBox.innerText = "🟢 ENTRAR AGORA";
-                decisaoBox.className = "decisao-box status-entrar";
-            }
+            decisaoBox.innerText = "🟢 ENTRAR AGORA";
+            decisaoBox.className = "decisao-box status-entrar";
         } else {
             decisaoBox.innerText = "🔴 FICAR DE FORA";
             decisaoBox.className = "decisao-box status-fora";
@@ -472,7 +471,6 @@
         const minuto = document.getElementById('minuto').value || "-";
         const ap = document.getElementById('ap').value || "0";
         const finalizacoes = document.getElementById('finalizacoes').value || "0";
-        const chutes_alvo = document.getElementById('chutes_alvo').value || "0";
         const escanteios = document.getElementById('escanteios').value || "0";
         const pressao = document.getElementById('pressao').value;
         const odd = document.getElementById('odd').value || "-";
@@ -489,15 +487,13 @@
         const corpoTabela = document.getElementById('historico-corpo');
         const novaLinha = document.createElement('tr');
 
-        let badgeClass = "badge-fora";
-        if (decisaoTexto.includes("ENTRAR")) badgeClass = "badge-entrar";
-        if (decisaoTexto.includes("🟡")) badgeClass = "badge-alerta";
+        const badgeClass = decisaoTexto.includes("ENTRAR") ? "badge-entrar" : "badge-fora";
 
         novaLinha.innerHTML = `
             <td><strong>${jogo}</strong></td>
             <td>${minuto}'</td>
             <td>${appm}</td>
-            <td>${chutes_alvo}/${finalizacoes}</td>
+            <td>${finalizacoes}</td>
             <td>${escanteios}</td>
             <td>${pressao}</td>
             <td><span class="badge ${badgeClass}">${pontos}</span></td>
@@ -515,13 +511,12 @@
 
         corpoTabela.insertBefore(novaLinha, corpoTabela.firstChild);
         
-        // Limpar campos de dados variáveis, mas manter o nome do jogo e odd
         document.getElementById('minuto').value = "";
         document.getElementById('ap').value = "";
         document.getElementById('finalizacoes').value = "";
-        document.getElementById('chutes_alvo').value = "";
         document.getElementById('escanteios').value = "";
-        calcular(); // Atualiza a box para aguardando
+        document.getElementById('odd').value = "";
+        calcular();
     }
 
     function atualizarCorResultado(selectElement) {
