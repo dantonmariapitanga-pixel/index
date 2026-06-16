@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner Betfair - Análise de Pressão</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e24;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { color: #ffb703; }
+        .container {
+            background-color: #2b2b36;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            max-width: 800px;
+            width: 100%;
+        }
+        .header-inputs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: #383846;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            width: 48%;
+        }
+        label { margin-bottom: 5px; font-weight: bold; font-size: 0.9em; color: #a9a9bc; }
+        input {
+            padding: 8px;
+            border: 1px solid #4a4a5a;
+            border-radius: 5px;
+            background-color: #1e1e24;
+            color: white;
+        }
+        .teams-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .team-card {
+            background-color: #383846;
+            padding: 15px;
+            border-radius: 8px;
+            border-top: 4px solid;
+        }
+        .team-a { border-color: #219ebc; }
+        .team-b { border-color: #fb8500; }
+        h3 { margin-top: 0; text-align: center; }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .stat-row input { width: 60px; text-align: center; }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #ffb703;
+            color: #023047;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #fb8500; color: white; }
+        #resultado {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: none;
+        }
+        .sinal-back { background-color: #2a9d8f; color: white; }
+        .sinal-lay { background-color: #e63946; color: white; }
+        .sinal-neutro { background-color: #457b9d; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>Radar de Mercado - Betfair</h1>
+    
+    <div class="container">
+        <div class="header-inputs">
+            <div class="input-group" style="width: 100%; text-align: center; align-items: center;">
+                <label for="tempoJogo">Tempo de Jogo (Minutos Exatos, ex: 10.5 para 10:30)</label>
+                <input type="number" id="tempoJogo" step="0.1" placeholder="Ex: 10.5">
+            </div>
+        </div>
+
+        <div class="teams-grid">
+            <div class="team-card team-a">
+                <h3>Equipa A (Casa)</h3>
+                <div class="stat-row">
+                    <label>Ataques Perigosos</label>
+                    <input type="number" id="attPerigososA" value="0">
+                </div>
+                <div class="stat-row">
+                    <label>Remates à Baliza (No alvo)</label>
+                    <input type="number" id="rematesAlvoA" value="0">
+                </div>
+                <div class="stat-row">
+                    <label>Remates Fora</label>
+                    <input type="number" id="rematesForaA" value="0">
+                </div>
+                <div class="stat-row">
+                    <label>Pontapés de Canto</label>
+                    <input type="number" id="cantosA" value="0">
+                </div>
+            </div>
+
+            <div class="team-card team-b">
+                <h3>Equipa B (Visitante)</h3>
+                <div class="stat-row">
+                    <label>Ataques Perigosos</label>
+                    <input type="number" id="attPerigososB" value="0">
+                </div>
+                <div class="stat-row">
+                    <label>Remates à Baliza (No alvo)</label>
+                    <input type="number" id="rematesAlvoB" value="0">
+                </div>
+                <div class="stat-row">
+                    <label>Remates Fora</label>
+                    <input type="number" id="rematesForaB" value="0">
+                </div>
+                <div class="stat-row">
+                    <label>Pontapés de Canto</label>
+                    <input type="number" id="cantosB" value="0">
+                </div>
+            </div>
+        </div>
+
+        <button onclick="analisarMercado()">Analisar Oportunidade de Entrada</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function analisarMercado() {
+            const tempo = parseFloat(document.getElementById('tempoJogo').value);
+            
+            if (!tempo || tempo <= 0) {
+                alert("Por favor, insira o tempo de jogo atual.");
+                return;
+            }
+
+            // Recolher dados Equipa A
+            const apA = parseFloat(document.getElementById('attPerigososA').value);
+            const raA = parseFloat(document.getElementById('rematesAlvoA').value);
+            const rfA = parseFloat(document.getElementById('rematesForaA').value);
+            const caA = parseFloat(document.getElementById('cantosA').value);
+
+            // Recolher dados Equipa B
+            const apB = parseFloat(document.getElementById('attPerigososB').value);
+            const raB = parseFloat(document.getElementById('rematesAlvoB').value);
+            const rfB = parseFloat(document.getElementById('rematesForaB').value);
+            const caB = parseFloat(document.getElementById('cantosB').value);
+
+            // Cálculos de Pressão (Algoritmo Básico de Trading)
+            // APPM (Ataques Perigosos Por Minuto) > 1.0 é considerado pressão forte.
+            const appmA = apA / tempo;
+            const appmB = apB / tempo;
+
+            // Índice de Perigo (Ponderação: Remates no alvo valem mais, seguidos de cantos e remates fora)
+            const indicePerigoA = appmA + (raA * 0.4) + (caA * 0.2) + (rfA * 0.1);
+            const indicePerigoB = appmB + (raB * 0.4) + (caB * 0.2) + (rfB * 0.1);
+
+            const divResultado = document.getElementById('resultado');
+            divResultado.style.display = 'block';
+            divResultado.className = ''; // Reset classes
+
+            // Lógica de Decisão Lay/Back
+            if (tempo < 15 && (indicePerigoA < 0.5 && indicePerigoB < 0.5)) {
+                divResultado.innerHTML = "⏱️ Jogo em fase de estudo. <br>Recomendação: <b>NÃO ENTRAR</b> ou <b>LAY ao Golo (Back Under)</b> até o ritmo aumentar.";
+                divResultado.classList.add('sinal-neutro');
+            } 
+            else if (indicePerigoA >= 1.5 && indicePerigoA > (indicePerigoB * 2)) {
+                divResultado.innerHTML = `🔥 Forte domínio da Equipa A! (Índice: ${indicePerigoA.toFixed(2)})<br>Recomendação: <b>BACK Equipa A</b> ou <b>LAY Equipa B</b>.`;
+                divResultado.classList.add('sinal-back');
+            }
+            else if (indicePerigoB >= 1.5 && indicePerigoB > (indicePerigoA * 2)) {
+                divResultado.innerHTML = `🔥 Forte domínio da Equipa B! (Índice: ${indicePerigoB.toFixed(2)})<br>Recomendação: <b>BACK Equipa B</b> ou <b>LAY Equipa A</b>.`;
+                divResultado.classList.add('sinal-back');
+            }
+            else if (appmA > 0.8 && appmB > 0.8 && (raA + raB) >= 2) {
+                divResultado.innerHTML = "⚔️ Jogo muito aberto e 'Lá e Cá'. <br>Recomendação: <b>BACK Over Golos</b> (Evitar apostar no Vencedor da Partida).";
+                divResultado.classList.add('sinal-back');
+            }
+            else {
+                divResultado.innerHTML = "⚖️ Jogo equilibrado ou sem pressão suficiente para um golo iminente. <br>Recomendação: <b>AGUARDAR</b> novas estatísticas.";
+                divResultado.classList.add('sinal-neutro');
+            }
+        }
+    </script>
+</body>
+</html>
