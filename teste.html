@@ -30,9 +30,7 @@
   --cyn:#38bdf8;
 }
 html,body{height:100%}
-
-/* --- FONTE ATUALIZADA AQUI --- */
-body{background:var(--bg);color:var(--txt);font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.4}
+body{background:var(--bg);color:var(--txt);font-family:'Consolas','Courier New',monospace;font-size:13px;line-height:1.4}
 
 /* TOPBAR */
 .tb{display:flex;align-items:center;gap:10px;padding:0 16px;height:36px;background:var(--s1);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:99}
@@ -284,4 +282,470 @@ tr:hover td{background:var(--s2)}
       <div class="cx-v" id="cx-appm">—</div>
       <div class="cx-s">ideal ≥ 0.50/min</div>
     </div>
-    <div class
+    <div class="cx">
+      <div class="cx-l">Situação</div>
+      <div class="cx-v" id="cx-sit" style="font-size:14px;margin-top:2px">—</div>
+      <div class="cx-s" id="cx-sit-s">placar</div>
+    </div>
+    <div class="cx">
+      <div class="cx-l">Odd</div>
+      <div class="cx-v" id="cx-odd">—</div>
+      <div class="cx-s" id="cx-odd-s">mercado</div>
+    </div>
+  </div>
+
+  <div class="sci">
+    <div class="sc">
+      <div class="sc-l">Score Bruto</div>
+      <div class="sc-v a" id="sci-score">0</div>
+      <div class="sc-s">de 20 pts</div>
+    </div>
+    <div class="sc">
+      <div class="sc-l">Score %</div>
+      <div class="sc-v" id="sci-pct">0%</div>
+      <div class="sc-s">entrada ≥ 65%</div>
+    </div>
+    <div class="sc">
+      <div class="sc-l">Pressão Real</div>
+      <div class="sc-v" id="sci-pr">—</div>
+      <div class="sc-s">≥ 25% = qualidade</div>
+    </div>
+    <div class="sc">
+      <div class="sc-l">Critérios OK</div>
+      <div class="sc-v" id="sci-cok">0</div>
+      <div class="sc-s">de 7 principais</div>
+    </div>
+  </div>
+
+</div><div class="col-r">
+  <div class="sh">&#9632; Análise — Critérios ponderados</div>
+
+  <div class="crit-wrap">
+
+    <div class="cr">
+      <div class="ci ne" id="ci-efic">—</div>
+      <div class="cb">
+        <div class="cn">Eficiência AP ≥ 55%</div>
+        <div class="cd">Peso alto · domínio com qualidade real</div>
+      </div>
+      <span class="cv v-ne" id="cv-efic">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-qch">—</div>
+      <div class="cb">
+        <div class="cn">Qualidade de Chutes ≥ 45%</div>
+        <div class="cd">Peso alto · chutes no gol vs total</div>
+      </div>
+      <span class="cv v-ne" id="cv-qch">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-pr">—</div>
+      <div class="cb">
+        <div class="cn">Pressão Real ≥ 25%</div>
+        <div class="cd">Peso alto · métrica composta (efic × qchute)</div>
+      </div>
+      <span class="cv v-ne" id="cv-pr">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-appm">—</div>
+      <div class="cb">
+        <div class="cn">AP por Minuto ≥ 0.50</div>
+        <div class="cd">Peso alto · ritmo e constância da pressão</div>
+      </div>
+      <span class="cv v-ne" id="cv-appm">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-pos">—</div>
+      <div class="cb">
+        <div class="cn">Posse de Bola ≥ 55%</div>
+        <div class="cd">Peso alto · r=0.71 com resultado (UEFA/NIH)</div>
+      </div>
+      <span class="cv v-ne" id="cv-pos">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-cng">—</div>
+      <div class="cb">
+        <div class="cn">Chutes no Gol ≥ 3</div>
+        <div class="cd">Peso alto · r=0.58 com vitória (NIH)</div>
+      </div>
+      <span class="cv v-ne" id="cv-cng">—</span><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sport Trade Terminal — 1X2 Live</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090f;
+  --s1:#0d1321;
+  --s2:#111927;
+  --s3:#16202f;
+  --bd:#1c2d42;
+  --bd2:#243250;
+  --acc:#3b82f6;
+  --txt:#ffffff;   /* Alterado para branco puro */
+  --txt2:#ffffff;  /* Alterado para branco puro */
+  --mu:#ffffff;    /* Alterado para branco puro (era o cinza azulado principal) */
+  --mu2:#cccccc;   /* Alterado para um cinza bem claro/quase branco para manter legibilidade dos placeholders */
+  --grn:#22c55e;
+  --gbg:#031610;
+  --gbr:#0f4d27;
+  --red:#f87171;
+  --rbg:#140505;
+  --rbr:#6b1a1a;
+  --yel:#fbbf24;
+  --ybg:#120d02;
+  --ybr:#6b4a00;
+  --cyn:#38bdf8;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--txt);font-family:'Consolas','Courier New',monospace;font-size:13px;line-height:1.4}
+
+/* TOPBAR */
+.tb{display:flex;align-items:center;gap:10px;padding:0 16px;height:36px;background:var(--s1);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:99}
+.wm{display:flex;gap:5px}
+.wm i{width:10px;height:10px;border-radius:50%}
+.d1{background:#ff5f57}.d2{background:#febc2e}.d3{background:#28c840}
+.tb-t{font-size:10px;color:var(--mu);letter-spacing:2px;text-transform:uppercase}
+.tb-r{margin-left:auto;display:flex;align-items:center;gap:12px}
+.pill{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:1.5px;padding:3px 8px;border-radius:2px}
+.p-live{color:var(--grn);border:1px solid var(--gbr);background:var(--gbg)}
+.p-mkt{color:var(--cyn);border:1px solid #0b3d52;background:#020d14}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--grn);animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
+.clk{font-size:11px;color:var(--mu);letter-spacing:1px}
+
+/* LAYOUT */
+.app{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 36px)}
+.col-l{border-right:1px solid var(--bd)}
+.col-r{display:flex;flex-direction:column}
+
+/* SECTION HEADER */
+.sh{display:flex;align-items:center;padding:7px 16px;background:var(--s1);border-bottom:1px solid var(--bd);font-size:9px;color:var(--mu);letter-spacing:2px;text-transform:uppercase}
+.sh span{margin-left:auto;color:var(--mu2)}
+
+/* INPUTS */
+.inp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd)}
+.ic{background:var(--s1);padding:14px 16px}
+.ic.full{grid-column:1/-1}
+.il{font-size:9px;color:var(--mu);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.peso{font-size:8px;font-weight:700;padding:2px 6px;border-radius:2px;letter-spacing:.5px}
+.ph{background:var(--gbg);color:var(--grn);border:1px solid var(--gbr)}
+.pm{background:var(--ybg);color:var(--yel);border:1px solid var(--ybr)}
+.fi{
+  width:100%;background:var(--bg);
+  border:1px solid var(--bd2);border-radius:3px;
+  color:var(--txt);font-family:inherit;
+  font-size:16px;font-weight:600;
+  padding:10px 12px;outline:none;
+  transition:border .15s,background .15s;
+  -moz-appearance:textfield;
+}
+.fi::-webkit-outer-spin-button,.fi::-webkit-inner-spin-button{-webkit-appearance:none}
+.fi:focus{border-color:var(--acc);background:#080f1a}
+.fi::placeholder{color:var(--mu2);font-size:14px;font-weight:400}
+.fi option{background:#0d1321}
+.fi-sub{font-size:9px;color:var(--mu2);margin-top:5px}
+
+/* RAZÕES CALCULADAS */
+.raz{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bd);border-top:1px solid var(--bd)}
+.rz{background:var(--s2);padding:12px 16px}
+.rz-l{font-size:8.5px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.rz-v{font-size:22px;font-weight:700;letter-spacing:-1px;color:var(--txt)}
+.rz-b{height:4px;background:var(--s3);border-radius:2px;margin-top:6px;overflow:hidden}
+.rz-f{height:100%;border-radius:2px;transition:width .4s,background .4s}
+.rz-s{font-size:9px;color:var(--mu2);margin-top:3px}
+
+/* PLACAR CONTEXT */
+.ctx{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--bd);border-top:1px solid var(--bd)}
+.cx{background:var(--s2);padding:10px 16px;text-align:center}
+.cx-l{font-size:8.5px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.cx-v{font-size:20px;font-weight:700;color:var(--txt)}
+.cx-s{font-size:9px;color:var(--mu2);margin-top:2px}
+
+/* CRITÉRIOS */
+.crit-wrap{flex:1;overflow-y:auto;border-bottom:1px solid var(--bd)}
+.cr{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--bd);background:var(--s1);transition:background .15s}
+.cr:hover{background:var(--s2)}
+.ci{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.ok{background:var(--gbg);border:1px solid var(--gbr);color:var(--grn)}
+.fl{background:var(--rbg);border:1px solid var(--rbr);color:var(--red)}
+.wn{background:var(--ybg);border:1px solid var(--ybr);color:var(--yel)}
+.ne{background:var(--s3);border:1px solid var(--bd2);color:var(--mu)}
+.cb{flex:1}
+.cn{font-size:12px;color:var(--txt);line-height:1.3}
+.cd{font-size:10px;color:var(--mu);margin-top:1px}
+.cv{font-size:12px;font-weight:700;flex-shrink:0;min-width:48px;text-align:right}
+.v-ok{color:var(--grn)}.v-fl{color:var(--red)}.v-wn{color:var(--yel)}.v-ne{color:var(--mu)}
+
+/* ALERTS */
+.al{padding:9px 16px;font-size:10px;letter-spacing:.5px;border-bottom:1px solid var(--bd);display:none;line-height:1.5}
+.al.show{display:block}
+.al-r{background:var(--rbg);color:var(--red);border-color:var(--rbr)}
+.al-y{background:var(--ybg);color:var(--yel);border-color:var(--ybr)}
+.al-c{background:#020d14;color:var(--cyn);border-color:#0b3d52}
+
+/* VERDICT */
+.verd{padding:20px 16px;text-align:center;transition:background .3s,border-color .3s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-bottom:1px solid var(--bd)}
+.ve{font-size:8.5px;color:var(--mu);letter-spacing:2px;text-transform:uppercase}
+.vm{font-size:20px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:color .3s}
+.vs{font-size:10px;color:var(--mu);letter-spacing:.5px;max-width:240px;line-height:1.5;text-align:center}
+.vn{color:var(--mu)}.vg{color:var(--grn)}.vr{color:var(--red)}.vy{color:var(--yel)}
+.v-g{background:var(--gbg);border-color:var(--gbr)}
+.v-r{background:var(--rbg);border-color:var(--rbr)}
+.v-y{background:var(--ybg);border-color:var(--ybr)}
+
+/* METROS */
+.mts{padding:12px 16px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:8px}
+.mt{display:flex;align-items:center;gap:10px}
+.mt-l{font-size:9px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;width:90px;flex-shrink:0}
+.mt-tr{flex:1;height:6px;background:var(--s3);border-radius:3px;overflow:hidden}
+.mt-fi{height:100%;border-radius:3px;transition:width .4s,background .4s}
+.mt-n{font-size:11px;font-weight:700;color:var(--txt);width:44px;text-align:right}
+
+/* BTN */
+.btn{width:100%;padding:14px;background:var(--acc);color:#fff;border:none;font-family:inherit;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{background:#1d4ed8}
+
+/* LOG */
+.log-sec{border-top:1px solid var(--bd)}
+.log-sc{overflow-x:auto}
+table{width:100%;border-collapse:collapse;white-space:nowrap}
+th{background:var(--bg);color:var(--mu);padding:8px 10px;text-align:left;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--bd);font-weight:400}
+td{padding:8px 10px;border-bottom:1px solid #0a1220;color:var(--txt2);font-size:11px}
+tr:hover td{background:var(--s2)}
+.bdg{display:inline-block;padding:2px 7px;border-radius:2px;font-size:8.5px;letter-spacing:1px;font-weight:700;text-transform:uppercase}
+.bg{background:var(--gbg);color:var(--grn);border:1px solid var(--gbr)}
+.br{background:var(--rbg);color:var(--red);border:1px solid var(--rbr)}
+.by{background:var(--ybg);color:var(--yel);border:1px solid var(--ybr)}
+.rs{background:var(--bg);border:1px solid var(--bd2);color:var(--mu);padding:3px 6px;font-size:10px;font-family:inherit;border-radius:2px;cursor:pointer}
+.lg-empty{text-align:center;color:var(--mu2);padding:28px;font-size:10px;letter-spacing:1px}
+
+/* DIVIDER LABEL */
+.dv{grid-column:1/-1;background:var(--s3);padding:5px 16px;display:flex;align-items:center;gap:8px;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+.dv span{font-size:8.5px;color:var(--mu);letter-spacing:2px;text-transform:uppercase}
+.dv-line{flex:1;height:1px;background:var(--bd2)}
+
+/* SCORE INDEX */
+.sci{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border-top:1px solid var(--bd)}
+.sc{background:var(--s3);padding:10px 14px}
+.sc-l{font-size:8px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.sc-v{font-size:20px;font-weight:700;color:var(--txt);letter-spacing:-1px}
+.sc-v.a{color:var(--acc)}
+.sc-s{font-size:8.5px;color:var(--mu2);margin-top:2px}
+
+@media(max-width:700px){
+  .app{grid-template-columns:1fr}
+  .col-l{border-right:none;border-bottom:1px solid var(--bd)}
+  .raz,.ctx{grid-template-columns:1fr 1fr}
+  .sci{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="tb">
+  <div class="wm"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+  <span class="tb-t">Sport Trade Terminal</span>
+  <div class="tb-r">
+    <span class="pill p-mkt">&#9679; 1X2 LIVE</span>
+    <span class="pill p-live"><span class="ldot"></span>LIVE</span>
+    <span class="clk" id="clk">--:--:--</span>
+  </div>
+</div>
+
+<div class="app">
+
+<div class="col-l">
+  <div class="sh">&#9632; Entrada de dados — AI Score Live <span>Ideal: 15–30 min</span></div>
+
+  <div class="inp-wrap">
+
+    <div class="ic full">
+      <div class="il">Identificação do Jogo</div>
+      <input class="fi" id="jogo" type="text" placeholder="Ex: Flamengo x Vasco" oninput="calc()">
+    </div>
+
+    <div class="dv"><span>Contexto do jogo</span><div class="dv-line"></div></div>
+
+    <div class="ic">
+      <div class="il">Minuto Atual <span class="peso ph">DECISIVO</span></div>
+      <input class="fi" id="min" type="number" min="1" max="90" placeholder="22" oninput="calc()">
+      <div class="fi-sub">Janela ideal: 15 a 30 min</div>
+    </div>
+
+    <div class="ic">
+      <div class="il">Placar (Time A – Time B)</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input class="fi" id="ga" type="number" min="0" placeholder="0" oninput="calc()" style="flex:1">
+        <span style="color:var(--mu);font-size:18px;font-weight:700">–</span>
+        <input class="fi" id="gb" type="number" min="0" placeholder="0" oninput="calc()" style="flex:1">
+      </div>
+      <div class="fi-sub">Time A = o que você quer apostar</div>
+    </div>
+
+    <div class="dv"><span>Pressão ofensiva do Time A</span><div class="dv-line"></div></div>
+
+    <div class="ic">
+      <div class="il">Ataques Perigosos (AP) <span class="peso ph">ALTO</span></div>
+      <input class="fi" id="ap" type="number" min="0" placeholder="12" oninput="calc()">
+      <div class="fi-sub">Ataques que chegam perto do gol</div>
+    </div>
+
+    <div class="ic">
+      <div class="il">Ataques Não Perigosos (ANP) <span class="peso pm">MÉDIO</span></div>
+      <input class="fi" id="anp" type="number" min="0" placeholder="8" oninput="calc()">
+      <div class="fi-sub">Volume sem qualidade — dilui AP</div>
+    </div>
+
+    <div class="ic">
+      <div class="il">Chutes No Gol <span class="peso ph">ALTO</span></div>
+      <input class="fi" id="cng" type="number" min="0" placeholder="3" oninput="calc()">
+      <div class="fi-sub">Exigiram defesa do goleiro</div>
+    </div>
+
+    <div class="ic">
+      <div class="il">Chutes Fora <span class="peso pm">MÉDIO</span></div>
+      <input class="fi" id="cf" type="number" min="0" placeholder="2" oninput="calc()">
+      <div class="fi-sub">Volume de finalização total</div>
+    </div>
+
+    <div class="dv"><span>Controle e posse</span><div class="dv-line"></div></div>
+
+    <div class="ic">
+      <div class="il">Posse de Bola % <span class="peso ph">ALTO</span></div>
+      <input class="fi" id="pos" type="number" min="0" max="100" placeholder="62" oninput="calc()">
+      <div class="fi-sub">r=0.71 com vitória (pesquisa UEFA)</div>
+    </div>
+
+    <div class="ic">
+      <div class="il">Odd Atual <span class="peso ph">DECISIVO</span></div>
+      <input class="fi" id="odd" type="number" step="0.01" min="1.01" placeholder="1.65" oninput="calc()">
+      <div class="fi-sub">Value ideal: 1.30 – 2.20</div>
+    </div>
+
+  </div><div class="raz">
+    <div class="rz">
+      <div class="rz-l">Eficiência AP</div>
+      <div class="rz-v" id="rv-efic">—</div>
+      <div class="rz-b"><div class="rz-f" id="rf-efic" style="width:0%;background:var(--mu2)"></div></div>
+      <div class="rz-s">AP÷(AP+ANP) · ideal ≥55%</div>
+    </div>
+    <div class="rz">
+      <div class="rz-l">Qualidade de Chute</div>
+      <div class="rz-v" id="rv-qch">—</div>
+      <div class="rz-b"><div class="rz-f" id="rf-qch" style="width:0%;background:var(--mu2)"></div></div>
+      <div class="rz-s">CNG÷Total · ideal ≥45%</div>
+    </div>
+    <div class="rz">
+      <div class="rz-l">Pressão Real</div>
+      <div class="rz-v" id="rv-pr">—</div>
+      <div class="rz-b"><div class="rz-f" id="rf-pr" style="width:0%;background:var(--mu2)"></div></div>
+      <div class="rz-s">Efic×QChute · ideal ≥25%</div>
+    </div>
+  </div>
+
+  <div class="ctx">
+    <div class="cx">
+      <div class="cx-l">AP por Minuto</div>
+      <div class="cx-v" id="cx-appm">—</div>
+      <div class="cx-s">ideal ≥ 0.50/min</div>
+    </div>
+    <div class="cx">
+      <div class="cx-l">Situação</div>
+      <div class="cx-v" id="cx-sit" style="font-size:14px;margin-top:2px">—</div>
+      <div class="cx-s" id="cx-sit-s">placar</div>
+    </div>
+    <div class="cx">
+      <div class="cx-l">Odd</div>
+      <div class="cx-v" id="cx-odd">—</div>
+      <div class="cx-s" id="cx-odd-s">mercado</div>
+    </div>
+  </div>
+
+  <div class="sci">
+    <div class="sc">
+      <div class="sc-l">Score Bruto</div>
+      <div class="sc-v a" id="sci-score">0</div>
+      <div class="sc-s">de 20 pts</div>
+    </div>
+    <div class="sc">
+      <div class="sc-l">Score %</div>
+      <div class="sc-v" id="sci-pct">0%</div>
+      <div class="sc-s">entrada ≥ 65%</div>
+    </div>
+    <div class="sc">
+      <div class="sc-l">Pressão Real</div>
+      <div class="sc-v" id="sci-pr">—</div>
+      <div class="sc-s">≥ 25% = qualidade</div>
+    </div>
+    <div class="sc">
+      <div class="sc-l">Critérios OK</div>
+      <div class="sc-v" id="sci-cok">0</div>
+      <div class="sc-s">de 7 principais</div>
+    </div>
+  </div>
+
+</div><div class="col-r">
+  <div class="sh">&#9632; Análise — Critérios ponderados</div>
+
+  <div class="crit-wrap">
+
+    <div class="cr">
+      <div class="ci ne" id="ci-efic">—</div>
+      <div class="cb">
+        <div class="cn">Eficiência AP ≥ 55%</div>
+        <div class="cd">Peso alto · domínio com qualidade real</div>
+      </div>
+      <span class="cv v-ne" id="cv-efic">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-qch">—</div>
+      <div class="cb">
+        <div class="cn">Qualidade de Chutes ≥ 45%</div>
+        <div class="cd">Peso alto · chutes no gol vs total</div>
+      </div>
+      <span class="cv v-ne" id="cv-qch">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-pr">—</div>
+      <div class="cb">
+        <div class="cn">Pressão Real ≥ 25%</div>
+        <div class="cd">Peso alto · métrica composta (efic × qchute)</div>
+      </div>
+      <span class="cv v-ne" id="cv-pr">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-appm">—</div>
+      <div class="cb">
+        <div class="cn">AP por Minuto ≥ 0.50</div>
+        <div class="cd">Peso alto · ritmo e constância da pressão</div>
+      </div>
+      <span class="cv v-ne" id="cv-appm">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-pos">—</div>
+      <div class="cb">
+        <div class="cn">Posse de Bola ≥ 55%</div>
+        <div class="cd">Peso alto · r=0.71 com resultado (UEFA/NIH)</div>
+      </div>
+      <span class="cv v-ne" id="cv-pos">—</span>
+    </div>
+
+    <div class="cr">
+      <div class="ci ne" id="ci-cng">—</div>
+      <div class="cb">
+        <div class="cn">Chutes no Gol ≥ 3</div>
+        <div class="cd">Peso alto · r=0.58 com vitória (NIH)</div>
+      </div>
+      <span class="cv v-ne" id="cv-cng">—</span>
