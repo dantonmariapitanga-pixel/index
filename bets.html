@@ -1,212 +1,389 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scanner Betfair - Análise de Pressão</title>
+    <title>Scanner In-Play - Análise de Pressão</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1e1e24;
-            color: #ffffff;
+        :root {
+            --b365-dark-green: #003b2b;
+            --b365-header-green: #005a42;
+            --b365-yellow: #ffdf1b;
+            --b365-bg: #1a1a1a;
+            --b365-card: #282828;
+            --b365-input-bg: #333333;
+            --b365-border: #444444;
+            --text-white: #ffffff;
+            --text-muted: #a7a7a7;
+            
+            --sinal-back: #00a86b;
+            --sinal-lay: #dc3545;
+            --sinal-neutro: #007bff;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--b365-bg);
+            color: var(--text-white);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header-bar {
+            background-color: var(--b365-header-green);
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 3px solid var(--b365-yellow);
+        }
+
+        .header-bar h1 {
+            font-size: 1.4rem;
+            color: var(--text-white);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            background-color: var(--b365-card);
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .time-section {
+            background-color: var(--b365-dark-green);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        h1 { color: #ffb703; }
-        .container {
-            background-color: #2b2b36;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            max-width: 800px;
+
+        .time-section label {
+            font-size: 0.85rem;
+            color: var(--b365-yellow);
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .time-section input {
             width: 100%;
+            max-width: 150px;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: 1px solid var(--b365-border);
+            border-radius: 4px;
+            background-color: var(--b365-bg);
+            color: var(--text-white);
         }
-        .header-inputs {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            background-color: #383846;
-            padding: 15px;
-            border-radius: 8px;
-        }
-        .input-group {
+
+        .teams-container {
             display: flex;
             flex-direction: column;
-            width: 48%;
+            gap: 15px;
         }
-        label { margin-bottom: 5px; font-weight: bold; font-size: 0.9em; color: #a9a9bc; }
-        input {
-            padding: 8px;
-            border: 1px solid #4a4a5a;
-            border-radius: 5px;
-            background-color: #1e1e24;
-            color: white;
-        }
-        .teams-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+
         .team-card {
-            background-color: #383846;
-            padding: 15px;
-            border-radius: 8px;
-            border-top: 4px solid;
+            background-color: #222222;
+            border: 1px solid var(--b365-border);
+            border-radius: 6px;
+            padding: 12px;
         }
-        .team-a { border-color: #219ebc; }
-        .team-b { border-color: #fb8500; }
-        h3 { margin-top: 0; text-align: center; }
+
+        .team-title {
+            font-size: 1rem;
+            font-weight: bold;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--b365-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .team-a-title { color: #4ba3e3; }
+        .team-b-title { color: #ff9f43; }
+
         .stat-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        .stat-row input { width: 60px; text-align: center; }
-        button {
-            width: 100%;
-            padding: 15px;
-            background-color: #ffb703;
-            color: #023047;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
+
+        .stat-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-row label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .input-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-counter {
+            width: 32px;
+            height: 32px;
+            background-color: var(--b365-input-bg);
+            border: 1px solid var(--b365-border);
+            color: var(--text-white);
+            font-size: 1.2rem;
             font-weight: bold;
+            border-radius: 4px;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        button:hover { background-color: #fb8500; color: white; }
-        #resultado {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 8px;
+
+        .btn-counter:active {
+            background-color: var(--b365-header-green);
+        }
+
+        .stat-input {
+            width: 50px;
+            height: 32px;
             text-align: center;
-            font-size: 1.2em;
+            background-color: var(--b365-bg);
+            border: 1px solid var(--b365-border);
+            color: var(--text-white);
+            font-size: 1rem;
             font-weight: bold;
-            display: none;
+            border-radius: 4px;
         }
-        .sinal-back { background-color: #2a9d8f; color: white; }
-        .sinal-lay { background-color: #e63946; color: white; }
-        .sinal-neutro { background-color: #457b9d; color: white; }
+
+        /* Desativar setas nativas do input de número */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--b365-yellow);
+            color: #000000;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 15px;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        .btn-analyze:active {
+            background-color: #e0c215;
+        }
+
+        #result-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            line-height: 1.4;
+            display: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .bg-back { background-color: var(--sinal-back); color: white; }
+        .bg-lay { background-color: var(--sinal-lay); color: white; }
+        .bg-neutro { background-color: var(--sinal-neutro); color: white; }
     </style>
 </head>
 <body>
 
-    <h1>Radar de Mercado - Betfair</h1>
+    <div class="header-bar">
+        <h1>Scanner In-Play</h1>
+    </div>
     
     <div class="container">
-        <div class="header-inputs">
-            <div class="input-group" style="width: 100%; text-align: center; align-items: center;">
-                <label for="tempoJogo">Tempo de Jogo (Minutos Exatos, ex: 10.5 para 10:30)</label>
-                <input type="number" id="tempoJogo" step="0.1" placeholder="Ex: 10.5">
+        <div class="time-section">
+            <label for="tempoJogo">Minuto Atual do Jogo</label>
+            <input type="number" id="tempoJogo" step="1" min="1" max="95" placeholder="Ex: 25">
+        </div>
+
+        <div class="teams-container">
+            <div class="team-card">
+                <div class="team-title team-a-title">🔹 Equipe A (Casa)</div>
+                
+                <div class="stat-row">
+                    <label>Ataques Perigosos</label>
+                    <div class="input-controls">
+                        <button class="btn-counter" onclick="changeVal('apA', -1)">-</button>
+                        <input type="number" id="apA" class="stat-input" value="0">
+                        <button class="btn-counter" onclick="changeVal('apA', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="stat-row">
+                    <label>Chutes no Alvo</label>
+                    <div class="input-controls">
+                        <button class="btn-counter" onclick="changeVal('caA', -1)">-</button>
+                        <input type="number" id="caA" class="stat-input" value="0">
+                        <button class="btn-counter" onclick="changeVal('caA', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="stat-row">
+                    <label>Chutes Para Fora</label>
+                    <div class="input-controls">
+                        <button class="btn-counter" onclick="changeVal('cfA', -1)">-</button>
+                        <input type="number" id="cfA" class="stat-input" value="0">
+                        <button class="btn-counter" onclick="changeVal('cfA', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="stat-row">
+                    <label>Escanteios</label>
+                    <div class="input-controls">
+                        <button class="btn-counter" onclick="changeVal('escA', -1)">-</button>
+                        <input type="number" id="escA" class="stat-input" value="0">
+                        <button class="btn-counter" onclick="changeVal('escA', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="team-title team-b-title">🔸 Equipe B (Visitante)</div>
+                
+                <div class="stat-row">
+                    <label>Ataques Perigosos</label>
+                    <div class="input-controls">
+                        <button class="btn-counter" onclick="changeVal('apB', -1)">-</button>
+                        <input type="number" id="apB" class="stat-input" value="0">
+                        <button class="btn-counter" onclick="changeVal('apB', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="stat-row">
+                    <label>Chutes no Alvo</label>
+                    <div class="input-controls">
+                        <button class="btn-counter" onclick="changeVal('caB', -1)">-</button>
+                        <input type="number" id="caB" class="stat-input" value="0">
+                        <button class="btn-counter" onclick="changeVal('caB', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="stat-row">
+                    <label>Chutes Para Fora</label>
+                    <div class="input-controls); container">
+                        <button class="btn-counter" onclick="changeVal('cfB', -1)">-</button>
+                        <input type="number" id="cfB" class="stat-input" value="0">
+                        <button class="btn-counter" onclick="changeVal('cfB', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="stat-row">
+                    <label>Escanteios</label>
+                    <div class="input-controls">
+                        <button class="btn-counter" onclick="changeVal('escB', -1)">-</button>
+                        <input type="number" id="escB" class="stat-input" value="0">
+                        <button class="btn-counter" onclick="changeVal('escB', 1)">+</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="teams-grid">
-            <div class="team-card team-a">
-                <h3>Equipa A (Casa)</h3>
-                <div class="stat-row">
-                    <label>Ataques Perigosos</label>
-                    <input type="number" id="attPerigososA" value="0">
-                </div>
-                <div class="stat-row">
-                    <label>Remates à Baliza (No alvo)</label>
-                    <input type="number" id="rematesAlvoA" value="0">
-                </div>
-                <div class="stat-row">
-                    <label>Remates Fora</label>
-                    <input type="number" id="rematesForaA" value="0">
-                </div>
-                <div class="stat-row">
-                    <label>Pontapés de Canto</label>
-                    <input type="number" id="cantosA" value="0">
-                </div>
-            </div>
+        <button class="btn-analyze" onclick="calcularSinal()">Analisar Cenário</button>
 
-            <div class="team-card team-b">
-                <h3>Equipa B (Visitante)</h3>
-                <div class="stat-row">
-                    <label>Ataques Perigosos</label>
-                    <input type="number" id="attPerigososB" value="0">
-                </div>
-                <div class="stat-row">
-                    <label>Remates à Baliza (No alvo)</label>
-                    <input type="number" id="rematesAlvoB" value="0">
-                </div>
-                <div class="stat-row">
-                    <label>Remates Fora</label>
-                    <input type="number" id="rematesForaB" value="0">
-                </div>
-                <div class="stat-row">
-                    <label>Pontapés de Canto</label>
-                    <input type="number" id="cantosB" value="0">
-                </div>
-            </div>
-        </div>
-
-        <button onclick="analisarMercado()">Analisar Oportunidade de Entrada</button>
-
-        <div id="resultado"></div>
+        <div id="result-box"></div>
     </div>
 
     <script>
-        function analisarMercado() {
+        // Função auxiliar para os botões de + e - facilitarem o uso no celular
+        function changeVal(id, amount) {
+            const el = document.getElementById(id);
+            let current = parseInt(el.value) || 0;
+            current += amount;
+            if (current < 0) current = 0;
+            el.value = current;
+        }
+
+        function calcularSinal() {
             const tempo = parseFloat(document.getElementById('tempoJogo').value);
             
             if (!tempo || tempo <= 0) {
-                alert("Por favor, insira o tempo de jogo atual.");
+                alert("Por favor, digite o minuto atual do jogo.");
                 return;
             }
 
-            // Recolher dados Equipa A
-            const apA = parseFloat(document.getElementById('attPerigososA').value);
-            const raA = parseFloat(document.getElementById('rematesAlvoA').value);
-            const rfA = parseFloat(document.getElementById('rematesForaA').value);
-            const caA = parseFloat(document.getElementById('cantosA').value);
+            // Dados da Equipe A
+            const apA = parseFloat(document.getElementById('apA').value) || 0;
+            const caA = parseFloat(document.getElementById('caA').value) || 0;
+            const cfA = parseFloat(document.getElementById('cfA').value) || 0;
+            const escA = parseFloat(document.getElementById('escA').value) || 0;
 
-            // Recolher dados Equipa B
-            const apB = parseFloat(document.getElementById('attPerigososB').value);
-            const raB = parseFloat(document.getElementById('rematesAlvoB').value);
-            const rfB = parseFloat(document.getElementById('rematesForaB').value);
-            const caB = parseFloat(document.getElementById('cantosB').value);
+            // Dados da Equipe B
+            const apB = parseFloat(document.getElementById('apB').value) || 0;
+            const caB = parseFloat(document.getElementById('caB').value) || 0;
+            const cfB = parseFloat(document.getElementById('cfB').value) || 0;
+            const escB = parseFloat(document.getElementById('escB').value) || 0;
 
-            // Cálculos de Pressão (Algoritmo Básico de Trading)
-            // APPM (Ataques Perigosos Por Minuto) > 1.0 é considerado pressão forte.
+            // Métrica de Ataques Perigosos por Minuto (APPM)
             const appmA = apA / tempo;
             const appmB = apB / tempo;
 
-            // Índice de Perigo (Ponderação: Remates no alvo valem mais, seguidos de cantos e remates fora)
-            const indicePerigoA = appmA + (raA * 0.4) + (caA * 0.2) + (rfA * 0.1);
-            const indicePerigoB = appmB + (raB * 0.4) + (caB * 0.2) + (rfB * 0.1);
+            // Cálculo do Índice de Pressão Hidráulica/Ofensiva
+            const pressaoA = appmA + (caA * 0.4) + (escA * 0.2) + (cfA * 0.1);
+            const pressaoB = appmB + (caB * 0.4) + (escB * 0.2) + (cfB * 0.1);
 
-            const divResultado = document.getElementById('resultado');
-            divResultado.style.display = 'block';
-            divResultado.className = ''; // Reset classes
+            const resultBox = document.getElementById('result-box');
+            resultBox.style.display = 'block';
+            resultBox.className = ''; // Limpa estilos anteriores
 
-            // Lógica de Decisão Lay/Back
-            if (tempo < 15 && (indicePerigoA < 0.5 && indicePerigoB < 0.5)) {
-                divResultado.innerHTML = "⏱️ Jogo em fase de estudo. <br>Recomendação: <b>NÃO ENTRAR</b> ou <b>LAY ao Golo (Back Under)</b> até o ritmo aumentar.";
-                divResultado.classList.add('sinal-neutro');
+            // Regras de Entrada baseadas em Padrões de Intercâmbio (Betfair Exchange)
+            if (tempo < 15 && pressaoA < 0.5 && pressaoB < 0.5) {
+                resultBox.innerHTML = "⏱️ Jogo em fase de estudo inicial.<br>Recomendação: <b>NÃO ENTRAR</b> ou buscar <b>LAY ao Gol (Under Inicial)</b> se as odds estiverem esticadas.";
+                resultBox.classList.add('bg-neutro');
             } 
-            else if (indicePerigoA >= 1.5 && indicePerigoA > (indicePerigoB * 2)) {
-                divResultado.innerHTML = `🔥 Forte domínio da Equipa A! (Índice: ${indicePerigoA.toFixed(2)})<br>Recomendação: <b>BACK Equipa A</b> ou <b>LAY Equipa B</b>.`;
-                divResultado.classList.add('sinal-back');
+            else if (pressaoA >= 1.4 && pressaoA > (pressaoB * 2)) {
+                resultBox.innerHTML = `🔥 Domínio absoluto da Equipe A!<br>Recomendação: <b>BACK Equipe A</b> ou fazer <b>LAY Equipe B</b>.`;
+                resultBox.classList.add('bg-back');
             }
-            else if (indicePerigoB >= 1.5 && indicePerigoB > (indicePerigoA * 2)) {
-                divResultado.innerHTML = `🔥 Forte domínio da Equipa B! (Índice: ${indicePerigoB.toFixed(2)})<br>Recomendação: <b>BACK Equipa B</b> ou <b>LAY Equipa A</b>.`;
-                divResultado.classList.add('sinal-back');
+            else if (pressaoB >= 1.4 && pressaoB > (pressaoA * 2)) {
+                resultBox.innerHTML = `🔥 Domínio absoluto da Equipe B!<br>Recomendação: <b>BACK Equipe B</b> ou fazer <b>LAY Equipe A</b>.`;
+                resultBox.classList.add('bg-back');
             }
-            else if (appmA > 0.8 && appmB > 0.8 && (raA + raB) >= 2) {
-                divResultado.innerHTML = "⚔️ Jogo muito aberto e 'Lá e Cá'. <br>Recomendação: <b>BACK Over Golos</b> (Evitar apostar no Vencedor da Partida).";
-                divResultado.classList.add('sinal-back');
+            else if (appmA > 0.85 && appmB > 0.85 && (caA + caB) >= 2) {
+                resultBox.innerHTML = "⚔️ Jogo aberto no estilo 'Lá e Cá' com alta intensidade!<br>Recomendação: <b>BACK Over Gols</b> na linha atual do mercado.";
+                resultBox.classList.add('bg-back');
+            }
+            else if (tempo > 75 && pressaoA < 0.4 && pressaoB < 0.4) {
+                resultBox.innerHTML = "📉 Jogo morto e sem criatividade no final da partida.<br>Recomendação: <b>LAY à zebra (se houver empate)</b> ou manter posição no <b>Under Gols</b>.";
+                resultBox.classList.add('bg-lay');
             }
             else {
-                divResultado.innerHTML = "⚖️ Jogo equilibrado ou sem pressão suficiente para um golo iminente. <br>Recomendação: <b>AGUARDAR</b> novas estatísticas.";
-                divResultado.classList.add('sinal-neutro');
+                resultBox.innerHTML = "⚖️ Partida equilibrada ou sem volume de finalizações contundente.<br>Recomendação: <b>AGUARDAR</b> e monitorar os próximos minutos.";
+                resultBox.classList.add('bg-neutro');
             }
         }
     </script>
