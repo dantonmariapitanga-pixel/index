@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora PRO de Trade Esportivo Live</title>
+    <title>Calculadora de Trade Esportivo Live</title>
     <style>
         * {
             box-sizing: border-box;
@@ -29,7 +29,7 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
-            border-left: 5px solid #10b981;
+            border-left: 5px solid #3b82f6;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
 
@@ -53,8 +53,13 @@
             align-items: stretch;
         }
 
-        .column-left { flex: 1.4; }
-        .column-right { flex: 1; }
+        .column-left {
+            flex: 1.4;
+        }
+
+        .column-right {
+            flex: 1;
+        }
 
         .card {
             background-color: #1e293b;
@@ -69,21 +74,11 @@
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #10b981;
+            color: #3b82f6;
             border-bottom: 1px solid #334155;
             padding-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-        
-        .section-subtitle {
-            font-size: 13px;
-            color: #94a3b8;
-            margin: 20px 0 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-left: 3px solid #f59e0b;
-            padding-left: 8px;
         }
 
         .form-grid {
@@ -92,7 +87,9 @@
             gap: 15px;
         }
 
-        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
 
         label {
             display: block;
@@ -117,30 +114,27 @@
 
         input:focus, select:focus {
             outline: none;
-            border-color: #10b981;
+            border-color: #3b82f6;
             background-color: #111827;
         }
 
         .metrics-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .metric-box {
             background-color: #0f172a;
             border-radius: 8px;
-            padding: 12px;
+            padding: 15px;
             text-align: center;
             border: 1px solid #334155;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
         .metric-label {
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             color: #94a3b8;
             letter-spacing: 0.5px;
@@ -148,32 +142,14 @@
         }
 
         .metric-value {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: 700;
             color: #ffffff;
         }
 
-        /* Destaque para o Risco */
-        .risco-box {
-            background-color: #0f172a;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #475569;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .risco-valor {
-            font-size: 20px;
-            font-weight: 800;
-            margin-top: 5px;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-
         .decisao-container {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 25px;
         }
 
         .decisao-label {
@@ -187,7 +163,7 @@
         .decisao-box {
             font-size: 22px;
             font-weight: 800;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             text-align: center;
             letter-spacing: 0.5px;
@@ -195,30 +171,37 @@
             box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
         }
 
-        .status-aguardando { background-color: #334155; color: #94a3b8; border: 1px solid #475569; }
-        .status-entrar { background-color: #065f46; color: #34d399; border: 2px solid #059669; text-shadow: 0 0 10px rgba(52, 211, 153, 0.3); }
-        .status-fora { background-color: #991b1b; color: #f87171; border: 2px solid #dc2626; text-shadow: 0 0 10px rgba(248, 113, 113, 0.3); }
-
-        .alertas-box {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #f87171;
-            text-align: left;
-            min-height: 40px;
-            background-color: rgba(239, 68, 68, 0.1);
-            padding: 10px;
-            border-radius: 6px;
-            border-left: 4px solid #ef4444;
+        .status-aguardando {
+            background-color: #334155;
+            color: #94a3b8;
+            border: 1px solid #475569;
         }
 
-        .alertas-box ul {
-            padding-left: 20px;
-            margin-top: 5px;
+        .status-entrar {
+            background-color: #065f46;
+            color: #34d399;
+            border: 2px solid #059669;
+            text-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+        }
+
+        .status-fora {
+            background-color: #991b1b;
+            color: #f87171;
+            border: 2px solid #dc2626;
+            text-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
+        }
+
+        /* NOVA CLASSE DE ALERTA PARA OS FILTROS DE SEGURANÇA */
+        .status-alerta {
+            background-color: #78350f;
+            color: #fbbf24;
+            border: 2px solid #b45309;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
         }
 
         .btn-salvar {
             width: 100%;
-            background-color: #10b981;
+            background-color: #3b82f6;
             color: white;
             border: none;
             padding: 14px;
@@ -230,7 +213,9 @@
             transition: background-color 0.2s;
         }
 
-        .btn-salvar:hover { background-color: #059669; }
+        .btn-salvar:hover {
+            background-color: #2563eb;
+        }
 
         .history-section {
             background-color: #1e293b;
@@ -240,25 +225,74 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
         }
 
-        .table-responsive { width: 100%; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: left; white-space: nowrap; }
-        th { background-color: #0f172a; color: #94a3b8; font-weight: 600; padding: 12px 10px; font-size: 12px; text-transform: uppercase; border-bottom: 2px solid #334155; }
-        td { padding: 12px 10px; border-bottom: 1px solid #334155; color: #cbd5e1; font-size: 13px; }
-        tr:hover td { background-color: #243146; }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
 
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; display: inline-block; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #0f172a;
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 12px 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #334155;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #334155;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        tr:hover td {
+            background-color: #243146;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
         .badge-entrar { background-color: #065f46; color: #34d399; }
         .badge-fora { background-color: #991b1b; color: #f87171; }
+        .badge-alerta { background-color: #78350f; color: #fbbf24; }
 
-        .select-resultado { background-color: #0f172a; border: 1px solid #475569; color: white; padding: 6px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+        .select-resultado {
+            background-color: #0f172a;
+            border: 1px solid #475569;
+            color: white;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
         .select-resultado option[value="Green"] { color: #34d399; }
         .select-resultado option[value="Red"] { color: #f87171; }
 
         @media (max-width: 768px) {
-            .main-layout { flex-direction: column; }
+            body { padding: 12px; }
+            header { padding: 15px; }
+            header h1 { font-size: 18px; }
+            .main-layout { flex-direction: column; gap: 15px; }
+            .card { padding: 20px; }
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full-width { grid-column: 1; }
-            .metrics-grid { grid-template-columns: 1fr; }
+            .decisao-box { font-size: 18px; }
         }
     </style>
 </head>
@@ -266,14 +300,15 @@
 
 <div class="container">
     <header>
-        <h1>CALCULADORA DE TRADE: ALGORITMO AVANÇADO</h1>
-        <p>Análise de Eficiência Ofensiva e Radar de Contra-Ataque</p>
+        <h1>SISTEMA DE TRADE ESPORTIVO LIVE</h1>
+        <p>Análise de Critérios de Pressão e Ritmo de Jogo em Tempo Real</p>
     </header>
 
     <div class="main-layout">
+        <!-- COLUNA ESQUERDA -->
         <div class="column-left">
             <div class="card">
-                <div class="card-title">Inserção de Dados da Partida</div>
+                <div class="card-title">Dados em Tempo Real</div>
                 
                 <div class="form-grid">
                     <div class="form-group full-width">
@@ -281,65 +316,61 @@
                         <input type="text" id="jogo" placeholder="Ex: Brasil x Argentina" oninput="calcular()">
                     </div>
 
-                    <div class="form-group full-width">
+                    <div class="form-group">
                         <label for="minuto">Minuto Atual do Jogo</label>
-                        <input type="number" id="minuto" min="1" max="90" placeholder="Ex: 35" oninput="calcular()">
+                        <input type="number" id="minuto" min="1" max="90" placeholder="Ex: 15" oninput="calcular()">
                     </div>
-                </div>
 
-                <div class="section-subtitle">SEU TIME (AQUELE QUE VOCÊ QUER ENTRAR)</div>
-                <div class="form-grid">
                     <div class="form-group">
                         <label for="ap">Ataques Perigosos (AP)</label>
-                        <input type="number" id="ap" min="0" placeholder="Ex: 27" oninput="calcular()">
+                        <input type="number" id="ap" min="0" placeholder="Ex: 25" oninput="calcular()">
                     </div>
+
                     <div class="form-group">
-                        <label for="escanteios">Escanteios A Favor</label>
-                        <input type="number" id="escanteios" min="0" placeholder="Ex: 2" oninput="calcular()">
+                        <label for="finalizacoes">Total de Finalizações</label>
+                        <input type="number" id="finalizacoes" min="0" placeholder="Ex: 5" oninput="calcular()">
                     </div>
+
                     <div class="form-group">
-                        <label for="finalizacoes">Chutes Totais (Alvo + Fora)</label>
-                        <input type="number" id="finalizacoes" min="0" placeholder="Ex: 3" oninput="calcular()">
+                        <label for="chutes_alvo">Chutes no Alvo (No Gol)</label>
+                        <input type="number" id="chutes_alvo" min="0" placeholder="Ex: 2" oninput="calcular()">
                     </div>
+
                     <div class="form-group">
-                        <label style="color:#34d399;" for="chutesAlvo">Chutes NO ALVO</label>
-                        <input type="number" id="chutesAlvo" min="0" placeholder="Ex: 1" oninput="calcular()">
+                        <label for="escanteios">Escanteios Convertidos</label>
+                        <input type="number" id="escanteios" min="0" placeholder="Ex: 1" oninput="calcular()">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pressao">Pressão Alta / Recup. Rápida?</label>
+                        <select id="pressao" onchange="calcular()">
+                            <option value="Não">Não</option>
+                            <option value="Sim">Sim</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="odd">Odd Atual do Mercado</label>
+                        <input type="number" id="odd" step="0.01" min="1.01" placeholder="Ex: 1.85" oninput="calcular()">
                     </div>
                 </div>
-
-                <div class="section-subtitle" style="border-left-color: #ef4444;">ADVERSÁRIO (RISCO DE CONTRA-ATAQUE)</div>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label style="color:#f87171;" for="apAdv">Ataques Perigosos do Adv.</label>
-                        <input type="number" id="apAdv" min="0" placeholder="Ex: 12" oninput="calcular()">
-                    </div>
-                    <div class="form-group">
-                        <label style="color:#f87171;" for="chutesAlvoAdv">Chutes NO ALVO do Adv.</label>
-                        <input type="number" id="chutesAlvoAdv" min="0" placeholder="Ex: 2" oninput="calcular()">
-                    </div>
-                </div>
-
             </div>
         </div>
 
+        <!-- COLUNA DIREITA -->
         <div class="column-right">
             <div class="card">
-                <div class="card-title">Inteligência Artificial & Métricas</div>
+                <div class="card-title">Análise de Indicadores</div>
                 
                 <div class="metrics-grid">
                     <div class="metric-box">
-                        <div class="metric-label">Pressão (AP/Min)</div>
+                        <div class="metric-label">AP por Minuto</div>
                         <div class="metric-value" id="out-appm">0.00</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-label">Pontuação Geral</div>
-                        <div class="metric-value" id="out-pontos">0 / 6</div>
+                        <div class="metric-label">Pontuação</div>
+                        <div class="metric-value" id="out-pontos">0 / 4</div>
                     </div>
-                </div>
-
-                <div class="risco-box" id="box-risco">
-                    <div class="metric-label" style="color: inherit;">Radar de Contra-Ataque</div>
-                    <div class="risco-valor" id="out-risco">AGUARDANDO</div>
                 </div>
 
                 <div class="decisao-container">
@@ -347,16 +378,12 @@
                     <div id="decisao-box" class="decisao-box status-aguardando">AGUARDANDO DADOS</div>
                 </div>
 
-                <div class="alertas-box" id="alertas-container" style="display:none;">
-                    <strong>⚠️ MOTIVOS PARA NÃO ENTRAR:</strong>
-                    <ul id="lista-alertas"></ul>
-                </div>
-
                 <button class="btn-salvar" onclick="salvarNoHistorico()">Registrar Partida no Log</button>
             </div>
         </div>
     </div>
 
+    <!-- SEÇÃO DE HISTÓRICO -->
     <div class="history-section">
         <div class="card-title" style="margin-bottom: 10px;">Log de Operações da Sessão</div>
         <div class="table-responsive">
@@ -364,12 +391,14 @@
                 <thead>
                     <tr>
                         <th>Jogo</th>
-                        <th>Min</th>
-                        <th>APPM Favorito</th>
-                        <th>Chutes (Alvo) Fav.</th>
-                        <th>Chutes Alvo Adv.</th>
-                        <th>Risco</th>
+                        <th>Minuto</th>
+                        <th>APPM</th>
+                        <th>Chutes (Alvo/Total)</th>
+                        <th>Cantos</th>
+                        <th>Pressão</th>
+                        <th>Pontos</th>
                         <th>Decisão</th>
+                        <th>Odd</th>
                         <th>Resultado</th>
                     </tr>
                 </thead>
@@ -382,174 +411,117 @@
 
 <script>
     function calcular() {
-        // Dados Base
         const minuto = parseFloat(document.getElementById('minuto').value) || 0;
-        
-        // Dados Favorito
         const ap = parseFloat(document.getElementById('ap').value) || 0;
         const finalizacoes = parseFloat(document.getElementById('finalizacoes').value) || 0;
-        const chutesAlvo = parseFloat(document.getElementById('chutesAlvo').value) || 0;
+        const chutes_alvo = parseFloat(document.getElementById('chutes_alvo').value) || 0;
         const escanteios = parseFloat(document.getElementById('escanteios').value) || 0;
-        
-        // Dados Adversário
-        const apAdv = parseFloat(document.getElementById('apAdv').value) || 0;
-        const chutesAlvoAdv = parseFloat(document.getElementById('chutesAlvoAdv').value) || 0;
+        const pressao = document.getElementById('pressao').value;
 
-        // UI Elements
-        const alertasBox = document.getElementById('alertas-container');
-        const listaAlertas = document.getElementById('lista-alertas');
-        const boxDecisao = document.getElementById('decisao-box');
-        const boxRisco = document.getElementById('box-risco');
-        const txtRisco = document.getElementById('out-risco');
-
-        // Reset
-        listaAlertas.innerHTML = '';
-        alertasBox.style.display = 'none';
-
+        // Reset inicial se não houver dados suficientes
         if (minuto <= 0 || ap === 0) {
             document.getElementById('out-appm').innerText = "0.00";
-            document.getElementById('out-pontos').innerText = "0 / 6";
-            boxDecisao.innerText = "AGUARDANDO DADOS";
-            boxDecisao.className = "decisao-box status-aguardando";
-            
-            boxRisco.style.backgroundColor = "#0f172a";
-            boxRisco.style.borderColor = "#475569";
-            boxRisco.style.color = "#94a3b8";
-            txtRisco.innerText = "AGUARDANDO";
+            document.getElementById('out-pontos').innerText = "0 / 4";
+            const box = document.getElementById('decisao-box');
+            box.innerText = "AGUARDANDO DADOS";
+            box.className = "decisao-box status-aguardando";
             return;
         }
 
-        // Cálculos do Favorito
+        // Cálculo de APPM
         const appm = ap / minuto;
-        const chpm = finalizacoes / minuto;
-        const alvoPorMinuto = chutesAlvo / minuto;
-
         document.getElementById('out-appm').innerText = appm.toFixed(2);
 
+        // Cálculo de Eficiência dos Chutes
+        let eficiencia = 0;
+        if (finalizacoes > 0) {
+            eficiencia = (chutes_alvo / finalizacoes) * 100;
+        }
+
+        // Sistema de Pontuação Atualizado
         let pontos = 0;
-        let alertas = [];
+        if (appm >= 1.10) pontos += 1;        // Gatilho mais rigoroso (antes era 0.70)
+        if (chutes_alvo >= 2) pontos += 1;    // Agora exige alvo, não apenas chutes para fora
+        if (pressao === 'Sim') pontos += 1;   
+        if (escanteios >= 1) pontos += 1;     
 
-        // 1. Pressão de Volume (APPM) Max 2 pontos
-        if (appm >= 1.0) pontos += 2; 
-        else if (appm >= 0.70) pontos += 1;
-        else alertas.push("Baixo volume de ataques perigosos (APPM baixo).");
+        document.getElementById('out-pontos').innerText = pontos + " / 4";
 
-        // 2. O Fim do "Arame Liso" (Chutes no Alvo) - Max 2 pontos
-        if (alvoPorMinuto >= 0.10) pontos += 2; 
-        else if (chutesAlvo === 0) alertas.push("O seu time não deu nenhum chute no alvo ainda.");
-        else alertas.push("Falta pontaria: Time tem a bola mas não agride o goleiro.");
-
-        // 3. Pressão contínua (Escanteios) - Max 1 ponto
-        if (escanteios >= (minuto / 15)) pontos += 1;
+        const decisaoBox = document.getElementById('decisao-box');
         
-        // 4. Eficiência Geral - Max 1 ponto
-        if (chpm >= 0.20) pontos += 1;
-
-        // --- NOVO: MÓDULO DE RADAR DE CONTRA-ATAQUE ---
-        let nivelRisco = "BAIXO";
-        let corBg = "#0f172a";
-        let corBorda = "#34d399";
-        let corTexto = "#34d399";
-
-        // Cenário Extremo: O adversário tem MAIS chutes no alvo do que o seu time
-        if (chutesAlvoAdv > chutesAlvo && chutesAlvoAdv > 0) {
-            nivelRisco = "EXTREMO";
-            corBg = "rgba(239, 68, 68, 0.1)"; // Fundo vermelho
-            corBorda = "#ef4444";
-            corTexto = "#ef4444";
-            alertas.push("PERIGO DE CONTRA-ATAQUE: O adversário finalizou mais no alvo que o seu time!");
-            pontos -= 2; // Pune severamente a nota
-        } 
-        // Cenário Alto: Adversário chuta bem mesmo com poucos ataques (ex: 2 chutes no alvo em apenas 12 APs)
-        else if (chutesAlvoAdv >= 2 && apAdv < ap) {
-            nivelRisco = "ALTO";
-            corBg = "rgba(249, 115, 22, 0.1)"; // Fundo laranja
-            corBorda = "#f97316";
-            corTexto = "#f97316";
-            alertas.push("ALERTA: O adversário é perigoso nos contra-ataques (Alta conversão AP -> Chute).");
-            pontos -= 1;
-        }
-        // Cenário Médio: Adversário já deu 1 chute no alvo
-        else if (chutesAlvoAdv === 1) {
-            nivelRisco = "MÉDIO";
-            corBorda = "#eab308"; // Amarelo
-            corTexto = "#eab308";
-        }
-
-        // Aplica o visual do Risco
-        boxRisco.style.backgroundColor = corBg;
-        boxRisco.style.borderColor = corBorda;
-        boxRisco.style.color = corTexto;
-        txtRisco.innerText = nivelRisco;
-
-        // --- FILTROS DE TRAVA (RED FLAGS DE TEMPO) ---
-        if ((minuto >= 38 && minuto <= 45) || (minuto >= 85 && minuto <= 90)) {
-            pontos -= 2;
-            alertas.push("ZONA MORTA: Fim de tempo. O tempo joga a favor do contra-ataque.");
-        }
-
-        // Limita visual do placar
-        pontos = Math.max(0, pontos);
-        document.getElementById('out-pontos').innerText = pontos + " / 6";
-
-        // Decisão: Precisa de nota boa (4 ou mais) E não ter alertas graves de contra-ataque ou arame liso
-        if (pontos >= 4 && nivelRisco !== "EXTREMO" && alertas.length === 0) {
-            boxDecisao.innerText = "🟢 ENTRAR AGORA";
-            boxDecisao.className = "decisao-box status-entrar";
-        } else {
-            boxDecisao.innerText = "🔴 FICAR DE FORA";
-            boxDecisao.className = "decisao-box status-fora";
-            
-            if (alertas.length > 0) {
-                alertasBox.style.display = 'block';
-                alertas.forEach(alerta => {
-                    const li = document.createElement('li');
-                    li.innerText = alerta;
-                    listaAlertas.appendChild(li);
-                });
+        // Lógica de Decisão com Travas de Segurança
+        if (pontos >= 3) {
+            if (minuto < 20) {
+                decisaoBox.innerText = "🟡 JOGO CEDO (ESPERE OS 20')";
+                decisaoBox.className = "decisao-box status-alerta";
+            } else if (eficiencia < 30) {
+                decisaoBox.innerText = `🟡 BAIXA EFICIÊNCIA (${eficiencia.toFixed(0)}%)`;
+                decisaoBox.className = "decisao-box status-alerta";
+            } else {
+                decisaoBox.innerText = "🟢 ENTRAR AGORA";
+                decisaoBox.className = "decisao-box status-entrar";
             }
+        } else {
+            decisaoBox.innerText = "🔴 FICAR DE FORA";
+            decisaoBox.className = "decisao-box status-fora";
         }
     }
 
     function salvarNoHistorico() {
-        const jogo = document.getElementById('jogo').value || "Não informado";
+        const jogo = document.getElementById('jogo').value || "Jogo Sem Nome";
         const minuto = document.getElementById('minuto').value || "-";
+        const ap = document.getElementById('ap').value || "0";
         const finalizacoes = document.getElementById('finalizacoes').value || "0";
-        const chutesAlvo = document.getElementById('chutesAlvo').value || "0";
-        const chutesAlvoAdv = document.getElementById('chutesAlvoAdv').value || "0";
+        const chutes_alvo = document.getElementById('chutes_alvo').value || "0";
+        const escanteios = document.getElementById('escanteios').value || "0";
+        const pressao = document.getElementById('pressao').value;
+        const odd = document.getElementById('odd').value || "-";
         
         const appm = document.getElementById('out-appm').innerText;
-        const riscoTexto = document.getElementById('out-risco').innerText;
+        const pontos = document.getElementById('out-pontos').innerText;
         const decisaoTexto = document.getElementById('decisao-box').innerText;
         
-        if (minuto === "-") return;
-
-        let badgeRiscoClass = "badge-entrar"; // verde
-        if (riscoTexto === "EXTREMO") badgeRiscoClass = "badge-fora"; // vermelho
-        if (riscoTexto === "ALTO") badgeRiscoClass = "badge-fora"; // usando classe de vermelho para simplificar
-        if (riscoTexto === "MÉDIO") badgeRiscoClass = ""; // sem badge forte
+        if (minuto === "-" || ap === "0") {
+            alert("Insira os dados da partida antes de salvar no log.");
+            return;
+        }
 
         const corpoTabela = document.getElementById('historico-corpo');
         const novaLinha = document.createElement('tr');
+
+        let badgeClass = "badge-fora";
+        if (decisaoTexto.includes("ENTRAR")) badgeClass = "badge-entrar";
+        if (decisaoTexto.includes("🟡")) badgeClass = "badge-alerta";
 
         novaLinha.innerHTML = `
             <td><strong>${jogo}</strong></td>
             <td>${minuto}'</td>
             <td>${appm}</td>
-            <td>${finalizacoes} (${chutesAlvo}🎯)</td>
-            <td>${chutesAlvoAdv}🎯</td>
-            <td><span class="badge ${badgeRiscoClass}" style="${riscoTexto === 'ALTO' || riscoTexto === 'MÉDIO' ? 'background-color:#f59e0b;color:#fff;' : ''}">${riscoTexto}</span></td>
+            <td>${chutes_alvo}/${finalizacoes}</td>
+            <td>${escanteios}</td>
+            <td>${pressao}</td>
+            <td><span class="badge ${badgeClass}">${pontos}</span></td>
             <td><strong>${decisaoTexto}</strong></td>
+            <td>${odd}</td>
             <td>
                 <select class="select-resultado" onchange="atualizarCorResultado(this)">
                     <option value="Aberto">Aberto ⏳</option>
                     <option value="Green">Green ✅</option>
                     <option value="Red">Red ❌</option>
+                    <option value="Reembolso">Reembolso ↩️</option>
                 </select>
             </td>
         `;
 
         corpoTabela.insertBefore(novaLinha, corpoTabela.firstChild);
+        
+        // Limpar campos de dados variáveis, mas manter o nome do jogo e odd
+        document.getElementById('minuto').value = "";
+        document.getElementById('ap').value = "";
+        document.getElementById('finalizacoes').value = "";
+        document.getElementById('chutes_alvo').value = "";
+        document.getElementById('escanteios').value = "";
+        calcular(); // Atualiza a box para aguardando
     }
 
     function atualizarCorResultado(selectElement) {
