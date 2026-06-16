@@ -30,7 +30,9 @@
   --cyn:#38bdf8;
 }
 html,body{height:100%}
-body{background:var(--bg);color:var(--txt);font-family:'Consolas','Courier New',monospace;font-size:13px;line-height:1.4}
+
+/* --- FONTE ATUALIZADA AQUI --- */
+body{background:var(--bg);color:var(--txt);font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;font-size:13px;line-height:1.4}
 
 /* TOPBAR */
 .tb{display:flex;align-items:center;gap:10px;padding:0 16px;height:36px;background:var(--s1);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:99}
@@ -282,95 +284,4 @@ tr:hover td{background:var(--s2)}
       <div class="cx-v" id="cx-appm">—</div>
       <div class="cx-s">ideal ≥ 0.50/min</div>
     </div>
-    <div class="cx">
-      <div class="cx-l">Situação</div>
-      <div class="cx-v" id="cx-sit" style="font-size:14px;margin-top:2px">—</div>
-      <div class="cx-s" id="cx-sit-s">placar</div>
-    </div>
-    <div class="cx">
-      <div class="cx-l">Odd</div>
-      <div class="cx-v" id="cx-odd">—</div>
-      <div class="cx-s" id="cx-odd-s">mercado</div>
-    </div>
-  </div>
-
-  <div class="sci">
-    <div class="sc">
-      <div class="sc-l">Score Bruto</div>
-      <div class="sc-v a" id="sci-score">0</div>
-      <div class="sc-s">de 20 pts</div>
-    </div>
-    <div class="sc">
-      <div class="sc-l">Score %</div>
-      <div class="sc-v" id="sci-pct">0%</div>
-      <div class="sc-s">entrada ≥ 65%</div>
-    </div>
-    <div class="sc">
-      <div class="sc-l">Pressão Real</div>
-      <div class="sc-v" id="sci-pr">—</div>
-      <div class="sc-s">≥ 25% = qualidade</div>
-    </div>
-    <div class="sc">
-      <div class="sc-l">Critérios OK</div>
-      <div class="sc-v" id="sci-cok">0</div>
-      <div class="sc-s">de 7 principais</div>
-    </div>
-  </div>
-
-</div><div class="col-r">
-  <div class="sh">&#9632; Análise — Critérios ponderados</div>
-
-  <div class="crit-wrap">
-
-    <div class="cr">
-      <div class="ci ne" id="ci-efic">—</div>
-      <div class="cb">
-        <div class="cn">Eficiência AP ≥ 55%</div>
-        <div class="cd">Peso alto · domínio com qualidade real</div>
-      </div>
-      <span class="cv v-ne" id="cv-efic">—</span>
-    </div>
-
-    <div class="cr">
-      <div class="ci ne" id="ci-qch">—</div>
-      <div class="cb">
-        <div class="cn">Qualidade de Chutes ≥ 45%</div>
-        <div class="cd">Peso alto · chutes no gol vs total</div>
-      </div>
-      <span class="cv v-ne" id="cv-qch">—</span>
-    </div>
-
-    <div class="cr">
-      <div class="ci ne" id="ci-pr">—</div>
-      <div class="cb">
-        <div class="cn">Pressão Real ≥ 25%</div>
-        <div class="cd">Peso alto · métrica composta (efic × qchute)</div>
-      </div>
-      <span class="cv v-ne" id="cv-pr">—</span>
-    </div>
-
-    <div class="cr">
-      <div class="ci ne" id="ci-appm">—</div>
-      <div class="cb">
-        <div class="cn">AP por Minuto ≥ 0.50</div>
-        <div class="cd">Peso alto · ritmo e constância da pressão</div>
-      </div>
-      <span class="cv v-ne" id="cv-appm">—</span>
-    </div>
-
-    <div class="cr">
-      <div class="ci ne" id="ci-pos">—</div>
-      <div class="cb">
-        <div class="cn">Posse de Bola ≥ 55%</div>
-        <div class="cd">Peso alto · r=0.71 com resultado (UEFA/NIH)</div>
-      </div>
-      <span class="cv v-ne" id="cv-pos">—</span>
-    </div>
-
-    <div class="cr">
-      <div class="ci ne" id="ci-cng">—</div>
-      <div class="cb">
-        <div class="cn">Chutes no Gol ≥ 3</div>
-        <div class="cd">Peso alto · r=0.58 com vitória (NIH)</div>
-      </div>
-      <span class="cv v-ne" id="cv-cng">—</span>
+    <div class
