@@ -14,10 +14,10 @@
   --bd:#1c2d42;
   --bd2:#243250;
   --acc:#3b82f6;
-  --txt:#d0dced;
-  --txt2:#7a96b4;
-  --mu:#3a526e;
-  --mu2:#1f3048;
+  --txt:#ffffff;   /* Alterado para branco puro */
+  --txt2:#ffffff;  /* Alterado para branco puro */
+  --mu:#ffffff;    /* Alterado para branco puro (era o cinza azulado principal) */
+  --mu2:#cccccc;   /* Alterado para um cinza bem claro/quase branco para manter legibilidade dos placeholders */
   --grn:#22c55e;
   --gbg:#031610;
   --gbr:#0f4d27;
@@ -187,19 +187,16 @@ tr:hover td{background:var(--s2)}
 
 <div class="app">
 
-<!-- ═══════════ COL ESQUERDA ═══════════ -->
 <div class="col-l">
   <div class="sh">&#9632; Entrada de dados — AI Score Live <span>Ideal: 15–30 min</span></div>
 
   <div class="inp-wrap">
 
-    <!-- Jogo -->
     <div class="ic full">
       <div class="il">Identificação do Jogo</div>
       <input class="fi" id="jogo" type="text" placeholder="Ex: Flamengo x Vasco" oninput="calc()">
     </div>
 
-    <!-- BLOCO 1: CONTEXTO -->
     <div class="dv"><span>Contexto do jogo</span><div class="dv-line"></div></div>
 
     <div class="ic">
@@ -218,7 +215,6 @@ tr:hover td{background:var(--s2)}
       <div class="fi-sub">Time A = o que você quer apostar</div>
     </div>
 
-    <!-- BLOCO 2: PRESSÃO -->
     <div class="dv"><span>Pressão ofensiva do Time A</span><div class="dv-line"></div></div>
 
     <div class="ic">
@@ -245,7 +241,6 @@ tr:hover td{background:var(--s2)}
       <div class="fi-sub">Volume de finalização total</div>
     </div>
 
-    <!-- BLOCO 3: CONTROLE -->
     <div class="dv"><span>Controle e posse</span><div class="dv-line"></div></div>
 
     <div class="ic">
@@ -260,10 +255,7 @@ tr:hover td{background:var(--s2)}
       <div class="fi-sub">Value ideal: 1.30 – 2.20</div>
     </div>
 
-  </div><!-- /inp-wrap -->
-
-  <!-- RAZÕES CRUZADAS CALCULADAS -->
-  <div class="raz">
+  </div><div class="raz">
     <div class="rz">
       <div class="rz-l">Eficiência AP</div>
       <div class="rz-v" id="rv-efic">—</div>
@@ -284,7 +276,6 @@ tr:hover td{background:var(--s2)}
     </div>
   </div>
 
-  <!-- CONTEXTO CALCULADO -->
   <div class="ctx">
     <div class="cx">
       <div class="cx-l">AP por Minuto</div>
@@ -303,7 +294,6 @@ tr:hover td{background:var(--s2)}
     </div>
   </div>
 
-  <!-- SCORE INDEX -->
   <div class="sci">
     <div class="sc">
       <div class="sc-l">Score Bruto</div>
@@ -327,15 +317,11 @@ tr:hover td{background:var(--s2)}
     </div>
   </div>
 
-</div><!-- /col-l -->
-
-<!-- ═══════════ COL DIREITA ═══════════ -->
-<div class="col-r">
+</div><div class="col-r">
   <div class="sh">&#9632; Análise — Critérios ponderados</div>
 
   <div class="crit-wrap">
 
-    <!-- CRITÉRIO 1 -->
     <div class="cr">
       <div class="ci ne" id="ci-efic">—</div>
       <div class="cb">
@@ -345,7 +331,6 @@ tr:hover td{background:var(--s2)}
       <span class="cv v-ne" id="cv-efic">—</span>
     </div>
 
-    <!-- CRITÉRIO 2 -->
     <div class="cr">
       <div class="ci ne" id="ci-qch">—</div>
       <div class="cb">
@@ -355,7 +340,6 @@ tr:hover td{background:var(--s2)}
       <span class="cv v-ne" id="cv-qch">—</span>
     </div>
 
-    <!-- CRITÉRIO 3 -->
     <div class="cr">
       <div class="ci ne" id="ci-pr">—</div>
       <div class="cb">
@@ -365,7 +349,6 @@ tr:hover td{background:var(--s2)}
       <span class="cv v-ne" id="cv-pr">—</span>
     </div>
 
-    <!-- CRITÉRIO 4 -->
     <div class="cr">
       <div class="ci ne" id="ci-appm">—</div>
       <div class="cb">
@@ -375,7 +358,6 @@ tr:hover td{background:var(--s2)}
       <span class="cv v-ne" id="cv-appm">—</span>
     </div>
 
-    <!-- CRITÉRIO 5 -->
     <div class="cr">
       <div class="ci ne" id="ci-pos">—</div>
       <div class="cb">
@@ -385,7 +367,6 @@ tr:hover td{background:var(--s2)}
       <span class="cv v-ne" id="cv-pos">—</span>
     </div>
 
-    <!-- CRITÉRIO 6 -->
     <div class="cr">
       <div class="ci ne" id="ci-cng">—</div>
       <div class="cb">
@@ -393,375 +374,3 @@ tr:hover td{background:var(--s2)}
         <div class="cd">Peso alto · r=0.58 com vitória (NIH)</div>
       </div>
       <span class="cv v-ne" id="cv-cng">—</span>
-    </div>
-
-    <!-- CRITÉRIO 7 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-sit">—</div>
-      <div class="cb">
-        <div class="cn">Situação do Placar</div>
-        <div class="cd">Peso alto · ganhar/empatar vs perder</div>
-      </div>
-      <span class="cv v-ne" id="cv-sit">—</span>
-    </div>
-
-    <!-- CRITÉRIO 8 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-jan">—</div>
-      <div class="cb">
-        <div class="cn">Janela 15–30 min</div>
-        <div class="cd">Contexto · odd ainda tem value</div>
-      </div>
-      <span class="cv v-ne" id="cv-jan">—</span>
-    </div>
-
-    <!-- CRITÉRIO 9 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-odd">—</div>
-      <div class="cb">
-        <div class="cn">Odd 1.30 – 2.20</div>
-        <div class="cd">Value · faixa de retorno saudável</div>
-      </div>
-      <span class="cv v-ne" id="cv-odd">—</span>
-    </div>
-
-    <!-- CRITÉRIO BLOQUEANTE -->
-    <div class="cr" style="background:var(--s3)">
-      <div class="ci ne" id="ci-arm">—</div>
-      <div class="cb">
-        <div class="cn">Detector de Armadilha</div>
-        <div class="cd">AP alto + chutes no gol baixo = pressão sem qualidade</div>
-      </div>
-      <span class="cv v-ne" id="cv-arm">—</span>
-    </div>
-
-  </div><!-- /crit-wrap -->
-
-  <!-- ALERTAS -->
-  <div class="al al-r" id="al-arm">&#9650; ARMADILHA DETECTADA — muitos ataques, poucos chutes no gol. Padrão clássico de red.</div>
-  <div class="al al-r" id="al-odd">&#9650; Odd seca (&lt;1.30) — value inexistente. Pule esse jogo.</div>
-  <div class="al al-y" id="al-perd">&#9651; Perdendo no placar — dados inflados por desespero, não domínio real.</div>
-  <div class="al al-y" id="al-jan">&#9651; Fora da janela ideal (15–30 min) — risco elevado.</div>
-  <div class="al al-c" id="al-ok">&#9432; Setup forte — todos os critérios principais atingidos.</div>
-
-  <!-- VEREDITO -->
-  <div class="verd" id="verd">
-    <div class="ve">Veredito do Algoritmo</div>
-    <div class="vm vn" id="vm">AGUARDANDO</div>
-    <div class="vs" id="vs">preencha os dados ao lado</div>
-  </div>
-
-  <!-- METROS -->
-  <div class="mts">
-    <div class="mt">
-      <span class="mt-l">Score</span>
-      <div class="mt-tr"><div class="mt-fi" id="mt-sc" style="width:0%;background:var(--mu2)"></div></div>
-      <span class="mt-n" id="mt-sc-n">0%</span>
-    </div>
-    <div class="mt">
-      <span class="mt-l">Risco</span>
-      <div class="mt-tr"><div class="mt-fi" id="mt-rk" style="width:0%;background:var(--mu2)"></div></div>
-      <span class="mt-n" id="mt-rk-n">—</span>
-    </div>
-    <div class="mt">
-      <span class="mt-l">Pressão Real</span>
-      <div class="mt-tr"><div class="mt-fi" id="mt-pr" style="width:0%;background:var(--mu2)"></div></div>
-      <span class="mt-n" id="mt-pr-n">—</span>
-    </div>
-  </div>
-
-  <button class="btn" onclick="salvar()">&#9632; Registrar no Log</button>
-
-</div><!-- /col-r -->
-</div><!-- /app -->
-
-<!-- LOG -->
-<div class="log-sec">
-  <div class="sh">&#9632; Log de Operações da Sessão <span id="lg-ct">0 entradas</span></div>
-  <div class="log-sc">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Jogo</th><th>Min</th><th>Placar</th>
-          <th>AP/m</th><th>Efic%</th><th>QCh%</th><th>PReal%</th>
-          <th>Posse%</th><th>CNG</th><th>Score%</th>
-          <th>Decisão</th><th>Odd</th><th>Resultado</th>
-        </tr>
-      </thead>
-      <tbody id="lg-body">
-        <tr><td colspan="14" class="lg-empty">— Nenhuma operação registrada nesta sessão —</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<script>
-// Pesos baseados em correlação científica com vitória
-const P={
-  efic:3,  // AP vs ANP — qualidade da pressão
-  qch:3,   // Chutes no gol vs total
-  pr:4,    // Pressão real composta (maior peso — métrica síntese)
-  appm:3,  // AP/min
-  pos:3,   // Posse (r=0.71)
-  cng:3,   // Chutes no gol absoluto (r=0.58)
-  sit:3,   // Situação placar
-};
-const MAX=Object.values(P).reduce((a,b)=>a+b,0); // 22
-
-const g=id=>document.getElementById(id);
-
-function setRz(fillId,valId,val,ideal,fmt){
-  const fEl=g(fillId),vEl=g(valId);
-  if(val<0){
-    fEl.style.width='0%';fEl.style.background='var(--mu2)';
-    vEl.textContent='—';vEl.style.color='var(--mu)';return;
-  }
-  const pct=Math.min(100,val);
-  fEl.style.width=pct+'%';
-  fEl.style.background=val>=ideal?'var(--grn)':val>=(ideal*0.7)?'var(--yel)':'var(--red)';
-  vEl.textContent=fmt(val);
-  vEl.style.color=val>=ideal?'var(--grn)':val>=(ideal*0.7)?'var(--yel)':'var(--red)';
-}
-
-function setCr(id,est,val){
-  const ci=g('ci-'+id),cv=g('cv-'+id);
-  const m={ok:{c:'ci ok',vc:'v-ok',s:'✓'},fl:{c:'ci fl',vc:'v-fl',s:'✗'},wn:{c:'ci wn',vc:'v-wn',s:'!'},ne:{c:'ci ne',vc:'v-ne',s:'—'}};
-  const t=m[est]||m.ne;
-  ci.className=t.c;ci.textContent=t.s;
-  cv.className='cv '+t.vc;cv.textContent=val||'—';
-}
-
-function showAl(id,show){
-  const el=g(id);
-  el.classList.toggle('show',!!show);
-}
-
-let logN=0;
-
-function calc(){
-  const min  = parseFloat(g('min').value)  || 0;
-  const gaS  = g('ga').value;
-  const gbS  = g('gb').value;
-  const ga   = gaS!==''?parseFloat(gaS):null;
-  const gb   = gbS!==''?parseFloat(gbS):null;
-  const ap   = parseFloat(g('ap').value)   || 0;
-  const anp  = parseFloat(g('anp').value)  || 0;
-  const cng  = parseFloat(g('cng').value)  || 0;
-  const cf   = parseFloat(g('cf').value)   || 0;
-  const pos  = parseFloat(g('pos').value)  || 0;
-  const odd  = parseFloat(g('odd').value)  || 0;
-
-  // ── CÁLCULOS DAS RAZÕES ──
-  const totalAt = ap+anp;
-  const totalCh = cng+cf;
-  const appm    = min>0 ? ap/min : -1;
-  const efic    = totalAt>0 ? (ap/totalAt)*100 : -1;
-  const qch     = totalCh>0 ? (cng/totalCh)*100 : -1;
-  const pr      = (efic>=0&&qch>=0) ? (efic/100)*(qch/100)*100 : -1;
-
-  // ── EXIBIR RAZÕES ──
-  setRz('rf-efic','rv-efic', efic, 55, v=>v.toFixed(0)+'%');
-  setRz('rf-qch', 'rv-qch',  qch,  45, v=>v.toFixed(0)+'%');
-  setRz('rf-pr',  'rv-pr',   pr,   25, v=>v.toFixed(0)+'%');
-
-  // ── CONTEXTO BOX ──
-  g('cx-appm').textContent = appm>=0?appm.toFixed(2):'—';
-  g('cx-appm').style.color = appm>=0.5?'var(--grn)':appm>=0.35?'var(--yel)':'var(--red)';
-
-  const sitV=g('cx-sit'), sitS=g('cx-sit-s');
-  let sitTxt='—', sitColor='var(--mu)', sitSub='placar';
-  if(ga!==null&&gb!==null){
-    if(ga>gb){sitTxt='Ganhando';sitColor='var(--grn)';sitSub=ga+' – '+gb;}
-    else if(ga===gb){sitTxt='Empatando';sitColor='var(--yel)';sitSub=ga+' – '+gb;}
-    else{sitTxt='Perdendo';sitColor='var(--red)';sitSub=ga+' – '+gb;}
-  }
-  sitV.textContent=sitTxt;sitV.style.color=sitColor;sitS.textContent=sitSub;
-
-  g('cx-odd').textContent=odd>0?odd.toFixed(2):'—';
-  g('cx-odd').style.color=odd>0?(odd>=1.30&&odd<=2.20?'var(--grn)':odd<1.30?'var(--red)':'var(--yel)'):'var(--mu)';
-  g('cx-odd-s').textContent=odd<1.30&&odd>0?'SECA':odd>2.20&&odd>0?'Alta demais':'mercado';
-
-  // Metros: pressão real
-  const prM=g('mt-pr');
-  if(pr>=0){
-    prM.style.width=Math.min(100,pr)+'%';
-    prM.style.background=pr>=25?'var(--grn)':pr>=15?'var(--yel)':'var(--red)';
-    g('mt-pr-n').textContent=pr.toFixed(0)+'%';
-  } else {
-    prM.style.width='0%';prM.style.background='var(--mu2)';g('mt-pr-n').textContent='—';
-  }
-
-  // ── AVALIAÇÃO DOS CRITÉRIOS ──
-  const placarOk = ga!==null&&gb!==null;
-  const sitOk    = placarOk&&ga>=gb; // ganhando ou empatando
-  const sitPerd  = placarOk&&ga<gb;
-
-  // Detector de armadilha: AP alto mas QCH muito baixo
-  const armadilha = ap>=8&&qch>=0&&qch<25;
-
-  const C={
-    efic:  efic>=55,
-    qch:   qch>=45,
-    pr:    pr>=25,
-    appm:  appm>=0.50,
-    pos:   pos>=55,
-    cng:   cng>=3,
-    sit:   sitOk,
-  };
-
-  // Critérios de contexto (não somam, só sinalizam)
-  const jan   = min>=15&&min<=30;
-  const oddOk = odd>=1.30&&odd<=2.20;
-
-  setCr('efic', efic<0?'ne':C.efic?'ok':'fl', efic>=0?efic.toFixed(0)+'%':'—');
-  setCr('qch',  qch<0?'ne':C.qch?'ok':'fl',   qch>=0?qch.toFixed(0)+'%':'—');
-  setCr('pr',   pr<0?'ne':C.pr?'ok':'fl',      pr>=0?pr.toFixed(0)+'%':'—');
-  setCr('appm', appm<0?'ne':C.appm?'ok':'fl',  appm>=0?appm.toFixed(2)+'/m':'—');
-  setCr('pos',  pos<=0?'ne':C.pos?'ok':'fl',   pos>0?pos+'%':'—');
-  setCr('cng',  cng<=0&&cf<=0?'ne':C.cng?'ok':'fl', (cng>0||cf>0)?cng+' chutes':'—');
-  setCr('sit',  !placarOk?'ne':C.sit?'ok':(sitPerd?'fl':'wn'), sitTxt||'—');
-  setCr('jan',  min<=0?'ne':jan?'ok':'wn', min>0?min+"'":'—');
-  setCr('odd',  odd<=0?'ne':oddOk?'ok':(odd<1.30?'wn':'fl'), odd>0?odd.toFixed(2):'—');
-  setCr('arm',  !armadilha?'ok':'fl', armadilha?'DETECTADA':'Limpo');
-
-  // ── SCORE PONDERADO ──
-  let score=0;
-  let cok=0;
-  const keys=['efic','qch','pr','appm','pos','cng','sit'];
-  keys.forEach(k=>{ if(C[k]){score+=P[k];cok++;} });
-
-  // Penalidades
-  if(sitPerd)        score=Math.max(0,score-4);
-  if(armadilha)      score=Math.max(0,score-5);
-  if(odd>0&&odd<1.30) score=Math.max(0,score-6);
-
-  const pct=Math.round((score/MAX)*100);
-
-  g('sci-score').textContent=score;
-  g('sci-pct').textContent=pct+'%';
-  g('sci-pr').textContent=pr>=0?pr.toFixed(0)+'%':'—';
-  g('sci-pr').style.color=pr>=25?'var(--grn)':pr>=15?'var(--yel)':'var(--red)';
-  g('sci-cok').textContent=cok;
-  g('sci-cok').style.color=cok>=5?'var(--grn)':cok>=3?'var(--yel)':'var(--red)';
-
-  // Score metro
-  const sm=g('mt-sc');
-  sm.style.width=pct+'%';
-  sm.style.background=pct>=65?'var(--grn)':pct>=45?'var(--yel)':'var(--red)';
-  g('mt-sc-n').textContent=pct+'%';
-
-  // Risco metro
-  let risco=100-pct;
-  if(!jan&&min>0) risco=Math.min(100,risco+10);
-  if(armadilha)   risco=Math.min(100,risco+20);
-  if(sitPerd)     risco=Math.min(100,risco+15);
-  const rm=g('mt-rk');
-  rm.style.width=risco+'%';
-  rm.style.background=risco<35?'var(--grn)':risco<65?'var(--yel)':'var(--red)';
-  g('mt-rk-n').textContent=risco<35?'BAIXO':risco<65?'MÉDIO':'ALTO';
-
-  // ── ALERTAS ──
-  showAl('al-arm',  armadilha);
-  showAl('al-odd',  odd>0&&odd<1.30);
-  showAl('al-perd', sitPerd);
-  showAl('al-jan',  min>0&&!jan);
-  showAl('al-ok',   pct>=65&&cok>=5&&!armadilha&&!sitPerd);
-
-  // ── VEREDITO ──
-  const vEl=g('verd'), vmEl=g('vm'), vsEl=g('vs');
-
-  if(odd>0&&odd<1.30){
-    vEl.className='verd v-r'; vmEl.className='vm vr';
-    vmEl.textContent='▪ NÃO ENTRAR';
-    vsEl.textContent='Odd seca demais — value inexistente. Pule esse jogo.';
-  } else if(armadilha&&pct<60){
-    vEl.className='verd v-r'; vmEl.className='vm vr';
-    vmEl.textContent='▪ ARMADILHA';
-    vsEl.textContent='AP alto mas chutes no gol baixos — pressão sem qualidade.';
-  } else if(sitPerd&&pct<55){
-    vEl.className='verd v-r'; vmEl.className='vm vr';
-    vmEl.textContent='■ FICAR DE FORA';
-    vsEl.textContent='Perdendo + dados inflados por desespero. Não é domínio real.';
-  } else if(pct>=65&&cok>=5){
-    vEl.className='verd v-g'; vmEl.className='vm vg';
-    vmEl.textContent='▶ ENTRAR — '+pct+'%';
-    vsEl.textContent='Score '+score+'/'+MAX+' · '+cok+'/7 critérios OK · Pressão Real: '+(pr>=0?pr.toFixed(0)+'%':'—');
-  } else if(pct>=50){
-    vEl.className='verd v-y'; vmEl.className='vm vy';
-    vmEl.textContent='▪ SETUP FRACO — '+pct+'%';
-    vsEl.textContent='Score '+score+'/'+MAX+' · aguarde mais 1–2 critérios se completarem.';
-  } else if(min>0||ap>0){
-    vEl.className='verd v-r'; vmEl.className='vm vr';
-    vmEl.textContent='■ FICAR DE FORA — '+pct+'%';
-    vsEl.textContent='Score '+score+'/'+MAX+' · setup insuficiente para entrada.';
-  } else {
-    vEl.className='verd'; vmEl.className='vm vn';
-    vmEl.textContent='AGUARDANDO';
-    vsEl.textContent='preencha os dados ao lado';
-  }
-}
-
-function salvar(){
-  const min=g('min').value, ap=g('ap').value;
-  if(!min||!ap){alert('Preencha ao menos Minuto e Ataques Perigosos.');return;}
-
-  const jogo=g('jogo').value||'Sem nome';
-  const ga=g('ga').value, gb=g('gb').value;
-  const placar=(ga!==''&&gb!=='')?ga+'-'+gb:'—';
-  const anp=g('anp').value||'0', cng=g('cng').value||'0', cf=g('cf').value||'0';
-  const pos=g('pos').value||'—', odd=g('odd').value||'—';
-
-  const appm=g('cx-appm').textContent;
-  const efic=g('rv-efic').textContent;
-  const qch=g('rv-qch').textContent;
-  const pr=g('rv-pr').textContent;
-  const pct=g('sci-pct').textContent;
-  const vTxt=g('vm').textContent;
-
-  const isG=vTxt.includes('ENTRAR'), isY=vTxt.includes('FRACO')||vTxt.includes('SETUP');
-  const bc=isG?'bg':isY?'by':'br';
-
-  const tbody=g('lg-body');
-  if(tbody.querySelector('.lg-empty')) tbody.innerHTML='';
-
-  logN++;
-  g('lg-ct').textContent=logN+(logN===1?' entrada':' entradas');
-
-  const tr=document.createElement('tr');
-  tr.innerHTML=`
-    <td style="color:var(--mu2)">${logN}</td>
-    <td style="color:var(--txt);font-weight:700">${jogo}</td>
-    <td>${min}'</td>
-    <td>${placar}</td>
-    <td style="color:${parseFloat(appm)>=0.5?'var(--grn)':'var(--red)'}">${appm}</td>
-    <td>${efic}</td><td>${qch}</td><td>${pr}</td>
-    <td>${pos}${pos!=='—'?'%':''}</td>
-    <td>${cng}</td>
-    <td><span class="bdg ${bc}">${pct}</span></td>
-    <td style="font-size:10px;letter-spacing:.5px">${vTxt}</td>
-    <td>${odd!=='—'?parseFloat(odd).toFixed(2):'—'}</td>
-    <td><select class="rs" onchange="clrRes(this)">
-      <option value="">Aberto ⏳</option>
-      <option value="g">Green ✅</option>
-      <option value="r">Red ❌</option>
-      <option value="v">Reembolso ↩</option>
-    </select></td>`;
-  tbody.insertBefore(tr,tbody.firstChild);
-
-  ['min','ga','gb','ap','anp','cng','cf','pos','odd'].forEach(id=>{const el=g(id);if(el)el.value='';});
-  calc();
-}
-
-function clrRes(s){
-  const m={g:'var(--grn)',r:'var(--red)',v:'var(--yel)','':'var(--mu)'};
-  s.style.color=m[s.value];s.style.borderColor=m[s.value];
-}
-
-function tick(){
-  const n=new Date();
-  g('clk').textContent=n.toTimeString().slice(0,8);
-}
-tick();setInterval(tick,1000);
-</script>
-</body>
-</html>
