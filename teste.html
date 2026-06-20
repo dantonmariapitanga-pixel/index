@@ -253,7 +253,7 @@ tr:hover td{background:var(--s2)}
     <div class="ic">
       <div class="il">Escanteios <span class="peso ph">ALTO</span></div>
       <input class="fi" id="esc" type="number" min="0" placeholder="5" oninput="calc()">
-      <div class="fi-sub">Pressão na bola parada — ideal ≥4/min</div>
+      <div class="fi-sub">Confirmação de domínio real — ideal ≥4</div>
     </div>
 
     <!-- BLOCO 3: CONTROLE -->
@@ -308,9 +308,9 @@ tr:hover td{background:var(--s2)}
       <div class="cx-s" id="cx-sit-s">placar</div>
     </div>
     <div class="cx">
-      <div class="cx-l">Escanteios/min</div>
-      <div class="cx-v" id="cx-escpm">—</div>
-      <div class="cx-s">ideal ≥ 0.17/min</div>
+      <div class="cx-l">Escanteios</div>
+      <div class="cx-v" id="cx-esc">—</div>
+      <div class="cx-s">ideal ≥ 4</div>
     </div>
   </div>
 
@@ -665,6 +665,7 @@ function calc(){
   if(odd>0&&odd<1.30) score=Math.max(0,score-6);
 
   const pct=Math.round((score/MAX)*100);
+  console.log('SCORE CALC:', {C, score, cok, pct, MAX});
 
   g('sci-score').textContent=score;
   g('sci-pct').textContent=pct+'%';
@@ -698,6 +699,7 @@ function calc(){
 
   // ── VEREDITO ──
   const vEl=g('verd'), vmEl=g('vm'), vsEl=g('vs');
+  console.log('VEREDITO DEBUG:', {pct, cok, score, odd, armadilha, sitPerd, jan, vEl, vmEl, vsEl});
 
   if(odd>0&&odd<1.30){
     vEl.className='verd v-r'; vmEl.className='vm vr';
