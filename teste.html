@@ -319,7 +319,7 @@ tr:hover td{background:var(--s2)}
     <div class="sc">
       <div class="sc-l">Score Bruto</div>
       <div class="sc-v a" id="sci-score">0</div>
-      <div class="sc-s">de 25 pts</div>
+      <div class="sc-s">de 24 pts</div>
     </div>
     <div class="sc">
       <div class="sc-l">Score %</div>
@@ -411,7 +411,7 @@ tr:hover td{background:var(--s2)}
       <div class="ci ne" id="ci-esc">—</div>
       <div class="cb">
         <div class="cn">Escanteios ≥ 4</div>
-        <div class="cd">Peso alto · pressão na bola parada correlaciona com vitória</div>
+        <div class="cd">Confirmação · domínio real gera bola parada</div>
       </div>
       <span class="cv v-ne" id="cv-esc">—</span>
     </div>
@@ -525,10 +525,10 @@ const P={
   appm:3,  // AP/min
   pos:3,   // Posse (r=0.71)
   cng:3,   // Chutes no gol absoluto (r=0.58)
-  esc:3,   // Escanteios (pressão bola parada)
+  esc:2,   // Escanteios (confirmação, não driver primário)
   sit:3,   // Situação placar
 };
-const MAX=Object.values(P).reduce((a,b)=>a+b,0); // 25
+const MAX=Object.values(P).reduce((a,b)=>a+b,0); // 24
 
 const g=id=>document.getElementById(id);
 
@@ -714,15 +714,15 @@ function calc(){
   } else if(pct>=65&&cok>=6){
     vEl.className='verd v-g'; vmEl.className='vm vg';
     vmEl.textContent='▶ ENTRAR — '+pct+'%';
-    vsEl.textContent='Score '+score+'/'+MAX+' · '+cok+'/8 critérios OK · Pressão Real: '+(pr>=0?pr.toFixed(0)+'%':'—');
+    vsEl.textContent='Score '+score+'/24 · '+cok+'/8 critérios OK · Pressão Real: '+(pr>=0?pr.toFixed(0)+'%':'—');
   } else if(pct>=50){
     vEl.className='verd v-y'; vmEl.className='vm vy';
     vmEl.textContent='▪ SETUP FRACO — '+pct+'%';
-    vsEl.textContent='Score '+score+'/'+MAX+' · aguarde mais 1–2 critérios se completarem.';
+    vsEl.textContent='Score '+score+'/24 · aguarde mais 1–2 critérios se completarem.';
   } else if(min>0||ap>0){
     vEl.className='verd v-r'; vmEl.className='vm vr';
     vmEl.textContent='■ FICAR DE FORA — '+pct+'%';
-    vsEl.textContent='Score '+score+'/'+MAX+' · setup insuficiente para entrada.';
+    vsEl.textContent='Score '+score+'/24 · setup insuficiente para entrada.';
   } else {
     vEl.className='verd'; vmEl.className='vm vn';
     vmEl.textContent='AGUARDANDO';
