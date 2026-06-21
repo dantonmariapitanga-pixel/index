@@ -1,799 +1,1363 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sport Trade Terminal — 1X2 Live</title>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f5f5f5;
-  --s1:#ffffff;
-  --s2:#fafafa;
-  --s3:#f0f0f0;
-  --bd:#d3d3d3;
-  --bd2:#e0e0e0;
-  --acc:#003d7a;
-  --txt:#1a1a1a;
-  --txt2:#1a1a1a;
-  --mu:#4a4a4a;
-  --mu2:#e8e8e8;
-  --mu-txt:#7a7a7a;
-  --grn:#00a854;
-  --gbg:#f0f8f5;
-  --gbr:#00a854;
-  --red:#d9534f;
-  --rbg:#fef5f5;
-  --rbr:#d9534f;
-  --yel:#f0ad4e;
-  --ybg:#fffaf0;
-  --ybr:#f0ad4e;
-  --cyn:#0099cc;
-}
-html,body{height:100%}
-body{background:var(--bg);color:var(--txt);font-family:'Arial','Helvetica',sans-serif;font-size:13px;line-height:1.4;font-weight:500}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trader Terminal - Live Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* TOPBAR */
-.tb{display:flex;align-items:center;gap:10px;padding:0 16px;height:36px;background:var(--acc);border-bottom:2px solid var(--acc);position:sticky;top:0;z-index:99}
-.wm{display:flex;gap:5px}
-.wm i{width:10px;height:10px;border-radius:50%}
-.d1{background:#ff5f57}.d2{background:#febc2e}.d3{background:#28c840}
-.tb-t{font-size:14px;color:#ffffff;letter-spacing:1px;text-transform:uppercase;font-family:inherit;font-weight:700;}
-.tb-r{margin-left:auto;display:flex;align-items:center;gap:12px}
-.pill{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:1px;padding:4px 10px;border-radius:3px;background:rgba(255,255,255,0.15);color:#ffffff;font-weight:600}
-.p-live{color:#fff;border:1px solid rgba(255,255,255,0.4);background:rgba(0,168,84,0.2)}
-.p-mkt{color:#fff;border:1px solid rgba(255,255,255,0.4);background:rgba(0,153,204,0.2)}
-.ldot{width:6px;height:6px;border-radius:50%;background:#fff;animation:blink 1.4s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.clk{font-size:14px;color:#ffffff;letter-spacing:1px;font-family:inherit;font-weight:700;}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1f1a 0%, #0f3d2f 50%, #1a5c47 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
 
-/* LAYOUT */
-.app{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 36px)}
-.col-l{border-right:1px solid var(--bd)}
-.col-r{display:flex;flex-direction:column}
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-/* SECTION HEADER */
-.sh{display:flex;align-items:center;padding:10px 16px;background:var(--acc);border-bottom:1px solid var(--acc);font-size:13px;color:#ffffff;letter-spacing:1px;text-transform:uppercase;font-family:inherit;font-weight:700;}
-.sh span{margin-left:auto;color:rgba(255,255,255,0.8);font-size:11px;font-family:inherit;font-weight:600;}
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00d084;
+            padding-bottom: 20px;
+        }
 
-/* INPUTS */
-.inp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd)}
-.ic{background:var(--s1);padding:14px 16px}
-.ic.full{grid-column:1/-1}
-.il{font-size:12px;color:var(--txt);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px;font-family:inherit;font-weight:700;}
-.peso{font-size:9px;font-weight:700;padding:3px 7px;border-radius:2px;letter-spacing:.5px;font-family:inherit;}
-.ph{background:var(--gbg);color:var(--grn);border:1px solid var(--gbr)}
-.pm{background:var(--ybg);color:var(--yel);border:1px solid var(--ybr)}
-.fi{
-  width:100%;background:var(--s1);
-  border:1px solid var(--bd);border-radius:4px;
-  color:var(--txt);font-family:inherit;
-  font-size:14px;font-weight:600;
-  padding:11px 13px;outline:none;
-  transition:border .15s,box-shadow .15s;
-  -moz-appearance:textfield;
-}
-.fi::-webkit-outer-spin-button,.fi::-webkit-inner-spin-button{-webkit-appearance:none}
-.fi:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(0,61,122,0.1)}
-.fi::placeholder{color:var(--mu-txt);font-size:13px;font-weight:600;font-family:inherit;}
-.fi option{background:var(--s1);color:var(--txt)}
-.fi-sub{font-size:11px;color:var(--mu-txt);margin-top:5px;font-family:inherit;font-weight:600;}
+        .header h1 {
+            font-size: 2em;
+            color: #00d084;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 208, 132, 0.3);
+        }
 
-/* RAZÕES CALCULADAS */
-.raz{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bd);border-top:1px solid var(--bd)}
-.rz{background:var(--s2);padding:12px 16px}
-.rz-l{font-size:12px;color:var(--mu);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:6px;font-family:inherit;font-weight:700;}
-.rz-v{font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--txt)}
-.rz-b{height:5px;background:var(--mu2);border-radius:3px;margin-top:6px;overflow:hidden}
-.rz-f{height:100%;border-radius:3px;transition:width .4s,background .4s}
-.rz-s{font-size:11px;color:var(--mu-txt);margin-top:3px;font-family:inherit;font-weight:600;}
+        .inputs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
 
-/* PLACAR CONTEXT */
-.ctx{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--bd);border-top:1px solid var(--bd)}
-.cx{background:var(--s2);padding:10px 16px;text-align:center}
-.cx-l{font-size:12px;color:var(--mu);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;font-family:inherit;font-weight:700;}
-.cx-v{font-size:20px;font-weight:700;color:var(--txt)}
-.cx-s{font-size:11px;color:var(--mu-txt);margin-top:2px;font-family:inherit;font-weight:600;}
+        .team-section {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00d084;
+            border-radius: 8px;
+            padding: 20px;
+        }
 
-/* CRITÉRIOS */
-.crit-wrap{flex:1;overflow-y:auto;border-bottom:1px solid var(--bd)}
-.cr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--s1);transition:background .15s}
-.cr:hover{background:var(--s2)}
-.ci{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:inherit;}
-.ok{background:var(--gbg);border:1px solid var(--gbr);color:var(--grn)}
-.fl{background:var(--rbg);border:1px solid var(--rbr);color:var(--red)}
-.wn{background:var(--ybg);border:1px solid var(--ybr);color:var(--yel)}
-.ne{background:var(--s3);border:1px solid var(--bd2);color:var(--mu);font-family:inherit;font-weight:600;}
-.cb{flex:1}
-.cn{font-size:13px;color:var(--txt);line-height:1.3;font-family:inherit;font-weight:700;}
-.cd{font-size:12px;color:var(--mu);margin-top:1px;font-family:inherit;font-weight:600;}
-.cv{font-size:12px;font-weight:700;flex-shrink:0;min-width:50px;text-align:right;font-family:inherit;}
-.v-ok{color:var(--grn)}.v-fl{color:var(--red)}.v-wn{color:var(--yel)}.v-ne{color:var(--mu);font-family:inherit;font-weight:600;}
+        .team-section h2 {
+            color: #00d084;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-/* ALERTS */
-.al{padding:10px 16px;font-size:11px;letter-spacing:.5px;border-bottom:1px solid var(--bd);display:none;line-height:1.5;font-family:inherit;font-weight:600;}
-.al.show{display:block}
-.al-r{background:var(--rbg);color:var(--red);border-color:var(--rbr)}
-.al-y{background:var(--ybg);color:var(--yel);border-color:var(--ybr)}
-.al-c{background:#f0f5ff;color:var(--cyn);border-color:#cce5ff}
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
 
-/* VERDICT */
-.verd{padding:20px 16px;text-align:center;transition:background .3s,border-color .3s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-bottom:1px solid var(--bd)}
-.ve{font-size:12px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;font-family:inherit;font-weight:700;}
-.vm{font-size:18px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;transition:color .3s;font-family:inherit;}
-.vs{font-size:12px;color:var(--mu);letter-spacing:.5px;max-width:240px;line-height:1.5;text-align:center;font-family:inherit;font-weight:600;}
-.vn{color:var(--mu);font-family:inherit;font-weight:600;}
-.vg{color:var(--grn)}.vr{color:var(--red)}.vy{color:var(--yel)}
-.v-g{background:var(--gbg);border-color:var(--gbr);border:1px solid var(--gbr)}
-.v-r{background:var(--rbg);border-color:var(--rbr);border:1px solid var(--rbr)}
-.v-y{background:var(--ybg);border-color:var(--ybr);border:1px solid var(--ybr)}
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
 
-/* METROS */
-.mts{padding:12px 16px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:8px}
-.mt{display:flex;align-items:center;gap:10px}
-.mt-l{font-size:12px;color:var(--mu);letter-spacing:0.5px;text-transform:uppercase;width:100px;flex-shrink:0;font-family:inherit;font-weight:700;}
-.mt-tr{flex:1;height:6px;background:var(--mu2);border-radius:3px;overflow:hidden}
-.mt-fi{height:100%;border-radius:3px;transition:width .4s,background .4s}
-.mt-n{font-size:12px;font-weight:700;color:var(--txt);width:50px;text-align:right}
+        .input-group label {
+            color: #aaa;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-/* BTN */
-.btn{width:100%;padding:14px;background:var(--acc);color:#fff;border:none;font-family:inherit;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;}
-.btn:hover{background:#002a52}
+        .input-group input {
+            padding: 10px;
+            background: rgba(0, 208, 132, 0.1);
+            border: 1px solid #00d084;
+            color: #00d084;
+            border-radius: 4px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
 
-/* LOG */
-.log-sec{border-top:1px solid var(--bd)}
-.log-sc{overflow-x:auto}
-table{width:100%;border-collapse:collapse;white-space:nowrap}
-th{background:var(--acc);color:#fff;padding:10px;text-align:left;font-size:12px;letter-spacing:0.5px;text-transform:uppercase;border-bottom:2px solid var(--acc);font-weight:700;font-family:inherit;}
-td{padding:9px 10px;border-bottom:1px solid var(--bd);color:var(--txt);font-size:12px;font-family:inherit;font-weight:600;}
-tr:hover td{background:var(--s2)}
-.bdg{display:inline-block;padding:3px 8px;border-radius:3px;font-size:10px;letter-spacing:0.5px;font-weight:700;text-transform:uppercase}
-.bg{background:var(--gbg);color:var(--grn);border:1px solid var(--gbr)}
-.br{background:var(--rbg);color:var(--red);border:1px solid var(--rbr)}
-.by{background:var(--ybg);color:var(--yel);border:1px solid var(--ybr)}
-.rs{background:var(--s1);border:1px solid var(--bd);color:var(--txt);padding:5px 8px;font-size:12px;font-family:inherit;font-weight:600;border-radius:3px;cursor:pointer;transition:border .15s}
-.rs:focus{border-color:var(--acc);outline:none}
-.lg-empty{text-align:center;color:var(--mu-txt);padding:28px;font-size:13px;letter-spacing:0.5px;font-family:inherit;font-weight:600;}
+        .input-group input:focus {
+            outline: none;
+            background: rgba(0, 208, 132, 0.2);
+            box-shadow: 0 0 10px rgba(0, 208, 132, 0.5);
+        }
 
-/* DIVIDER LABEL */
-.dv{grid-column:1/-1;background:var(--s3);padding:7px 16px;display:flex;align-items:center;gap:8px;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
-.dv span{font-size:12px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;font-family:inherit;font-weight:700;}
-.dv-line{flex:1;height:1px;background:var(--bd2)}
+        .input-group input::placeholder {
+            color: rgba(0, 208, 132, 0.5);
+        }
 
-/* SCORE INDEX */
-.sci{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border-top:1px solid var(--bd)}
-.sc{background:var(--s2);padding:10px 14px}
-.sc-l{font-size:12px;color:var(--mu);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;font-family:inherit;font-weight:700;}
-.sc-v{font-size:20px;font-weight:700;color:var(--txt);letter-spacing:-0.5px}
-.sc-v.a{color:var(--acc)}
-.sc-s{font-size:11px;color:var(--mu-txt);margin-top:2px;font-family:inherit;font-weight:600;}
+        .match-info {
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00d084;
+            border-radius: 8px;
+            padding: 20px;
+        }
 
-@media(max-width:700px){
-  .app{grid-template-columns:1fr}
-  .col-l{border-right:none;border-bottom:1px solid var(--bd)}
-  .raz,.ctx{grid-template-columns:1fr 1fr}
-  .sci{grid-template-columns:1fr 1fr}
-  body{font-size:12px}
-  .sh,.il,.pb-t{font-size:12px}
-}
-</style>
+        .match-info h2 {
+            color: #00d084;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .button-group {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 40px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-analyze {
+            background: #00d084;
+            color: #000;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .btn-analyze:hover {
+            background: #00b870;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 208, 132, 0.4);
+        }
+
+        .btn-clear {
+            background: rgba(0, 208, 132, 0.2);
+            color: #00d084;
+            border: 1px solid #00d084;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .btn-clear:hover {
+            background: rgba(0, 208, 132, 0.3);
+        }
+
+        .results {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .team-analysis {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00d084;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .team-analysis h3 {
+            color: #00d084;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 208, 132, 0.1);
+            font-size: 0.9em;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #aaa;
+        }
+
+        .metric-value {
+            color: #00d084;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .verdict-section {
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00d084;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .verdict-section h2 {
+            color: #00d084;
+            margin-bottom: 30px;
+            font-size: 1.3em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .signals-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .signal-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(0, 208, 132, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .signal-card.strong {
+            border-color: #4caf50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .signal-card.weak {
+            border-color: #8bc34a;
+            box-shadow: 0 0 20px rgba(139, 195, 74, 0.3);
+        }
+
+        .signal-card.danger {
+            border-color: #ff5252;
+            box-shadow: 0 0 20px rgba(255, 82, 82, 0.3);
+        }
+
+        .signal-card.caution {
+            border-color: #ff9800;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+        }
+
+        .signal-title {
+            color: #aaa;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .signal-action {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .signal-action.back {
+            color: #4caf50;
+        }
+
+        .signal-action.lay {
+            color: #ff5252;
+        }
+
+        .signal-action.neutral {
+            color: #ff9800;
+        }
+
+        .signal-confidence {
+            color: #aaa;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        .analysis-text {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 3px solid #00d084;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .analysis-text strong {
+            color: #00d084;
+        }
+
+        @media (max-width: 1024px) {
+            .inputs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .signals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ TRADER TERMINAL</h1>
+            <p>Live Match Analysis - Sinais de Trading Real</p>
+        </div>
 
-<div class="tb">
-  <div class="wm"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
-  <span class="tb-t">Sport Trade Terminal</span>
-  <div class="tb-r">
-    <span class="pill p-mkt">● 1X2 LIVE</span>
-    <span class="pill p-live"><span class="ldot"></span>LIVE</span>
-    <span class="clk" id="clk">--:--:--</span>
-  </div>
-</div>
+        <div class="inputs-grid">
+            <div class="team-section">
+                <h2>🏠 Time da Casa</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Nome</label>
+                        <input type="text" id="homeTeam" placeholder="Equipe">
+                    </div>
+                    <div class="input-group">
+                        <label>Ataques Perigosos</label>
+                        <input type="number" id="homeAttacks" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Escanteios</label>
+                        <input type="number" id="homeCorners" placeholder="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Chutes no Alvo</label>
+                        <input type="number" id="homeOnTarget" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Chutes para Fora</label>
+                        <input type="number" id="homeWasted" placeholder="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Gols</label>
+                        <input type="number" id="homeGoals" placeholder="0" min="0">
+                    </div>
+                </div>
+            </div>
 
-<div class="app">
+            <div class="team-section">
+                <h2>✈️ Time Visitante</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Nome</label>
+                        <input type="text" id="awayTeam" placeholder="Equipe">
+                    </div>
+                    <div class="input-group">
+                        <label>Ataques Perigosos</label>
+                        <input type="number" id="awayAttacks" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Escanteios</label>
+                        <input type="number" id="awayCorners" placeholder="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Chutes no Alvo</label>
+                        <input type="number" id="awayOnTarget" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Chutes para Fora</label>
+                        <input type="number" id="awayWasted" placeholder="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Gols</label>
+                        <input type="number" id="awayGoals" placeholder="0" min="0">
+                    </div>
+                </div>
+            </div>
 
-<!-- ═══════════ COL ESQUERDA ═══════════ -->
-<div class="col-l">
-  <div class="sh">● Entrada de dados — AI Score Live <span>Ideal: 15–30 min</span></div>
+            <div class="match-info">
+                <h2>📊 Informações do Jogo</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Minuto de Jogo</label>
+                        <input type="number" id="matchMinute" placeholder="45" min="0" max="120">
+                    </div>
+                    <div class="input-group">
+                        <label>Placar (ex: 2-1)</label>
+                        <input type="text" id="score" placeholder="0-0">
+                    </div>
+                </div>
+            </div>
 
-  <div class="inp-wrap">
+            <div class="button-group">
+                <button class="btn-analyze" onclick="analyzeMatch()">🎯 ANALISAR</button>
+                <button class="btn-clear" onclick="clearAll()">🔄 LIMPAR</button>
+            </div>
+        </div>
 
-    <!-- Jogo -->
-    <div class="ic full">
-      <div class="il">Identificação do Jogo</div>
-      <input class="fi" id="jogo" type="text" placeholder="Ex: Flamengo x Vasco" oninput="calc()">
+        <div class="results" id="results">
+            <div class="analysis-grid">
+                <div class="team-analysis" id="homeAnalysis"></div>
+                <div class="team-analysis" id="awayAnalysis"></div>
+            </div>
+
+            <div class="verdict-section">
+                <h2>📈 Sinais de Trading</h2>
+                <div class="signals-grid" id="signalsGrid"></div>
+                <div class="analysis-text" id="analysisText"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- BLOCO 1: CONTEXTO -->
-    <div class="dv"><span>Contexto do jogo</span><div class="dv-line"></div></div>
+    <script>
+        function calculatePressure(attacks, corners, onTarget, wasted) {
+            return attacks + corners + onTarget + wasted;
+        }
 
-    <div class="ic">
-      <div class="il">Minuto Atual <span class="peso ph">DECISIVO</span></div>
-      <input class="fi" id="min" type="number" min="1" max="90" placeholder="22" oninput="calc()">
-      <div class="fi-sub">Janela ideal: 15 a 30 min</div>
+        function calculateEfficiency(goals, pressure) {
+            if (pressure === 0) return 0;
+            return (goals / pressure) * 100;
+        }
+
+        function getWasteRate(onTarget, wasted) {
+            const total = onTarget + wasted;
+            if (total === 0) return 0;
+            return (wasted / total) * 100;
+        }
+
+        function analyzeTeam(teamName, attacks, corners, onTarget, wasted, goals) {
+            const pressure = calculatePressure(attacks, corners, onTarget, wasted);
+            const efficiency = calculateEfficiency(goals, pressure);
+            const wasteRate = getWasteRate(onTarget, wasted);
+            const totalShots = onTarget + wasted;
+
+            return {
+                name: teamName,
+                attacks,
+                corners,
+                onTarget,
+                wasted,
+                goals,
+                pressure,
+                efficiency,
+                wasteRate,
+                totalShots
+            };
+        }
+
+        function generateTradeSignal(home, away) {
+            let homeSignal = { action: '', reasoning: [], confidence: 0 };
+            let awaySignal = { action: '', reasoning: [], confidence: 0 };
+            let overSignal = { action: '', reasoning: [], confidence: 0 };
+            let drawSignal = { action: '', reasoning: [], confidence: 0 };
+
+            // Análise HOME
+            if (home.pressure > 25 && home.goals <= 1 && home.wasteRate > 50) {
+                // Time atacando muito mas desperdiçando = cansado
+                homeSignal.action = 'LAY';
+                homeSignal.reasoning.push(`Pressão ${home.pressure} pontos com apenas ${home.goals} gols`);
+                homeSignal.reasoning.push(`${home.wasteRate.toFixed(0)}% de desperdício - time cansado`);
+                homeSignal.confidence = Math.min(90, 60 + (home.pressure - 25));
+                
+                overSignal.action = 'LAY';
+                overSignal.reasoning.push(`${home.name} queimando chances = menos gols`);
+                overSignal.confidence = 75;
+
+                drawSignal.action = 'BACK';
+                drawSignal.reasoning.push(`${home.name} cansado abre espaço`);
+                drawSignal.confidence = 70;
+            } else if (home.pressure > 30 && home.goals >= 2 && home.wasteRate < 40) {
+                // Time atacando e convertendo = força
+                homeSignal.action = 'BACK';
+                homeSignal.reasoning.push(`Pressão ${home.pressure} com ${home.goals} gols - eficiente`);
+                homeSignal.reasoning.push(`${home.wasteRate.toFixed(0)}% de desperdício - qualidade`);
+                homeSignal.confidence = Math.min(85, 65 + (home.goals * 10));
+
+                overSignal.action = 'BACK';
+                overSignal.reasoning.push(`${home.name} eficiente - provavelmente mais gols`);
+                overSignal.confidence = 70;
+
+                drawSignal.action = 'LAY';
+                drawSignal.reasoning.push(`${home.name} muito forte`);
+                drawSignal.confidence = 65;
+            } else if (home.pressure < 15 && home.goals === 0) {
+                homeSignal.action = 'NEUTRO';
+                homeSignal.reasoning.push(`Baixa pressão sem gols - time passivo`);
+                homeSignal.confidence = 40;
+            } else {
+                homeSignal.action = 'NEUTRO';
+                homeSignal.reasoning.push(`Padrão equilibrado - análise inconclusiva`);
+                homeSignal.confidence = 50;
+            }
+
+            // Análise AWAY (contra-ataque)
+            if (away.pressure < 10 && away.totalShots <= 3 && away.goals >= 1) {
+                // Poucos ataques mas muito eficiente = perigoso em contra
+                awaySignal.action = 'BACK';
+                awaySignal.reasoning.push(`${away.name} lethal em contra - ${away.efficiency.toFixed(1)}% eficiência`);
+                awaySignal.reasoning.push(`${away.goals} gols em apenas ${away.totalShots} chutes`);
+                awaySignal.confidence = Math.min(85, 70 + (away.efficiency / 2));
+
+                drawSignal.action = 'LAY';
+                drawSignal.reasoning.push(`${away.name} competente ofensivamente`);
+                drawSignal.confidence = 60;
+            } else if (away.pressure < 15 && away.goals === 0) {
+                awaySignal.action = 'LAY';
+                awaySignal.reasoning.push(`${away.name} sem criatividade - improvável marcar`);
+                awaySignal.confidence = 55;
+            } else if (away.pressure > 20 && away.goals === 0 && away.wasteRate > 55) {
+                awaySignal.action = 'LAY';
+                awaySignal.reasoning.push(`${away.name} desperdiçador - ${away.wasteRate.toFixed(0)}% de perda`);
+                awaySignal.confidence = 65;
+            } else {
+                awaySignal.action = 'NEUTRO';
+                awaySignal.reasoning.push(`Padrão equilibrado`);
+                awaySignal.confidence = 50;
+            }
+
+            // Ajustar OVER/UNDER
+            const totalPressure = home.pressure + away.pressure;
+            const totalGoals = home.goals + away.goals;
+
+            if (totalGoals >= 3 || (totalPressure > 50 && totalGoals >= 2)) {
+                if (!overSignal.action) {
+                    overSignal.action = 'BACK';
+                    overSignal.reasoning.push(`Alta pressão total (${totalPressure}) com gols sendo marcados`);
+                    overSignal.confidence = 70;
+                }
+            } else if (totalGoals <= 1 && (home.wasteRate > 50 || away.wasteRate > 50)) {
+                if (!overSignal.action) {
+                    overSignal.action = 'LAY';
+                    overSignal.reasoning.push(`Muita pressão (${totalPressure}) mas baixa conversão`);
+                    overSignal.confidence = 75;
+                }
+            }
+
+            if (!overSignal.action) {
+                overSignal.action = 'NEUTRO';
+                overSignal.confidence = 50;
+            }
+
+            if (!drawSignal.action) {
+                drawSignal.action = totalPressure > 40 ? 'LAY' : 'BACK';
+                drawSignal.confidence = Math.abs(totalPressure - 40) / 2 + 40;
+            }
+
+            return { homeSignal, awaySignal, overSignal, drawSignal };
+        }
+
+        function analyzeMatch() {
+            const homeTeam = document.getElementById('homeTeam').value || 'Casa';
+            const awayTeam = document.getElementById('awayTeam').value || 'Visitante';
+            const matchMinute = parseInt(document.getElementById('matchMinute').value) || 45;
+
+            const home = analyzeTeam(
+                homeTeam,
+                parseInt(document.getElementById('homeAttacks').value) || 0,
+                parseInt(document.getElementById('homeCorners').value) || 0,
+                parseInt(document.getElementById('homeOnTarget').value) || 0,
+                parseInt(document.getElementById('homeWasted').value) || 0,
+                parseInt(document.getElementById('homeGoals').value) || 0
+            );
+
+            const away = analyzeTeam(
+                awayTeam,
+                parseInt(document.getElementById('awayAttacks').value) || 0,
+                parseInt(document.getElementById('awayCorners').value) || 0,
+                parseInt(document.getElementById('awayOnTarget').value) || 0,
+                parseInt(document.getElementById('awayWasted').value) || 0,
+                parseInt(document.getElementById('awayGoals').value) || 0
+            );
+
+            // Exibir análise das equipes
+            document.getElementById('homeAnalysis').innerHTML = renderTeamAnalysis(home);
+            document.getElementById('awayAnalysis').innerHTML = renderTeamAnalysis(away);
+
+            // Gerar sinais
+            const { homeSignal, awaySignal, overSignal, drawSignal } = generateTradeSignal(home, away);
+
+            // Exibir sinais
+            document.getElementById('signalsGrid').innerHTML = `
+                <div class="signal-card ${getCardClass(homeSignal.action)}">
+                    <div class="signal-title">1️⃣ ${home.name}</div>
+                    <div class="signal-action ${homeSignal.action.toLowerCase()}">${homeSignal.action}</div>
+                    <div class="signal-confidence">${homeSignal.confidence.toFixed(0)}% confiança</div>
+                </div>
+                <div class="signal-card ${getCardClass(drawSignal.action)}">
+                    <div class="signal-title">❌ Empate</div>
+                    <div class="signal-action ${drawSignal.action.toLowerCase()}">${drawSignal.action}</div>
+                    <div class="signal-confidence">${drawSignal.confidence.toFixed(0)}% confiança</div>
+                </div>
+                <div class="signal-card ${getCardClass(awaySignal.action)}">
+                    <div class="signal-title">2️⃣ ${away.name}</div>
+                    <div class="signal-action ${awaySignal.action.toLowerCase()}">${awaySignal.action}</div>
+                    <div class="signal-confidence">${awaySignal.confidence.toFixed(0)}% confiança</div>
+                </div>
+            `;
+
+            // Análise textual
+            let analysisHTML = `<strong>📊 Min ${matchMinute}'</strong><br><br>`;
+            analysisHTML += `<strong>${home.name}:</strong> ${homeSignal.reasoning.join(' | ')}<br><br>`;
+            analysisHTML += `<strong>${away.name}:</strong> ${awaySignal.reasoning.join(' | ')}<br><br>`;
+            analysisHTML += `<strong>OVER/UNDER 2.5:</strong> ${overSignal.action} - ${overSignal.reasoning.join(' | ')}`;
+
+            document.getElementById('analysisText').innerHTML = analysisHTML;
+            document.getElementById('results').classList.add('active');
+        }
+
+        function renderTeamAnalysis(team) {
+            return `
+                <h3>${team.name}</h3>
+                <div class="metric">
+                    <span class="metric-label">Pressão Total</span>
+                    <span class="metric-value">${team.pressure}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Ataques | Escanteios</span>
+                    <span class="metric-value">${team.attacks} | ${team.corners}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Chutes (Alvo/Perdido)</span>
+                    <span class="metric-value">${team.onTarget}/${team.wasted}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Gols</span>
+                    <span class="metric-value">${team.goals}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Eficiência Ofensiva</span>
+                    <span class="metric-value">${team.efficiency.toFixed(1)}%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Taxa de Desperdício</span>
+                    <span class="metric-value">${team.wasteRate.toFixed(0)}%</span>
+                </div>
+            `;
+        }
+
+        function getCardClass(action) {
+            if (action === 'BACK') return 'strong';
+            if (action === 'LAY') return 'danger';
+            return 'caution';
+        }
+
+        function clearAll() {
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.getElementById('results').classList.remove('active');
+        }
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trader Terminal - Live Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1f1a 0%, #0f3d2f 50%, #1a5c47 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00d084;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            color: #00d084;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 208, 132, 0.3);
+        }
+
+        .inputs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .team-section {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00d084;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .team-section h2 {
+            color: #00d084;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            color: #aaa;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            padding: 10px;
+            background: rgba(0, 208, 132, 0.1);
+            border: 1px solid #00d084;
+            color: #00d084;
+            border-radius: 4px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            background: rgba(0, 208, 132, 0.2);
+            box-shadow: 0 0 10px rgba(0, 208, 132, 0.5);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(0, 208, 132, 0.5);
+        }
+
+        .match-info {
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00d084;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .match-info h2 {
+            color: #00d084;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .button-group {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 40px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-analyze {
+            background: #00d084;
+            color: #000;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .btn-analyze:hover {
+            background: #00b870;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 208, 132, 0.4);
+        }
+
+        .btn-clear {
+            background: rgba(0, 208, 132, 0.2);
+            color: #00d084;
+            border: 1px solid #00d084;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .btn-clear:hover {
+            background: rgba(0, 208, 132, 0.3);
+        }
+
+        .results {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .team-analysis {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00d084;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .team-analysis h3 {
+            color: #00d084;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 208, 132, 0.1);
+            font-size: 0.9em;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #aaa;
+        }
+
+        .metric-value {
+            color: #00d084;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .verdict-section {
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00d084;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .verdict-section h2 {
+            color: #00d084;
+            margin-bottom: 30px;
+            font-size: 1.3em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .signals-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .signal-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(0, 208, 132, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .signal-card.strong {
+            border-color: #4caf50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .signal-card.weak {
+            border-color: #8bc34a;
+            box-shadow: 0 0 20px rgba(139, 195, 74, 0.3);
+        }
+
+        .signal-card.danger {
+            border-color: #ff5252;
+            box-shadow: 0 0 20px rgba(255, 82, 82, 0.3);
+        }
+
+        .signal-card.caution {
+            border-color: #ff9800;
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+        }
+
+        .signal-title {
+            color: #aaa;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .signal-action {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .signal-action.back {
+            color: #4caf50;
+        }
+
+        .signal-action.lay {
+            color: #ff5252;
+        }
+
+        .signal-action.neutral {
+            color: #ff9800;
+        }
+
+        .signal-confidence {
+            color: #aaa;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        .analysis-text {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 3px solid #00d084;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .analysis-text strong {
+            color: #00d084;
+        }
+
+        @media (max-width: 1024px) {
+            .inputs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .signals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ TRADER TERMINAL</h1>
+            <p>Live Match Analysis - Sinais de Trading Real</p>
+        </div>
+
+        <div class="inputs-grid">
+            <div class="team-section">
+                <h2>🏠 Time da Casa</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Nome</label>
+                        <input type="text" id="homeTeam" placeholder="Equipe">
+                    </div>
+                    <div class="input-group">
+                        <label>Ataques Perigosos</label>
+                        <input type="number" id="homeAttacks" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Escanteios</label>
+                        <input type="number" id="homeCorners" placeholder="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Chutes no Alvo</label>
+                        <input type="number" id="homeOnTarget" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Chutes para Fora</label>
+                        <input type="number" id="homeWasted" placeholder="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Gols</label>
+                        <input type="number" id="homeGoals" placeholder="0" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-section">
+                <h2>✈️ Time Visitante</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Nome</label>
+                        <input type="text" id="awayTeam" placeholder="Equipe">
+                    </div>
+                    <div class="input-group">
+                        <label>Ataques Perigosos</label>
+                        <input type="number" id="awayAttacks" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Escanteios</label>
+                        <input type="number" id="awayCorners" placeholder="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Chutes no Alvo</label>
+                        <input type="number" id="awayOnTarget" placeholder="0" min="0">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Chutes para Fora</label>
+                        <input type="number" id="awayWasted" placeholder="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Gols</label>
+                        <input type="number" id="awayGoals" placeholder="0" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="match-info">
+                <h2>📊 Informações do Jogo</h2>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Minuto de Jogo</label>
+                        <input type="number" id="matchMinute" placeholder="45" min="0" max="120">
+                    </div>
+                    <div class="input-group">
+                        <label>Placar (ex: 2-1)</label>
+                        <input type="text" id="score" placeholder="0-0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-analyze" onclick="analyzeMatch()">🎯 ANALISAR</button>
+                <button class="btn-clear" onclick="clearAll()">🔄 LIMPAR</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="analysis-grid">
+                <div class="team-analysis" id="homeAnalysis"></div>
+                <div class="team-analysis" id="awayAnalysis"></div>
+            </div>
+
+            <div class="verdict-section">
+                <h2>📈 Sinais de Trading</h2>
+                <div class="signals-grid" id="signalsGrid"></div>
+                <div class="analysis-text" id="analysisText"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="ic">
-      <div class="il">Placar (Time A – Time B)</div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <input class="fi" id="ga" type="number" min="0" placeholder="0" oninput="calc()" style="flex:1">
-        <span style="color:var(--mu);font-size:16px;font-weight:700">–</span>
-        <input class="fi" id="gb" type="number" min="0" placeholder="0" oninput="calc()" style="flex:1">
-      </div>
-      <div class="fi-sub">Time A = o que você quer apostar</div>
-    </div>
-
-    <!-- BLOCO 2: PRESSÃO -->
-    <div class="dv"><span>Pressão ofensiva do Time A</span><div class="dv-line"></div></div>
-
-    <div class="ic">
-      <div class="il">Ataques Perigosos (AP) <span class="peso ph">ALTO</span></div>
-      <input class="fi" id="ap" type="number" min="0" placeholder="12" oninput="calc()">
-      <div class="fi-sub">Ataques que chegam perto do gol</div>
-    </div>
-
-    <div class="ic">
-      <div class="il">Ataques Não Perigosos (ANP) <span class="peso pm">MÉDIO</span></div>
-      <input class="fi" id="anp" type="number" min="0" placeholder="8" oninput="calc()">
-      <div class="fi-sub">Volume sem qualidade — dilui AP</div>
-    </div>
-
-    <div class="ic">
-      <div class="il">Chutes No Gol <span class="peso ph">ALTO</span></div>
-      <input class="fi" id="cng" type="number" min="0" placeholder="3" oninput="calc()">
-      <div class="fi-sub">Exigiram defesa do goleiro</div>
-    </div>
-
-    <div class="ic">
-      <div class="il">Chutes Fora <span class="peso pm">MÉDIO</span></div>
-      <input class="fi" id="cf" type="number" min="0" placeholder="2" oninput="calc()">
-      <div class="fi-sub">Volume de finalização total</div>
-    </div>
-
-    <div class="ic">
-      <div class="il">Escanteios <span class="peso ph">ALTO</span></div>
-      <input class="fi" id="esc" type="number" min="0" placeholder="5" oninput="calc()">
-      <div class="fi-sub">Confirmação de domínio real — ideal ≥4</div>
-    </div>
-
-    <!-- BLOCO 3: CONTROLE -->
-    <div class="dv"><span>Controle e posse</span><div class="dv-line"></div></div>
-
-    <div class="ic">
-      <div class="il">Posse de Bola % <span class="peso ph">ALTO</span></div>
-      <input class="fi" id="pos" type="number" min="0" max="100" placeholder="62" oninput="calc()">
-      <div class="fi-sub">r=0.71 com vitória (pesquisa UEFA)</div>
-    </div>
-
-    <div class="ic">
-      <div class="il">Odd Atual <span class="peso ph">DECISIVO</span></div>
-      <input class="fi" id="odd" type="number" step="0.01" min="1.01" placeholder="1.65" oninput="calc()">
-      <div class="fi-sub">Value ideal: 1.30 – 2.20</div>
-    </div>
-
-  </div><!-- /inp-wrap -->
-
-  <!-- RAZÕES CRUZADAS CALCULADAS -->
-  <div class="raz">
-    <div class="rz">
-      <div class="rz-l">Eficiência AP</div>
-      <div class="rz-v" id="rv-efic">—</div>
-      <div class="rz-b"><div class="rz-f" id="rf-efic" style="width:0%;background:var(--mu2)"></div></div>
-      <div class="rz-s">AP÷(AP+ANP) · ideal ≥55%</div>
-    </div>
-    <div class="rz">
-      <div class="rz-l">Qualidade de Chute</div>
-      <div class="rz-v" id="rv-qch">—</div>
-      <div class="rz-b"><div class="rz-f" id="rf-qch" style="width:0%;background:var(--mu2)"></div></div>
-      <div class="rz-s">CNG÷Total · ideal ≥45%</div>
-    </div>
-    <div class="rz">
-      <div class="rz-l">Pressão Real</div>
-      <div class="rz-v" id="rv-pr">—</div>
-      <div class="rz-b"><div class="rz-f" id="rf-pr" style="width:0%;background:var(--mu2)"></div></div>
-      <div class="rz-s">Efic×QChute · ideal ≥25%</div>
-    </div>
-  </div>
-
-  <!-- CONTEXTO CALCULADO -->
-  <div class="ctx">
-    <div class="cx">
-      <div class="cx-l">AP por Minuto</div>
-      <div class="cx-v" id="cx-appm">—</div>
-      <div class="cx-s">ideal ≥ 0.50/min</div>
-    </div>
-    <div class="cx">
-      <div class="cx-l">Situação</div>
-      <div class="cx-v" id="cx-sit" style="font-size:14px;margin-top:2px">—</div>
-      <div class="cx-s" id="cx-sit-s">placar</div>
-    </div>
-    <div class="cx">
-      <div class="cx-l">Escanteios</div>
-      <div class="cx-v" id="cx-esc">—</div>
-      <div class="cx-s">ideal ≥ 4</div>
-    </div>
-  </div>
-
-  <!-- SCORE INDEX -->
-  <div class="sci">
-    <div class="sc">
-      <div class="sc-l">Score Bruto</div>
-      <div class="sc-v a" id="sci-score">0</div>
-      <div class="sc-s">de 24 pts</div>
-    </div>
-    <div class="sc">
-      <div class="sc-l">Score %</div>
-      <div class="sc-v" id="sci-pct">0%</div>
-      <div class="sc-s">entrada ≥ 65%</div>
-    </div>
-    <div class="sc">
-      <div class="sc-l">Pressão Real</div>
-      <div class="sc-v" id="sci-pr">—</div>
-      <div class="sc-s">≥ 25% = qualidade</div>
-    </div>
-    <div class="sc">
-      <div class="sc-l">Critérios OK</div>
-      <div class="sc-v" id="sci-cok">0</div>
-      <div class="sc-s">de 8 principais</div>
-    </div>
-  </div>
-
-</div><!-- /col-l -->
-
-<!-- ═══════════ COL DIREITA ═══════════ -->
-<div class="col-r">
-  <div class="sh">● Análise — Critérios ponderados</div>
-
-  <div class="crit-wrap">
-
-    <!-- CRITÉRIO 1 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-efic">—</div>
-      <div class="cb">
-        <div class="cn">Eficiência AP ≥ 55%</div>
-        <div class="cd">Peso alto · domínio com qualidade real</div>
-      </div>
-      <span class="cv v-ne" id="cv-efic">—</span>
-    </div>
-
-    <!-- CRITÉRIO 2 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-qch">—</div>
-      <div class="cb">
-        <div class="cn">Qualidade de Chutes ≥ 45%</div>
-        <div class="cd">Peso alto · chutes no gol vs total</div>
-      </div>
-      <span class="cv v-ne" id="cv-qch">—</span>
-    </div>
-
-    <!-- CRITÉRIO 3 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-pr">—</div>
-      <div class="cb">
-        <div class="cn">Pressão Real ≥ 25%</div>
-        <div class="cd">Peso alto · métrica composta (efic × qchute)</div>
-      </div>
-      <span class="cv v-ne" id="cv-pr">—</span>
-    </div>
-
-    <!-- CRITÉRIO 4 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-appm">—</div>
-      <div class="cb">
-        <div class="cn">AP por Minuto ≥ 0.50</div>
-        <div class="cd">Peso alto · ritmo e constância da pressão</div>
-      </div>
-      <span class="cv v-ne" id="cv-appm">—</span>
-    </div>
-
-    <!-- CRITÉRIO 5 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-pos">—</div>
-      <div class="cb">
-        <div class="cn">Posse de Bola ≥ 55%</div>
-        <div class="cd">Peso alto · r=0.71 com resultado (UEFA/NIH)</div>
-      </div>
-      <span class="cv v-ne" id="cv-pos">—</span>
-    </div>
-
-    <!-- CRITÉRIO 6 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-cng">—</div>
-      <div class="cb">
-        <div class="cn">Chutes no Gol ≥ 3</div>
-        <div class="cd">Peso alto · r=0.58 com vitória (NIH)</div>
-      </div>
-      <span class="cv v-ne" id="cv-cng">—</span>
-    </div>
-
-    <!-- CRITÉRIO 7 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-esc">—</div>
-      <div class="cb">
-        <div class="cn">Escanteios ≥ 4</div>
-        <div class="cd">Confirmação · domínio real gera bola parada</div>
-      </div>
-      <span class="cv v-ne" id="cv-esc">—</span>
-    </div>
-
-    <!-- CRITÉRIO 8 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-sit">—</div>
-      <div class="cb">
-        <div class="cn">Situação do Placar</div>
-        <div class="cd">Peso alto · ganhar/empatar vs perder</div>
-      </div>
-      <span class="cv v-ne" id="cv-sit">—</span>
-    </div>
-
-    <!-- CRITÉRIO 9 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-jan">—</div>
-      <div class="cb">
-        <div class="cn">Janela 15–30 min</div>
-        <div class="cd">Contexto · odd ainda tem value</div>
-      </div>
-      <span class="cv v-ne" id="cv-jan">—</span>
-    </div>
-
-    <!-- CRITÉRIO 10 -->
-    <div class="cr">
-      <div class="ci ne" id="ci-odd">—</div>
-      <div class="cb">
-        <div class="cn">Odd 1.30 – 2.20</div>
-        <div class="cd">Value · faixa de retorno saudável</div>
-      </div>
-      <span class="cv v-ne" id="cv-odd">—</span>
-    </div>
-
-    <!-- CRITÉRIO BLOQUEANTE -->
-    <div class="cr" style="background:var(--s3)">
-      <div class="ci ne" id="ci-arm">—</div>
-      <div class="cb">
-        <div class="cn">Detector de Armadilha</div>
-        <div class="cd">AP alto + chutes no gol baixo = pressão sem qualidade</div>
-      </div>
-      <span class="cv v-ne" id="cv-arm">—</span>
-    </div>
-
-  </div><!-- /crit-wrap -->
-
-  <!-- ALERTAS -->
-  <div class="al al-r" id="al-arm">▲ ARMADILHA DETECTADA — muitos ataques, poucos chutes no gol. Padrão clássico de red.</div>
-  <div class="al al-r" id="al-odd">▲ Odd seca (<1.30) — value inexistente. Pule esse jogo.</div>
-  <div class="al al-y" id="al-perd">▼ Perdendo no placar — dados inflados por desespero, não domínio real.</div>
-  <div class="al al-y" id="al-jan">▼ Fora da janela ideal (15–30 min) — risco elevado.</div>
-  <div class="al al-c" id="al-ok">● Setup forte — todos os critérios principais atingidos.</div>
-
-  <!-- VEREDITO -->
-  <div class="verd" id="verd">
-    <div class="ve">Veredito do Algoritmo</div>
-    <div class="vm vn" id="vm">AGUARDANDO</div>
-    <div class="vs" id="vs">preencha os dados ao lado</div>
-  </div>
-
-  <!-- METROS -->
-  <div class="mts">
-    <div class="mt">
-      <span class="mt-l">Score</span>
-      <div class="mt-tr"><div class="mt-fi" id="mt-sc" style="width:0%;background:var(--mu2)"></div></div>
-      <span class="mt-n" id="mt-sc-n">0%</span>
-    </div>
-    <div class="mt">
-      <span class="mt-l">Risco</span>
-      <div class="mt-tr"><div class="mt-fi" id="mt-rk" style="width:0%;background:var(--mu2)"></div></div>
-      <span class="mt-n" id="mt-rk-n">—</span>
-    </div>
-    <div class="mt">
-      <span class="mt-l">Pressão Real</span>
-      <div class="mt-tr"><div class="mt-fi" id="mt-pr" style="width:0%;background:var(--mu2)"></div></div>
-      <span class="mt-n" id="mt-pr-n">—</span>
-    </div>
-  </div>
-
-  <button class="btn" onclick="salvar()">● Registrar no Log</button>
-
-</div><!-- /col-r -->
-</div><!-- /app -->
-
-<!-- LOG -->
-<div class="log-sec">
-  <div class="sh">● Log de Operações da Sessão <span id="lg-ct">0 entradas</span></div>
-  <div class="log-sc">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Jogo</th><th>Min</th><th>Placar</th>
-          <th>AP/m</th><th>Efic%</th><th>QCh%</th><th>PReal%</th>
-          <th>Posse%</th><th>CNG</th><th>Esc</th><th>Score%</th>
-          <th>Decisão</th><th>Odd</th><th>Resultado</th>
-        </tr>
-      </thead>
-      <tbody id="lg-body">
-        <tr><td colspan="15" class="lg-empty">— Nenhuma operação registrada nesta sessão —</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<script>
-// Pesos baseados em correlação científica com vitória
-const P={
-  efic:3,  // AP vs ANP — qualidade da pressão
-  qch:3,   // Chutes no gol vs total
-  pr:4,    // Pressão real composta (maior peso — métrica síntese)
-  appm:3,  // AP/min
-  pos:3,   // Posse (r=0.71)
-  cng:3,   // Chutes no gol absoluto (r=0.58)
-  esc:2,   // Escanteios (confirmação, não driver primário)
-  sit:3,   // Situação placar
-};
-const MAX=Object.values(P).reduce((a,b)=>a+b,0); // 24
-
-const g=id=>document.getElementById(id);
-
-function setRz(fillId,valId,val,ideal,fmt){
-  const fEl=g(fillId),vEl=g(valId);
-  if(val<0){
-    fEl.style.width='0%';fEl.style.background='var(--mu2)';
-    vEl.textContent='—';vEl.style.color='var(--mu)';return;
-  }
-  const pct=Math.min(100,val);
-  fEl.style.width=pct+'%';
-  fEl.style.background=val>=ideal?'var(--grn)':val>=(ideal*0.7)?'var(--yel)':'var(--red)';
-  vEl.textContent=fmt(val);
-  vEl.style.color=val>=ideal?'var(--grn)':val>=(ideal*0.7)?'var(--yel)':'var(--red)';
-}
-
-function setCr(id,est,val){
-  const ci=g('ci-'+id),cv=g('cv-'+id);
-  const m={ok:{c:'ci ok',vc:'v-ok',s:'✓'},fl:{c:'ci fl',vc:'v-fl',s:'✗'},wn:{c:'ci wn',vc:'v-wn',s:'!'},ne:{c:'ci ne',vc:'v-ne',s:'—'}};
-  const t=m[est]||m.ne;
-  ci.className=t.c;ci.textContent=t.s;
-  cv.className='cv '+t.vc;cv.textContent=val||'—';
-}
-
-function showAl(id,show){
-  const el=g(id);
-  el.classList.toggle('show',!!show);
-}
-
-let logN=0;
-
-function calc(){
-  const min  = parseFloat(g('min').value)  || 0;
-  const gaS  = g('ga').value;
-  const gbS  = g('gb').value;
-  const ga   = gaS!==''?parseFloat(gaS):null;
-  const gb   = gbS!==''?parseFloat(gbS):null;
-  const ap   = parseFloat(g('ap').value)   || 0;
-  const anp  = parseFloat(g('anp').value)  || 0;
-  const cng  = parseFloat(g('cng').value)  || 0;
-  const cf   = parseFloat(g('cf').value)   || 0;
-  const esc  = parseFloat(g('esc').value)  || 0;
-  const pos  = parseFloat(g('pos').value)  || 0;
-  const odd  = parseFloat(g('odd').value)  || 0;
-
-  // ── CÁLCULOS DAS RAZÕES ──
-  const totalAt = ap+anp;
-  const totalCh = cng+cf;
-  const appm    = min>0 ? ap/min : -1;
-  const escpm   = min>0 ? esc/min : -1;
-  const efic    = totalAt>0 ? (ap/totalAt)*100 : -1;
-  const qch     = totalCh>0 ? (cng/totalCh)*100 : -1;
-  const pr      = (efic>=0&&qch>=0) ? (efic/100)*(qch/100)*100 : -1;
-
-  // ── EXIBIR RAZÕES ──
-  setRz('rf-efic','rv-efic', efic, 55, v=>v.toFixed(0)+'%');
-  setRz('rf-qch', 'rv-qch',  qch,  45, v=>v.toFixed(0)+'%');
-  setRz('rf-pr',  'rv-pr',   pr,   25, v=>v.toFixed(0)+'%');
-
-  // ── CONTEXTO BOX ──
-  g('cx-appm').textContent = appm>=0?appm.toFixed(2):'—';
-  g('cx-appm').style.color = appm>=0.5?'var(--grn)':appm>=0.35?'var(--yel)':'var(--red)';
-
-  g('cx-escpm').textContent = escpm>=0?escpm.toFixed(2):'—';
-  g('cx-escpm').style.color = escpm>=0.17?'var(--grn)':escpm>=0.10?'var(--yel)':'var(--red)';
-
-  const sitV=g('cx-sit'), sitS=g('cx-sit-s');
-  let sitTxt='—', sitColor='var(--mu)', sitSub='placar';
-  if(ga!==null&&gb!==null){
-    if(ga>gb){sitTxt='Ganhando';sitColor='var(--grn)';sitSub=ga+' – '+gb;}
-    else if(ga===gb){sitTxt='Empatando';sitColor='var(--yel)';sitSub=ga+' – '+gb;}
-    else{sitTxt='Perdendo';sitColor='var(--red)';sitSub=ga+' – '+gb;}
-  }
-  sitV.textContent=sitTxt;sitV.style.color=sitColor;sitS.textContent=sitSub;
-
-  g('cx-odd').textContent=odd>0?odd.toFixed(2):'—';
-  g('cx-odd').style.color=odd>0?(odd>=1.30&&odd<=2.20?'var(--grn)':odd<1.30?'var(--red)':'var(--yel)'):'var(--mu)';
-  g('cx-odd-s').textContent=odd<1.30&&odd>0?'SECA':odd>2.20&&odd>0?'Alta demais':'mercado';
-
-  // Metros: pressão real
-  const prM=g('mt-pr');
-  if(pr>=0){
-    prM.style.width=Math.min(100,pr)+'%';
-    prM.style.background=pr>=25?'var(--grn)':pr>=15?'var(--yel)':'var(--red)';
-    g('mt-pr-n').textContent=pr.toFixed(0)+'%';
-  } else {
-    prM.style.width='0%';prM.style.background='var(--mu2)';g('mt-pr-n').textContent='—';
-  }
-
-  // ── AVALIAÇÃO DOS CRITÉRIOS ──
-  const placarOk = ga!==null&&gb!==null;
-  const sitOk    = placarOk&&ga>=gb; // ganhando ou empatando
-  const sitPerd  = placarOk&&ga<gb;
-
-  // Detector de armadilha: AP alto mas QCH muito baixo
-  const armadilha = ap>=8&&qch>=0&&qch<25;
-
-  const C={
-    efic:  efic>=55,
-    qch:   qch>=45,
-    pr:    pr>=25,
-    appm:  appm>=0.50,
-    pos:   pos>=55,
-    cng:   cng>=3,
-    esc:   esc>=4,
-    sit:   sitOk,
-  };
-
-  // Critérios de contexto (não somam, só sinalizam)
-  const jan   = min>=15&&min<=30;
-  const oddOk = odd>=1.30&&odd<=2.20;
-
-  setCr('efic', efic<0?'ne':C.efic?'ok':'fl', efic>=0?efic.toFixed(0)+'%':'—');
-  setCr('qch',  qch<0?'ne':C.qch?'ok':'fl',   qch>=0?qch.toFixed(0)+'%':'—');
-  setCr('pr',   pr<0?'ne':C.pr?'ok':'fl',      pr>=0?pr.toFixed(0)+'%':'—');
-  setCr('appm', appm<0?'ne':C.appm?'ok':'fl',  appm>=0?appm.toFixed(2)+'/m':'—');
-  setCr('pos',  pos<=0?'ne':C.pos?'ok':'fl',   pos>0?pos+'%':'—');
-  setCr('cng',  cng<=0&&cf<=0?'ne':C.cng?'ok':'fl', (cng>0||cf>0)?cng+' chutes':'—');
-  setCr('esc',  esc<=0?'ne':C.esc?'ok':'fl',   esc>0?esc+' cantos':'—');
-  setCr('sit',  !placarOk?'ne':C.sit?'ok':(sitPerd?'fl':'wn'), sitTxt||'—');
-  setCr('jan',  min<=0?'ne':jan?'ok':'wn', min>0?min+"'":'—');
-  setCr('odd',  odd<=0?'ne':oddOk?'ok':(odd<1.30?'wn':'fl'), odd>0?odd.toFixed(2):'—');
-  setCr('arm',  !armadilha?'ok':'fl', armadilha?'DETECTADA':'Limpo');
-
-  // ── SCORE PONDERADO ──
-  let score=0;
-  let cok=0;
-  const keys=['efic','qch','pr','appm','pos','cng','esc','sit'];
-  keys.forEach(k=>{ if(C[k]){score+=P[k];cok++;} });
-
-  // Penalidades
-  if(sitPerd)        score=Math.max(0,score-4);
-  if(armadilha)      score=Math.max(0,score-5);
-  if(odd>0&&odd<1.30) score=Math.max(0,score-6);
-
-  const pct=Math.round((score/MAX)*100);
-  console.log('SCORE CALC:', {C, score, cok, pct, MAX});
-
-  g('sci-score').textContent=score;
-  g('sci-pct').textContent=pct+'%';
-  g('sci-pr').textContent=pr>=0?pr.toFixed(0)+'%':'—';
-  g('sci-pr').style.color=pr>=25?'var(--grn)':pr>=15?'var(--yel)':'var(--red)';
-  g('sci-cok').textContent=cok;
-  g('sci-cok').style.color=cok>=6?'var(--grn)':cok>=4?'var(--yel)':'var(--red)';
-
-  // Score metro
-  const sm=g('mt-sc');
-  sm.style.width=pct+'%';
-  sm.style.background=pct>=65?'var(--grn)':pct>=45?'var(--yel)':'var(--red)';
-  g('mt-sc-n').textContent=pct+'%';
-
-  // Risco metro
-  let risco=100-pct;
-  if(!jan&&min>0) risco=Math.min(100,risco+10);
-  if(armadilha)   risco=Math.min(100,risco+20);
-  if(sitPerd)     risco=Math.min(100,risco+15);
-  const rm=g('mt-rk');
-  rm.style.width=risco+'%';
-  rm.style.background=risco<35?'var(--grn)':risco<65?'var(--yel)':'var(--red)';
-  g('mt-rk-n').textContent=risco<35?'BAIXO':risco<65?'MÉDIO':'ALTO';
-
-  // ── ALERTAS ──
-  showAl('al-arm',  armadilha);
-  showAl('al-odd',  odd>0&&odd<1.30);
-  showAl('al-perd', sitPerd);
-  showAl('al-jan',  min>0&&!jan);
-  showAl('al-ok',   pct>=65&&cok>=6&&!armadilha&&!sitPerd);
-
-  // ── VEREDITO ──
-  const vEl=g('verd'), vmEl=g('vm'), vsEl=g('vs');
-  console.log('VEREDITO DEBUG:', {pct, cok, score, odd, armadilha, sitPerd, jan, vEl, vmEl, vsEl});
-
-  if(odd>0&&odd<1.30){
-    vEl.className='verd v-r'; vmEl.className='vm vr';
-    vmEl.textContent='▪ NÃO ENTRAR';
-    vsEl.textContent='Odd seca demais — value inexistente. Pule esse jogo.';
-  } else if(armadilha&&pct<60){
-    vEl.className='verd v-r'; vmEl.className='vm vr';
-    vmEl.textContent='▪ ARMADILHA';
-    vsEl.textContent='AP alto mas chutes no gol baixos — pressão sem qualidade.';
-  } else if(sitPerd&&pct<55){
-    vEl.className='verd v-r'; vmEl.className='vm vr';
-    vmEl.textContent='■ FICAR DE FORA';
-    vsEl.textContent='Perdendo + dados inflados por desespero. Não é domínio real.';
-  } else if(pct>=65&&cok>=6){
-    vEl.className='verd v-g'; vmEl.className='vm vg';
-    vmEl.textContent='▶ ENTRAR — '+pct+'%';
-    vsEl.textContent='Score '+score+'/24 · '+cok+'/8 critérios OK · Pressão Real: '+(pr>=0?pr.toFixed(0)+'%':'—');
-  } else if(pct>=50){
-    vEl.className='verd v-y'; vmEl.className='vm vy';
-    vmEl.textContent='▪ SETUP FRACO — '+pct+'%';
-    vsEl.textContent='Score '+score+'/24 · aguarde mais 1–2 critérios se completarem.';
-  } else if(min>0||ap>0){
-    vEl.className='verd v-r'; vmEl.className='vm vr';
-    vmEl.textContent='■ FICAR DE FORA — '+pct+'%';
-    vsEl.textContent='Score '+score+'/24 · setup insuficiente para entrada.';
-  } else {
-    vEl.className='verd'; vmEl.className='vm vn';
-    vmEl.textContent='AGUARDANDO';
-    vsEl.textContent='preencha os dados ao lado';
-  }
-}
-
-function salvar(){
-  const min=g('min').value, ap=g('ap').value;
-  if(!min||!ap){alert('Preencha ao menos Minuto e Ataques Perigosos.');return;}
-
-  const jogo=g('jogo').value||'Sem nome';
-  const ga=g('ga').value, gb=g('gb').value;
-  const placar=(ga!==''&&gb!=='')?ga+'-'+gb:'—';
-  const anp=g('anp').value||'0', cng=g('cng').value||'0', cf=g('cf').value||'0';
-  const esc=g('esc').value||'0', pos=g('pos').value||'—', odd=g('odd').value||'—';
-
-  const appm=g('cx-appm').textContent;
-  const efic=g('rv-efic').textContent;
-  const qch=g('rv-qch').textContent;
-  const pr=g('rv-pr').textContent;
-  const pct=g('sci-pct').textContent;
-  const vTxt=g('vm').textContent;
-
-  const isG=vTxt.includes('ENTRAR'), isY=vTxt.includes('FRACO')||vTxt.includes('SETUP');
-  const bc=isG?'bg':isY?'by':'br';
-
-  const tbody=g('lg-body');
-  if(tbody.querySelector('.lg-empty')) tbody.innerHTML='';
-
-  logN++;
-  g('lg-ct').textContent=logN+(logN===1?' entrada':' entradas');
-
-  const tr=document.createElement('tr');
-  tr.innerHTML=`
-    <td style="color:var(--mu-txt);font-weight:600;font-family:inherit;">${logN}</td>
-    <td style="color:var(--txt);font-weight:700;font-family:inherit;">${jogo}</td>
-    <td style="font-family:inherit;font-weight:600;">${min}'</td>
-    <td style="font-family:inherit;font-weight:600;">${placar}</td>
-    <td style="font-family:inherit;font-weight:600;color:${parseFloat(appm)>=0.5?'var(--grn)':'var(--red)'}">${appm}</td>
-    <td style="font-family:inherit;font-weight:600;">${efic}</td><td style="font-family:inherit;font-weight:600;">${qch}</td><td style="font-family:inherit;font-weight:600;">${pr}</td>
-    <td style="font-family:inherit;font-weight:600;">${pos}${pos!=='—'?'%':''}</td>
-    <td style="font-family:inherit;font-weight:600;">${cng}</td>
-    <td style="font-family:inherit;font-weight:600;">${esc}</td>
-    <td><span class="bdg ${bc}" style="font-family:inherit;">${pct}</span></td>
-    <td style="font-size:11px;font-weight:600;letter-spacing:.5px;font-family:inherit;">${vTxt}</td>
-    <td style="font-family:inherit;font-weight:600;">${odd!=='—'?parseFloat(odd).toFixed(2):'—'}</td>
-    <td><select class="rs" onchange="clrRes(this)">
-      <option value="">Aberto ⏳</option>
-      <option value="g">Green ✅</option>
-      <option value="r">Red ❌</option>
-      <option value="v">Reembolso ↩</option>
-    </select></td>`;
-  tbody.insertBefore(tr,tbody.firstChild);
-
-  ['min','ga','gb','ap','anp','cng','cf','esc','pos','odd'].forEach(id=>{const el=g(id);if(el)el.value='';});
-  calc();
-}
-
-function clrRes(s){
-  const m={g:'var(--grn)',r:'var(--red)',v:'var(--yel)','':'var(--mu)'};
-  s.style.color=m[s.value];s.style.borderColor=m[s.value];
-}
-
-function tick(){
-  const n=new Date();
-  g('clk').textContent=n.toTimeString().slice(0,8);
-}
-tick();setInterval(tick,1000);
-</script>
+    <script>
+        function calculatePressure(attacks, corners, onTarget, wasted) {
+            return attacks + corners + onTarget + wasted;
+        }
+
+        function calculateEfficiency(goals, pressure) {
+            if (pressure === 0) return 0;
+            return (goals / pressure) * 100;
+        }
+
+        function getWasteRate(onTarget, wasted) {
+            const total = onTarget + wasted;
+            if (total === 0) return 0;
+            return (wasted / total) * 100;
+        }
+
+        function analyzeTeam(teamName, attacks, corners, onTarget, wasted, goals) {
+            const pressure = calculatePressure(attacks, corners, onTarget, wasted);
+            const efficiency = calculateEfficiency(goals, pressure);
+            const wasteRate = getWasteRate(onTarget, wasted);
+            const totalShots = onTarget + wasted;
+
+            return {
+                name: teamName,
+                attacks,
+                corners,
+                onTarget,
+                wasted,
+                goals,
+                pressure,
+                efficiency,
+                wasteRate,
+                totalShots
+            };
+        }
+
+        function generateTradeSignal(home, away) {
+            let homeSignal = { action: '', reasoning: [], confidence: 0 };
+            let awaySignal = { action: '', reasoning: [], confidence: 0 };
+            let overSignal = { action: '', reasoning: [], confidence: 0 };
+            let drawSignal = { action: '', reasoning: [], confidence: 0 };
+
+            // Análise HOME
+            if (home.pressure > 25 && home.goals <= 1 && home.wasteRate > 50) {
+                // Time atacando muito mas desperdiçando = cansado
+                homeSignal.action = 'LAY';
+                homeSignal.reasoning.push(`Pressão ${home.pressure} pontos com apenas ${home.goals} gols`);
+                homeSignal.reasoning.push(`${home.wasteRate.toFixed(0)}% de desperdício - time cansado`);
+                homeSignal.confidence = Math.min(90, 60 + (home.pressure - 25));
+                
+                overSignal.action = 'LAY';
+                overSignal.reasoning.push(`${home.name} queimando chances = menos gols`);
+                overSignal.confidence = 75;
+
+                drawSignal.action = 'BACK';
+                drawSignal.reasoning.push(`${home.name} cansado abre espaço`);
+                drawSignal.confidence = 70;
+            } else if (home.pressure > 30 && home.goals >= 2 && home.wasteRate < 40) {
+                // Time atacando e convertendo = força
+                homeSignal.action = 'BACK';
+                homeSignal.reasoning.push(`Pressão ${home.pressure} com ${home.goals} gols - eficiente`);
+                homeSignal.reasoning.push(`${home.wasteRate.toFixed(0)}% de desperdício - qualidade`);
+                homeSignal.confidence = Math.min(85, 65 + (home.goals * 10));
+
+                overSignal.action = 'BACK';
+                overSignal.reasoning.push(`${home.name} eficiente - provavelmente mais gols`);
+                overSignal.confidence = 70;
+
+                drawSignal.action = 'LAY';
+                drawSignal.reasoning.push(`${home.name} muito forte`);
+                drawSignal.confidence = 65;
+            } else if (home.pressure < 15 && home.goals === 0) {
+                homeSignal.action = 'NEUTRO';
+                homeSignal.reasoning.push(`Baixa pressão sem gols - time passivo`);
+                homeSignal.confidence = 40;
+            } else {
+                homeSignal.action = 'NEUTRO';
+                homeSignal.reasoning.push(`Padrão equilibrado - análise inconclusiva`);
+                homeSignal.confidence = 50;
+            }
+
+            // Análise AWAY (contra-ataque)
+            if (away.pressure < 10 && away.totalShots <= 3 && away.goals >= 1) {
+                // Poucos ataques mas muito eficiente = perigoso em contra
+                awaySignal.action = 'BACK';
+                awaySignal.reasoning.push(`${away.name} lethal em contra - ${away.efficiency.toFixed(1)}% eficiência`);
+                awaySignal.reasoning.push(`${away.goals} gols em apenas ${away.totalShots} chutes`);
+                awaySignal.confidence = Math.min(85, 70 + (away.efficiency / 2));
+
+                drawSignal.action = 'LAY';
+                drawSignal.reasoning.push(`${away.name} competente ofensivamente`);
+                drawSignal.confidence = 60;
+            } else if (away.pressure < 15 && away.goals === 0) {
+                awaySignal.action = 'LAY';
+                awaySignal.reasoning.push(`${away.name} sem criatividade - improvável marcar`);
+                awaySignal.confidence = 55;
+            } else if (away.pressure > 20 && away.goals === 0 && away.wasteRate > 55) {
+                awaySignal.action = 'LAY';
+                awaySignal.reasoning.push(`${away.name} desperdiçador - ${away.wasteRate.toFixed(0)}% de perda`);
+                awaySignal.confidence = 65;
+            } else {
+                awaySignal.action = 'NEUTRO';
+                awaySignal.reasoning.push(`Padrão equilibrado`);
+                awaySignal.confidence = 50;
+            }
+
+            // Ajustar OVER/UNDER
+            const totalPressure = home.pressure + away.pressure;
+            const totalGoals = home.goals + away.goals;
+
+            if (totalGoals >= 3 || (totalPressure > 50 && totalGoals >= 2)) {
+                if (!overSignal.action) {
+                    overSignal.action = 'BACK';
+                    overSignal.reasoning.push(`Alta pressão total (${totalPressure}) com gols sendo marcados`);
+                    overSignal.confidence = 70;
+                }
+            } else if (totalGoals <= 1 && (home.wasteRate > 50 || away.wasteRate > 50)) {
+                if (!overSignal.action) {
+                    overSignal.action = 'LAY';
+                    overSignal.reasoning.push(`Muita pressão (${totalPressure}) mas baixa conversão`);
+                    overSignal.confidence = 75;
+                }
+            }
+
+            if (!overSignal.action) {
+                overSignal.action = 'NEUTRO';
+                overSignal.confidence = 50;
+            }
+
+            if (!drawSignal.action) {
+                drawSignal.action = totalPressure > 40 ? 'LAY' : 'BACK';
+                drawSignal.confidence = Math.abs(totalPressure - 40) / 2 + 40;
+            }
+
+            return { homeSignal, awaySignal, overSignal, drawSignal };
+        }
+
+        function analyzeMatch() {
+            const homeTeam = document.getElementById('homeTeam').value || 'Casa';
+            const awayTeam = document.getElementById('awayTeam').value || 'Visitante';
+            const matchMinute = parseInt(document.getElementById('matchMinute').value) || 45;
+
+            const home = analyzeTeam(
+                homeTeam,
+                parseInt(document.getElementById('homeAttacks').value) || 0,
+                parseInt(document.getElementById('homeCorners').value) || 0,
+                parseInt(document.getElementById('homeOnTarget').value) || 0,
+                parseInt(document.getElementById('homeWasted').value) || 0,
+                parseInt(document.getElementById('homeGoals').value) || 0
+            );
+
+            const away = analyzeTeam(
+                awayTeam,
+                parseInt(document.getElementById('awayAttacks').value) || 0,
+                parseInt(document.getElementById('awayCorners').value) || 0,
+                parseInt(document.getElementById('awayOnTarget').value) || 0,
+                parseInt(document.getElementById('awayWasted').value) || 0,
+                parseInt(document.getElementById('awayGoals').value) || 0
+            );
+
+            // Exibir análise das equipes
+            document.getElementById('homeAnalysis').innerHTML = renderTeamAnalysis(home);
+            document.getElementById('awayAnalysis').innerHTML = renderTeamAnalysis(away);
+
+            // Gerar sinais
+            const { homeSignal, awaySignal, overSignal, drawSignal } = generateTradeSignal(home, away);
+
+            // Exibir sinais
+            document.getElementById('signalsGrid').innerHTML = `
+                <div class="signal-card ${getCardClass(homeSignal.action)}">
+                    <div class="signal-title">1️⃣ ${home.name}</div>
+                    <div class="signal-action ${homeSignal.action.toLowerCase()}">${homeSignal.action}</div>
+                    <div class="signal-confidence">${homeSignal.confidence.toFixed(0)}% confiança</div>
+                </div>
+                <div class="signal-card ${getCardClass(drawSignal.action)}">
+                    <div class="signal-title">❌ Empate</div>
+                    <div class="signal-action ${drawSignal.action.toLowerCase()}">${drawSignal.action}</div>
+                    <div class="signal-confidence">${drawSignal.confidence.toFixed(0)}% confiança</div>
+                </div>
+                <div class="signal-card ${getCardClass(awaySignal.action)}">
+                    <div class="signal-title">2️⃣ ${away.name}</div>
+                    <div class="signal-action ${awaySignal.action.toLowerCase()}">${awaySignal.action}</div>
+                    <div class="signal-confidence">${awaySignal.confidence.toFixed(0)}% confiança</div>
+                </div>
+            `;
+
+            // Análise textual
+            let analysisHTML = `<strong>📊 Min ${matchMinute}'</strong><br><br>`;
+            analysisHTML += `<strong>${home.name}:</strong> ${homeSignal.reasoning.join(' | ')}<br><br>`;
+            analysisHTML += `<strong>${away.name}:</strong> ${awaySignal.reasoning.join(' | ')}<br><br>`;
+            analysisHTML += `<strong>OVER/UNDER 2.5:</strong> ${overSignal.action} - ${overSignal.reasoning.join(' | ')}`;
+
+            document.getElementById('analysisText').innerHTML = analysisHTML;
+            document.getElementById('results').classList.add('active');
+        }
+
+        function renderTeamAnalysis(team) {
+            return `
+                <h3>${team.name}</h3>
+                <div class="metric">
+                    <span class="metric-label">Pressão Total</span>
+                    <span class="metric-value">${team.pressure}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Ataques | Escanteios</span>
+                    <span class="metric-value">${team.attacks} | ${team.corners}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Chutes (Alvo/Perdido)</span>
+                    <span class="metric-value">${team.onTarget}/${team.wasted}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Gols</span>
+                    <span class="metric-value">${team.goals}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Eficiência Ofensiva</span>
+                    <span class="metric-value">${team.efficiency.toFixed(1)}%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Taxa de Desperdício</span>
+                    <span class="metric-value">${team.wasteRate.toFixed(0)}%</span>
+                </div>
+            `;
+        }
+
+        function getCardClass(action) {
+            if (action === 'BACK') return 'strong';
+            if (action === 'LAY') return 'danger';
+            return 'caution';
+        }
+
+        function clearAll() {
+            document.querySelectorAll('input').forEach(i => i.value = '');
+            document.getElementById('results').classList.remove('active');
+        }
+    </script>
 </body>
 </html>
