@@ -412,7 +412,7 @@
                     <input type="number" id="homeAttacks" placeholder="0" min="0">
                 </div>
                 <div class="input-group">
-                    <label>Chutes ao Gol</label>
+                    <label>Chutes no Alvo</label>
                     <input type="number" id="homeShots" placeholder="0" min="0">
                 </div>
                 <div class="input-group">
@@ -436,7 +436,7 @@
                     <input type="number" id="awayAttacks" placeholder="0" min="0">
                 </div>
                 <div class="input-group">
-                    <label>Chutes ao Gol</label>
+                    <label>Chutes no Alvo</label>
                     <input type="number" id="awayShots" placeholder="0" min="0">
                 </div>
                 <div class="input-group">
@@ -563,6 +563,36 @@
 
         let signalHistory = JSON.parse(localStorage.getItem('signalHistory')) || [];
 
+        function calculateXG(attacks, shots) {
+            if (shots === 0) return 0;
+            
+            // Calcular qualidade do ataque
+            const attackQuality = attacks / shots;
+            let baseValue;
+            
+            // Definir valor base conforme qualidade
+            if (attackQuality > 8) {
+                baseValue = 0.22; // Alta qualidade - poucos chutes, muito perigosos
+            } else if (attackQuality >= 5) {
+                baseValue = 0.14; // Média qualidade
+            } else {
+                baseValue = 0.08; // Baixa qualidade - muitos chutes, menos precisão
+            }
+            
+            // xG = (chutes × valor base) + (bônus por volume de ataques)
+            const xG = (shots * baseValue) + (attacks * 0.02);
+            return parseFloat(xG.toFixed(2));
+        }
+
+        function getAttackQualityLabel(attacks, shots) {
+            if (shots === 0) return 'Sem dados';
+            const quality = attacks / shots;
+            
+            if (quality > 8) return '⭐ Muito Alta';
+            if (quality >= 5) return '✓ Média';
+            return '⚠️ Baixa';
+        }
+
         function calculateScore(home, away) {
             const homeScore =
                 (home.attacks * SCORING.dangerousAttacks) +
@@ -656,6 +686,12 @@
             const { homeScore, awayScore } = calculateScore(homeData, awayData);
             const scoreDiff = homeScore - awayScore;
 
+            // Calcular xG
+            const homeXG = calculateXG(homeData.attacks, homeData.shots);
+            const awayXG = calculateXG(awayData.attacks, awayData.shots);
+            const homeQuality = getAttackQualityLabel(homeData.attacks, homeData.shots);
+            const awayQuality = getAttackQualityLabel(awayData.attacks, awayData.shots);
+
             // Obter multiplicador de confiança baseado no minuto
             const { multiplier: minuteMultiplier, phase: gamePhase } = getMinuteMultiplier(matchMinute);
 
@@ -704,6 +740,31 @@
 
             const quality = Math.abs(scoreDiff) < 5 ? 'Equilibrado' : (scoreDiff > 0 ? 'Casa Dominante' : 'Visitante Dominante');
             document.getElementById('metricsQuality').textContent = quality;
+
+            // Exibir xG
+            const xGDisplay = document.createElement('div');
+            xGDisplay.className = 'metric-row';
+            xGDisplay.innerHTML = `
+                <div class="metric">
+                    <span class="metric-label">xG vs Gols</span>
+                    <span class="metric-value">${homeXG} vs ${homeData.goals} | ${awayXG} vs ${awayData.goals}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Qualidade de Chute</span>
+                    <span class="metric-value">${homeQuality} | ${awayQuality}</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">xG Diferença</span>
+                    <span class="metric-value">${(homeXG - awayXG).toFixed(2)}</span>
+                </div>
+            `;
+            
+            // Inserir xG antes dos insights
+            const analysisSection = document.querySelector('.analysis-section');
+            const existingXG = analysisSection.querySelector('[data-xg-section]');
+            if (existingXG) existingXG.remove();
+            xGDisplay.setAttribute('data-xg-section', 'true');
+            analysisSection.appendChild(xGDisplay);
 
             // Gerar insights com informações do minuto
             generateInsights(homeTeam, awayTeam, homeData, awayData, homeScore, awayScore, scoreDiff, matchMinute, gamePhase);
