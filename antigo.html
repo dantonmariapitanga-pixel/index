@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Trade Esportivo Live</title>
+    <title>SISTEMA APEX - Trade Live PRO</title>
     <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: #151b2b;
+            --border-color: #2a3441;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --blue-accent: #3b82f6;
+            --green-glow: #10b981;
+            --red-glow: #ef4444;
+            --gold-glow: #fbbf24;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,8 +25,8 @@
         }
 
         body {
-            background-color: #0f141c;
-            color: #f1f5f9;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             padding: 20px;
             font-size: 14px;
         }
@@ -29,24 +41,50 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
-            border-left: 5px solid #3b82f6;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid var(--gold-glow);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
             color: #ffffff;
+            text-transform: uppercase;
         }
 
         header p {
-            color: #94a3b8;
+            color: var(--text-muted);
             margin-top: 5px;
             font-size: 13px;
         }
 
-        /* Layout Principal usando Flexbox */
+        .status-pulse {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--green-glow);
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--green-glow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--green-glow);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
         .main-layout {
             display: flex;
             gap: 20px;
@@ -54,35 +92,34 @@
             align-items: stretch;
         }
 
-        .column-left {
-            flex: 1.4; /* Ocupa um pouco mais de espaço no PC */
-        }
-
-        .column-right {
-            flex: 1; /* Ocupa o restante no PC */
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .card {
-            background-color: #1e293b;
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 25px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-            border: 1px solid #334155;
-            height: 100%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
         }
 
         .card-title {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
             margin-bottom: 20px;
-            color: #3b82f6;
-            border-bottom: 1px solid #334155;
+            color: var(--blue-accent);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        /* Grid para o formulário */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -90,37 +127,43 @@
         }
 
         .form-group.full-width {
-            grid-column: 1 / -1; /* Ocupa as duas colunas */
+            grid-column: 1 / -1;
         }
 
         label {
             display: block;
             margin-bottom: 6px;
             color: #cbd5e1;
-            font-weight: 500;
-            font-size: 13px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
         }
 
-        input[type="text"],
-        input[type="number"],
-        select {
+        input, select {
             width: 100%;
-            background-color: #0f172a;
-            border: 1px solid #475569;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             padding: 12px;
             color: #ffffff;
             font-size: 14px;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: #3b82f6;
-            background-color: #111827;
+            border-color: var(--blue-accent);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
         }
 
-        /* Grid para o painel de métricas */
+        .radar-box {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px dashed var(--blue-accent);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
         .metrics-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -129,194 +172,137 @@
         }
 
         .metric-box {
-            background-color: #0f172a;
+            background-color: var(--bg-dark);
             border-radius: 8px;
             padding: 15px;
             text-align: center;
-            border: 1px solid #334155;
+            border: 1px solid var(--border-color);
         }
 
         .metric-label {
             font-size: 11px;
             text-transform: uppercase;
-            color: #94a3b8;
+            color: var(--text-muted);
             letter-spacing: 0.5px;
             margin-bottom: 5px;
         }
 
         .metric-value {
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: 800;
             color: #ffffff;
         }
 
         .decisao-container {
             text-align: center;
-            margin-top: 25px;
-        }
-
-        .decisao-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #94a3b8;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
+            margin-top: 15px;
         }
 
         .decisao-box {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 800;
             padding: 20px;
             border-radius: 8px;
             text-align: center;
             letter-spacing: 0.5px;
             transition: all 0.3s ease;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 2px solid transparent;
         }
 
-        .status-aguardando {
-            background-color: #334155;
-            color: #94a3b8;
-            border: 1px solid #475569;
+        .sub-decisao {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+            opacity: 0.9;
         }
 
-        .status-entrar {
-            background-color: #065f46;
-            color: #34d399;
-            border: 2px solid #059669;
-            text-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
-        }
-
-        .status-fora {
-            background-color: #991b1b;
-            color: #f87171;
-            border: 2px solid #dc2626;
-            text-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
+        .status-aguardando { background-color: #1e293b; color: var(--text-muted); border-color: #334155; }
+        .status-fora { background-color: rgba(220, 38, 38, 0.1); color: var(--red-glow); border-color: var(--red-glow); box-shadow: inset 0 0 20px rgba(220, 38, 38, 0.2); }
+        .status-alerta { background-color: rgba(245, 158, 11, 0.1); color: #fbbf24; border-color: #fbbf24; }
+        .status-padrao { background-color: rgba(16, 185, 129, 0.1); color: var(--green-glow); border-color: var(--green-glow); box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.2); }
+        
+        /* O Super Gatilho Ouro */
+        .status-super { 
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(217, 119, 6, 0.2));
+            color: var(--gold-glow); 
+            border-color: var(--gold-glow); 
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.4), inset 0 0 20px rgba(251, 191, 36, 0.2);
+            text-transform: uppercase;
         }
 
         .btn-salvar {
             width: 100%;
-            background-color: #3b82f6;
+            background-color: var(--blue-accent);
             color: white;
             border: none;
             padding: 14px;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
             border-radius: 6px;
             cursor: pointer;
             margin-top: 20px;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
         }
 
         .btn-salvar:hover {
             background-color: #2563eb;
+            transform: translateY(-2px);
         }
 
-        /* Tabela de Histórico */
-        .history-section {
-            background-color: #1e293b;
-            border-radius: 10px;
-            padding: 20px;
-            border: 1px solid #334155;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-        }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-        }
-
+        /* Tabela Histórico */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
             text-align: left;
             white-space: nowrap;
         }
 
         th {
-            background-color: #0f172a;
-            color: #94a3b8;
+            background-color: var(--bg-dark);
+            color: var(--text-muted);
             font-weight: 600;
-            padding: 12px 10px;
-            font-size: 12px;
+            padding: 12px;
+            font-size: 11px;
             text-transform: uppercase;
-            border-bottom: 2px solid #334155;
+            border-bottom: 2px solid var(--border-color);
         }
 
         td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #334155;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
             color: #cbd5e1;
             font-size: 13px;
         }
 
-        tr:hover td {
-            background-color: #243146;
-        }
+        tr:hover td { background-color: rgba(255,255,255,0.02); }
 
         .badge {
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
+            font-weight: 700;
         }
-
-        .badge-entrar { background-color: #065f46; color: #34d399; }
-        .badge-fora { background-color: #991b1b; color: #f87171; }
 
         .select-resultado {
-            background-color: #0f172a;
-            border: 1px solid #475569;
-            color: white;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
             padding: 6px;
             border-radius: 4px;
-            font-size: 13px;
             cursor: pointer;
         }
-        
-        .select-resultado option[value="Green"] { color: #34d399; }
-        .select-resultado option[value="Red"] { color: #f87171; }
 
-        /* =========================================
-           A MÁGICA DO CELULAR (MEDIA QUERIES)
-           ========================================= */
         @media (max-width: 768px) {
-            body {
-                padding: 12px; /* Reduz margens do celular */
-            }
-
-            header {
-                padding: 15px;
-            }
-
-            header h1 {
-                font-size: 18px;
-            }
-
-            /* Força as duas grandes colunas a empilharem */
-            .main-layout {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-            /* Força o formulário a ficar em uma coluna só no celular */
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-group.full-width {
-                grid-column: 1; /* Reseta a grade no celular */
-            }
-
-            .decisao-box {
-                font-size: 20px; /* Adapta a fonte da decisão */
-            }
+            .main-layout { flex-direction: column; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: 1; }
+            header { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>
@@ -324,213 +310,275 @@
 
 <div class="container">
     <header>
-        <h1>SISTEMA DE TRADE ESPORTIVO LIVE</h1>
-        <p>Análise de Critérios de Pressão e Ritmo de Jogo em Tempo Real</p>
+        <div>
+            <h1>SISTEMA APEX - MATRIX TÁTICA</h1>
+            <p>Cruzamento de Dados de Campo vs. Decaimento Financeiro da Betfair Exchange</p>
+        </div>
+        <div class="status-pulse">
+            <div class="pulse-dot"></div> ALGORITMO ONLINE
+        </div>
     </header>
 
     <div class="main-layout">
-        <!-- COLUNA ESQUERDA -->
-        <div class="column-left">
+        <!-- COLUNA 1: CAMPO -->
+        <div class="column" style="flex: 1.2;">
             <div class="card">
-                <div class="card-title">Dados em Tempo Real</div>
-                
+                <div class="card-title">1. Dados Táticos de Campo (O Fato)</div>
                 <div class="form-grid">
                     <div class="form-group full-width">
-                        <label for="jogo">Identificação do Jogo</label>
+                        <label>Identificação do Jogo</label>
                         <input type="text" id="jogo" placeholder="Ex: Brasil x Argentina" oninput="calcular()">
                     </div>
-
                     <div class="form-group">
-                        <label for="minuto">Minuto Atual do Jogo</label>
-                        <input type="number" id="minuto" min="1" max="90" placeholder="Ex: 15" oninput="calcular()">
+                        <label>Minuto Atual</label>
+                        <input type="number" id="minutoAtual" min="1" max="90" placeholder="Ex: 30" oninput="calcular()">
                     </div>
-
                     <div class="form-group">
-                        <label for="ap">Ataques Perigosos (AP)</label>
-                        <input type="number" id="ap" min="0" placeholder="Ex: 12" oninput="calcular()">
+                        <label>Ataques Perigosos (AP)</label>
+                        <input type="number" id="ap" min="0" placeholder="Ex: 35" oninput="calcular()">
                     </div>
-
                     <div class="form-group">
-                        <label for="finalizacoes">Finalizações (No Gol + Fora)</label>
-                        <input type="number" id="finalizacoes" min="0" placeholder="Ex: 2" oninput="calcular()">
+                        <label>Chutes NO ALVO</label>
+                        <input type="number" id="chutesAlvo" min="0" placeholder="Ex: 4" oninput="calcular()">
                     </div>
-
                     <div class="form-group">
-                        <label for="escanteios">Escanteios Convertidos</label>
-                        <input type="number" id="escanteios" min="0" placeholder="Ex: 1" oninput="calcular()">
+                        <label>Chutes PARA FORA</label>
+                        <input type="number" id="chutesFora" min="0" placeholder="Ex: 1" oninput="calcular()">
                     </div>
-
                     <div class="form-group">
-                        <label for="pressao">Pressão Alta / Recup. Rápida?</label>
+                        <label>Escanteios (Time Pressão)</label>
+                        <input type="number" id="escanteios" min="0" placeholder="Ex: 3" oninput="calcular()">
+                    </div>
+                    <div class="form-group">
+                        <label>Pressão Alta no Campo Adv?</label>
                         <select id="pressao" onchange="calcular()">
                             <option value="Não">Não</option>
                             <option value="Sim">Sim</option>
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <label for="odd">Odd Atual do Mercado</label>
-                        <input type="number" id="odd" step="0.01" min="1.01" placeholder="Ex: 1.85" oninput="calcular()">
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- COLUNA DIREITA -->
-        <div class="column-right">
+        <!-- COLUNA 2: RADAR FINANCEIRO & DECISÃO -->
+        <div class="column">
             <div class="card">
-                <div class="card-title">Análise de Indicadores</div>
-                
+                <div class="card-title">2. Radar Exchange U2.5 (Smart Money)</div>
+                <div class="radar-box form-grid">
+                    <div class="form-group">
+                        <label>Minuto de Referência (Passado)</label>
+                        <input type="number" id="minutoRef" placeholder="Ex: 20" oninput="calcular()">
+                    </div>
+                    <div class="form-group">
+                        <label>Odd de Referência (Passado)</label>
+                        <input type="number" step="0.01" id="oddRef" placeholder="Ex: 1.85" oninput="calcular()">
+                    </div>
+                    <div class="form-group full-width">
+                        <label style="color: var(--blue-accent)">Odd Atual da Exchange</label>
+                        <input type="number" step="0.01" id="oddAtual" placeholder="Ex: 1.83" oninput="calcular()" style="border-color: var(--blue-accent);">
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: -5px; margin-bottom: 15px; font-size: 13px; font-weight: bold;" id="status-fluxo">
+                    Aguardando Leitura de Ticks...
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">3. Veredito do Algoritmo</div>
                 <div class="metrics-grid">
                     <div class="metric-box">
-                        <div class="metric-label">AP por Minuto</div>
-                        <div class="metric-value" id="out-appm">0.00</div>
+                        <div class="metric-label">APPM Real</div>
+                        <div class="metric-value" id="out-appm" style="color: var(--blue-accent);">0.00</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-label">Pontuação</div>
-                        <div class="metric-value" id="out-pontos">0 / 4</div>
+                        <div class="metric-label">Força 4/4</div>
+                        <div class="metric-value" id="out-pontos" style="color: var(--gold-glow);">0 / 4</div>
                     </div>
                 </div>
-
                 <div class="decisao-container">
-                    <div class="decisao-label">Veredito do Algoritmo</div>
-                    <div id="decisao-box" class="decisao-box status-aguardando">AGUARDANDO DADOS</div>
+                    <div id="decisao-box" class="decisao-box status-aguardando">INCLUA OS DADOS</div>
                 </div>
-
-                <button class="btn-salvar" onclick="salvarNoHistorico()">Registrar Partida no Log</button>
+                <button class="btn-salvar" onclick="salvarNoHistorico()">Computar Operação</button>
             </div>
         </div>
     </div>
 
-    <!-- SEÇÃO DE HISTÓRICO -->
-    <div class="history-section">
-        <div class="card-title" style="margin-bottom: 10px;">Log de Operações da Sessão</div>
-        <div class="table-responsive">
+    <!-- LOG DE OPERAÇÕES -->
+    <div class="card" style="margin-top: -5px;">
+        <div class="card-title">Log de Anomalias Registradas</div>
+        <div style="overflow-x: auto;">
             <table>
                 <thead>
                     <tr>
                         <th>Jogo</th>
-                        <th>Minuto</th>
+                        <th>Min</th>
                         <th>APPM</th>
-                        <th>Chutes</th>
-                        <th>Cantos</th>
-                        <th>Pressão</th>
-                        <th>Pontos</th>
-                        <th>Decisão</th>
-                        <th>Odd</th>
+                        <th>Alvo/Fora</th>
+                        <th>Fluxo Odd</th>
+                        <th>Pts</th>
+                        <th>Sistema</th>
                         <th>Resultado</th>
                     </tr>
                 </thead>
-                <tbody id="historico-corpo">
-                </tbody>
+                <tbody id="historico-corpo"></tbody>
             </table>
         </div>
     </div>
 </div>
 
 <script>
+    let logBadgeCor = "";
+    let textoFluxo = "";
+
     function calcular() {
-        const minuto = parseFloat(document.getElementById('minuto').value) || 0;
+        // Coleta de Dados
+        const minAtual = parseFloat(document.getElementById('minutoAtual').value) || 0;
         const ap = parseFloat(document.getElementById('ap').value) || 0;
-        const finalizacoes = parseFloat(document.getElementById('finalizacoes').value) || 0;
+        const chutesAlvo = parseFloat(document.getElementById('chutesAlvo').value) || 0;
+        const chutesFora = parseFloat(document.getElementById('chutesFora').value) || 0;
         const escanteios = parseFloat(document.getElementById('escanteios').value) || 0;
         const pressao = document.getElementById('pressao').value;
+        
+        // Dados Financeiros
+        const minRef = parseFloat(document.getElementById('minutoRef').value) || 0;
+        const oddRef = parseFloat(document.getElementById('oddRef').value) || 0;
+        const oddAtual = parseFloat(document.getElementById('oddAtual').value) || 0;
 
-        if (minuto <= 0 || ap === 0) {
+        const decisaoBox = document.getElementById('decisao-box');
+        const fluxoBox = document.getElementById('status-fluxo');
+
+        // Reset inicial
+        if (minAtual <= 0 || ap === 0 || oddAtual === 0) {
             document.getElementById('out-appm').innerText = "0.00";
             document.getElementById('out-pontos').innerText = "0 / 4";
-            const box = document.getElementById('decisao-box');
-            box.innerText = "AGUARDANDO DADOS";
-            box.className = "decisao-box status-aguardando";
+            decisaoBox.innerHTML = "INCLUA OS DADOS";
+            decisaoBox.className = "decisao-box status-aguardando";
+            fluxoBox.innerHTML = "Aguardando Leitura de Ticks...";
+            fluxoBox.style.color = "#94a3b8";
             return;
         }
 
-        const appm = ap / minuto;
+        // 1. Cálculo Tático
+        const appm = ap / minAtual;
         document.getElementById('out-appm').innerText = appm.toFixed(2);
 
         let pontos = 0;
-        if (appm >= 0.70) pontos += 1;       
-        if (finalizacoes >= 2) pontos += 1;  
+        if (appm >= 1.0) pontos += 1; // Ajustado para Elite (APPM 1.0+)
+        if (chutesAlvo >= 2) pontos += 1; 
         if (pressao === 'Sim') pontos += 1;   
-        if (escanteios >= 1) pontos += 1;    
+        if (escanteios >= 2) pontos += 1;    
 
         document.getElementById('out-pontos').innerText = pontos + " / 4";
 
-        const decisaoBox = document.getElementById('decisao-box');
-        if (pontos >= 3) {
-            decisaoBox.innerText = "🟢 ENTRAR AGORA";
-            decisaoBox.className = "decisao-box status-entrar";
+        // 2. Cálculo do Radar Exchange (A Mágica da Velocidade do Tick)
+        let resistenciaDetectada = false;
+        let caindoNormal = true;
+        textoFluxo = "-";
+
+        if (minRef > 0 && oddRef > 0 && minAtual > minRef) {
+            const tempoDecorrido = minAtual - minRef;
+            const quedaReal = oddRef - oddAtual;
+            const quedaSugerida = tempoDecorrido * 0.02; // Aprox. 2 ticks / min
+
+            if (quedaReal <= 0) {
+                textoFluxo = "🚨 ALERTA: Odd Manteve/Subiu com o Tempo!";
+                fluxoBox.style.color = "#fbbf24";
+                resistenciaDetectada = true;
+            } else if (quedaReal <= (quedaSugerida * 0.5)) {
+                textoFluxo = "⚡ RESISTÊNCIA: Smart Money Segurando a Odd";
+                fluxoBox.style.color = "#3b82f6";
+                resistenciaDetectada = true;
+            } else {
+                textoFluxo = "⏳ FLUXO NORMAL: Decaimento natural";
+                fluxoBox.style.color = "#94a3b8";
+                caindoNormal = true;
+            }
         } else {
-            decisaoBox.innerText = "🔴 FICAR DE FORA";
+            textoFluxo = "Insira a Odd Anterior para rastrear Dinheiro Inteligente";
+            fluxoBox.style.color = "#94a3b8";
+        }
+        fluxoBox.innerText = textoFluxo;
+
+        // 3. Filtros Anti-Armadilha
+        const gatekeeperOdd = oddAtual >= 1.80;
+        const pressaoEsteril = chutesFora > (chutesAlvo * 2);
+        const eficienciaOfensiva = chutesAlvo > 0 && !pressaoEsteril;
+
+        // 4. Árvore de Decisão Pura
+        if (!gatekeeperOdd) {
+            decisaoBox.innerHTML = `🔴 ABORTAR (MERCADO TRUNCADO)<br><span class="sub-decisao">Odd ${oddAtual} abaixo do padrão matemático de valor (1.80+)</span>`;
             decisaoBox.className = "decisao-box status-fora";
+            logBadgeCor = "#ef4444";
+        } 
+        else if (pontos >= 3 && pressaoEsteril) {
+            decisaoBox.innerHTML = `🟡 FALSO POSITIVO (NO BET)<br><span class="sub-decisao">Volume alto sem direção. Alto risco de Contra-Ataque.</span>`;
+            decisaoBox.className = "decisao-box status-alerta";
+            logBadgeCor = "#fbbf24";
+        }
+        else if (pontos >= 3 && eficienciaOfensiva) {
+            if (resistenciaDetectada) {
+                // O SANTO GRAAL: Tática + Dinheiro Institucional
+                decisaoBox.innerHTML = `🔥 SUPER GATILHO: ENTRAR OVER<br><span class="sub-decisao">Pressão Real 4/4 cruzada com Dinheiro Asiático Segurando o Preço!</span>`;
+                decisaoBox.className = "decisao-box status-super";
+                logBadgeCor = "#fbbf24"; // Dourado no log
+            } else {
+                decisaoBox.innerHTML = `🟢 GATILHO PADRÃO: OVER GOLS<br><span class="sub-decisao">Tática validada. Dinheiro fluindo normalmente.</span>`;
+                decisaoBox.className = "decisao-box status-padrao";
+                logBadgeCor = "#10b981";
+            }
+        } 
+        else {
+            decisaoBox.innerHTML = `🔴 NO BET: SEM CONTEXTO<br><span class="sub-decisao">O jogo não atende aos requisitos táticos (${pontos}/4)</span>`;
+            decisaoBox.className = "decisao-box status-fora";
+            logBadgeCor = "#ef4444";
         }
     }
 
     function salvarNoHistorico() {
-        const jogo = document.getElementById('jogo').value || "Jogo Sem Nome";
-        const minuto = document.getElementById('minuto').value || "-";
-        const ap = document.getElementById('ap').value || "0";
-        const finalizacoes = document.getElementById('finalizacoes').value || "0";
-        const escanteios = document.getElementById('escanteios').value || "0";
-        const pressao = document.getElementById('pressao').value;
-        const odd = document.getElementById('odd').value || "-";
-        
+        const jogo = document.getElementById('jogo').value || "Não Identificado";
+        const minAtual = document.getElementById('minutoAtual').value || "-";
+        const chutesAlvo = document.getElementById('chutesAlvo').value || "0";
+        const chutesFora = document.getElementById('chutesFora').value || "0";
         const appm = document.getElementById('out-appm').innerText;
         const pontos = document.getElementById('out-pontos').innerText;
-        const decisaoTexto = document.getElementById('decisao-box').innerText;
         
-        if (minuto === "-" || ap === "0") {
-            alert("Insira os dados da partida antes de salvar no log.");
-            return;
-        }
+        let decisaoTextoCompleto = document.getElementById('decisao-box').innerHTML;
+        let tituloVeredito = decisaoTextoCompleto.split('<br>')[0].trim();
+        
+        if(tituloVeredito === "INCLUA OS DADOS") return alert("Preencha os dados do jogo primeiro.");
 
-        const corpoTabela = document.getElementById('historico-corpo');
-        const novaLinha = document.createElement('tr');
+        const corpo = document.getElementById('historico-corpo');
+        const tr = document.createElement('tr');
+        
+        // Pega o status reduzido do fluxo para caber na tabela
+        let statusFluxoAbrev = textoFluxo.includes("RESISTÊNCIA") ? "⚡ Resistência" : textoFluxo.includes("Normal") ? "⏳ Normal" : "-";
 
-        const badgeClass = decisaoTexto.includes("ENTRAR") ? "badge-entrar" : "badge-fora";
-
-        novaLinha.innerHTML = `
+        tr.innerHTML = `
             <td><strong>${jogo}</strong></td>
-            <td>${minuto}'</td>
+            <td>${minAtual}'</td>
             <td>${appm}</td>
-            <td>${finalizacoes}</td>
-            <td>${escanteios}</td>
-            <td>${pressao}</td>
-            <td><span class="badge ${badgeClass}">${pontos}</span></td>
-            <td><strong>${decisaoTexto}</strong></td>
-            <td>${odd}</td>
+            <td>${chutesAlvo} / ${chutesFora}</td>
+            <td>${statusFluxoAbrev}</td>
+            <td>${pontos}</td>
+            <td><span class="badge" style="background-color: transparent; border: 1px solid ${logBadgeCor}; color: ${logBadgeCor}">${tituloVeredito}</span></td>
             <td>
-                <select class="select-resultado" onchange="atualizarCorResultado(this)">
-                    <option value="Aberto">Aberto ⏳</option>
+                <select class="select-resultado" onchange="if(this.value==='Green'){this.style.color='#10b981';this.style.borderColor='#10b981'}else if(this.value==='Red'){this.style.color='#ef4444';this.style.borderColor='#ef4444'}else{this.style.color='white';this.style.borderColor='#2a3441'}">
+                    <option value="Aberto">Em Aberto</option>
                     <option value="Green">Green ✅</option>
                     <option value="Red">Red ❌</option>
-                    <option value="Reembolso">Reembolso ↩️</option>
                 </select>
             </td>
         `;
 
-        corpoTabela.insertBefore(novaLinha, corpoTabela.firstChild);
+        corpo.insertBefore(tr, corpo.firstChild);
         
-        document.getElementById('minuto').value = "";
-        document.getElementById('ap').value = "";
-        document.getElementById('finalizacoes').value = "";
-        document.getElementById('escanteios').value = "";
-        document.getElementById('odd').value = "";
+        // Reset Inputs Táticos para a próxima análise
+        ['chutesAlvo', 'chutesFora', 'escanteios', 'ap'].forEach(id => document.getElementById(id).value = "");
+        // Passa a odd atual e minuto atual para os de referência, preparando o próximo track
+        document.getElementById('minutoRef').value = document.getElementById('minutoAtual').value;
+        document.getElementById('oddRef').value = document.getElementById('oddAtual').value;
+        
         calcular();
-    }
-
-    function atualizarCorResultado(selectElement) {
-        const val = selectElement.value;
-        if (val === 'Green') {
-            selectElement.style.borderColor = '#34d399';
-            selectElement.style.color = '#34d399';
-        } else if (val === 'Red') {
-            selectElement.style.borderColor = '#f87171';
-            selectElement.style.color = '#f87171';
-        } else {
-            selectElement.style.borderColor = '#475569';
-            selectElement.style.color = 'white';
-        }
     }
 </script>
 
