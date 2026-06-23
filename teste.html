@@ -113,17 +113,34 @@
         let historicoLogs = []; // Array que guarda toda a sua trajetória
 
         function registrarEAnalisar() {
-            let tempoJogo = document.getElementById('tempoJogo').value;
             let minuto = parseFloat(document.getElementById('minuto').value);
-            let tipoMercado = document.getElementById('tipoMercado').value;
             let oddIniTime = parseFloat(document.getElementById('oddInicial').value);
             let oddRealTime = parseFloat(document.getElementById('oddReal').value);
             let oddIniGols = parseFloat(document.getElementById('oddGolsInicial').value);
             let oddRealGols = parseFloat(document.getElementById('oddGolsReal').value);
 
-            if(isNaN(minuto) || isNaN(oddIniTime) || isNaN(oddRealTime) || isNaN(oddIniGols) || isNaN(oddRealGols)) {
-                alert("Preencha todos os dados!"); return;
+            // CÁLCULO ESTÁVEL: oddEsperada = oddInicial + (tempo/90 * margem)
+            // Isso evita valores irreais como 5.90
+            let margemTempo = (minuto / 90) * 1.5; 
+            let oddEsperadaTime = oddIniTime + (oddIniTime * margemTempo);
+            let oddEsperadaGols = oddIniGols + (oddIniGols * margemTempo);
+
+            // Anomalia: se a odd real for MENOR que a esperada, o mercado está esmagando
+            let anomaliaTime = (oddRealTime < (oddEsperadaTime - 0.10));
+            let anomaliaGols = (oddRealGols < (oddEsperadaGols - 0.10));
+
+            // Atualiza exibição
+            document.getElementById('resultadoOddTime').innerText = oddEsperadaTime.toFixed(2);
+            document.getElementById('resultadoOddGols').innerText = oddEsperadaGols.toFixed(2);
+
+            // Lógica de alerta mais conservadora
+            if (anomaliaTime && anomaliaGols) {
+                // Gatilho real
+            } else if (anomaliaTime) {
+                // Falso positivo (pressão estéril)
             }
+            // ... (resto do seu código de atualização de tabela)
+        }
 
             // Configuração dos Tempos
             let isPrimeiroTempo = (tempoJogo === "1");
