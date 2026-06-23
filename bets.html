@@ -2,83 +2,112 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Radar Profissional - Time Decay</title>
+    <title>Radar de Odds Profissional</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #fff; padding: 20px; }
-        .painel { background-color: #2d2d2d; border: 1px solid #444; padding: 20px; max-width: 350px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #fff; padding: 20px; }
+        .painel { background-color: #262626; border: 1px solid #333; padding: 25px; max-width: 380px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
         .linha-input { margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        input { padding: 8px; width: 80px; text-align: center; border: 1px solid #555; border-radius: 4px; background-color: #111; color: #fff; font-weight: bold; }
-        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        button:hover { background-color: #0056b3; }
-        .resultado { margin-top: 20px; padding-top: 15px; border-top: 1px solid #444; }
+        input, select { padding: 8px; width: 100px; text-align: center; border: 1px solid #444; border-radius: 4px; background-color: #111; color: #fff; font-weight: bold; }
+        select { width: 120px; text-align: left; }
+        button { width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background-color: #218838; }
+        .resultado { margin-top: 20px; padding-top: 15px; border-top: 1px solid #333; display: flex; justify-content: space-between; }
         .destaque { font-size: 22px; color: #00ffcc; font-weight: bold; }
-        .alerta-perigo { color: white; background-color: #dc3545; padding: 12px; font-weight: bold; text-align: center; border-radius: 4px; margin-top: 15px; display: none; }
+        .alerta-perigo { color: white; background-color: #dc3545; padding: 12px; font-weight: bold; text-align: center; border-radius: 4px; margin-top: 15px; display: none; font-size: 14px; box-shadow: 0 0 10px rgba(220, 53, 69, 0.5); }
     </style>
 </head>
 <body>
 
-    <h2>Radar de Anomalia (Empate)</h2>
+    <h2>Radar de Anomalias - Betfair</h2>
     
     <div class="painel">
         <div class="linha-input">
-            <label>Minuto Atual do Jogo:</label>
-            <input type="number" id="minuto" placeholder="Ex: 75" min="0" max="90">
+            <label>O que está monitorando?</label>
+            <select id="tipoMercado">
+                <option value="sobe">Favorito (Odd Sobe)</option>
+                <option value="desce">Empate (Odd Desce)</option>
+            </select>
+        </div>
+        <div class="linha-input">
+            <label>Minuto Atual:</label>
+            <input type="number" id="minuto" value="11" min="0" max="90">
         </div>
         <div class="linha-input">
             <label>Odd Inicial (Pré-Live):</label>
-            <input type="number" step="0.01" id="oddInicial" placeholder="Ex: 3.50">
+            <input type="number" step="0.01" id="oddInicial" value="1.20">
         </div>
         <div class="linha-input">
-            <label>Odd Real na Betfair Agora:</label>
-            <input type="number" step="0.01" id="oddReal" placeholder="Ex: 2.10">
+            <label>Odd na Betfair Agora:</label>
+            <input type="number" step="0.01" id="oddReal" value="1.26">
         </div>
 
-        <button onclick="calcularOdd()">Analisar Mercado</button>
+        <button onclick="analisarMercado()">Analisar Mercado</button>
 
         <div class="resultado">
-            <p>Odd Matemática Esperada: <span id="resultadoOdd" class="destaque">-</span></p>
+            <span>Odd Justa Calculada:</span>
+            <span id="resultadoOdd" class="destaque">-</span>
         </div>
         
+        <!-- Caixa de Alerta Dinâmica -->
         <div id="caixaAlerta" class="alerta-perigo">
-            ⚠️ OPA! O mercado está segurando a odd. Há pressão de gol!
+            ⚠️ OPA! Anomalia detectada. O mercado está segurando a odd, gol iminente!
         </div>
     </div>
 
     <script>
-        function calcularOdd() {
-            // 1. Pega os valores que você digitou
+        function analisarMercado() {
             let minuto = parseFloat(document.getElementById('minuto').value);
             let oddInicial = parseFloat(document.getElementById('oddInicial').value);
             let oddReal = parseFloat(document.getElementById('oddReal').value);
+            let tipoMercado = document.getElementById('tipoMercado').value;
 
-            // Validação simples para evitar erros
-            if(isNaN(minuto) || isNaN(oddInicial) || isNaN(oddReal) || minuto < 0 || minuto > 90) {
-                alert("Por favor, preencha todos os campos corretamente. O minuto deve ser entre 0 e 90.");
+            if(isNaN(minuto) || isNaN(oddInicial) || isNaN(oddReal)) {
+                alert("Por favor, preencha todos os campos.");
                 return;
             }
 
-            // 2. A Matemática Profissional (Curva de Decaimento)
-            let probInicial = 1 / oddInicial;
-            let fatorTempo = Math.pow((minuto / 90), 2.5); // O expoente 2.5 cria a curva do futebol
-            let probAtual = probInicial + ((1 - probInicial) * fatorTempo);
-            
-            let oddEsperada = 1 / probAtual;
+            let oddEsperada = 0;
+            let dispararAlerta = false;
 
-            // 3. Mostra o resultado na tela arredondado para 2 casas decimais
+            if (tipoMercado === "sobe") {
+                // --- MODELO PARA FAVORITO (ODD SOBE) ---
+                let probInicial = 1 / oddInicial;
+                // O expoente 1.45 modela perfeitamente a subida inicial do favorito
+                let fatorTempo = Math.pow((minuto / 90), 1.45);
+                let probAtual = probInicial * (1 - fatorTempo);
+                
+                if (probAtual <= 0) probAtual = 0.005; // Evita divisão por zero no fim do jogo
+                oddEsperada = 1 / probAtual;
+
+                // Margem de segurança curta para odds espremidas
+                let margemSeguranca = 0.03; 
+
+                // ANOMALIA NO FAVORITO: A odd real está MENOR do que deveria estar (mercado segurando)
+                if (oddReal < (oddEsperada - margemSeguranca)) {
+                    dispararAlerta = true;
+                }
+            } else {
+                // --- MODELO PARA EMPATE (ODD DESCE) ---
+                let probInicial = 1 / oddInicial;
+                let fatorTempo = Math.pow((minuto / 90), 2.5);
+                let probAtual = probInicial + ((1 - probInicial) * fatorTempo);
+                oddEsperada = 1 / probAtual;
+
+                let margemSeguranca = 0.20;
+
+                // ANOMALIA NO EMPATE: A odd real está MAIOR do que deveria estar (mercado resistindo a descer)
+                if (oddReal > (oddEsperada + margemSeguranca)) {
+                    dispararAlerta = true;
+                }
+            }
+
+            // Exibe a Odd Justa na tela
             document.getElementById('resultadoOdd').innerText = oddEsperada.toFixed(2);
 
-            // 4. Lógica do Alerta (Margem de anomalia)
-            // Se a odd real estiver acima do esperado, não tem perigo (jogo morno).
-            // Se a odd real estiver "agarrada" (ex: mercado oferecendo 2.50 quando a matemática pede 2.10)
-            
-            // Defini uma margem de segurança de 0.20 ticks (você pode ajustar depois)
-            let margem = 0.20; 
-
-            if (oddReal > (oddEsperada + margem)) {
-                // Alerta ativado!
+            // Ativa ou desativa o alerta na tela
+            if (dispararAlerta) {
                 document.getElementById('caixaAlerta').style.display = 'block';
             } else {
-                // Tudo normal, esconde o alerta
                 document.getElementById('caixaAlerta').style.display = 'none';
             }
         }
