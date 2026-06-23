@@ -2,309 +2,73 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Radar Tape Reading - Histórico e Fases</title>
+    <title>Radar de Trade - Com Persistência</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #eee; padding: 20px; margin: 0; }
-        h2 { text-align: center; color: #fff; margin-bottom: 20px; }
-        .container-principal { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1200px; margin: 0 auto; }
-        .painel { background-color: #262626; border: 1px solid #444; padding: 20px; width: 100%; max-width: 400px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
-        .grafico-container { background-color: #262626; border: 1px solid #444; padding: 20px; border-radius: 10px; flex-grow: 1; min-width: 300px; max-width: 600px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); display: flex; flex-direction: column; }
-        .secao-titulo { font-size: 14px; color: #aaa; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 15px; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        .linha-input { margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        input, select { padding: 8px; width: 90px; text-align: center; border: 1px solid #555; border-radius: 5px; background-color: #111; color: #fff; font-weight: bold; font-size: 14px; }
-        select { width: 130px; text-align: left; }
-        button { width: 100%; padding: 14px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.3s; }
-        button:hover { background-color: #0056b3; }
-        
-        .caixa-alerta { padding: 15px; font-weight: bold; text-align: center; border-radius: 5px; margin-top: 15px; display: none; font-size: 14px; }
-        .alerta-verde { color: #fff; background-color: #28a745; border: 1px solid #1e7e34; }
-        .alerta-amarelo { color: #000; background-color: #ffc107; border: 1px solid #d39e00; }
-        .alerta-vermelho { color: #fff; background-color: #dc3545; border: 1px solid #c82333; }
-
-        /* Estilos da Tabela de Histórico */
-        .tabela-historico { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; text-align: center; }
-        .tabela-historico th { background-color: #333; padding: 10px; color: #00ffcc; border-bottom: 2px solid #555; }
-        .tabela-historico td { padding: 8px; border-bottom: 1px solid #444; }
-        .tabela-historico tr:nth-child(even) { background-color: #2a2a2a; }
-        .badge { padding: 4px 8px; border-radius: 3px; font-weight: bold; font-size: 11px; color: #fff; }
-        .bg-verde { background-color: #28a745; }
-        .bg-amarelo { background-color: #ffc107; color: #000; }
-        .bg-vermelho { background-color: #dc3545; }
+        body { font-family: sans-serif; background-color: #1a1a1a; color: #eee; padding: 20px; }
+        .container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .painel { background-color: #262626; padding: 20px; border-radius: 10px; width: 350px; }
+        .linha { margin-bottom: 10px; display: flex; justify-content: space-between; }
+        input, select { width: 80px; padding: 5px; text-align: center; }
+        button { width: 100%; padding: 10px; margin-top: 10px; cursor: pointer; }
+        .historico { width: 100%; max-width: 800px; margin-top: 20px; background: #262626; padding: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #444; padding: 8px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <h2>Radar Dinâmico com Histórico & Fases</h2>
-    
-    <div class="container-principal">
-        <!-- Lado Esquerdo: Controles -->
-        <div class="painel">
-            <div class="linha-input">
-                <label>Fase da Partida:</label>
-                <select id="tempoJogo">
-                    <option value="1">1º Tempo (0 a 45')</option>
-                    <option value="2">2º Tempo (45 a 90')</option>
-                </select>
-            </div>
-            <div class="linha-input">
-                <label>Minuto Atual:</label>
-                <input type="number" id="minuto" value="10" min="0" max="95">
-            </div>
-
-            <div class="secao-titulo">Mercado do Time (Match Odds)</div>
-            <div class="linha-input">
-                <label>O que monitora?</label>
-                <select id="tipoMercado">
-                    <option value="sobe">Favorito (Odd Sobe)</option>
-                    <option value="desce">Empate (Odd Desce)</option>
-                </select>
-            </div>
-            <div class="linha-input">
-                <label>Odd Inicial:</label>
-                <input type="number" step="0.01" id="oddInicial" value="1.50">
-            </div>
-            <div class="linha-input">
-                <label>Odd Real Agora:</label>
-                <input type="number" step="0.01" id="oddReal" value="1.52">
-            </div>
-
-            <div class="secao-titulo">Mercado de Gols (+0.5 ou Próximo)</div>
-            <div class="linha-input">
-                <label>Odd Inicial Gols:</label>
-                <input type="number" step="0.01" id="oddGolsInicial" value="1.30">
-            </div>
-            <div class="linha-input">
-                <label>Odd Real Gols:</label>
-                <input type="number" step="0.01" id="oddGolsReal" value="1.35">
-            </div>
-
-            <button onclick="registrarEAnalisar()">Registrar Log e Analisar</button>
-
-            <!-- Alertas -->
-            <div id="alertaVerde" class="caixa-alerta alerta-verde">✅ MERCADO NORMAL: Sem pressão evidente.</div>
-            <div id="alertaAmarelo" class="caixa-alerta alerta-amarelo">⚠️ FALSO POSITIVO: Time esmagado, mas GOLS normais. Fique fora!</div>
-            <div id="alertaVermelho" class="caixa-alerta alerta-vermelho">🔥 GATILHO DE OURO: Mercados confirmam amasso absoluto!</div>
-        </div>
-
-        <!-- Lado Direito: Gráfico e Tabela -->
-        <div class="grafico-container">
-            <canvas id="meuGrafico" height="150"></canvas>
-            
-            <div class="secao-titulo" style="margin-top: 30px;">Histórico de Entradas (Trajetória)</div>
-            <table class="tabela-historico">
-                <thead>
-                    <tr>
-                        <th>Minuto</th>
-                        <th>Odd Time (Real)</th>
-                        <th>Odd Gols (Real)</th>
-                        <th>Status do Radar</th>
-                    </tr>
-                </thead>
-                <tbody id="corpoTabela">
-                    <!-- Os logs vão aparecer aqui -->
-                </tbody>
-            </table>
-        </div>
+<div class="container">
+    <div class="painel">
+        <label>Minuto:</label><input type="number" id="minuto" value="10"><br>
+        <label>Odd Inicial Time:</label><input type="number" step="0.01" id="oddInicial" value="1.42"><br>
+        <label>Odd Real Time:</label><input type="number" step="0.01" id="oddReal" value="1.53"><br>
+        <label>Odd Inicial Gols:</label><input type="number" step="0.01" id="oddGolsInicial" value="1.36"><br>
+        <label>Odd Real Gols:</label><input type="number" step="0.01" id="oddGolsReal" value="2.10"><br>
+        <button onclick="registrar()">Registrar Log</button>
+        <button onclick="limparTudo()" style="background: #dc3545; color: white;">Limpar Histórico</button>
+        <div id="status" style="margin-top:10px; font-weight:bold;"></div>
     </div>
+</div>
 
-    <script>
-        let graficoAtual = null;
-        let historicoLogs = []; // Array que guarda toda a sua trajetória
+<div class="historico">
+    <table>
+        <thead><tr><th>Minuto</th><th>Odd Time</th><th>Odd Gols</th><th>Status</th></tr></thead>
+        <tbody id="corpoTabela"></tbody>
+    </table>
+</div>
 
-        function registrarEAnalisar() {
-            let minuto = parseFloat(document.getElementById('minuto').value);
-            let oddIniTime = parseFloat(document.getElementById('oddInicial').value);
-            let oddRealTime = parseFloat(document.getElementById('oddReal').value);
-            let oddIniGols = parseFloat(document.getElementById('oddGolsInicial').value);
-            let oddRealGols = parseFloat(document.getElementById('oddGolsReal').value);
+<script>
+    let logs = JSON.parse(localStorage.getItem('tradeLogs')) || [];
 
-            // CÁLCULO ESTÁVEL: oddEsperada = oddInicial + (tempo/90 * margem)
-            // Isso evita valores irreais como 5.90
-            let margemTempo = (minuto / 90) * 1.5; 
-            let oddEsperadaTime = oddIniTime + (oddIniTime * margemTempo);
-            let oddEsperadaGols = oddIniGols + (oddIniGols * margemTempo);
+    function registrar() {
+        let m = document.getElementById('minuto').value;
+        let oRT = parseFloat(document.getElementById('oddReal').value);
+        let oRG = parseFloat(document.getElementById('oddGolsReal').value);
+        
+        // Matemática linear conservadora
+        let oET = parseFloat(document.getElementById('oddInicial').value) + (m/90 * 0.5);
+        let oEG = parseFloat(document.getElementById('oddGolsInicial').value) + (m/90 * 0.5);
+        
+        let status = (oRT < oET - 0.1 && oRG < oEG - 0.1) ? "GATILHO!" : (oRT < oET - 0.1 ? "FALSO POSITIVO" : "NORMAL");
 
-            // Anomalia: se a odd real for MENOR que a esperada, o mercado está esmagando
-            let anomaliaTime = (oddRealTime < (oddEsperadaTime - 0.10));
-            let anomaliaGols = (oddRealGols < (oddEsperadaGols - 0.10));
+        logs.push({m, oRT, oRG, status});
+        localStorage.setItem('tradeLogs', JSON.stringify(logs));
+        renderizar();
+    }
 
-            // Atualiza exibição
-            document.getElementById('resultadoOddTime').innerText = oddEsperadaTime.toFixed(2);
-            document.getElementById('resultadoOddGols').innerText = oddEsperadaGols.toFixed(2);
+    function renderizar() {
+        let tbody = document.getElementById('corpoTabela');
+        tbody.innerHTML = logs.map(l => `<tr><td>${l.m}'</td><td>${l.oRT}</td><td>${l.oRG}</td><td>${l.status}</td></tr>`).join('');
+    }
 
-            // Lógica de alerta mais conservadora
-            if (anomaliaTime && anomaliaGols) {
-                // Gatilho real
-            } else if (anomaliaTime) {
-                // Falso positivo (pressão estéril)
-            }
-            // ... (resto do seu código de atualização de tabela)
-        }
+    function limparTudo() {
+        localStorage.removeItem('tradeLogs');
+        logs = [];
+        renderizar();
+    }
 
-            // Configuração dos Tempos
-            let isPrimeiroTempo = (tempoJogo === "1");
-            let tempoTotal = isPrimeiroTempo ? 48 : 95;
-            let tempoBase = isPrimeiroTempo ? 48 : 50; 
-            
-            let tempoPassado = isPrimeiroTempo ? minuto : Math.max(0, minuto - 45);
-            let tr = (tempoBase - tempoPassado) / tempoBase;
-            if(tr < 0.01) tr = 0.01;
-
-            // 1. MATEMÁTICA DO TIME
-            let oddEsperadaTime = 0;
-            let anomaliaTime = false;
-
-            if (tipoMercado === "sobe") {
-                let pIni = 1 / oddIniTime;
-                let pAtual = pIni * Math.pow(tr, 0.55);
-                if (pAtual <= 0.05) pAtual = 0.05; 
-                oddEsperadaTime = 1 / pAtual;
-
-                let margemTime = 0.25; 
-                if (oddRealTime < (oddEsperadaTime - margemTime)) anomaliaTime = true;
-            } else {
-                let pIni = 1 / oddIniTime;
-                let pAtual = pIni + ((1 - pIni) * (1 - Math.pow(tr, 1.2)));
-                oddEsperadaTime = 1 / pAtual;
-                if (oddRealTime > (oddEsperadaTime + 0.20)) anomaliaTime = true;
-            }
-
-            // 2. MATEMÁTICA DE GOLS
-            let pIniGols = 1 / oddIniGols;
-            let pAtualGols = pIniGols * Math.pow(tr, 0.5);
-            if (pAtualGols <= 0.05) pAtualGols = 0.05;
-            let oddEsperadaGols = 1 / pAtualGols;
-            
-            let anomaliaGols = (oddRealGols < (oddEsperadaGols - 0.25));
-
-            // 3. ANÁLISE DE STATUS
-            let statusTexto = "";
-            let classeBadge = "";
-            
-            document.getElementById('alertaVerde').style.display = 'none';
-            document.getElementById('alertaAmarelo').style.display = 'none';
-            document.getElementById('alertaVermelho').style.display = 'none';
-
-            if (anomaliaTime && !anomaliaGols) {
-                document.getElementById('alertaAmarelo').style.display = 'block';
-                statusTexto = "Falso Positivo"; classeBadge = "bg-amarelo";
-            } else if (anomaliaTime && anomaliaGols) {
-                document.getElementById('alertaVermelho').style.display = 'block';
-                statusTexto = "Gatilho Amasso!"; classeBadge = "bg-vermelho";
-            } else {
-                document.getElementById('alertaVerde').style.display = 'block';
-                statusTexto = "Normal"; classeBadge = "bg-verde";
-            }
-
-            // 4. REGISTRO NO HISTÓRICO
-            // Verifica se o minuto já foi registrado para não duplicar, atualizando caso exista
-            let indexExistente = historicoLogs.findIndex(log => log.minuto === minuto);
-            let novoLog = {
-                minuto: minuto,
-                oddTime: oddRealTime,
-                oddGols: oddRealGols,
-                statusTexto: statusTexto,
-                classeBadge: classeBadge
-            };
-
-            if (indexExistente >= 0) {
-                historicoLogs[indexExistente] = novoLog; // Atualiza
-            } else {
-                historicoLogs.push(novoLog); // Adiciona novo
-            }
-            
-            // Ordena o histórico pelo minuto do jogo
-            historicoLogs.sort((a, b) => a.minuto - b.minuto);
-            
-            atualizarTabela();
-            atualizarGrafico(oddIniTime, tipoMercado, isPrimeiroTempo);
-        }
-
-        function atualizarTabela() {
-            let corpo = document.getElementById('corpoTabela');
-            corpo.innerHTML = ""; // Limpa a tabela
-            
-            historicoLogs.forEach(log => {
-                let linha = `<tr>
-                    <td>${log.minuto}'</td>
-                    <td><b>${log.oddTime.toFixed(2)}</b></td>
-                    <td>${log.oddGols.toFixed(2)}</td>
-                    <td><span class="badge ${log.classeBadge}">${log.statusTexto}</span></td>
-                </tr>`;
-                corpo.innerHTML += linha;
-            });
-        }
-
-        function atualizarGrafico(oddInicial, tipoMercado, isPrimeiroTempo) {
-            let ctx = document.getElementById('meuGrafico').getContext('2d');
-            if (graficoAtual) graficoAtual.destroy();
-
-            let minInicio = isPrimeiroTempo ? 0 : 45;
-            let minFim = isPrimeiroTempo ? 48 : 95;
-            let tempoBase = isPrimeiroTempo ? 48 : 50;
-
-            let labelsCurva = [];
-            let dadosCurvaJusta = [];
-
-            // Gerar a linha contínua da Odd Justa (a "Referência")
-            for(let m = minInicio; m <= minFim; m += 2) {
-                labelsCurva.push(m);
-                let tempoPassado = isPrimeiroTempo ? m : (m - 45);
-                let tr = (tempoBase - tempoPassado) / tempoBase;
-                if (tr < 0.01) tr = 0.01;
-                
-                let oddCalc = 0;
-                if (tipoMercado === "sobe") {
-                    let pIni = 1 / oddInicial;
-                    let pAtual = pIni * Math.pow(tr, 0.55);
-                    oddCalc = 1 / (pAtual < 0.05 ? 0.05 : pAtual);
-                } else {
-                    let pIni = 1 / oddInicial;
-                    let pAtual = pIni + ((1 - pIni) * (1 - Math.pow(tr, 1.2)));
-                    oddCalc = 1 / pAtual;
-                }
-                dadosCurvaJusta.push(oddCalc > 10 ? 10 : parseFloat(oddCalc.toFixed(2)));
-            }
-
-            let dadosTrajetoria = historicoLogs.map(log => ({x: log.minuto, y: log.oddTime}));
-
-            graficoAtual = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labelsCurva,
-                    datasets: [
-                        {
-                            label: 'Odd Justa (Referência)',
-                            data: dadosCurvaJusta,
-                            borderColor: '#007bff',
-                            borderWidth: 2,
-                            fill: false,
-                            pointRadius: 0,
-                            tension: 0.3
-                        },
-                        {
-                            label: 'Odd Real (Mercado)',
-                            data: dadosTrajetoria,
-                            borderColor: '#e53935',
-                            backgroundColor: '#e53935',
-                            borderWidth: 3,
-                            fill: false,
-                            pointRadius: 6,
-                            tension: 0.1
-                        }
-                    ]
-                },
-                options: { 
-                    responsive: true, 
-                    plugins: { legend: { labels: { color: '#fff' } } }, 
-                    scales: { 
-                        x: { type: 'linear', min: minInicio, max: minFim, ticks: { color: '#ccc' } }, 
-                        y: { ticks: { color: '#ccc' }, grid: { color: '#444' } } 
-                    } 
-                }
-            });
-        }
-    </script>
+    renderizar();
+</script>
 </body>
 </html>
