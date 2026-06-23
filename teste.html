@@ -2,70 +2,87 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Radar de Odds Pro - Com Gráfico</title>
+    <title>Radar Cross-Market (Match + Gols)</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #eee; padding: 20px; margin: 0; }
-        h2 { text-align: center; color: #fff; margin-bottom: 30px; }
-        
-        /* Layout flexível para colocar o painel e o gráfico lado a lado */
-        .container-principal { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; max-width: 1200px; margin: 0 auto; }
-        
-        .painel { background-color: #262626; border: 1px solid #444; padding: 25px; width: 100%; max-width: 380px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
+        h2 { text-align: center; color: #fff; margin-bottom: 20px; }
+        .container-principal { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        .painel { background-color: #262626; border: 1px solid #444; padding: 20px; width: 100%; max-width: 400px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
         .grafico-container { background-color: #262626; border: 1px solid #444; padding: 20px; border-radius: 10px; flex-grow: 1; min-width: 300px; max-width: 600px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
-        
-        .linha-input { margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        input, select { padding: 10px; width: 110px; text-align: center; border: 1px solid #555; border-radius: 5px; background-color: #111; color: #fff; font-weight: bold; font-size: 14px; }
-        select { width: 145px; text-align: left; }
+        .secao-titulo { font-size: 14px; color: #aaa; border-bottom: 1px solid #444; padding-bottom: 5px; margin-bottom: 15px; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        .linha-input { margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        input, select { padding: 8px; width: 90px; text-align: center; border: 1px solid #555; border-radius: 5px; background-color: #111; color: #fff; font-weight: bold; font-size: 14px; }
+        select { width: 130px; text-align: left; }
         button { width: 100%; padding: 14px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.3s; }
         button:hover { background-color: #0056b3; }
+        .resultado { margin-top: 20px; padding-top: 15px; border-top: 1px solid #444; }
+        .linha-resultado { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .destaque { font-size: 20px; color: #00ffcc; font-weight: bold; }
         
-        .resultado { margin-top: 25px; padding-top: 15px; border-top: 1px solid #444; display: flex; flex-direction: column; gap: 10px; }
-        .linha-resultado { display: flex; justify-content: space-between; align-items: center; }
-        .destaque { font-size: 24px; color: #00ffcc; font-weight: bold; }
-        .info-tecnica { font-size: 12px; color: #aaa; font-style: italic; text-align: center; margin-top: 5px; }
-        
-        .alerta-perigo { color: white; background-color: #e53935; padding: 15px; font-weight: bold; text-align: center; border-radius: 5px; margin-top: 20px; display: none; font-size: 15px; box-shadow: 0 0 15px rgba(229, 57, 53, 0.4); border: 1px solid #ff5252; }
+        /* Alertas */
+        .caixa-alerta { padding: 15px; font-weight: bold; text-align: center; border-radius: 5px; margin-top: 15px; display: none; font-size: 14px; }
+        .alerta-amarelo { color: #000; background-color: #ffc107; border: 1px solid #d39e00; box-shadow: 0 0 15px rgba(255, 193, 7, 0.4); }
+        .alerta-vermelho { color: #fff; background-color: #dc3545; border: 1px solid #c82333; box-shadow: 0 0 15px rgba(220, 53, 69, 0.5); }
     </style>
 </head>
 <body>
 
-    <h2>Radar Dinâmico & Tape Reading</h2>
+    <h2>Radar Cross-Market (Filtro Anti-Red)</h2>
     
     <div class="container-principal">
         <div class="painel">
             <div class="linha-input">
-                <label>O que está monitorando?</label>
+                <label>Minuto Atual:</label>
+                <input type="number" id="minuto" value="77" min="0" max="90">
+            </div>
+
+            <div class="secao-titulo">Mercado Principal (Match Odds)</div>
+            <div class="linha-input">
+                <label>O que monitora?</label>
                 <select id="tipoMercado">
                     <option value="sobe">Time (Odd Sobe)</option>
                     <option value="desce">Empate (Odd Desce)</option>
                 </select>
             </div>
             <div class="linha-input">
-                <label>Minuto Atual:</label>
-                <input type="number" id="minuto" value="25" min="0" max="90">
+                <label>Odd Inicial:</label>
+                <input type="number" step="0.01" id="oddInicial" value="1.20">
             </div>
             <div class="linha-input">
-                <label>Odd Inicial (Pré-Live):</label>
-                <input type="number" step="0.01" id="oddInicial" value="2.50">
-            </div>
-            <div class="linha-input">
-                <label>Odd na Betfair Agora:</label>
-                <input type="number" step="0.01" id="oddReal" value="2.35">
+                <label>Odd Agora:</label>
+                <input type="number" step="0.01" id="oddReal" value="2.13">
             </div>
 
-            <button onclick="analisarMercado()">Calcular Fluxo & Gerar Gráfico</button>
+            <div class="secao-titulo">Mercado de Gols (O Filtro)</div>
+            <div class="linha-input">
+                <label>Odd Inicial (+0.5):</label>
+                <input type="number" step="0.01" id="oddGolsInicial" value="1.25">
+            </div>
+            <div class="linha-input">
+                <label>Odd Agora (+0.5):</label>
+                <input type="number" step="0.01" id="oddGolsReal" value="2.80">
+            </div>
+
+            <button onclick="analisarMercado()">Cruzar Dados do Mercado</button>
 
             <div class="resultado">
                 <div class="linha-resultado">
-                    <span>Odd Justa (Matemática):</span>
-                    <span id="resultadoOdd" class="destaque">-</span>
+                    <span>Odd Justa (Time):</span>
+                    <span id="resultadoOddTime" class="destaque">-</span>
                 </div>
-                <div id="statusSensibilidade" class="info-tecnica">Insira os dados para calibrar o sistema.</div>
+                <div class="linha-resultado">
+                    <span>Odd Justa (Gols):</span>
+                    <span id="resultadoOddGols" class="destaque">-</span>
+                </div>
             </div>
             
-            <div id="caixaAlerta" class="alerta-perigo">
-                ⚠️ ATENÇÃO: Mercado esmagando a odd! Forte pressão detectada.
+            <!-- Alertas -->
+            <div id="alertaAmarelo" class="caixa-alerta alerta-amarelo">
+                ⚠️ ALERTA FALSO: O time está esmagado, mas os gols NÃO confirmam. Pressão estéril ou dinheiro passional. Fique de fora!
+            </div>
+            <div id="alertaVermelho" class="caixa-alerta alerta-vermelho">
+                🔥 GATILHO DE OURO: Mercados confirmam amasso! Dinheiro institucional travou as duas odds. Excelente chance de gol!
             </div>
         </div>
 
@@ -75,38 +92,86 @@
     </div>
 
     <script>
-        let graficoAtual = null; // Variável para armazenar o gráfico
+        let graficoAtual = null;
 
         function analisarMercado() {
+            // Coleta de dados
             let minuto = parseFloat(document.getElementById('minuto').value);
-            let oddInicial = parseFloat(document.getElementById('oddInicial').value);
-            let oddReal = parseFloat(document.getElementById('oddReal').value);
             let tipoMercado = document.getElementById('tipoMercado').value;
+            let oddIniTime = parseFloat(document.getElementById('oddInicial').value);
+            let oddRealTime = parseFloat(document.getElementById('oddReal').value);
+            let oddIniGols = parseFloat(document.getElementById('oddGolsInicial').value);
+            let oddRealGols = parseFloat(document.getElementById('oddGolsReal').value);
 
-            if(isNaN(minuto) || isNaN(oddInicial) || isNaN(oddReal)) {
-                alert("Por favor, preencha todos os campos corretamente.");
-                return;
+            if(isNaN(minuto) || isNaN(oddIniTime) || isNaN(oddRealTime) || isNaN(oddIniGols) || isNaN(oddRealGols)) {
+                alert("Preencha todos os campos numéricos."); return;
             }
 
-            let oddEsperada = 0;
-            let dispararAlerta = false;
-            let perfilMercado = "";
-            let margemSeguranca = 0;
+            // 1. MATEMÁTICA DO TIME
+            let oddEsperadaTime = 0;
+            let anomaliaTime = false;
+            let margemTime = 0;
 
-            // Arrays para desenhar a linha do gráfico
+            if (tipoMercado === "sobe") {
+                let pIni = 1 / oddIniTime;
+                let fTempo = Math.pow((minuto / 90), 1.45); // Curva mais suave
+                let pAtual = pIni * (1 - fTempo);
+                if (pAtual <= 0.05) pAtual = 0.05; // Trava para não explodir no final
+                oddEsperadaTime = 1 / pAtual;
+
+                margemTime = (oddIniTime <= 1.40) ? 0.20 : 0.15; // Margem aumentada para o fim do jogo
+                if (oddRealTime < (oddEsperadaTime - margemTime)) anomaliaTime = true;
+            } else {
+                let pIni = 1 / oddIniTime;
+                let fTempo = Math.pow((minuto / 90), 2.5);
+                let pAtual = pIni + ((1 - pIni) * fTempo);
+                oddEsperadaTime = 1 / pAtual;
+                if (oddRealTime > (oddEsperadaTime + 0.20)) anomaliaTime = true;
+            }
+
+            // 2. MATEMÁTICA DE GOLS
+            let pIniGols = 1 / oddIniGols;
+            let fTempoGols = Math.pow((minuto / 90), 1.5);
+            let pAtualGols = pIniGols * (1 - fTempoGols);
+            if (pAtualGols <= 0.02) pAtualGols = 0.02; // Trava matemática
+            let oddEsperadaGols = 1 / pAtualGols;
+            
+            // Anomalia de gols: a odd real está bem menor do que deveria (segurando o gol)
+            let anomaliaGols = (oddRealGols < (oddEsperadaGols - 0.25));
+
+            // Atualiza tela
+            document.getElementById('resultadoOddTime').innerText = oddEsperadaTime.toFixed(2);
+            document.getElementById('resultadoOddGols').innerText = oddEsperadaGols.toFixed(2);
+
+            // 3. LÓGICA DE ALERTAS
+            document.getElementById('alertaAmarelo').style.display = 'none';
+            document.getElementById('alertaVermelho').style.display = 'none';
+
+            if (anomaliaTime && !anomaliaGols) {
+                document.getElementById('alertaAmarelo').style.display = 'block'; // Falso Positivo
+            } else if (anomaliaTime && anomaliaGols) {
+                document.getElementById('alertaVermelho').style.display = 'block'; // Gatilho de Ouro
+            }
+
+            // Gráfico (Mostrando a curva do Time)
+            atualizarGrafico(oddIniTime, oddRealTime, minuto, oddEsperadaTime, tipoMercado);
+        }
+
+        function atualizarGrafico(oddInicial, oddReal, minutoAtual, oddEsperada, tipoMercado) {
+            let ctx = document.getElementById('meuGrafico').getContext('2d');
+            if (graficoAtual) graficoAtual.destroy();
+
             let labelsMinutos = [];
             let dadosCurvaJusta = [];
 
-            // Gerar a curva matemática do minuto 0 ao 90
             for(let m = 0; m <= 90; m += 5) {
                 labelsMinutos.push(m);
                 let oddCalc = 0;
-                
                 if (tipoMercado === "sobe") {
                     let pIni = 1 / oddInicial;
                     let fTempo = Math.pow((m / 90), 1.45);
                     let pAtual = pIni * (1 - fTempo);
-                    if (pAtual <= 0) pAtual = 0.005;
+                    if (pAtual <= 0.05) pAtual = 0.05;
                     oddCalc = 1 / pAtual;
                 } else {
                     let pIni = 1 / oddInicial;
@@ -114,115 +179,20 @@
                     let pAtual = pIni + ((1 - pIni) * fTempo);
                     oddCalc = 1 / pAtual;
                 }
-                // Limitar a visualização máxima no gráfico para não achatar tudo
-                if(oddCalc > 10) oddCalc = 10; 
+                if(oddCalc > 20) oddCalc = 20; 
                 dadosCurvaJusta.push(oddCalc.toFixed(2));
-            }
-
-            // Cálculos para o minuto atual EXATO digitado pelo usuário
-            if (tipoMercado === "sobe") {
-                let probInicial = 1 / oddInicial;
-                let fatorTempo = Math.pow((minuto / 90), 1.45);
-                let probAtual = probInicial * (1 - fatorTempo);
-                if (probAtual <= 0) probAtual = 0.005; 
-                oddEsperada = 1 / probAtual;
-
-                if (oddInicial <= 1.40) {
-                    margemSeguranca = 0.04;
-                    perfilMercado = "Super Favorito (Alta Sensibilidade)";
-                } else if (oddInicial <= 2.00) {
-                    margemSeguranca = 0.08;
-                    perfilMercado = "Favorito Moderado (Média Sensibilidade)";
-                } else {
-                    margemSeguranca = 0.18;
-                    perfilMercado = "Jogo Equilibrado (Baixa Sensibilidade)";
-                }
-
-                if (oddReal < (oddEsperada - margemSeguranca)) { dispararAlerta = true; }
-            } else {
-                let probInicial = 1 / oddInicial;
-                let fatorTempo = Math.pow((minuto / 90), 2.5);
-                let probAtual = probInicial + ((1 - probInicial) * fatorTempo);
-                oddEsperada = 1 / probAtual;
-
-                margemSeguranca = 0.20;
-                perfilMercado = "Mercado de Empate Padrão";
-
-                if (oddReal > (oddEsperada + margemSeguranca)) { dispararAlerta = true; }
-            }
-
-            // Atualiza Interface
-            document.getElementById('resultadoOdd').innerText = oddEsperada.toFixed(2);
-            document.getElementById('statusSensibilidade').innerText = `Perfil: ${perfilMercado} | Tolerância: ${margemSeguranca} ticks`;
-            document.getElementById('caixaAlerta').style.display = dispararAlerta ? 'block' : 'none';
-
-            // ATUALIZAR O GRÁFICO
-            atualizarGrafico(labelsMinutos, dadosCurvaJusta, oddInicial, oddReal, minuto, oddEsperada);
-        }
-
-        function atualizarGrafico(labels, curvaJusta, oddInicial, oddReal, minutoAtual, oddEsperada) {
-            let ctx = document.getElementById('meuGrafico').getContext('2d');
-
-            // Se já existir um gráfico, destrói para desenhar o novo atualizado
-            if (graficoAtual) {
-                graficoAtual.destroy();
             }
 
             graficoAtual = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels, // Eixo X (Minutos)
+                    labels: labelsMinutos,
                     datasets: [
-                        {
-                            label: 'Curva Justa (Matemática)',
-                            data: curvaJusta,
-                            borderColor: '#007bff',
-                            borderWidth: 2,
-                            fill: false,
-                            tension: 0.3,
-                            pointRadius: 0
-                        },
-                        {
-                            label: 'Odd Real (Mercado)',
-                            // Exibe um ponto único no gráfico para a odd real
-                            data: [{x: minutoAtual, y: oddReal}],
-                            backgroundColor: '#e53935',
-                            borderColor: '#fff',
-                            pointRadius: 8,
-                            pointHoverRadius: 10,
-                            type: 'scatter'
-                        },
-                        {
-                            label: 'Odd Esperada Agora',
-                            // Exibe um ponto único mostrando onde a odd devia estar
-                            data: [{x: minutoAtual, y: oddEsperada}],
-                            backgroundColor: '#00ffcc',
-                            borderColor: '#fff',
-                            pointRadius: 6,
-                            pointHoverRadius: 8,
-                            type: 'scatter'
-                        }
+                        { label: 'Curva Match Odds', data: dadosCurvaJusta, borderColor: '#007bff', borderWidth: 2, fill: false, tension: 0.3, pointRadius: 0 },
+                        { label: 'Odd Real (Mercado)', data: [{x: minutoAtual, y: oddReal}], backgroundColor: '#e53935', borderColor: '#fff', pointRadius: 8, type: 'scatter' }
                     ]
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { labels: { color: '#fff' } },
-                        tooltip: { enabled: true }
-                    },
-                    scales: {
-                        x: { 
-                            type: 'linear', position: 'bottom', min: 0, max: 90,
-                            title: { display: true, text: 'Minutos de Jogo', color: '#aaa' },
-                            ticks: { color: '#ccc', stepSize: 10 }
-                        },
-                        y: {
-                            title: { display: true, text: 'Valor da Odd', color: '#aaa' },
-                            ticks: { color: '#ccc' },
-                            grid: { color: '#444' }
-                        }
-                    }
-                }
+                options: { responsive: true, plugins: { legend: { labels: { color: '#fff' } } }, scales: { x: { type: 'linear', min: 0, max: 90, ticks: { color: '#ccc' } }, y: { ticks: { color: '#ccc' }, grid: { color: '#444' } } } }
             });
         }
     </script>
