@@ -2,80 +2,569 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Radar de Odds Pro - Com Gráfico</title>
+    <title>RADAR PRO - Betfair Trading Terminal</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #eee; padding: 20px; margin: 0; }
-        h2 { text-align: center; color: #fff; margin-bottom: 30px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Layout flexível para colocar o painel e o gráfico lado a lado */
-        .container-principal { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; max-width: 1200px; margin: 0 auto; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            padding: 12px;
+            min-height: 100vh;
+        }
         
-        .painel { background-color: #262626; border: 1px solid #444; padding: 25px; width: 100%; max-width: 380px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
-        .grafico-container { background-color: #262626; border: 1px solid #444; padding: 20px; border-radius: 10px; flex-grow: 1; min-width: 300px; max-width: 600px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: rgba(10, 77, 35, 0.15);
+            border-bottom: 2px solid #0A4D23;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
         
-        .linha-input { margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        input, select { padding: 10px; width: 110px; text-align: center; border: 1px solid #555; border-radius: 5px; background-color: #111; color: #fff; font-weight: bold; font-size: 14px; }
-        select { width: 145px; text-align: left; }
-        button { width: 100%; padding: 14px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.3s; }
-        button:hover { background-color: #0056b3; }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+        }
         
-        .resultado { margin-top: 25px; padding-top: 15px; border-top: 1px solid #444; display: flex; flex-direction: column; gap: 10px; }
-        .linha-resultado { display: flex; justify-content: space-between; align-items: center; }
-        .destaque { font-size: 24px; color: #00ffcc; font-weight: bold; }
-        .info-tecnica { font-size: 12px; color: #aaa; font-style: italic; text-align: center; margin-top: 5px; }
+        .header-status {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
         
-        .alerta-perigo { color: white; background-color: #e53935; padding: 15px; font-weight: bold; text-align: center; border-radius: 5px; margin-top: 20px; display: none; font-size: 15px; box-shadow: 0 0 15px rgba(229, 57, 53, 0.4); border: 1px solid #ff5252; }
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 12px;
+        }
+        
+        .status-label {
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 10px;
+        }
+        
+        .status-value {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            color: #00ff88;
+            margin-top: 4px;
+        }
+        
+        /* CONTAINER PRINCIPAL */
+        .container-main {
+            display: grid;
+            grid-template-columns: 380px 1fr 320px;
+            gap: 20px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        /* PAINEL ESQUERDO - INPUTS */
+        .painel-controles {
+            background: rgba(38, 38, 38, 0.8);
+            border: 1px solid #0A4D23;
+            border-radius: 8px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            height: fit-content;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .painel-controles h3 {
+            color: #00ff88;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #0A4D23;
+            padding-bottom: 10px;
+        }
+        
+        .campo-input {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .campo-input label {
+            font-size: 11px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+        
+        input[type="number"], select {
+            padding: 10px 12px;
+            background: #111;
+            border: 1px solid #0A4D23;
+            border-radius: 5px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+            background: #1a1a1a;
+        }
+        
+        select {
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        option {
+            background: #1a1a1a;
+            color: #00ff88;
+        }
+        
+        /* BOTÃO PRINCIPAL */
+        .btn-calcular {
+            padding: 14px;
+            background: linear-gradient(135deg, #0A4D23 0%, #0d6630 100%);
+            border: 1px solid #00ff88;
+            border-radius: 5px;
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-family: 'Segoe UI', sans-serif;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+        }
+        
+        .btn-calcular:hover {
+            background: linear-gradient(135deg, #0d6630 0%, #00ff88 100%);
+            color: #1a1a1a;
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .btn-calcular:active {
+            transform: translateY(0);
+        }
+        
+        /* RESULTADO PAINEL */
+        .resultado-box {
+            background: rgba(10, 77, 35, 0.2);
+            border: 1px solid #0A4D23;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .resultado-linha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        
+        .resultado-linha:last-child {
+            margin-bottom: 0;
+        }
+        
+        .resultado-label {
+            color: #aaa;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.8px;
+        }
+        
+        .resultado-valor {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        
+        /* ALERTA */
+        .caixa-alerta {
+            background: rgba(255, 51, 51, 0.15);
+            border-left: 3px solid #ff3333;
+            border-radius: 5px;
+            padding: 12px;
+            font-size: 12px;
+            color: #ff8888;
+            font-weight: 600;
+            display: none;
+            animation: pulso 0.8s infinite;
+        }
+        
+        .caixa-alerta.ativo {
+            display: block;
+        }
+        
+        @keyframes pulso {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* GRÁFICO CENTRAL */
+        .grafico-container {
+            background: rgba(38, 38, 38, 0.8);
+            border: 1px solid #0A4D23;
+            border-radius: 8px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .grafico-container h3 {
+            color: #00ff88;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #0A4D23;
+        }
+        
+        #meuGrafico {
+            max-height: 500px;
+        }
+        
+        /* PAINEL DIREITO - MÉTRICAS */
+        .painel-metricas {
+            background: rgba(38, 38, 38, 0.8);
+            border: 1px solid #0A4D23;
+            border-radius: 8px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            height: fit-content;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .painel-metricas h3 {
+            color: #00ff88;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #0A4D23;
+        }
+        
+        .metrica {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 18px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .metrica:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .metrica-label {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-icon {
+            width: 14px;
+            height: 14px;
+            border: 1px solid #0A4D23;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #00ff88;
+            cursor: help;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 77, 35, 0.98);
+            color: #00ff88;
+            text-align: left;
+            padding: 12px 14px;
+            border-radius: 5px;
+            border: 1px solid #0A4D23;
+            font-size: 10px;
+            white-space: normal;
+            max-width: 280px;
+            font-weight: normal;
+            text-transform: none;
+            letter-spacing: normal;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
+            line-height: 1.4;
+        }
+        
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -4px;
+            border-width: 4px;
+            border-style: solid;
+            border-color: #0A4D23 transparent transparent transparent;
+        }
+        
+        .info-icon:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .metrica-valor {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        
+        .metrica-sub {
+            font-size: 11px;
+            color: #666;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .gauge-bar {
+            width: 100%;
+            height: 4px;
+            background: #222;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        
+        .gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0A4D23, #00ff88);
+            transition: width 0.4s ease;
+        }
+        
+        /* RESPONSIVO */
+        @media (max-width: 1400px) {
+            .container-main {
+                grid-template-columns: 1fr;
+            }
+            
+            .painel-controles, .painel-metricas {
+                height: auto;
+            }
+        }
+        
+        /* SCROLL CUSTOMIZADO */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #0A4D23;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ff88;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Radar Dinâmico & Tape Reading</h2>
-    
-    <div class="container-principal">
-        <div class="painel">
-            <div class="linha-input">
-                <label>O que está monitorando?</label>
-                <select id="tipoMercado">
-                    <option value="sobe">Time (Odd Sobe)</option>
-                    <option value="desce">Empate (Odd Desce)</option>
-                </select>
+    <div class="header">
+        <h1>⚡ RADAR PRO</h1>
+        <div class="header-status">
+            <div class="status-item">
+                <span class="status-label">Status</span>
+                <span class="status-value" id="headerStatus">PRONTO</span>
             </div>
-            <div class="linha-input">
-                <label>Minuto Atual:</label>
-                <input type="number" id="minuto" value="25" min="0" max="90">
-            </div>
-            <div class="linha-input">
-                <label>Odd Inicial (Pré-Live):</label>
-                <input type="number" step="0.01" id="oddInicial" value="2.50">
-            </div>
-            <div class="linha-input">
-                <label>Odd na Betfair Agora:</label>
-                <input type="number" step="0.01" id="oddReal" value="2.35">
-            </div>
-
-            <button onclick="analisarMercado()">Calcular Fluxo & Gerar Gráfico</button>
-
-            <div class="resultado">
-                <div class="linha-resultado">
-                    <span>Odd Justa (Matemática):</span>
-                    <span id="resultadoOdd" class="destaque">-</span>
-                </div>
-                <div id="statusSensibilidade" class="info-tecnica">Insira os dados para calibrar o sistema.</div>
-            </div>
-            
-            <div id="caixaAlerta" class="alerta-perigo">
-                ⚠️ ATENÇÃO: Mercado esmagando a odd! Forte pressão detectada.
+            <div class="status-item">
+                <span class="status-label">Modo</span>
+                <span class="status-value" id="headerModo">ANÁLISE</span>
             </div>
         </div>
-
+    <div class="container-main">
+        
+        <!-- PAINEL ESQUERDO -->
+        <div class="painel-controles">
+            <h3>⚙️ Configuração</h3>
+            
+            <div class="campo-input">
+                <label>Monitorando</label>
+                <select id="tipoMercado">
+                    <option value="sobe">📈 Odd Subindo (Favorito)</option>
+                    <option value="desce">📉 Odd Descendo (Empate)</option>
+                </select>
+            </div>
+            
+            <div class="campo-input">
+                <label>Minuto Atual</label>
+                <input type="number" id="minuto" value="25" min="0" max="90">
+            </div>
+            
+            <div class="campo-input">
+                <label>Odd Inicial (Pré-Live)</label>
+                <input type="number" step="0.01" id="oddInicial" value="2.50">
+            </div>
+            
+            <div class="campo-input">
+                <label>Odd Agora (Betfair)</label>
+                <input type="number" step="0.01" id="oddReal" value="2.35">
+            </div>
+            
+            <button class="btn-calcular" onclick="analisarMercado()">⚡ ANALISAR</button>
+            
+            <div class="resultado-box">
+                <div class="resultado-linha">
+                    <span class="resultado-label" style="display: flex; gap: 6px; align-items: center;">
+                        Odd Justa
+                        <div class="info-icon" style="width: 12px; height: 12px; font-size: 8px; position: relative;">?<span class="tooltip-text"><strong>Odd Justa = Valor Teoricamente Correto</strong><br><br>Calculada por curva matemática que leva em conta minuto do jogo, probabilidade inicial e degradação temporal.<br><br><strong>Fórmula:</strong> p_inicial × (1 - tempo^expoente)<br><br><strong>O que significa:</strong> Se odd real está igual/perto disso = mercado eficiente. Se diferente = opportunity ou risco.</span></div>
+                    </span>
+                    <span class="resultado-valor" id="resultadoOdd">-</span>
+                </div>
+                <div class="resultado-linha">
+                    <span class="resultado-label" style="display: flex; gap: 6px; align-items: center;">
+                        Margem
+                        <div class="info-icon" style="width: 12px; height: 12px; font-size: 8px; position: relative;">?<span class="tooltip-text"><strong>Margem = Tolerância de Ruído do Mercado</strong><br><br>É a zona cinzenta onde o mercado pode estar oscilando naturalmente sem gerar alerta.<br><br><strong>Ajustada por:</strong> Tipo de mercado (favorito/moderado/equilibrado)<br><br><strong>Lógica:</strong> Se odd real sair ALÉM dessa margem = sinal confirmado (LAY ou BACK).</span></div>
+                    </span>
+                    <span class="resultado-valor" id="resultadoMargem">-</span>
+                </div>
+            </div>
+            
+            <div class="caixa-alerta" id="caixaAlerta">
+                ⚠️ PRESSÃO DETECTADA
+            </div>
+        </div>
+        
+        <!-- GRÁFICO CENTRAL -->
         <div class="grafico-container">
+            <h3>📊 Histórico de Fluxo & Curva Matemática</h3>
             <canvas id="meuGrafico"></canvas>
+        </div>
+        
+        <!-- PAINEL DIREITO - MÉTRICAS -->
+        <div class="painel-metricas">
+            <h3>📈 Métricas Técnicas</h3>
+            
+            <div class="metrica">
+                <span class="metrica-label">
+                    Spread Atual
+                    <div class="info-icon" style="position: relative;">?<span class="tooltip-text"><strong>Spread = Odd Real - Odd Esperada</strong><br><br>Diferença absoluta entre a odd que o mercado está oferecendo AGORA vs. o valor matematicamente justo (baseado na curva de tempo e probabilidade).<br><br><strong>Por que importa:</strong> Spread alto = mercado distante da realidade (opportunity). Spread pequeno = mercado eficiente.<br><br><strong>Interpretação:</strong> Se está ↑ ACIMA: mercado subestimando (raro). Se ↓ ABAIXO: mercado esmagando, precificar risco (comum em pressão).</span></div>
+                </span>
+                <span class="metrica-valor" id="metricaSpread">-</span>
+                <span class="metrica-sub" id="metricaSpreadAbs">-</span>
+                <div class="gauge-bar">
+                    <div class="gauge-fill" id="gaugeSpread" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="metrica">
+                <span class="metrica-label">
+                    Momentum
+                    <div class="info-icon" style="position: relative;">?<span class="tooltip-text"><strong>Momentum = Intensidade de Pressão</strong><br><br>Percentual de desvio entre a odd real e a teórica. Quanto maior, mais intensa a pressão do mercado está sendo no momento.<br><br><strong>Fórmula:</strong> |Desvio %| do spread, limitado a 100% para visualização.<br><br><strong>O que significa:</strong><br>• 0-20% = Mercado calmo, pressão baixa<br>• 20-50% = Pressão moderada, algo está acontecendo<br>• 50%+ = Pressão ALTA, decisão de mercado forte (gol, cartão, pressão total)</span></div>
+                </span>
+                <span class="metrica-valor" id="metricaMomentum">-</span>
+                <span class="metrica-sub">Pressão de Mercado</span>
+                <div class="gauge-bar">
+                    <div class="gauge-fill" id="gaugeMomentum" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="metrica">
+                <span class="metrica-label">
+                    Desvio %
+                    <div class="info-icon" style="position: relative;">?<span class="tooltip-text"><strong>Desvio % = (Odd Real - Esperada) / Esperada × 100</strong><br><br>Percentual que a odd real diverge da curva teórica. Indica se mercado está SOBRE (+) ou SUB (-) avaliado neste exato minuto.<br><br><strong>O que significa:</strong><br>• POSITIVO (+): Odd está ACIMA do esperado → raro, mercado medroso ou subestimou equipe<br>• NEGATIVO (-): Odd está ABAIXO → comum, pressão de mercado esmagando a odd (muita ação, medo, colapso)<br><br><strong>Usa em tape reading:</strong> Desvios negativos grandes = mercado mandando sinal de risco real.</span></div>
+                </span>
+                <span class="metrica-valor" id="metricaDesvio">-</span>
+                <span class="metrica-sub">Da Curva Teórica</span>
+            </div>
+            
+            <div class="metrica">
+                <span class="metrica-label">
+                    Sensibilidade
+                    <div class="info-icon" style="position: relative;">?<span class="tooltip-text"><strong>Sensibilidade = Margem de Tolerância do Sistema</strong><br><br>Cada mercado tem uma margem de "ruído" aceitável. Sistema ajusta por PERFIL DA ODD INICIAL.<br><br><strong>Três Perfis:</strong><br>• FAVORITO (odd ≤1.40): Margem 0.04 - Mercado sensível, reage rápido, sinal deve ser forte<br>• MODERADO (1.40-2.00): Margem 0.08 - Equilíbrio entre reação e noise<br>• EQUILIBRADO (odd ≥2.00): Margem 0.18 - Mercado inerte, tolera mais variação antes de sinal<br><br><strong>Lógica:</strong> Favoritos (1.10) sofrem pressão naturalmente. Equilibrados (2.50) movem menos. Sistema se auto-calibra.</span></div>
+                </span>
+                <span class="metrica-valor" id="metricaSensibilidade">-</span>
+                <span class="metrica-sub" id="metricaPerfil">-</span>
+            </div>
+            
+            <div class="metrica">
+                <span class="metrica-label">
+                    Sinal
+                    <div class="info-icon" style="position: relative;">?<span class="tooltip-text"><strong>Recomendação de Ação no Mercado</strong><br><br><strong>🟢 BACK (Verde):</strong> Odd está ACIMA da esperada → compre agora, valor inflacionado<br><br><strong>🔴 LAY (Vermelho):</strong> Odd está ABAIXO da esperada (esmagada) → venda/saia agora, risco real, mercado sinalizando perigo<br><br><strong>⚪ NEUTRO (Cinza):</strong> Spread dentro da tolerância → espere, sem setup claro<br><br><strong>Uso real:</strong> LAY é sinal de pressão-sem-conversão (mercado matou chance). BACK é valor raro. NEUTRO = cagueta até melhor setup.</span></div>
+                </span>
+                <span class="metrica-valor" id="metricaSinal">NEUTRO</span>
+                <span class="metrica-sub" id="metricaSinalDesc">Aguardando análise</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER / GUIA RÁPIDO -->
+    <div style="max-width: 1200px; margin: 40px auto 20px; padding: 25px; background: rgba(38, 38, 38, 0.5); border: 1px solid #0A4D23; border-radius: 8px; font-size: 11px; color: #aaa; line-height: 1.6;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div>
+                <h4 style="color: #00ff88; margin-bottom: 12px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">📖 Como Interpretar</h4>
+                <p><strong>Curva Justa (Verde):</strong> O valor matematicamente correto da odd em cada minuto. Se a odd real sair dessa linha = mercado fazendo pricing diferente.</p>
+                <p style="margin-top: 10px;"><strong>Bandas de Alerta (Vermelho-claro):</strong> Zona de ±8% da curva justa. Quando spread fica FORA = sinal confirmado.</p>
+                <p style="margin-top: 10px;"><strong>Ponto Vermelho (Odd Real):</strong> Onde o mercado está AGORA. Ponto Verde (Esperada): Onde deveria estar.</p>
+            </div>
+            <div>
+                <h4 style="color: #00ff88; margin-bottom: 12px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">🎯 Estratégia de Uso</h4>
+                <p><strong>LAY Signal:</strong> Mercado esmagando odd (vermelha abaixo da verde). Típico: pressão + falta de gol = risco real. Venda agora.</p>
+                <p style="margin-top: 10px;"><strong>BACK Signal:</strong> Raro. Odd acima da esperada = mercado medroso. Compre valor.</p>
+                <p style="margin-top: 10px;"><strong>Tape Reading:</strong> Momentum alto = mercado decidindo. Verifique o gol/evento. Desvio % negativo grande = confirma pressão legítima.</p>
+            </div>
+        </div>
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #0A4D23; color: #888; font-size: 10px; text-align: center;">
+            ⚡ Passe o mouse nos ícones (?) ao lado de cada métrica para explicações técnicas detalhadas
         </div>
     </div>
 
     <script>
-        let graficoAtual = null; // Variável para armazenar o gráfico
+        let graficoAtual = null;
+        let historicoDados = [];
 
         function analisarMercado() {
             let minuto = parseFloat(document.getElementById('minuto').value);
@@ -84,20 +573,26 @@
             let tipoMercado = document.getElementById('tipoMercado').value;
 
             if(isNaN(minuto) || isNaN(oddInicial) || isNaN(oddReal)) {
-                alert("Por favor, preencha todos os campos corretamente.");
+                alert("Preencha todos os campos corretamente.");
                 return;
             }
+
+            // Armazenar ponto de análise
+            let ponto = { minuto, oddInicial, oddReal, tipo: tipoMercado, timestamp: Date.now() };
+            historicoDados.push(ponto);
+            if(historicoDados.length > 30) historicoDados.shift(); // Manter últimas 30
 
             let oddEsperada = 0;
             let dispararAlerta = false;
             let perfilMercado = "";
             let margemSeguranca = 0;
+            let sinal = "NEUTRO";
+            let descricaoSinal = "";
 
-            // Arrays para desenhar a linha do gráfico
             let labelsMinutos = [];
             let dadosCurvaJusta = [];
 
-            // Gerar a curva matemática do minuto 0 ao 90
+            // Gerar curva matemática
             for(let m = 0; m <= 90; m += 5) {
                 labelsMinutos.push(m);
                 let oddCalc = 0;
@@ -114,31 +609,37 @@
                     let pAtual = pIni + ((1 - pIni) * fTempo);
                     oddCalc = 1 / pAtual;
                 }
-                // Limitar a visualização máxima no gráfico para não achatar tudo
-                if(oddCalc > 10) oddCalc = 10; 
+                if(oddCalc > 10) oddCalc = 10;
                 dadosCurvaJusta.push(oddCalc.toFixed(2));
             }
 
-            // Cálculos para o minuto atual EXATO digitado pelo usuário
+            // Análise no minuto específico
             if (tipoMercado === "sobe") {
                 let probInicial = 1 / oddInicial;
                 let fatorTempo = Math.pow((minuto / 90), 1.45);
                 let probAtual = probInicial * (1 - fatorTempo);
-                if (probAtual <= 0) probAtual = 0.005; 
+                if (probAtual <= 0) probAtual = 0.005;
                 oddEsperada = 1 / probAtual;
 
                 if (oddInicial <= 1.40) {
                     margemSeguranca = 0.04;
-                    perfilMercado = "Super Favorito (Alta Sensibilidade)";
+                    perfilMercado = "Favorito (Alta Sensibilidade)";
                 } else if (oddInicial <= 2.00) {
                     margemSeguranca = 0.08;
-                    perfilMercado = "Favorito Moderado (Média Sensibilidade)";
+                    perfilMercado = "Moderado (Média Sensibilidade)";
                 } else {
                     margemSeguranca = 0.18;
-                    perfilMercado = "Jogo Equilibrado (Baixa Sensibilidade)";
+                    perfilMercado = "Equilibrado (Baixa Sensibilidade)";
                 }
 
-                if (oddReal < (oddEsperada - margemSeguranca)) { dispararAlerta = true; }
+                if (oddReal < (oddEsperada - margemSeguranca)) {
+                    dispararAlerta = true;
+                    sinal = "LAY";
+                    descricaoSinal = "Mercado colapsando";
+                } else if (oddReal > oddEsperada + margemSeguranca * 0.5) {
+                    sinal = "BACK";
+                    descricaoSinal = "Valor acima do esperado";
+                }
             } else {
                 let probInicial = 1 / oddInicial;
                 let fatorTempo = Math.pow((minuto / 90), 2.5);
@@ -146,85 +647,265 @@
                 oddEsperada = 1 / probAtual;
 
                 margemSeguranca = 0.20;
-                perfilMercado = "Mercado de Empate Padrão";
+                perfilMercado = "Empate (Padrão)";
 
-                if (oddReal > (oddEsperada + margemSeguranca)) { dispararAlerta = true; }
+                if (oddReal > (oddEsperada + margemSeguranca)) {
+                    dispararAlerta = true;
+                    sinal = "LAY";
+                    descricaoSinal = "Empate inflacionado";
+                } else if (oddReal < oddEsperada - margemSeguranca * 0.5) {
+                    sinal = "BACK";
+                    descricaoSinal = "Subestimado";
+                }
             }
 
-            // Atualiza Interface
-            document.getElementById('resultadoOdd').innerText = oddEsperada.toFixed(2);
-            document.getElementById('statusSensibilidade').innerText = `Perfil: ${perfilMercado} | Tolerância: ${margemSeguranca} ticks`;
-            document.getElementById('caixaAlerta').style.display = dispararAlerta ? 'block' : 'none';
+            // Calcular desvio percentual
+            let desvioPercent = ((oddReal - oddEsperada) / oddEsperada * 100).toFixed(1);
+            let spread = Math.abs(oddReal - oddEsperada).toFixed(3).replace(',', '.');
+            let momentum = Math.min(100, Math.abs(desvioPercent));
 
-            // ATUALIZAR O GRÁFICO
+            // Atualizar Interface Esquerda
+            document.getElementById('resultadoOdd').innerText = oddEsperada.toFixed(2).replace(',', '.');
+            document.getElementById('resultadoMargem').innerText = margemSeguranca.toFixed(2).replace(',', '.');
+            document.getElementById('caixaAlerta').classList.toggle('ativo', dispararAlerta);
+
+            // Atualizar Métricas Direita
+            document.getElementById('metricaSpread').innerText = spread;
+            document.getElementById('metricaSpreadAbs').innerText = oddReal > oddEsperada ? '↑ Acima' : '↓ Abaixo';
+            document.getElementById('gaugeSpread').style.width = Math.min(100, Math.abs(parseFloat(spread)) * 20) + '%';
+
+            document.getElementById('metricaMomentum').innerText = momentum.toFixed(0) + '%';
+            document.getElementById('gaugeMomentum').style.width = momentum + '%';
+
+            document.getElementById('metricaDesvio').innerText = desvioPercent + '%';
+            document.getElementById('metricaSensibilidade').innerText = margemSeguranca.toFixed(2).replace(',', '.');
+            document.getElementById('metricaPerfil').innerText = perfilMercado;
+
+            let corSinal = sinal === 'LAY' ? '#ff3333' : sinal === 'BACK' ? '#00ff88' : '#888';
+            document.getElementById('metricaSinal').innerText = sinal;
+            document.getElementById('metricaSinal').style.color = corSinal;
+            document.getElementById('metricaSinalDesc').innerText = descricaoSinal;
+
+            // Status Header
+            document.getElementById('headerStatus').innerText = dispararAlerta ? 'ALERTA!' : 'PRONTO';
+            document.getElementById('headerModo').innerText = sinal;
+
+            // Desenhar gráfico
             atualizarGrafico(labelsMinutos, dadosCurvaJusta, oddInicial, oddReal, minuto, oddEsperada);
         }
 
         function atualizarGrafico(labels, curvaJusta, oddInicial, oddReal, minutoAtual, oddEsperada) {
             let ctx = document.getElementById('meuGrafico').getContext('2d');
 
-            // Se já existir um gráfico, destrói para desenhar o novo atualizado
             if (graficoAtual) {
                 graficoAtual.destroy();
             }
 
+            // Calcular bandas de segurança (Bollinger-like)
+            let bandaSuperior = curvaJusta.map(v => (parseFloat(v) * 1.08).toFixed(2).replace(',', '.'));
+            let bandaInferior = curvaJusta.map(v => (parseFloat(v) * 0.92).toFixed(2).replace(',', '.'));
+
+            // Gradientes
+            const gradientArea = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientArea.addColorStop(0, 'rgba(0, 255, 136, 0.25)');
+            gradientArea.addColorStop(1, 'rgba(0, 255, 136, 0.01)');
+
+            const gradientAlerta = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientAlerta.addColorStop(0, 'rgba(255, 51, 51, 0.08)');
+            gradientAlerta.addColorStop(1, 'rgba(255, 51, 51, 0.01)');
+
+            // Dataset histórico de pressão (para barras de volume/pressure)
+            let dadosPressao = historicoDados.map(d => ({
+                x: d.minuto,
+                y: Math.abs(d.oddReal - (1 / (1 / parseFloat(d.oddInicial))))
+            }));
+
             graficoAtual = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels, // Eixo X (Minutos)
+                    labels: labels,
                     datasets: [
+                        // Banda Superior (Alerta)
+                        {
+                            label: 'Zona de Alerta',
+                            data: bandaSuperior,
+                            borderColor: 'transparent',
+                            backgroundColor: gradientAlerta,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            borderWidth: 0
+                        },
+                        // Banda Inferior (Alerta)
+                        {
+                            label: '',
+                            data: bandaInferior,
+                            borderColor: 'transparent',
+                            backgroundColor: 'transparent',
+                            fill: false,
+                            pointRadius: 0
+                        },
+                        // Curva Justa Principal (com preenchimento)
                         {
                             label: 'Curva Justa (Matemática)',
                             data: curvaJusta,
-                            borderColor: '#007bff',
-                            borderWidth: 2,
-                            fill: false,
-                            tension: 0.3,
-                            pointRadius: 0
-                        },
-                        {
-                            label: 'Odd Real (Mercado)',
-                            // Exibe um ponto único no gráfico para a odd real
-                            data: [{x: minutoAtual, y: oddReal}],
-                            backgroundColor: '#e53935',
-                            borderColor: '#fff',
-                            pointRadius: 8,
-                            pointHoverRadius: 10,
-                            type: 'scatter'
-                        },
-                        {
-                            label: 'Odd Esperada Agora',
-                            // Exibe um ponto único mostrando onde a odd devia estar
-                            data: [{x: minutoAtual, y: oddEsperada}],
-                            backgroundColor: '#00ffcc',
-                            borderColor: '#fff',
-                            pointRadius: 6,
+                            borderColor: '#00ff88',
+                            borderWidth: 3,
+                            backgroundColor: gradientArea,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 2,
                             pointHoverRadius: 8,
-                            type: 'scatter'
+                            pointBackgroundColor: '#00ff88',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            segment: {
+                                borderDash: ctx => ctx.p0DataIndex % 3 === 0 ? [0] : [0]
+                            }
+                        },
+                        // Histórico de Pressão (barras)
+                        {
+                            label: 'Histórico de Pressão',
+                            data: dadosPressao,
+                            backgroundColor: 'rgba(255, 100, 100, 0.15)',
+                            borderColor: 'rgba(255, 100, 100, 0.3)',
+                            borderWidth: 1,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            pointBackgroundColor: 'rgba(255, 100, 100, 0.5)',
+                            type: 'scatter',
+                            showLine: false
+                        },
+                        // Odd Real Atual
+                        {
+                            label: 'Odd Real (Mercado Agora)',
+                            data: [{x: minutoAtual, y: oddReal}],
+                            backgroundColor: '#ff3333',
+                            borderColor: '#fff',
+                            borderWidth: 3,
+                            pointRadius: 12,
+                            pointHoverRadius: 16,
+                            pointStyle: 'circle',
+                            type: 'scatter',
+                            showLine: false,
+                            fill: false
+                        },
+                        // Odd Esperada
+                        {
+                            label: 'Odd Esperada (Teórica)',
+                            data: [{x: minutoAtual, y: oddEsperada}],
+                            backgroundColor: '#00ff88',
+                            borderColor: '#fff',
+                            borderWidth: 3,
+                            pointRadius: 10,
+                            pointHoverRadius: 14,
+                            pointStyle: 'rectRot',
+                            type: 'scatter',
+                            showLine: false,
+                            fill: false
                         }
                     ]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
                     plugins: {
-                        legend: { labels: { color: '#fff' } },
-                        tooltip: { enabled: true }
+                        legend: {
+                            labels: {
+                                color: '#aaa',
+                                font: { size: 11, family: "'Segoe UI'" },
+                                padding: 12,
+                                boxWidth: 8,
+                                usePointStyle: true,
+                                filter: function(item) {
+                                    return item.text !== '';
+                                }
+                            },
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(10, 10, 10, 0.9)',
+                            borderColor: '#00ff88',
+                            borderWidth: 2,
+                            titleColor: '#00ff88',
+                            bodyColor: '#fff',
+                            bodyFont: { family: "'Courier New', monospace", size: 12 },
+                            padding: 12,
+                            cornerRadius: 4,
+                            displayColors: false,
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += parseFloat(context.parsed.y).toFixed(2).replace(',', '.');
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
                     },
                     scales: {
-                        x: { 
-                            type: 'linear', position: 'bottom', min: 0, max: 90,
-                            title: { display: true, text: 'Minutos de Jogo', color: '#aaa' },
-                            ticks: { color: '#ccc', stepSize: 10 }
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: 0,
+                            max: 90,
+                            title: {
+                                display: true,
+                                text: '⏱ MINUTOS DE JOGO',
+                                color: '#00ff88',
+                                font: { size: 12, weight: 'bold' }
+                            },
+                            ticks: {
+                                color: '#666',
+                                stepSize: 10,
+                                font: { family: "'Courier New', monospace", size: 11 }
+                            },
+                            grid: {
+                                color: 'rgba(10, 77, 35, 0.15)',
+                                drawBorder: true,
+                                borderColor: '#0A4D23',
+                                lineWidth: 1
+                            }
                         },
                         y: {
-                            title: { display: true, text: 'Valor da Odd', color: '#aaa' },
-                            ticks: { color: '#ccc' },
-                            grid: { color: '#444' }
+                            title: {
+                                display: true,
+                                text: '💰 VALOR DA ODD',
+                                color: '#00ff88',
+                                font: { size: 12, weight: 'bold' }
+                            },
+                            ticks: {
+                                color: '#666',
+                                font: { family: "'Courier New', monospace", size: 11 },
+                                padding: 8,
+                                callback: function(value) {
+                                    return value.toFixed(2).replace(',', '.');
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(10, 77, 35, 0.15)',
+                                drawBorder: true,
+                                borderColor: '#0A4D23'
+                            }
                         }
                     }
                 }
             });
         }
+
+        // Inicializar com análise padrão
+        window.addEventListener('load', () => {
+            analisarMercado();
+        });
     </script>
 </body>
 </html>
