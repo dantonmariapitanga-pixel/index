@@ -223,17 +223,16 @@
             let ctx = document.getElementById('meuGrafico').getContext('2d');
             if (graficoAtual) graficoAtual.destroy();
 
-            // Configura os limites do gráfico de acordo com o tempo escolhido
             let minInicio = isPrimeiroTempo ? 0 : 45;
             let minFim = isPrimeiroTempo ? 48 : 95;
             let tempoBase = isPrimeiroTempo ? 48 : 50;
 
-            let labelsMinutos = [];
+            let labelsCurva = [];
             let dadosCurvaJusta = [];
 
-            // Desenha a linha teórica (azul) passo a passo
+            // Gerar a linha contínua da Odd Justa (a "Referência")
             for(let m = minInicio; m <= minFim; m += 2) {
-                labelsMinutos.push(m);
+                labelsCurva.push(m);
                 let tempoPassado = isPrimeiroTempo ? m : (m - 45);
                 let tr = (tempoBase - tempoPassado) / tempoBase;
                 if (tr < 0.01) tr = 0.01;
@@ -242,42 +241,40 @@
                 if (tipoMercado === "sobe") {
                     let pIni = 1 / oddInicial;
                     let pAtual = pIni * Math.pow(tr, 0.55);
-                    if (pAtual <= 0.05) pAtual = 0.05;
-                    oddCalc = 1 / pAtual;
+                    oddCalc = 1 / (pAtual < 0.05 ? 0.05 : pAtual);
                 } else {
                     let pIni = 1 / oddInicial;
                     let pAtual = pIni + ((1 - pIni) * (1 - Math.pow(tr, 1.2)));
                     oddCalc = 1 / pAtual;
                 }
-                if(oddCalc > 10) oddCalc = 10; // Teto visual
-                dadosCurvaJusta.push({x: m, y: parseFloat(oddCalc.toFixed(2))});
+                dadosCurvaJusta.push(oddCalc > 10 ? 10 : parseFloat(oddCalc.toFixed(2)));
             }
 
-            // Prepara os dados do SEU histórico para desenhar a linha vermelha
             let dadosTrajetoria = historicoLogs.map(log => ({x: log.minuto, y: log.oddTime}));
 
             graficoAtual = new Chart(ctx, {
-                type: 'scatter',
+                type: 'line',
                 data: {
+                    labels: labelsCurva,
                     datasets: [
                         {
-                            label: 'Curva Justa (Matemática)',
+                            label: 'Odd Justa (Referência)',
                             data: dadosCurvaJusta,
                             borderColor: '#007bff',
                             borderWidth: 2,
-                            showLine: true,
+                            fill: false,
                             pointRadius: 0,
                             tension: 0.3
                         },
                         {
-                            label: 'Sua Trajetória (Odd Real)',
+                            label: 'Odd Real (Mercado)',
                             data: dadosTrajetoria,
                             borderColor: '#e53935',
                             backgroundColor: '#e53935',
-                            borderWidth: 2,
-                            showLine: true, // Conecta os pontos que você digitou!
-                            pointRadius: 5,
-                            pointHoverRadius: 8
+                            borderWidth: 3,
+                            fill: false,
+                            pointRadius: 6,
+                            tension: 0.1
                         }
                     ]
                 },
@@ -285,16 +282,8 @@
                     responsive: true, 
                     plugins: { legend: { labels: { color: '#fff' } } }, 
                     scales: { 
-                        x: { 
-                            type: 'linear', 
-                            min: minInicio, 
-                            max: minFim, 
-                            ticks: { color: '#ccc', stepSize: 5 } 
-                        }, 
-                        y: { 
-                            ticks: { color: '#ccc' }, 
-                            grid: { color: '#444' } 
-                        } 
+                        x: { type: 'linear', min: minInicio, max: minFim, ticks: { color: '#ccc' } }, 
+                        y: { ticks: { color: '#ccc' }, grid: { color: '#444' } } 
                     } 
                 }
             });
