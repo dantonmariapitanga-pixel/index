@@ -2,116 +2,97 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Radar de Odds Profissional</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Trade Pro</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #fff; padding: 20px; }
-        .painel { background-color: #262626; border: 1px solid #333; padding: 25px; max-width: 380px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .linha-input { margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        input, select { padding: 8px; width: 100px; text-align: center; border: 1px solid #444; border-radius: 4px; background-color: #111; color: #fff; font-weight: bold; }
-        select { width: 120px; text-align: left; }
-        button { width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        button:hover { background-color: #218838; }
-        .resultado { margin-top: 20px; padding-top: 15px; border-top: 1px solid #333; display: flex; justify-content: space-between; }
-        .destaque { font-size: 22px; color: #00ffcc; font-weight: bold; }
-        .alerta-perigo { color: white; background-color: #dc3545; padding: 12px; font-weight: bold; text-align: center; border-radius: 4px; margin-top: 15px; display: none; font-size: 14px; box-shadow: 0 0 10px rgba(220, 53, 69, 0.5); }
+        /* Estilos mantidos e otimizados */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0f141c; color: #f1f5f9; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card { background-color: #1e293b; border-radius: 10px; padding: 25px; border: 1px solid #334155; margin-bottom: 20px; }
+        input, select { width: 100%; background-color: #0f172a; border: 1px solid #475569; border-radius: 6px; padding: 12px; color: #ffffff; }
+        .btn-salvar { width: 100%; background-color: #3b82f6; color: white; border: none; padding: 14px; border-radius: 6px; cursor: pointer; }
+        .btn-export { background-color: #10b981; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background-color: #0f172a; padding: 12px; text-transform: uppercase; font-size: 11px; }
+        td { padding: 12px; border-bottom: 1px solid #334155; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <h2>Radar de Anomalias - Betfair</h2>
-    
-    <div class="painel">
-        <div class="linha-input">
-            <label>O que está monitorando?</label>
-            <select id="tipoMercado">
-                <option value="sobe">Favorito (Odd Sobe)</option>
-                <option value="desce">Empate (Odd Desce)</option>
-            </select>
-        </div>
-        <div class="linha-input">
-            <label>Minuto Atual:</label>
-            <input type="number" id="minuto" value="11" min="0" max="90">
-        </div>
-        <div class="linha-input">
-            <label>Odd Inicial (Pré-Live):</label>
-            <input type="number" step="0.01" id="oddInicial" value="1.20">
-        </div>
-        <div class="linha-input">
-            <label>Odd na Betfair Agora:</label>
-            <input type="number" step="0.01" id="oddReal" value="1.26">
+<div class="container">
+    <div class="main-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="card">
+            <h3>Dados em Tempo Real</h3>
+            <input type="text" id="jogo" placeholder="Nome do Jogo" oninput="calcular()">
+            <input type="number" id="minuto" placeholder="Minuto" oninput="calcular()">
+            <input type="number" id="ap" placeholder="Ataques Perigosos" oninput="calcular()">
+            <input type="number" id="finalizacoes" placeholder="Finalizações" oninput="calcular()">
+            <input type="number" id="escanteios" placeholder="Escanteios" oninput="calcular()">
+            <select id="pressao" onchange="calcular()"><option value="Não">Sem Pressão</option><option value="Sim">Pressão Alta</option></select>
+            <input type="number" id="odd" placeholder="Odd Atual" step="0.01">
+            <button class="btn-salvar" onclick="salvarNoHistorico()">Registrar Partida</button>
         </div>
 
-        <button onclick="analisarMercado()">Analisar Mercado</button>
-
-        <div class="resultado">
-            <span>Odd Justa Calculada:</span>
-            <span id="resultadoOdd" class="destaque">-</span>
-        </div>
-        
-        <!-- Caixa de Alerta Dinâmica -->
-        <div id="caixaAlerta" class="alerta-perigo">
-            ⚠️ OPA! Anomalia detectada. O mercado está segurando a odd, gol iminente!
+        <div class="card">
+            <h3>Indicadores</h3>
+            <div id="decisao-box" style="padding: 20px; text-align: center; font-weight: bold;">AGUARDANDO</div>
+            <button class="btn-salvar btn-export" onclick="exportarCSV()">Exportar Histórico (CSV)</button>
         </div>
     </div>
 
-    <script>
-        function analisarMercado() {
-            let minuto = parseFloat(document.getElementById('minuto').value);
-            let oddInicial = parseFloat(document.getElementById('oddInicial').value);
-            let oddReal = parseFloat(document.getElementById('oddReal').value);
-            let tipoMercado = document.getElementById('tipoMercado').value;
+    <div class="card">
+        <h3>Log de Operações</h3>
+        <table id="historico-tabela">
+            <thead><tr><th>Jogo</th><th>Min</th><th>APPM</th><th>Decisão</th><th>Resultado</th></tr></thead>
+            <tbody id="historico-corpo"></tbody>
+        </table>
+    </div>
+</div>
 
-            if(isNaN(minuto) || isNaN(oddInicial) || isNaN(oddReal)) {
-                alert("Por favor, preencha todos os campos.");
-                return;
-            }
+<script>
+    // Carrega dados do LocalStorage ao iniciar
+    document.addEventListener('DOMContentLoaded', carregarHistorico);
 
-            let oddEsperada = 0;
-            let dispararAlerta = false;
+    function calcular() {
+        const minuto = parseFloat(document.getElementById('minuto').value) || 0;
+        const ap = parseFloat(document.getElementById('ap').value) || 0;
+        const appm = minuto > 0 ? (ap / minuto).toFixed(2) : "0.00";
+        document.getElementById('decisao-box').innerText = "APPM: " + appm;
+    }
 
-            if (tipoMercado === "sobe") {
-                // --- MODELO PARA FAVORITO (ODD SOBE) ---
-                let probInicial = 1 / oddInicial;
-                // O expoente 1.45 modela perfeitamente a subida inicial do favorito
-                let fatorTempo = Math.pow((minuto / 90), 1.45);
-                let probAtual = probInicial * (1 - fatorTempo);
-                
-                if (probAtual <= 0) probAtual = 0.005; // Evita divisão por zero no fim do jogo
-                oddEsperada = 1 / probAtual;
+    function salvarNoHistorico() {
+        const data = {
+            jogo: document.getElementById('jogo').value,
+            min: document.getElementById('minuto').value,
+            appm: (document.getElementById('ap').value / document.getElementById('minuto').value).toFixed(2),
+            decisao: "Analisado",
+            resultado: "Aberto"
+        };
 
-                // Margem de segurança curta para odds espremidas
-                let margemSeguranca = 0.03; 
+        let historico = JSON.parse(localStorage.getItem('trade_log') || '[]');
+        historico.unshift(data);
+        localStorage.setItem('trade_log', JSON.stringify(historico));
+        renderizarTabela();
+    }
 
-                // ANOMALIA NO FAVORITO: A odd real está MENOR do que deveria estar (mercado segurando)
-                if (oddReal < (oddEsperada - margemSeguranca)) {
-                    dispararAlerta = true;
-                }
-            } else {
-                // --- MODELO PARA EMPATE (ODD DESCE) ---
-                let probInicial = 1 / oddInicial;
-                let fatorTempo = Math.pow((minuto / 90), 2.5);
-                let probAtual = probInicial + ((1 - probInicial) * fatorTempo);
-                oddEsperada = 1 / probAtual;
+    function carregarHistorico() { renderizarTabela(); }
 
-                let margemSeguranca = 0.20;
+    function renderizarTabela() {
+        const corpo = document.getElementById('historico-corpo');
+        const historico = JSON.parse(localStorage.getItem('trade_log') || '[]');
+        corpo.innerHTML = historico.map(h => `<tr><td>${h.jogo}</td><td>${h.min}</td><td>${h.appm}</td><td>${h.decisao}</td><td>${h.resultado}</td></tr>`).join('');
+    }
 
-                // ANOMALIA NO EMPATE: A odd real está MAIOR do que deveria estar (mercado resistindo a descer)
-                if (oddReal > (oddEsperada + margemSeguranca)) {
-                    dispararAlerta = true;
-                }
-            }
-
-            // Exibe a Odd Justa na tela
-            document.getElementById('resultadoOdd').innerText = oddEsperada.toFixed(2);
-
-            // Ativa ou desativa o alerta na tela
-            if (dispararAlerta) {
-                document.getElementById('caixaAlerta').style.display = 'block';
-            } else {
-                document.getElementById('caixaAlerta').style.display = 'none';
-            }
-        }
-    </script>
-
+    function exportarCSV() {
+        const historico = JSON.parse(localStorage.getItem('trade_log') || '[]');
+        let csv = "Jogo,Minuto,APPM,Decisao,Resultado\n";
+        historico.forEach(row => csv += `${row.jogo},${row.min},${row.appm},${row.decisao},${row.resultado}\n`);
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'trade_log.csv'; a.click();
+    }
+</script>
 </body>
 </html>
