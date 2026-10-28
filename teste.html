@@ -9,407 +9,407 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <style>
-  :root{
-    --bg:#0A0D0B; --bg-soft:#10140F; --card:#141914; --card-border:#232B22;
-    --ink:#F2F5F1; --ink-dim:#9BA69A; --neon:#4AFE7B; --neon-deep:#1F9E4A;
-    --danger:#FF5C5C; --warn:#F5B942;
-    color-scheme: dark;
-  }
-  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#0A0D0B; } }
-  :root[data-theme="dark"]{ --bg:#0A0D0B; }
-  *{box-sizing:border-box;}
-  html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
-  body{
-    background:var(--bg); color:var(--ink);
-    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
-    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-    -webkit-font-smoothing:antialiased;
-  }
-  .font-display{font-family:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;}
-  .field-grid{
-    background-image:
-      linear-gradient(var(--card-border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--card-border) 1px, transparent 1px);
-    background-size: 42px 42px;
-    opacity:0.35;
-  }
-  .glass{
-    background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
-    border:1px solid var(--card-border);
-    backdrop-filter: blur(14px);
-  }
-  .glow-text{ text-shadow: 0 0 24px rgba(74,254,123,0.35); }
-  .btn-glow{ box-shadow: 0 0 0 1px rgba(74,254,123,0.25), 0 18px 40px -14px rgba(74,254,123,0.55); }
-  .btn-glow:active{ transform: translateY(1px); }
-  .slot{
-    transition: all .15s ease;
-    border:1px solid var(--card-border);
-  }
-  .slot[data-state="free"]:hover{ border-color: var(--neon); background: rgba(74,254,123,0.08); }
-  .slot[data-state="selected"]{
-    background: var(--neon); color:#06170C; border-color:var(--neon);
-    box-shadow: 0 10px 24px -10px rgba(74,254,123,0.7);
-  }
-  .slot[data-state="booked"], .slot[data-state="fixed"], .slot[data-state="past"]{
-    opacity:0.45; cursor:not-allowed; color:var(--ink-dim);
-  }
-  .dot{width:7px;height:7px;border-radius:999px;display:inline-block;}
-  ::-webkit-scrollbar{height:6px;width:6px;}
-  ::-webkit-scrollbar-thumb{background:#2A332A;border-radius:99px;}
-  input[type="date"]{color-scheme:dark;}
-  @media (prefers-reduced-motion: reduce){ *{transition:none !important; scroll-behavior:auto !important;} }
+  :root{
+    --bg:#0A0D0B; --bg-soft:#10140F; --card:#141914; --card-border:#232B22;
+    --ink:#F2F5F1; --ink-dim:#9BA69A; --neon:#4AFE7B; --neon-deep:#1F9E4A;
+    --danger:#FF5C5C; --warn:#F5B942;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#0A0D0B; } }
+  :root[data-theme="dark"]{ --bg:#0A0D0B; }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    -webkit-font-smoothing:antialiased;
+  }
+  .font-display{font-family:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;}
+  .field-grid{
+    background-image:
+      linear-gradient(var(--card-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--card-border) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity:0.35;
+  }
+  .glass{
+    background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+    border:1px solid var(--card-border);
+    backdrop-filter: blur(14px);
+  }
+  .glow-text{ text-shadow: 0 0 24px rgba(74,254,123,0.35); }
+  .btn-glow{ box-shadow: 0 0 0 1px rgba(74,254,123,0.25), 0 18px 40px -14px rgba(74,254,123,0.55); }
+  .btn-glow:active{ transform: translateY(1px); }
+  .slot{
+    transition: all .15s ease;
+    border:1px solid var(--card-border);
+  }
+  .slot[data-state="free"]:hover{ border-color: var(--neon); background: rgba(74,254,123,0.08); }
+  .slot[data-state="selected"]{
+    background: var(--neon); color:#06170C; border-color:var(--neon);
+    box-shadow: 0 10px 24px -10px rgba(74,254,123,0.7);
+  }
+  .slot[data-state="booked"], .slot[data-state="fixed"], .slot[data-state="past"]{
+    opacity:0.45; cursor:not-allowed; color:var(--ink-dim);
+  }
+  .dot{width:7px;height:7px;border-radius:999px;display:inline-block;}
+  ::-webkit-scrollbar{height:6px;width:6px;}
+  ::-webkit-scrollbar-thumb{background:#2A332A;border-radius:99px;}
+  input[type="date"]{color-scheme:dark;}
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important; scroll-behavior:auto !important;} }
 </style>
 </head>
 <body class="min-h-screen">
 
 <!-- HERO -->
 <header class="relative overflow-hidden border-b border-[var(--card-border)]">
-  <div class="absolute inset-0 field-grid pointer-events-none"></div>
-  <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[var(--neon)] opacity-[0.08] blur-3xl pointer-events-none"></div>
-  <div class="relative max-w-3xl mx-auto px-5 pt-10 pb-12 sm:pt-16 sm:pb-16">
-    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium text-[var(--neon)] mb-6">
-      <span class="dot bg-[var(--neon)]"></span> Av. Emília Gonçalves, 885 - Quintino Cunha
-    </div>
-    <h1 class="font-display text-4xl sm:text-5xl font-semibold leading-[1.05] tracking-tight">
-      Arena <span class="glow-text text-[var(--neon)]">Plural</span>
-    </h1>
-    <p class="mt-4 text-[var(--ink-dim)] text-base sm:text-lg max-w-md">
-      Gramado sintético padrão profissional, iluminação de LED e reserva confirmada em minutos — direto no seu WhatsApp.
-    </p>
-    <a href="#agendamento" class="mt-7 inline-flex items-center gap-2 bg-[var(--neon)] text-[#06170C] font-semibold px-6 py-3 rounded-xl btn-glow">
-      Reservar meu horário
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="#06170C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </div>
+  <div class="absolute inset-0 field-grid pointer-events-none"></div>
+  <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[var(--neon)] opacity-[0.08] blur-3xl pointer-events-none"></div>
+  <div class="relative max-w-3xl mx-auto px-5 pt-10 pb-12 sm:pt-16 sm:pb-16">
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium text-[var(--neon)] mb-6">
+      <span class="dot bg-[var(--neon)]"></span> Av. Emília Gonçalves, 885 - Quintino Cunha
+    </div>
+    <h1 class="font-display text-4xl sm:text-5xl font-semibold leading-[1.05] tracking-tight">
+      Arena <span class="glow-text text-[var(--neon)]">Plural</span>
+    </h1>
+    <p class="mt-4 text-[var(--ink-dim)] text-base sm:text-lg max-w-md">
+      Gramado sintético padrão profissional, iluminação de LED e reserva confirmada em minutos — direto no seu WhatsApp.
+    </p>
+    <a href="#agendamento" class="mt-7 inline-flex items-center gap-2 bg-[var(--neon)] text-[#06170C] font-semibold px-6 py-3 rounded-xl btn-glow">
+      Reservar meu horário
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="#06170C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
 </header>
 
 <!-- PREÇOS -->
 <section class="max-w-3xl mx-auto px-5 py-10">
-  <div class="grid grid-cols-2 gap-3 sm:gap-4">
-    <div class="glass rounded-2xl p-5">
-      <p class="text-xs text-[var(--ink-dim)] mb-1">Hora cheia</p>
-      <p class="font-display text-2xl sm:text-3xl font-semibold">R$ 150<span class="text-sm text-[var(--ink-dim)] font-normal">/hora</span></p>
-      <p class="text-xs text-[var(--ink-dim)] mt-2">Quadra reservada com exclusividade</p>
-    </div>
-    <div class="glass rounded-2xl p-5 relative">
-      <p class="text-xs text-[var(--ink-dim)] mb-1">Prorrogação</p>
-      <p class="font-display text-2xl sm:text-3xl font-semibold text-[var(--neon)]">+R$ 75</p>
-      <p class="text-xs text-[var(--ink-dim)] mt-2">30 minutos adicionais de jogo</p>
-    </div>
-  </div>
+  <div class="grid grid-cols-2 gap-3 sm:gap-4">
+    <div class="glass rounded-2xl p-5">
+      <p class="text-xs text-[var(--ink-dim)] mb-1">Hora cheia</p>
+      <p class="font-display text-2xl sm:text-3xl font-semibold">R$ 150<span class="text-sm text-[var(--ink-dim)] font-normal">/hora</span></p>
+      <p class="text-xs text-[var(--ink-dim)] mt-2">Quadra reservada com exclusividade</p>
+    </div>
+    <div class="glass rounded-2xl p-5 relative">
+      <p class="text-xs text-[var(--ink-dim)] mb-1">Prorrogação</p>
+      <p class="font-display text-2xl sm:text-3xl font-semibold text-[var(--neon)]">+R$ 75</p>
+      <p class="text-xs text-[var(--ink-dim)] mt-2">30 minutos adicionais de jogo</p>
+    </div>
+  </div>
 </section>
 
 <!-- AGENDAMENTO -->
 <section id="agendamento" class="max-w-3xl mx-auto px-5 pb-10">
-  <div class="glass rounded-3xl p-5 sm:p-7">
-    <h2 class="font-display text-xl font-semibold mb-5">Monte sua reserva</h2>
+  <div class="glass rounded-3xl p-5 sm:p-7">
+    <h2 class="font-display text-xl font-semibold mb-5">Monte sua reserva</h2>
 
-    <!-- Data -->
-    <label class="block text-sm text-[var(--ink-dim)] mb-2">Escolha a data</label>
-    <input id="dateInput" type="date" class="w-full bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-3 text-[var(--ink)] mb-6 focus:outline-none focus:ring-2 focus:ring-[var(--neon)]">
+    <!-- Data -->
+    <label class="block text-sm text-[var(--ink-dim)] mb-2">Escolha a data</label>
+    <input id="dateInput" type="date" class="w-full bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-3 text-[var(--ink)] mb-6 focus:outline-none focus:ring-2 focus:ring-[var(--neon)]">
 
-    <!-- Legenda -->
-    <div class="flex flex-wrap gap-4 text-xs text-[var(--ink-dim)] mb-4">
-      <span class="flex items-center gap-1.5"><span class="dot bg-[var(--neon)]"></span>Disponível</span>
-      <span class="flex items-center gap-1.5"><span class="dot" style="background:#5A655A"></span>Fixo/Ocupado</span>
-      <span class="flex items-center gap-1.5"><span class="dot" style="background:var(--danger)"></span>Reservado</span>
-    </div>
+    <!-- Legenda -->
+    <div class="flex flex-wrap gap-4 text-xs text-[var(--ink-dim)] mb-4">
+      <span class="flex items-center gap-1.5"><span class="dot bg-[var(--neon)]"></span>Disponível</span>
+      <span class="flex items-center gap-1.5"><span class="dot" style="background:#5A655A"></span>Fixo/Ocupado</span>
+      <span class="flex items-center gap-1.5"><span class="dot" style="background:var(--danger)"></span>Reservado</span>
+    </div>
 
-    <!-- Grade de horários -->
-    <div id="slotsGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 mb-6"></div>
-    <p id="noSlotsMsg" class="hidden text-sm text-[var(--ink-dim)] mb-6">Nenhum horário disponível neste dia. Tente outra data.</p>
+    <!-- Grade de horários -->
+    <div id="slotsGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 mb-6"></div>
+    <p id="noSlotsMsg" class="hidden text-sm text-[var(--ink-dim)] mb-6">Nenhum horário disponível neste dia. Tente outra data.</p>
 
-    <!-- Prorrogação -->
-    <label class="flex items-center justify-between glass rounded-xl px-4 py-3.5 mb-6 cursor-pointer select-none">
-      <span class="text-sm">Adicionar <strong>+30 min</strong> de prorrogação <span class="text-[var(--ink-dim)]">(+R$ 75,00)</span></span>
-      <input id="extraToggle" type="checkbox" class="w-5 h-5 accent-[var(--neon)]">
-    </label>
+    <!-- Prorrogação -->
+    <label class="flex items-center justify-between glass rounded-xl px-4 py-3.5 mb-6 cursor-pointer select-none">
+      <span class="text-sm">Adicionar <strong>+30 min</strong> de prorrogação <span class="text-[var(--ink-dim)]">(+R$ 75,00)</span></span>
+      <input id="extraToggle" type="checkbox" class="w-5 h-5 accent-[var(--neon)]">
+    </label>
 
-    <!-- Dados do cliente -->
-    <div class="grid sm:grid-cols-2 gap-3 mb-6">
-      <div>
-        <label class="block text-sm text-[var(--ink-dim)] mb-2">Nome completo</label>
-        <input id="nameInput" type="text" placeholder="Seu nome" class="w-full bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--neon)]">
-      </div>
-      <div>
-        <label class="block text-sm text-[var(--ink-dim)] mb-2">WhatsApp</label>
-        <input id="phoneInput" type="tel" placeholder="(85) 99999-9999" class="w-full bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--neon)]">
-      </div>
-    </div>
+    <!-- Dados do cliente -->
+    <div class="grid sm:grid-cols-2 gap-3 mb-6">
+      <div>
+        <label class="block text-sm text-[var(--ink-dim)] mb-2">Nome completo</label>
+        <input id="nameInput" type="text" placeholder="Seu nome" class="w-full bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--neon)]">
+      </div>
+      <div>
+        <label class="block text-sm text-[var(--ink-dim)] mb-2">WhatsApp</label>
+        <input id="phoneInput" type="tel" placeholder="(85) 99999-9999" class="w-full bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--neon)]">
+      </div>
+    </div>
 
-    <!-- Resumo -->
-    <div class="glass rounded-2xl p-5 mb-5">
-      <div class="flex justify-between text-sm text-[var(--ink-dim)] mb-1.5">
-        <span>Horário escolhido</span><span id="sumTime" class="text-[var(--ink)]">—</span>
-      </div>
-      <div class="flex justify-between text-sm text-[var(--ink-dim)] mb-1.5">
-        <span>Duração</span><span id="sumDuration" class="text-[var(--ink)]">1 hora</span>
-      </div>
-      <div class="flex justify-between items-center mt-3 pt-3 border-t border-[var(--card-border)]">
-        <span class="text-sm">Valor total</span>
-        <span id="sumTotal" class="font-display text-2xl font-semibold text-[var(--neon)]">R$ 150,00</span>
-      </div>
-    </div>
+    <!-- Resumo -->
+    <div class="glass rounded-2xl p-5 mb-5">
+      <div class="flex justify-between text-sm text-[var(--ink-dim)] mb-1.5">
+        <span>Horário escolhido</span><span id="sumTime" class="text-[var(--ink)]">—</span>
+      </div>
+      <div class="flex justify-between text-sm text-[var(--ink-dim)] mb-1.5">
+        <span>Duração</span><span id="sumDuration" class="text-[var(--ink)]">1 hora</span>
+      </div>
+      <div class="flex justify-between items-center mt-3 pt-3 border-t border-[var(--card-border)]">
+        <span class="text-sm">Valor total</span>
+        <span id="sumTotal" class="font-display text-2xl font-semibold text-[var(--neon)]">R$ 150,00</span>
+      </div>
+    </div>
 
-    <button id="confirmBtn" class="w-full flex items-center justify-center gap-2 bg-[var(--neon)] text-[#06170C] font-semibold py-4 rounded-xl btn-glow">
-      <svg width="70" height="70" viewBox="0 0 24 24" fill="#06170C"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.6 14.3c-.2.6-1.3 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.6-.6-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.8 1.8.8 2 .1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
-      Confirmar Agendamento via WhatsApp
-    </button>
-    <p id="formError" class="hidden text-sm text-[var(--danger)] mt-3 text-center"></p>
+    <button id="confirmBtn" class="w-full flex items-center justify-center gap-2 bg-[var(--neon)] text-[#06170C] font-semibold py-4 rounded-xl btn-glow">
+      <svg width="70" height="70" viewBox="0 0 24 24" fill="#06170C"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.6 14.3c-.2.6-1.3 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.6-.6-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.8 1.8.8 2 .1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+      Confirmar Agendamento via WhatsApp
+    </button>
+    <p id="formError" class="hidden text-sm text-[var(--danger)] mt-3 text-center"></p>
 
-  </div>
+  </div>
 </section>
 
 <div id="adminPanel" class="hidden max-w-3xl mx-auto px-5 pb-10">
-  <div class="glass rounded-2xl p-5">
-    <div class="flex items-center justify-between gap-3 mb-4">
-      <p class="text-xs text-[var(--ink-dim)]">Modo admin ativo - visivel apenas com o link secreto.</p>
-      <button id="resetBtn" class="text-xs font-medium text-[var(--danger)] underline whitespace-nowrap">Apagar tudo</button>
-    </div>
-    <p class="text-sm font-medium mb-3">Reservas salvas neste navegador</p>
-    <div id="adminList" class="space-y-2"></div>
-    <p id="adminEmpty" class="hidden text-sm text-[var(--ink-dim)]">Nenhuma reserva salva neste navegador.</p>
-  </div>
+  <div class="glass rounded-2xl p-5">
+    <div class="flex items-center justify-between gap-3 mb-4">
+      <p class="text-xs text-[var(--ink-dim)]">Modo admin ativo - visivel apenas com o link secreto.</p>
+      <button id="resetBtn" class="text-xs font-medium text-[var(--danger)] underline whitespace-nowrap">Apagar tudo</button>
+    </div>
+    <p class="text-sm font-medium mb-3">Reservas salvas neste navegador</p>
+    <div id="adminList" class="space-y-2"></div>
+    <p id="adminEmpty" class="hidden text-sm text-[var(--ink-dim)]">Nenhuma reserva salva neste navegador.</p>
+  </div>
 </div>
 
 <footer class="text-center text-xs text-[var(--ink-dim)] pb-10 px-5">
-  Arena Plural · Reservas sujeitas à confirmação via WhatsApp
+  Arena Plural · Reservas sujeitas à confirmação via WhatsApp
 </footer>
 
 <script>
 (function(){
-  const WHATSAPP_NUMBER = "5585991469859";
-  const BASE_PRICE = 150;
-  const EXTRA_PRICE = 75;
-  const STORAGE_KEY = "arenaBookings";
-  const OPEN_HOUR = 6, CLOSE_HOUR = 23;
+  const WHATSAPP_NUMBER = "5585991469859";
+  const BASE_PRICE = 150;
+  const EXTRA_PRICE = 75;
+  const STORAGE_KEY = "arenaBookings";
+  const OPEN_HOUR = 6, CLOSE_HOUR = 23;
 
-  const FIXED_SCHEDULE = {
-    1: ["19:00","20:00"],
-    2: ["19:00"],
-    3: ["21:00"],
-    4: ["20:00","21:00"],
-    5: ["18:00","19:00"],
-    0: ["07:30","08:00"]
-  };
+  const FIXED_SCHEDULE = {
+    1: ["19:00","20:00"],
+    2: ["19:00"],
+    3: ["21:00"],
+    4: ["20:00","21:00"],
+    5: ["18:00","19:00"],
+    0: ["07:30","08:00"]
+  };
 
-  const WEEKDAYS = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
+  const WEEKDAYS = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
 
-  const dateInput = document.getElementById("dateInput");
-  const slotsGrid = document.getElementById("slotsGrid");
-  const noSlotsMsg = document.getElementById("noSlotsMsg");
-  const extraToggle = document.getElementById("extraToggle");
-  const nameInput = document.getElementById("nameInput");
-  const phoneInput = document.getElementById("phoneInput");
-  const sumTime = document.getElementById("sumTime");
-  const sumDuration = document.getElementById("sumDuration");
-  const sumTotal = document.getElementById("sumTotal");
-  const confirmBtn = document.getElementById("confirmBtn");
-  const formError = document.getElementById("formError");
-  const resetBtn = document.getElementById("resetBtn");
+  const dateInput = document.getElementById("dateInput");
+  const slotsGrid = document.getElementById("slotsGrid");
+  const noSlotsMsg = document.getElementById("noSlotsMsg");
+  const extraToggle = document.getElementById("extraToggle");
+  const nameInput = document.getElementById("nameInput");
+  const phoneInput = document.getElementById("phoneInput");
+  const sumTime = document.getElementById("sumTime");
+  const sumDuration = document.getElementById("sumDuration");
+  const sumTotal = document.getElementById("sumTotal");
+  const confirmBtn = document.getElementById("confirmBtn");
+  const formError = document.getElementById("formError");
+  const resetBtn = document.getElementById("resetBtn");
 
-  let selectedTime = null;
+  let selectedTime = null;
 
-  function todayISO(){
-    const d = new Date();
-    const off = d.getTimezoneOffset();
-    return new Date(d.getTime() - off*60000).toISOString().slice(0,10);
-  }
-  function pad(n){ return String(n).padStart(2,"0"); }
+  function todayISO(){
+    const d = new Date();
+    const off = d.getTimezoneOffset();
+    return new Date(d.getTime() - off*60000).toISOString().slice(0,10);
+  }
+  function pad(n){ return String(n).padStart(2,"0"); }
 
-  dateInput.min = todayISO();
-  dateInput.value = todayISO();
+  dateInput.min = todayISO();
+  dateInput.value = todayISO();
 
-  function getBookings(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    catch(e){ return []; }
-  }
-  function saveBooking(date, time){
-    const list = getBookings();
-    list.push({date, time});
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  }
-  function removeBooking(date, time){
-    const list = getBookings().filter(b => !(b.date === date && b.time === time));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  }
-  function isBooked(date, time){
-    return getBookings().some(b => b.date === date && b.time === time);
-  }
+  function getBookings(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e){ return []; }
+  }
+  function saveBooking(date, time){
+    const list = getBookings();
+    list.push({date, time});
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  }
+  function removeBooking(date, time){
+    const list = getBookings().filter(b => !(b.date === date && b.time === time));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  }
+  function isBooked(date, time){
+    return getBookings().some(b => b.date === date && b.time === time);
+  }
 
-  const adminList = document.getElementById("adminList");
-  const adminEmpty = document.getElementById("adminEmpty");
+  const adminList = document.getElementById("adminList");
+  const adminEmpty = document.getElementById("adminEmpty");
 
-  function renderAdminList(){
-    if(!adminList) return;
-    const list = getBookings().slice().sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
-    adminList.innerHTML = "";
-    adminEmpty.classList.toggle("hidden", list.length > 0);
-    list.forEach(b => {
-      const row = document.createElement("div");
-      row.className = "flex items-center justify-between bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-2.5";
-      const weekdayName = WEEKDAYS[parseLocalDate(b.date).getDay()];
-      row.innerHTML = `<span class="text-sm">${formatDateBR(b.date)} (${weekdayName}) — <strong>${b.time}</strong></span>`;
-      const delBtn = document.createElement("button");
-      delBtn.className = "text-xs text-[var(--danger)] underline ml-3 whitespace-nowrap";
-      delBtn.textContent = "remover";
-      delBtn.addEventListener("click", () => {
-        removeBooking(b.date, b.time);
-        renderAdminList();
-        renderGrid();
-      });
-      row.appendChild(delBtn);
-      adminList.appendChild(row);
-    });
-  }
+  function renderAdminList(){
+    if(!adminList) return;
+    const list = getBookings().slice().sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+    adminList.innerHTML = "";
+    adminEmpty.classList.toggle("hidden", list.length > 0);
+    list.forEach(b => {
+      const row = document.createElement("div");
+      row.className = "flex items-center justify-between bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-2.5";
+      const weekdayName = WEEKDAYS[parseLocalDate(b.date).getDay()];
+      row.innerHTML = `<span class="text-sm">${formatDateBR(b.date)} (${weekdayName}) — <strong>${b.time}</strong></span>`;
+      const delBtn = document.createElement("button");
+      delBtn.className = "text-xs text-[var(--danger)] underline ml-3 whitespace-nowrap";
+      delBtn.textContent = "remover";
+      delBtn.addEventListener("click", () => {
+        removeBooking(b.date, b.time);
+        renderAdminList();
+        renderGrid();
+      });
+      row.appendChild(delBtn);
+      adminList.appendChild(row);
+    });
+  }
 
-  function generateSlots(){
-    const slots = [];
-    for(let h=OPEN_HOUR; h<CLOSE_HOUR; h++){
-      slots.push(pad(h)+":00");
-      slots.push(pad(h)+":30");
-    }
-    slots.push(pad(CLOSE_HOUR)+":00");
-    return slots;
-  }
-  const ALL_SLOTS = generateSlots();
+  function generateSlots(){
+    const slots = [];
+    for(let h=OPEN_HOUR; h<CLOSE_HOUR; h++){
+      slots.push(pad(h)+":00");
+      slots.push(pad(h)+":30");
+    }
+    slots.push(pad(CLOSE_HOUR)+":00");
+    return slots;
+  }
+  const ALL_SLOTS = generateSlots();
 
-  function parseLocalDate(iso){
-    const [y,m,d] = iso.split("-").map(Number);
-    return new Date(y, m-1, d);
-  }
+  function parseLocalDate(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    return new Date(y, m-1, d);
+  }
 
-  function renderGrid(){
-    const dateVal = dateInput.value;
-    if(!dateVal) return;
-    const dateObj = parseLocalDate(dateVal);
-    const weekday = dateObj.getDay();
-    const fixed = FIXED_SCHEDULE[weekday] || [];
-    const isToday = dateVal === todayISO();
-    const now = new Date();
-    const nowMinutes = now.getHours()*60 + now.getMinutes();
+  function renderGrid(){
+    const dateVal = dateInput.value;
+    if(!dateVal) return;
+    const dateObj = parseLocalDate(dateVal);
+    const weekday = dateObj.getDay();
+    const fixed = FIXED_SCHEDULE[weekday] || [];
+    const isToday = dateVal === todayISO();
+    const now = new Date();
+    const nowMinutes = now.getHours()*60 + now.getMinutes();
 
-    slotsGrid.innerHTML = "";
-    selectedTime = null;
-    updateSummary();
+    slotsGrid.innerHTML = "";
+    selectedTime = null;
+    updateSummary();
 
-    let availableCount = 0;
+    let availableCount = 0;
 
-    ALL_SLOTS.forEach(time => {
-      const [hh,mm] = time.split(":").map(Number);
-      const slotMinutes = hh*60+mm;
-      let state = "free";
+    ALL_SLOTS.forEach(time => {
+      const [hh,mm] = time.split(":").map(Number);
+      const slotMinutes = hh*60+mm;
+      let state = "free";
 
-      if(fixed.includes(time)) state = "fixed";
-      else if(isToday && slotMinutes <= nowMinutes) state = "past";
-      else if(isBooked(dateVal, time)) state = "booked";
+      if(fixed.includes(time)) state = "fixed";
+      else if(isToday && slotMinutes <= nowMinutes) state = "past";
+      else if(isBooked(dateVal, time)) state = "booked";
 
-      if(state === "free") availableCount++;
+      if(state === "free") availableCount++;
 
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "slot rounded-xl py-2.5 text-sm font-medium bg-[var(--bg-soft)]";
-      btn.dataset.state = state;
-      btn.dataset.time = time;
-      btn.textContent = time;
-      btn.disabled = (state !== "free");
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "slot rounded-xl py-2.5 text-sm font-medium bg-[var(--bg-soft)]";
+      btn.dataset.state = state;
+      btn.dataset.time = time;
+      btn.textContent = time;
+      btn.disabled = (state !== "free");
 
-      if(state === "free"){
-        btn.addEventListener("click", () => selectSlot(time));
-      }
-      slotsGrid.appendChild(btn);
-    });
+      if(state === "free"){
+        btn.addEventListener("click", () => selectSlot(time));
+      }
+      slotsGrid.appendChild(btn);
+    });
 
-    noSlotsMsg.classList.toggle("hidden", availableCount > 0);
-    slotsGrid.classList.toggle("hidden", availableCount === 0);
-  }
+    noSlotsMsg.classList.toggle("hidden", availableCount > 0);
+    slotsGrid.classList.toggle("hidden", availableCount === 0);
+  }
 
-  function selectSlot(time){
-    selectedTime = time;
-    [...slotsGrid.children].forEach(btn => {
-      if(btn.dataset.time === time){
-        btn.dataset.state = "selected";
-      } else if(btn.dataset.state === "selected"){
-        btn.dataset.state = "free";
-      }
-    });
-    updateSummary();
-  }
+  function selectSlot(time){
+    selectedTime = time;
+    [...slotsGrid.children].forEach(btn => {
+      if(btn.dataset.time === time){
+        btn.dataset.state = "selected";
+      } else if(btn.dataset.state === "selected"){
+        btn.dataset.state = "free";
+      }
+    });
+    updateSummary();
+  }
 
-  function updateSummary(){
-    sumTime.textContent = selectedTime || "—";
-    const hasExtra = extraToggle.checked;
-    sumDuration.textContent = hasExtra ? "1h30min" : "1 hora";
-    const total = BASE_PRICE + (hasExtra ? EXTRA_PRICE : 0);
-    sumTotal.textContent = "R$ " + total.toFixed(2).replace(".", ",");
-  }
+  function updateSummary(){
+    sumTime.textContent = selectedTime || "—";
+    const hasExtra = extraToggle.checked;
+    sumDuration.textContent = hasExtra ? "1h30min" : "1 hora";
+    const total = BASE_PRICE + (hasExtra ? EXTRA_PRICE : 0);
+    sumTotal.textContent = "R$ " + total.toFixed(2).replace(".", ",");
+  }
 
-  extraToggle.addEventListener("change", updateSummary);
-  dateInput.addEventListener("change", renderGrid);
+  extraToggle.addEventListener("change", updateSummary);
+  dateInput.addEventListener("change", renderGrid);
 
-  function showError(msg){
-    formError.textContent = msg;
-    formError.classList.remove("hidden");
-  }
-  function clearError(){
-    formError.classList.add("hidden");
-  }
+  function showError(msg){
+    formError.textContent = msg;
+    formError.classList.remove("hidden");
+  }
+  function clearError(){
+    formError.classList.add("hidden");
+  }
 
-  function formatDateBR(iso){
-    const [y,m,d] = iso.split("-");
-    return `${d}/${m}/${y}`;
-  }
+  function formatDateBR(iso){
+    const [y,m,d] = iso.split("-");
+    return `${d}/${m}/${y}`;
+  }
 
-  confirmBtn.addEventListener("click", () => {
-    clearError();
-    const name = nameInput.value.trim();
-    const phone = phoneInput.value.trim();
-    const date = dateInput.value;
+  confirmBtn.addEventListener("click", () => {
+    clearError();
+    const name = nameInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const date = dateInput.value;
 
-    if(!name){ showError("Por favor, informe seu nome completo."); return; }
-    if(!phone){ showError("Por favor, informe seu telefone/WhatsApp."); return; }
-    if(!date){ showError("Por favor, selecione uma data."); return; }
-    if(!selectedTime){ showError("Por favor, selecione um horário disponível."); return; }
+    if(!name){ showError("Por favor, informe seu nome completo."); return; }
+    if(!phone){ showError("Por favor, informe seu telefone/WhatsApp."); return; }
+    if(!date){ showError("Por favor, selecione uma data."); return; }
+    if(!selectedTime){ showError("Por favor, selecione um horário disponível."); return; }
 
-    saveBooking(date, selectedTime);
-    renderAdminList();
+    saveBooking(date, selectedTime);
+    renderAdminList();
 
-    const hasExtra = extraToggle.checked;
-    const duration = hasExtra ? "1h30min (com prorrogação de 30min)" : "1 hora";
-    const total = (BASE_PRICE + (hasExtra ? EXTRA_PRICE : 0)).toFixed(2).replace(".", ",");
-    const weekdayName = WEEKDAYS[parseLocalDate(date).getDay()];
+    const hasExtra = extraToggle.checked;
+    const duration = hasExtra ? "1h30min (com prorrogação de 30min)" : "1 hora";
+    const total = (BASE_PRICE + (hasExtra ? EXTRA_PRICE : 0)).toFixed(2).replace(".", ",");
+    const weekdayName = WEEKDAYS[parseLocalDate(date).getDay()];
 
-    const message = `Olá! Gostaria de confirmar o agendamento na Arena Plural:
+    const message = `Olá! Gostaria de confirmar o agendamento na Arena Plural:
 
- Nome: ${name}
- Contato: ${phone}
- Data: ${formatDateBR(date)} (${weekdayName})
- Horário: ${selectedTime}
- Duração: ${duration}
- Valor Total: R$ ${total}
+ Nome: ${name}
+ Contato: ${phone}
+ Data: ${formatDateBR(date)} (${weekdayName})
+ Horário: ${selectedTime}
+ Duração: ${duration}
+ Valor Total: R$ ${total}
 
 Aguardo a confirmação da reserva!`;
 
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-    renderGrid();
-    window.open(url, "_blank");
-  });
+    renderGrid();
+    window.open(url, "_blank");
+  });
 
-  resetBtn.addEventListener("click", () => {
-    if(confirm("Isso vai apagar TODAS as reservas salvas neste navegador. Confirma?")){
-      localStorage.removeItem(STORAGE_KEY);
-      renderGrid();
-      renderAdminList();
-    }
-  });
+  resetBtn.addEventListener("click", () => {
+    if(confirm("Isso vai apagar TODAS as reservas salvas neste navegador. Confirma?")){
+      localStorage.removeItem(STORAGE_KEY);
+      renderGrid();
+      renderAdminList();
+    }
+  });
 
-  if(location.hash === "#admin-reset-xk9"){
-    document.getElementById("adminPanel").classList.remove("hidden");
-    renderAdminList();
-  }
+  if(location.hash === "#admin-reset-xk9"){
+    document.getElementById("adminPanel").classList.remove("hidden");
+    renderAdminList();
+  }
 
-  renderGrid();
+  renderGrid();
 })();
 </script>
 </body>
