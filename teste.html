@@ -404,10 +404,22 @@ Aguardo a confirmação da reserva!`;
     }
   });
 
-  if(location.hash === "#admin-reset-xk9"){
-    document.getElementById("adminPanel").classList.remove("hidden");
-    renderAdminList();
+ // Função inteligente para checar e exibir o painel admin a qualquer momento
+  function checkAdminAccess() {
+    if(window.location.hash === "#admin-reset-xk9"){
+      const panel = document.getElementById("adminPanel");
+      if(panel) {
+        panel.classList.remove("hidden");
+        renderAdminList();
+      }
+    }
   }
+
+  // Executa ao carregar
+  checkAdminAccess();
+
+  // Fica escutando caso o hash mude na barra de endereços
+  window.addEventListener("hashchange", checkAdminAccess);
 
   renderGrid();
 })();
