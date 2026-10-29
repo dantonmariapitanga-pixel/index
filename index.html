@@ -26,8 +26,10 @@
     padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
     -webkit-font-smoothing:antialiased;
     background:
-      linear-gradient(180deg, rgba(5,8,6,0.35), rgba(5,8,6,0.72) 55%, rgba(5,8,6,0.9)),
+      linear-gradient(180deg, rgba(5,8,6,0.45), rgba(5,8,6,0.72) 55%, rgba(5,8,6,0.9)),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.04 0 0 0 0 0.28 0 0 0 0 0.1 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat,
       repeating-linear-gradient(90deg, #0D2113 0px, #0D2113 54px, #123420 54px, #123420 108px);
+    background-size: auto, 160px 160px, auto;
   }
   .font-display{font-family:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;}
   .glass{
@@ -37,7 +39,7 @@
     transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
   }
   .price-card:hover{ transform: translateY(-4px); box-shadow: 0 22px 44px -22px rgba(0,0,0,0.65); border-color: rgba(74,254,123,0.3); }
-  .glow-text{ text-shadow: 0 0 24px rgba(74,254,123,0.35); }
+  .glow-text{ text-shadow: 0 2px 18px rgba(0,0,0,0.65), 0 0 26px rgba(74,254,123,0.6), 0 0 48px rgba(74,254,123,0.35); }
   @keyframes pulseGlow{
     0%,100%{ box-shadow: 0 0 0 1px rgba(74,254,123,0.25), 0 18px 40px -14px rgba(74,254,123,0.55); }
     50%{ box-shadow: 0 0 0 1px rgba(74,254,123,0.45), 0 22px 52px -10px rgba(74,254,123,0.8); }
@@ -79,6 +81,7 @@
 
 <!-- HERO -->
 <header class="relative overflow-hidden border-b border-[var(--card-border)]">
+  <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent pointer-events-none"></div>
   <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-70" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" fill="none" stroke="rgba(242,245,241,0.09)" stroke-width="1.4">
     <line x1="400" y1="0" x2="400" y2="220"/>
     <circle cx="400" cy="140" r="52"/>
@@ -494,12 +497,12 @@
 
     const message = `Olá! Gostaria de confirmar o agendamento na Arena Plural:
 
-👤 *Nome:* ${name}
-📞 *Contato:* ${phone}
-📅 *Data:* ${formatDateBR(date)} (${weekdayName})
-⏰ *Horário:* ${startLabel}
-⏱️ *Duração:* ${durationLabel}
-💰 *Valor Total:* R$ ${total}
+Nome: ${name}
+Contato: ${phone}
+Data: ${formatDateBR(date)} (${weekdayName})
+Horário: ${startLabel}
+Duração: ${durationLabel}
+Valor Total: R$ ${total}
 
 Aguardo a confirmação da reserva!`;
 
