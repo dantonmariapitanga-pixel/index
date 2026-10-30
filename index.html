@@ -140,6 +140,19 @@
     <!-- Grade de horários -->
     <div id="slotsGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 mb-6"></div>
     <p id="noSlotsMsg" class="hidden text-sm text-[var(--ink-dim)] mb-6">Nenhum horário disponível neste dia. Tente outra data.</p>
+
+    <!-- Prorrogação (toggle animado) -->
+    <div class="flex items-center justify-between glass rounded-xl px-4 py-3.5 mb-2">
+      <label for="extraToggle" class="text-sm cursor-pointer select-none pr-3">Adicionar <strong>+30 min</strong> de prorrogação <span class="text-[var(--ink-dim)]">(+R$ 75,00)</span></label>
+      <span class="relative inline-block h-7 w-12 flex-shrink-0">
+        <input id="extraToggle" type="checkbox" class="peer sr-only">
+        <span class="absolute inset-0 rounded-full bg-[var(--bg-soft)] border border-[var(--card-border)] transition-colors duration-300 peer-checked:bg-[var(--neon)] peer-checked:border-[var(--neon)]"></span>
+        <span class="absolute left-1 top-1 h-5 w-5 rounded-full bg-[var(--ink-dim)] transition-transform duration-300 ease-[var(--ease)] peer-checked:translate-x-5 peer-checked:bg-[#06170C]"></span>
+      </span>
+    </div>
+    <p id="extraWarning" class="hidden text-xs text-[var(--warn)] mb-4">Esse horário não tem 30 min extras livres em seguida — a prorrogação não cabe aqui.</p>
+    <div class="h-4"></div>
+
     <!-- Dados do cliente -->
     <div class="grid sm:grid-cols-2 gap-3 mb-6">
       <div>
