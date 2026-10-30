@@ -27,9 +27,9 @@
     -webkit-font-smoothing:antialiased;
     background:
       linear-gradient(180deg, rgba(5,8,6,0.45), rgba(5,8,6,0.72) 55%, rgba(5,8,6,0.9)),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.04 0 0 0 0 0.28 0 0 0 0 0.1 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat,
+      url("https://raw.githubusercontent.com/dantonmariapitanga-pixel/index/refs/heads/main/F659C764-83F4-4848-8433-2B78DB94A555.png") repeat,
       repeating-linear-gradient(90deg, #0D2113 0px, #0D2113 54px, #123420 54px, #123420 108px);
-    background-size: auto, 160px 160px, auto;
+    background-size: auto, 1200px 1200px, auto;
   }
   .font-display{font-family:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;}
   .glass{
@@ -180,7 +180,7 @@
     </div>
 
     <button id="confirmBtn" class="w-full flex items-center justify-center gap-3 bg-[var(--neon)] text-[#06170C] font-semibold py-4 rounded-xl btn-glow">
-      <svg width="50" height="50" viewBox="0 0 24 24" fill="#06170C" class="flex-shrink-0"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.6 14.3c-.2.6-1.3 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.6-.6-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.8 1.8.8 2 .1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="#06170C" class="flex-shrink-0"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.6 14.3c-.2.6-1.3 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.6-.6-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.8 1.8.8 2 .1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
       <span>Confirmar Agendamento via WhatsApp</span>
     </button>
     <p id="formError" class="hidden text-sm text-[var(--danger)] mt-3 text-center"></p>
@@ -223,6 +223,13 @@
   };
 
   const WEEKDAYS = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
+
+  // Reservas marcadas manualmente por você (fechadas por fora do site).
+  // Formato: { date: "AAAA-MM-DD", time: "HH:MM", duration: 60 }  (duration: 90 se for 1h30)
+  // Basta adicionar uma linha aqui e subir o arquivo de novo no GitHub - vale para todos os visitantes.
+  const MANUAL_BOOKINGS = [
+    // { date: "2026-11-05", time: "20:00", duration: 60 },
+  ];
 
   const dateInput = document.getElementById("dateInput");
   const slotsGrid = document.getElementById("slotsGrid");
@@ -284,11 +291,17 @@
     return (FIXED_SCHEDULE[weekday] || []).map(t => { const s = timeToMin(t); return [s, s+60]; });
   }
   function getBookedWindows(dateVal){
-    return getBookings().filter(b => b.date === dateVal).map(b => {
+    const fromStorage = getBookings().filter(b => b.date === dateVal).map(b => {
       const s = timeToMin(b.time);
       const dur = b.duration || 60;
       return [s, s+dur];
     });
+    const manual = MANUAL_BOOKINGS.filter(b => b.date === dateVal).map(b => {
+      const s = timeToMin(b.time);
+      const dur = b.duration || 60;
+      return [s, s+dur];
+    });
+    return fromStorage.concat(manual);
   }
 
   function windowState(dateVal, startMin, durationMin, weekday, isToday, nowMin){
@@ -496,12 +509,12 @@
 
     const message = `Olá! Gostaria de confirmar o agendamento na Arena Plural:
 
-Nome: ${name}
-Contato: ${phone}
-Data: ${formatDateBR(date)} (${weekdayName})
-Horário: ${startLabel}
-Duração: ${durationLabel}
-Valor Total: R$ ${total}
+👤 *Nome:* ${name}
+📞 *Contato:* ${phone}
+📅 *Data:* ${formatDateBR(date)} (${weekdayName})
+⏰ *Horário:* ${startLabel}
+⏱️ *Duração:* ${durationLabel}
+💰 *Valor Total:* R$ ${total}
 
 Aguardo a confirmação da reserva!`;
 
