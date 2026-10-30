@@ -10,7 +10,7 @@
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <style>
   :root{
-    --bg:#0A0D0B; --bg-soft:#10140F; --card:#141914; --card-border:#232B22;
+    --bg:#0A0D0B; --bg-soft:#10140F; --card:#141914; --card-border:#FFFFFF;
     --ink:#F2F5F1; --ink-dim:#9BA69A; --neon:#4AFE7B; --neon-deep:#1F9E4A;
     --danger:#FF5C5C; --warn:#F5B942;
     --ease: cubic-bezier(.16,1,.3,1);
@@ -58,9 +58,8 @@
   .slot[data-state="free"]:hover{ border-color: var(--neon); background: rgba(74,254,123,0.08); transform: translateY(-2px); }
   .slot[data-state="free"]:active{ transform: scale(0.96); }
   .slot[data-state="selected"]{
-    background: var(--neon); color:#06170C; border-color:var(--neon);
+    background: var(--neon); color:#06170C; border-color:#FFFFFF;
     box-shadow: 0 10px 24px -10px rgba(74,254,123,0.7);
-    transform: scale(1.04);
   }
   .slot[data-state="booked"], .slot[data-state="fixed"], .slot[data-state="past"]{
     opacity:0.45; cursor:not-allowed; color:var(--ink-dim);
@@ -82,11 +81,6 @@
 <!-- HERO -->
 <header class="relative overflow-hidden border-b border-[var(--card-border)]">
   <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent pointer-events-none"></div>
-  <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-70" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" fill="none" stroke="rgba(242,245,241,0.09)" stroke-width="1.4">
-    <line x1="200" y1="0" x2="200" y2="220"/>
-    <circle cx="200" cy="110" r="50"/>
-    <circle cx="200" cy="110" r="2" fill="rgba(242,245,241,0.09)"/>
-  </svg>
   <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[var(--neon)] opacity-[0.1] blur-3xl pointer-events-none"></div>
   <div class="relative max-w-3xl mx-auto px-5 pt-10 pb-12 sm:pt-16 sm:pb-16">
     <div data-reveal class="reveal inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium text-[var(--neon)] mb-6">
@@ -114,9 +108,9 @@
       <p class="text-xs text-[var(--ink-dim)] mt-2">Quadra reservada com exclusividade</p>
     </div>
     <div data-reveal class="reveal price-card glass rounded-2xl p-5 relative">
-      <p class="text-xs text-[var(--ink-dim)] mb-1">Prorrogação</p>
-      <p class="font-display text-2xl sm:text-3xl font-semibold text-[var(--neon)]">+R$ 75</p>
-      <p class="text-xs text-[var(--ink-dim)] mt-2">30 minutos adicionais de jogo</p>
+      <p class="text-xs text-[var(--ink-dim)] mb-1">Horas seguidas</p>
+      <p class="font-display text-2xl sm:text-3xl font-semibold text-[var(--neon)]">2h = R$ 300</p>
+      <p class="text-xs text-[var(--ink-dim)] mt-2">Escolha quantas horas quiser, uma após a outra</p>
     </div>
   </div>
 </section>
@@ -131,27 +125,16 @@
     <input id="dateInput" type="date" class="w-full bg-[var(--bg-soft)] border border-[var(--card-border)] rounded-xl px-4 py-3 text-[var(--ink)] mb-6 focus:outline-none focus:ring-2 focus:ring-[var(--neon)] transition-shadow duration-200">
 
     <!-- Legenda -->
-    <div class="flex flex-wrap gap-4 text-xs text-[var(--ink-dim)] mb-4">
+    <div class="flex flex-wrap gap-4 text-xs text-[var(--ink-dim)] mb-2">
       <span class="flex items-center gap-1.5"><span class="dot bg-[var(--neon)]"></span>Disponível</span>
-      <span class="flex items-center gap-1.5"><span class="dot" style="background:#5A655A"></span>Fixo/Ocupado</span>
-      <span class="flex items-center gap-1.5"><span class="dot" style="background:var(--danger)"></span>Reservado</span>
+      <span class="flex items-center gap-1.5"><span class="dot" style="background:#5A655A"></span>Indisponível</span>
     </div>
+    <p class="text-xs text-[var(--ink-dim)] mb-4">Toque no horário inicial e depois nos horários seguintes para jogar mais de uma hora seguida. Cada bloco equivale a 1 hora (R$ 150).</p>
 
     <!-- Grade de horários -->
-    <div id="slotsGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 mb-6"></div>
-    <p id="noSlotsMsg" class="hidden text-sm text-[var(--ink-dim)] mb-6">Nenhum horário disponível neste dia. Tente outra data.</p>
-
-    <!-- Prorrogação (toggle animado) -->
-    <div class="flex items-center justify-between glass rounded-xl px-4 py-3.5 mb-2">
-      <label for="extraToggle" class="text-sm cursor-pointer select-none pr-3">Adicionar <strong>+30 min</strong> de prorrogação <span class="text-[var(--ink-dim)]">(+R$ 75,00)</span></label>
-      <span class="relative inline-block h-7 w-12 flex-shrink-0">
-        <input id="extraToggle" type="checkbox" class="peer sr-only">
-        <span class="absolute inset-0 rounded-full bg-[var(--bg-soft)] border border-[var(--card-border)] transition-colors duration-300 peer-checked:bg-[var(--neon)] peer-checked:border-[var(--neon)]"></span>
-        <span class="absolute left-1 top-1 h-5 w-5 rounded-full bg-[var(--ink-dim)] transition-transform duration-300 ease-[var(--ease)] peer-checked:translate-x-5 peer-checked:bg-[#06170C]"></span>
-      </span>
-    </div>
-    <p id="extraWarning" class="hidden text-xs text-[var(--warn)] mb-4">Esse horário não tem 30 min extras livres em seguida — a prorrogação não cabe aqui.</p>
-    <div class="h-4"></div>
+    <div id="slotsGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 mb-3"></div>
+    <p id="noSlotsMsg" class="hidden text-sm text-[var(--ink-dim)] mb-3">Nenhum horário disponível neste dia. Tente outra data.</p>
+    <p id="selectHint" class="text-xs text-[var(--warn)] mb-6 min-h-[1rem]"></p>
 
     <!-- Dados do cliente -->
     <div class="grid sm:grid-cols-2 gap-3 mb-6">
@@ -171,11 +154,11 @@
         <span>Horário escolhido</span><span id="sumTime" class="text-[var(--ink)]">—</span>
       </div>
       <div class="flex justify-between text-sm text-[var(--ink-dim)] mb-1.5">
-        <span>Duração</span><span id="sumDuration" class="text-[var(--ink)]">1 hora</span>
+        <span>Duração</span><span id="sumDuration" class="text-[var(--ink)]">—</span>
       </div>
       <div class="flex justify-between items-center mt-3 pt-3 border-t border-[var(--card-border)]">
         <span class="text-sm">Valor total</span>
-        <span id="sumTotal" class="font-display text-2xl font-semibold text-[var(--neon)]">R$ 150,00</span>
+        <span id="sumTotal" class="font-display text-2xl font-semibold text-[var(--neon)]">R$ 0,00</span>
       </div>
     </div>
 
@@ -207,12 +190,13 @@
 <script>
 (function(){
   const WHATSAPP_NUMBER = "5585991469859";
-  const BASE_PRICE = 150;
-  const EXTRA_PRICE = 75;
+  const PRICE_PER_HOUR = 150;
+  const STEP = 60;            // cada bloco da grade = 1 hora
+  const MIN_DURATION = 60;    // mínimo de 1 hora
   const STORAGE_KEY = "arenaBookings";
   const OPEN_HOUR = 6, CLOSE_HOUR = 23;
 
-  // Cada horário listado representa uma janela de 1 hora OCUPADA a partir dali.
+  // Horários FIXOS da semana (ocupados todo dia da semana indicado). Cada um bloqueia 1 hora.
   const FIXED_SCHEDULE = {
     1: ["19:00","20:00"],
     2: ["19:00"],
@@ -224,18 +208,24 @@
 
   const WEEKDAYS = ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
 
-  // Reservas marcadas manualmente por você (fechadas por fora do site).
-  // Formato: { date: "AAAA-MM-DD", time: "HH:MM", duration: 60 }  (duration: 90 se for 1h30)
-  // Basta adicionar uma linha aqui e subir o arquivo de novo no GitHub - vale para todos os visitantes.
+  // ============================================================
+  // RESERVAS MANUAIS (as que você fecha por fora do site)
+  // Para bloquear um horário, copie uma linha, tire o "//" do começo e edite:
+  //   date     = data no formato "AAAA-MM-DD"
+  //   time     = horário de INÍCIO no formato "HH:MM"
+  //   duration = duração em MINUTOS (60 = 1h, 90 = 1h30, 120 = 2h)
+  // Exemplo: cliente das 15:30 às 16:30 no dia 05/11/2026 ->
+  //   { date: "2026-11-05", time: "15:30", duration: 60 },
+  // Depois de salvar, suba o arquivo no GitHub de novo.
+  // ============================================================
   const MANUAL_BOOKINGS = [
-    // { date: "2026-11-05", time: "20:00", duration: 60 },
+    // { date: "2026-11-05", time: "15:30", duration: 60 },
   ];
 
   const dateInput = document.getElementById("dateInput");
   const slotsGrid = document.getElementById("slotsGrid");
   const noSlotsMsg = document.getElementById("noSlotsMsg");
-  const extraToggle = document.getElementById("extraToggle");
-  const extraWarning = document.getElementById("extraWarning");
+  const selectHint = document.getElementById("selectHint");
   const nameInput = document.getElementById("nameInput");
   const phoneInput = document.getElementById("phoneInput");
   const sumTime = document.getElementById("sumTime");
@@ -247,14 +237,22 @@
   const adminList = document.getElementById("adminList");
   const adminEmpty = document.getElementById("adminEmpty");
 
-  let selectedStart = null; // minutos desde 00:00
-  let currentTotal = BASE_PRICE;
+  let selFrom = null; // início da seleção (minutos desde 00:00)
+  let selTo = null;   // fim da seleção (minutos, exclusivo)
+  let currentTotal = 0;
 
   function pad(n){ return String(n).padStart(2,"0"); }
   function timeToMin(t){ const [h,m] = t.split(":").map(Number); return h*60+m; }
   function minToTime(min){ return pad(Math.floor(min/60))+":"+pad(min%60); }
   function overlaps(aS,aE,bS,bE){ return aS < bE && bS < aE; }
   function brl(n){ return "R$ " + n.toFixed(2).replace(".", ","); }
+  function durationLabel(min){
+    const h = Math.floor(min/60), m = min % 60;
+    if(h === 0) return m + " min";
+    if(m === 0) return h === 1 ? "1 hora" : h + " horas";
+    return h + "h" + pad(m) + "min";
+  }
+  function priceFor(min){ return (min/60) * PRICE_PER_HOUR; }
 
   function todayISO(){
     const d = new Date();
@@ -278,29 +276,26 @@
     catch(e){ return []; }
   }
   function saveBooking(date, startMin, durationMin){
-    const list = getBookings();
-    list.push({date, time: minToTime(startMin), duration: durationMin});
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    try{
+      const list = getBookings();
+      list.push({date, time: minToTime(startMin), duration: durationMin});
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }catch(e){}
   }
   function removeBooking(date, time){
-    const list = getBookings().filter(b => !(b.date === date && b.time === time));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    try{
+      const list = getBookings().filter(b => !(b.date === date && b.time === time));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }catch(e){}
   }
 
   function getFixedWindows(weekday){
     return (FIXED_SCHEDULE[weekday] || []).map(t => { const s = timeToMin(t); return [s, s+60]; });
   }
   function getBookedWindows(dateVal){
-    const fromStorage = getBookings().filter(b => b.date === dateVal).map(b => {
-      const s = timeToMin(b.time);
-      const dur = b.duration || 60;
-      return [s, s+dur];
-    });
-    const manual = MANUAL_BOOKINGS.filter(b => b.date === dateVal).map(b => {
-      const s = timeToMin(b.time);
-      const dur = b.duration || 60;
-      return [s, s+dur];
-    });
+    const toWin = b => { const s = timeToMin(b.time); return [s, s + (b.duration || 60)]; };
+    const fromStorage = getBookings().filter(b => b.date === dateVal).map(toWin);
+    const manual = MANUAL_BOOKINGS.filter(b => b.date === dateVal).map(toWin);
     return fromStorage.concat(manual);
   }
 
@@ -313,15 +308,8 @@
     return "free";
   }
 
-  function generateStartSlots(){
-    const slots = [];
-    const lastStart = CLOSE_HOUR*60 - 60;
-    for(let m = OPEN_HOUR*60; m <= lastStart; m += 30){
-      slots.push(m);
-    }
-    return slots;
-  }
-  const ALL_SLOTS = generateStartSlots();
+  const ALL_SLOTS = [];
+  for(let m = OPEN_HOUR*60; m + STEP <= CLOSE_HOUR*60; m += STEP){ ALL_SLOTS.push(m); }
 
   const adminPanel = document.getElementById("adminPanel");
   function checkAdminHash(){
@@ -365,69 +353,66 @@
   function renderGrid(){
     const dateVal = dateInput.value;
     if(!dateVal) return;
-    const dateObj = parseLocalDate(dateVal);
-    const weekday = dateObj.getDay();
+    const weekday = parseLocalDate(dateVal).getDay();
     const isToday = dateVal === todayISO();
     const now = new Date();
     const nowMin = now.getHours()*60 + now.getMinutes();
 
     slotsGrid.innerHTML = "";
-    selectedStart = null;
-    updateSummary();
+    selFrom = null; selTo = null;
 
     let availableCount = 0;
 
     ALL_SLOTS.forEach(startMin => {
-      const state = windowState(dateVal, startMin, 60, weekday, isToday, nowMin);
+      const state = windowState(dateVal, startMin, STEP, weekday, isToday, nowMin);
       if(state === "free") availableCount++;
 
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "slot rounded-xl py-2.5 text-xs sm:text-sm font-medium bg-[var(--bg-soft)] flex flex-col items-center";
       btn.dataset.state = state;
+      btn.dataset.base = state;
       btn.dataset.start = startMin;
-      btn.innerHTML = `<span class="font-semibold">${minToTime(startMin)}</span><span class="text-[10px] opacity-70">às ${minToTime(startMin+60)}</span>`;
+      btn.innerHTML = `<span class="font-semibold">${minToTime(startMin)}</span><span class="text-[10px] opacity-70">até ${minToTime(startMin+STEP)}</span>`;
       btn.disabled = (state !== "free");
 
       if(state === "free"){
-        btn.addEventListener("click", () => selectSlot(startMin));
+        btn.addEventListener("click", () => clickSlot(startMin));
       }
       slotsGrid.appendChild(btn);
     });
 
     noSlotsMsg.classList.toggle("hidden", availableCount > 0);
     slotsGrid.classList.toggle("hidden", availableCount === 0);
+    refreshSelection();
   }
 
-  function selectSlot(startMin){
-    selectedStart = startMin;
-    [...slotsGrid.children].forEach(btn => {
-      if(Number(btn.dataset.start) === startMin){
-        btn.dataset.state = "selected";
-      } else if(btn.dataset.state === "selected"){
-        btn.dataset.state = "free";
-      }
-    });
-    validateExtra();
-    updateSummary();
-  }
-
-  function validateExtra(){
-    extraWarning.classList.add("hidden");
-    if(selectedStart === null || !extraToggle.checked) return true;
-    const dateVal = dateInput.value;
-    const dateObj = parseLocalDate(dateVal);
-    const weekday = dateObj.getDay();
-    const isToday = dateVal === todayISO();
-    const now = new Date();
-    const nowMin = now.getHours()*60 + now.getMinutes();
-    const state = windowState(dateVal, selectedStart, 90, weekday, isToday, nowMin);
-    if(state !== "free"){
-      extraToggle.checked = false;
-      extraWarning.classList.remove("hidden");
-      return false;
+  function clickSlot(m){
+    if(selFrom === null){
+      selFrom = m; selTo = m + STEP;
+    } else if(m === selTo){
+      selTo = m + STEP;                          // estica para frente
+    } else if(m + STEP === selFrom){
+      selFrom = m;                               // estica para trás
+    } else if(m === selTo - STEP){
+      if(selTo - selFrom > STEP){ selTo = m; }   // encurta pelo fim
+      else { selFrom = null; selTo = null; }     // desmarca
+    } else if(m === selFrom){
+      selFrom = m + STEP;                        // encurta pelo início
+    } else {
+      selFrom = m; selTo = m + STEP;             // começa uma nova seleção
     }
-    return true;
+    refreshSelection();
+  }
+
+  function refreshSelection(){
+    [...slotsGrid.children].forEach(btn => {
+      const s = Number(btn.dataset.start);
+      const inRange = selFrom !== null && s >= selFrom && s < selTo;
+      if(inRange){ btn.dataset.state = "selected"; }
+      else { btn.dataset.state = btn.dataset.base; }
+    });
+    updateSummary();
   }
 
   function animateTotal(target){
@@ -438,8 +423,7 @@
     function tick(now){
       const t = Math.min(1, (now - startTime) / duration);
       const eased = 1 - Math.pow(1 - t, 3);
-      const value = start + (target - start) * eased;
-      sumTotal.textContent = brl(value);
+      sumTotal.textContent = brl(start + (target - start) * eased);
       if(t < 1){ requestAnimationFrame(tick); }
       else { currentTotal = target; sumTotal.textContent = brl(target); }
     }
@@ -447,22 +431,20 @@
   }
 
   function updateSummary(){
-    const hasExtra = extraToggle.checked;
-    const duration = hasExtra ? 90 : 60;
-    if(selectedStart === null){
+    if(selFrom === null){
       sumTime.textContent = "—";
-    } else {
-      sumTime.textContent = `${minToTime(selectedStart)} às ${minToTime(selectedStart+duration)}`;
+      sumDuration.textContent = "—";
+      selectHint.textContent = "";
+      animateTotal(0);
+      return;
     }
-    sumDuration.textContent = hasExtra ? "1h30min" : "1 hora";
-    const total = BASE_PRICE + (hasExtra ? EXTRA_PRICE : 0);
-    animateTotal(total);
+    const dur = selTo - selFrom;
+    sumTime.textContent = `${minToTime(selFrom)} às ${minToTime(selTo)}`;
+    sumDuration.textContent = durationLabel(dur);
+    selectHint.textContent = dur < MIN_DURATION ? "Selecione mais um horário seguido — o mínimo é 1 hora." : "";
+    animateTotal(priceFor(dur));
   }
 
-  extraToggle.addEventListener("change", () => {
-    validateExtra();
-    updateSummary();
-  });
   dateInput.addEventListener("change", renderGrid);
 
   function showError(msg){
@@ -482,38 +464,36 @@
     if(!name){ showError("Por favor, informe seu nome completo."); return; }
     if(!phone){ showError("Por favor, informe seu telefone/WhatsApp."); return; }
     if(!date){ showError("Por favor, selecione uma data."); return; }
-    if(selectedStart === null){ showError("Por favor, selecione um horário disponível."); return; }
+    if(selFrom === null){ showError("Por favor, selecione um horário disponível."); return; }
 
-    const hasExtra = extraToggle.checked;
-    const duration = hasExtra ? 90 : 60;
+    const duration = selTo - selFrom;
+    if(duration < MIN_DURATION){ showError("O mínimo de reserva é 1 hora. Selecione mais um horário seguido."); return; }
 
-    const dateObj = parseLocalDate(date);
-    const weekday = dateObj.getDay();
+    const weekday = parseLocalDate(date).getDay();
     const isToday = date === todayISO();
     const now = new Date();
     const nowMin = now.getHours()*60 + now.getMinutes();
-    const finalState = windowState(date, selectedStart, duration, weekday, isToday, nowMin);
+    const finalState = windowState(date, selFrom, duration, weekday, isToday, nowMin);
     if(finalState !== "free"){
       showError("Esse horário acabou de ficar indisponível. Escolha outro.");
       renderGrid();
       return;
     }
 
-    saveBooking(date, selectedStart, duration);
+    const from = selFrom, to = selTo;
+    saveBooking(date, from, duration);
     renderAdminList();
 
-    const durationLabel = hasExtra ? "1h30min (com prorrogação de 30min)" : "1 hora";
-    const total = (BASE_PRICE + (hasExtra ? EXTRA_PRICE : 0)).toFixed(2).replace(".", ",");
+    const total = priceFor(duration).toFixed(2).replace(".", ",");
     const weekdayName = WEEKDAYS[weekday];
-    const startLabel = minToTime(selectedStart);
 
     const message = `Olá! Gostaria de confirmar o agendamento na Arena Plural:
 
 Nome: ${name}
 Contato: ${phone}
 Data: ${formatDateBR(date)} (${weekdayName})
-Horário: ${startLabel}
-Duração: ${durationLabel}
+Horário: ${minToTime(from)} às ${minToTime(to)}
+Duração: ${durationLabel(duration)}
 Valor Total: R$ ${total}
 
 Aguardo a confirmação da reserva!`;
@@ -526,7 +506,7 @@ Aguardo a confirmação da reserva!`;
 
   resetBtn.addEventListener("click", () => {
     if(confirm("Isso vai apagar TODAS as reservas salvas neste navegador. Confirma?")){
-      localStorage.removeItem(STORAGE_KEY);
+      try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
       renderGrid();
       renderAdminList();
     }
