@@ -106,8 +106,8 @@
       <p id="totOut" class="font-display text-2xl font-semibold text-[var(--danger)] whitespace-nowrap">R$ 0,00</p>
     </div>
     <div data-reveal class="reveal stat glass rounded-2xl p-5">
-      <p class="text-xs text-[var(--ink-dim)] mb-1">Saldo do período</p>
-      <p id="totBal" class="font-display text-2xl font-semibold whitespace-nowrap">R$ 0,00</p>
+      <p class="text-xs text-[var(--ink-dim)] mb-2">Saldo do período (separado)</p>
+      <div id="balPeriod" class="space-y-1.5"></div>
     </div>
   </div>
 </section>
@@ -115,9 +115,9 @@
 <!-- Saldo em conta por forma de pagamento (acumulado) -->
 <section class="max-w-3xl mx-auto px-5 pb-6">
   <div data-reveal class="reveal glass rounded-3xl p-5 sm:p-7">
-    <h2 class="font-display text-lg font-semibold mb-1">Saldo em conta</h2>
-    <p class="text-xs text-[var(--ink-dim)] mb-4">Acumulado de todos os lançamentos (entradas menos saídas), por forma de pagamento. É o valor que deve bater com a conta e o caixa.</p>
-    <div id="byForma" class="space-y-2"></div>
+    <h2 class="font-display text-lg font-semibold mb-1">Saldo atual</h2>
+    <p class="text-xs text-[var(--ink-dim)] mb-4">Acumulado de todos os lançamentos (entradas menos saídas). Conta e dinheiro são separados e não se somam: cada valor deve bater com o respectivo saldo real.</p>
+    <div id="byForma" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
   </div>
 </section>
 
@@ -146,14 +146,17 @@
   //   date  = "AAAA-MM-DD"    hora = "HH:MM"
   //   texto = descrição (entrada) ou motivo (saída)
   //   valor = número, com ponto para centavos (150 ou 44.90)
-  //   forma = "Pix", "Dinheiro", "Débito" ou "Crédito"
+  //   forma = "Pix" (conta) ou "Dinheiro" (espécie)
   // ============================================================
   const LANCAMENTOS = [
     { tipo: "in",  date: "2026-11-03", hora: "19:00", texto: "Aluguel de campo — 1 hora", valor: 150, forma: "Pix" },
+    { tipo: "in",  date: "2026-11-03", hora: "21:00", texto: "Aluguel de campo — 1 hora", valor: 150, forma: "Dinheiro" },
     { tipo: "out", date: "2026-11-04", hora: "11:32", texto: "Pagamento do plano do chip da empresa", valor: 44.90, forma: "Pix" },
   ];
 
-  const FORMAS_BASE = ["Pix","Dinheiro","Débito","Crédito"];
+  const FORMAS_BASE = ["Pix","Dinheiro"];
+  const labelForma = f => f === "Dinheiro" ? "Dinheiro (espécie)" : f;
+  const saldoTitle = f => f === "Pix" ? "Conta (Pix)" : (f === "Dinheiro" ? "Dinheiro (espécie)" : f);
   const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
   const DIAS = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
   const brl = n => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(n);
@@ -175,7 +178,7 @@
   const $ = id => document.getElementById(id);
   const formaFilter = $("formaFilter"), refDate = $("refDate"), rangeLabel = $("rangeLabel"), navRow = $("navRow");
   const listEl = $("list"), emptyEl = $("empty"), byFormaEl = $("byForma");
-  const totIn = $("totIn"), totOut = $("totOut"), totBal = $("totBal");
+  const totIn = $("totIn"), totOut = $("totOut"), balPeriod = $("balPeriod");
 
   let mode = "mes";
   let ref = new Date(); ref = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate());
@@ -183,7 +186,7 @@
 
   // Filtro de forma de pagamento
   formaFilter.innerHTML = "";
-  [["all","Todas"]].concat(FORMAS.map(f => [f,f])).forEach(([v,t]) => {
+  [["all","Todas"]].concat(FORMAS.map(f => [f, labelForma(f)])).forEach(([v,t]) => {
     const o = document.createElement("option"); o.value = v; o.textContent = t; formaFilter.appendChild(o);
   });
 
@@ -231,19 +234,30 @@
 
     const sumIn  = base.filter(x => x.tipo === "in").reduce((a,x) => a + x.cents, 0);
     const sumOut = base.filter(x => x.tipo === "out").reduce((a,x) => a + x.cents, 0);
-    const bal = sumIn - sumOut;
     totIn.textContent = brl(sumIn/100);
     totOut.textContent = brl(sumOut/100);
-    totBal.textContent = brl(bal/100);
-    totBal.style.color = bal < 0 ? "var(--danger)" : "var(--ink)";
+
+    const pm = {}; FORMAS.forEach(f => pm[f] = 0);
+    base.forEach(x => { pm[x.forma] = (pm[x.forma] || 0) + (x.tipo === "in" ? x.cents : -x.cents); });
+    balPeriod.innerHTML = "";
+    FORMAS.filter(f => forma === "all" || f === forma).forEach(f => {
+      const line = document.createElement("div");
+      line.className = "flex items-baseline justify-between gap-2";
+      const n = document.createElement("span");
+      n.className = "text-xs text-[var(--ink-dim)]"; n.textContent = saldoTitle(f);
+      const v = document.createElement("span");
+      v.className = "font-display font-semibold whitespace-nowrap";
+      v.style.color = pm[f] < 0 ? "var(--danger)" : "var(--ink)";
+      v.textContent = brl(pm[f]/100);
+      line.appendChild(n); line.appendChild(v);
+      balPeriod.appendChild(line);
+    });
 
     // Saldo em conta: acumulado geral por forma
     const map = {}; FORMAS.forEach(f => map[f] = 0);
-    let total = 0;
-    ALL.forEach(x => { const v = x.tipo === "in" ? x.cents : -x.cents; map[x.forma] = (map[x.forma] || 0) + v; total += v; });
+    ALL.forEach(x => { map[x.forma] = (map[x.forma] || 0) + (x.tipo === "in" ? x.cents : -x.cents); });
     byFormaEl.innerHTML = "";
-    FORMAS.forEach(k => addFormaRow(k, map[k], false));
-    addFormaRow("Total", total, true);
+    FORMAS.forEach(k => addFormaRow(saldoTitle(k), map[k]));
 
     // Lista
     const rows = base.filter(x => activeTab === "all" || x.tipo === activeTab);
@@ -264,7 +278,7 @@
       const when = document.createElement("span");
       when.textContent = fmtDate(x.date) + (x.hora ? " às " + x.hora : "") + " · " + (isIn ? "Entrada" : "Saída");
       const badge = document.createElement("span");
-      badge.className = "badge"; badge.textContent = x.forma;
+      badge.className = "badge"; badge.textContent = labelForma(x.forma);
       meta.appendChild(when); meta.appendChild(badge);
       left.appendChild(title); left.appendChild(meta);
 
@@ -278,19 +292,17 @@
     });
   }
 
-  function addFormaRow(name, cents, isTotal){
-    const row = document.createElement("div");
-    row.className = "row rounded-xl px-4 py-3 flex items-center justify-between bg-[var(--bg-soft)]";
-    if(isTotal) row.style.borderColor = "var(--neon)";
-    const n = document.createElement("span");
-    n.className = "text-sm " + (isTotal ? "font-semibold" : "font-medium");
-    n.textContent = name;
-    const v = document.createElement("span");
-    v.className = "font-display font-semibold whitespace-nowrap";
+  function addFormaRow(name, cents){
+    const card = document.createElement("div");
+    card.className = "row rounded-xl px-4 py-4 bg-[var(--bg-soft)]";
+    const n = document.createElement("p");
+    n.className = "text-xs text-[var(--ink-dim)] mb-1"; n.textContent = name;
+    const v = document.createElement("p");
+    v.className = "font-display text-2xl font-semibold whitespace-nowrap";
     v.style.color = cents < 0 ? "var(--danger)" : (cents === 0 ? "var(--ink-dim)" : "var(--neon)");
     v.textContent = brl(cents/100);
-    row.appendChild(n); row.appendChild(v);
-    byFormaEl.appendChild(row);
+    card.appendChild(n); card.appendChild(v);
+    byFormaEl.appendChild(card);
   }
 
   // Eventos
