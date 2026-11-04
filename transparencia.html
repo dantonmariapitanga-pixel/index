@@ -91,10 +91,7 @@
       <input id="refDate" type="date" aria-label="Data de referência" class="field flex-1 min-w-0">
       <button id="nextBtn" type="button" aria-label="Próximo período" class="tab rounded-xl w-12 h-12 flex-shrink-0 text-lg">›</button>
     </div>
-    <div class="flex items-center justify-between gap-3 mb-4">
-      <p id="rangeLabel" class="text-sm font-medium text-[var(--neon)] min-w-0"></p>
-      <button id="todayBtn" type="button" class="tab rounded-xl h-10 px-4 flex-shrink-0 text-sm">Hoje</button>
-    </div>
+    <p id="rangeLabel" class="text-sm font-medium text-[var(--neon)] mb-4"></p>
 
     <label for="formaFilter" class="block text-sm text-[var(--ink-dim)] mb-2">Forma de pagamento</label>
     <select id="formaFilter" class="field"></select>
@@ -150,7 +147,7 @@
   //   date  = "AAAA-MM-DD"    hora = "HH:MM"
   //   texto = descrição (entrada) ou motivo (saída)
   //   valor = número, com ponto para centavos (150 ou 44.90)
-  //   forma = "Pix" (conta) ou "Dinheiro" (espécie)
+  //   forma = "Pix" (conta) ou "Dinheiro"
   // ============================================================
   const LANCAMENTOS = [
     { tipo: "in",  date: "2026-11-03", hora: "19:00", texto: "Aluguel de campo — 1 hora", valor: 150, forma: "Pix" },
@@ -159,8 +156,8 @@
   ];
 
   const FORMAS_BASE = ["Pix","Dinheiro"];
-  const labelForma = f => f === "Dinheiro" ? "Dinheiro (espécie)" : f;
-  const saldoTitle = f => f === "Pix" ? "Conta (Pix)" : (f === "Dinheiro" ? "Dinheiro (espécie)" : f);
+  const labelForma = f => f;
+  const saldoTitle = f => f === "Pix" ? "Conta (Pix)" : f;
   const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
   const DIAS = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
   const brl = n => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(n);
@@ -227,7 +224,6 @@
     refDate.value = toISO(ref);
     rangeLabel.textContent = labelFor();
     navRow.classList.toggle("hidden", mode === "tudo");
-    $("todayBtn").classList.toggle("hidden", mode === "tudo");
     document.querySelectorAll("[data-mode]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode === mode)));
     render();
   }
@@ -314,7 +310,6 @@
   document.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { mode = b.dataset.mode; sync(); }));
   $("prevBtn").addEventListener("click", () => shift(-1));
   $("nextBtn").addEventListener("click", () => shift(1));
-  $("todayBtn").addEventListener("click", () => { const t = new Date(); ref = new Date(t.getFullYear(), t.getMonth(), t.getDate()); sync(); });
   refDate.addEventListener("change", () => { if(refDate.value){ ref = fromISO(refDate.value); sync(); } });
   formaFilter.addEventListener("change", render);
   document.querySelectorAll("[data-tab]").forEach(btn => {
