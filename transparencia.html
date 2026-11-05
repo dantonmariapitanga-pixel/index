@@ -121,9 +121,18 @@
 <!-- Saldo por forma de pagamento (segue o período selecionado) -->
 <section class="max-w-3xl mx-auto px-5 pb-6">
   <div data-reveal class="reveal glass rounded-3xl p-5 sm:p-7">
-    <h2 class="font-display text-lg font-semibold mb-1">Saldo em caixa no período selecionado</h2>
+    <h2 class="font-display text-lg font-semibold mb-1">Saldo em caixa</h2>
     <p id="saldoDesc" class="text-xs text-[var(--ink-dim)] mb-4"></p>
     <div id="byForma" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+  </div>
+</section>
+
+<!-- Lucro líquido (Pix + Dinheiro somados) -->
+<section class="max-w-3xl mx-auto px-5 pb-6">
+  <div data-reveal class="reveal glass rounded-3xl p-5 sm:p-7">
+    <h2 class="font-display text-lg font-semibold mb-1">Lucro líquido</h2>
+    <p id="lucroDesc" class="text-xs text-[var(--ink-dim)] mb-4"></p>
+    <div id="lucroCards" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
   </div>
 </section>
 
@@ -185,7 +194,7 @@
   const $ = id => document.getElementById(id);
   const formaFilter = $("formaFilter"), refDate = $("refDate"), rangeLabel = $("rangeLabel"), navRow = $("navRow");
   const rangeRow = $("rangeRow"), fromDate = $("fromDate"), toDate = $("toDate");
-  const listEl = $("list"), emptyEl = $("empty"), byFormaEl = $("byForma");
+  const listEl = $("list"), emptyEl = $("empty"), byFormaEl = $("byForma"), lucroCards = $("lucroCards");
   const totIn = $("totIn"), totOut = $("totOut");
 
   let mode = "tudo";   // "dia" | "intervalo" | "tudo"
@@ -238,12 +247,30 @@
     totIn.textContent = brl(sumIn/100);
     totOut.textContent = brl(sumOut/100);
 
-    // Saldo do período selecionado, separado por forma (conta e dinheiro não se somam)
+    // Tudo que já aconteceu até o fim do período (inclui os dias anteriores), respeitando a forma de pagamento
+    const end = r ? r[1] : null;
+    const upToEnd = ALL.filter(x => (!end || x.date <= end) && (forma === "all" || x.forma === forma));
+
+    // Saldo em caixa: acumulado até o fim do período, separado por forma (conta e dinheiro não se somam)
     const map = {}; FORMAS.forEach(f => map[f] = 0);
-    base.forEach(x => { map[x.forma] = (map[x.forma] || 0) + (x.tipo === "in" ? x.cents : -x.cents); });
-    $("saldoDesc").textContent = labelFor() + ": é o que entrou menos o que saiu, separado por onde o valor está. Conta (Pix) é o saldo na conta bancária; Dinheiro é o valor em espécie, guardado em mãos. Os dois nunca são somados.";
+    upToEnd.forEach(x => { map[x.forma] = (map[x.forma] || 0) + (x.tipo === "in" ? x.cents : -x.cents); });
+    $("saldoDesc").textContent = (end ? `Posição ao final de ${fmtDate(end)}, somando também os dias anteriores.` : "Posição atual, somando todos os lançamentos.")
+      + " É o que entrou menos o que saiu. Conta (Pix) é o saldo na conta bancária; Dinheiro é o valor em espécie, guardado em mãos. Os dois nunca são somados.";
     byFormaEl.innerHTML = "";
     FORMAS.filter(f => forma === "all" || f === forma).forEach(k => addFormaRow(saldoTitle(k), map[k]));
+
+    // Lucro líquido: todas as entradas (Pix + Dinheiro) menos todas as saídas
+    const cumIn  = upToEnd.filter(x => x.tipo === "in").reduce((a,x) => a + x.cents, 0);
+    const cumOut = upToEnd.filter(x => x.tipo === "out").reduce((a,x) => a + x.cents, 0);
+    lucroCards.innerHTML = "";
+    if(mode === "tudo"){
+      addLucroCard("Lucro líquido total", cumIn - cumOut, cumIn, cumOut);
+    } else {
+      addLucroCard("No período selecionado", sumIn - sumOut, sumIn, sumOut);
+      addLucroCard(`Total acumulado até ${fmtDate(end)}`, cumIn - cumOut, cumIn, cumOut);
+    }
+    $("lucroDesc").textContent = "Soma todas as entradas (Pix + Dinheiro) e subtrai todas as saídas. Aqui conta e dinheiro entram juntos."
+      + (forma === "all" ? "" : ` Filtrado por ${labelForma(forma)}.`);
 
     // Lista
     const rows = base.filter(x => activeTab === "all" || x.tipo === activeTab);
@@ -276,6 +303,22 @@
       row.appendChild(left); row.appendChild(val);
       listEl.appendChild(row);
     });
+  }
+
+  function addLucroCard(title, cents, inC, outC){
+    const card = document.createElement("div");
+    card.className = "row rounded-xl px-4 py-4 bg-[var(--bg-soft)]";
+    const n = document.createElement("p");
+    n.className = "text-xs text-[var(--ink-dim)] mb-1"; n.textContent = title;
+    const v = document.createElement("p");
+    v.className = "font-display text-2xl font-semibold whitespace-nowrap";
+    v.style.color = cents < 0 ? "var(--danger)" : (cents === 0 ? "var(--ink-dim)" : "var(--neon)");
+    v.textContent = brl(cents/100);
+    const sub = document.createElement("p");
+    sub.className = "text-xs text-[var(--ink-dim)] mt-2";
+    sub.textContent = `Entradas ${brl(inC/100)} − Saídas ${brl(outC/100)}`;
+    card.appendChild(n); card.appendChild(v); card.appendChild(sub);
+    lucroCards.appendChild(card);
   }
 
   function addFormaRow(name, cents){
