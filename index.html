@@ -212,9 +212,9 @@
       <p class="text-xs text-[var(--ink-dim)]">Modo admin ativo - visível apenas com o link secreto.</p>
       <button id="resetBtn" class="text-xs font-medium text-[var(--danger)] underline whitespace-nowrap">Apagar tudo</button>
     </div>
-    <p class="text-sm font-medium mb-3">Reservas salvas neste navegador</p>
+    <p class="text-sm font-medium mb-3">Reservas salvas no banco</p>
     <div id="adminList" class="space-y-2"></div>
-    <p id="adminEmpty" class="hidden text-sm text-[var(--ink-dim)]">Nenhuma reserva salva neste navegador.</p>
+    <p id="adminEmpty" class="hidden text-sm text-[var(--ink-dim)]">Nenhuma reserva salva.</p>
   </div>
 </div>
 
@@ -228,8 +228,12 @@
   const PRICE_PER_HOUR = 150;
   const STEP = 60;            // cada bloco da grade = 1 hora
   const MIN_DURATION = 60;    // mínimo de 1 hora
-  const STORAGE_KEY = "arenaBookings";
   const OPEN_HOUR = 6, CLOSE_HOUR = 23;
+
+  // Banco de dados compartilhado (Firebase Realtime Database).
+  // Todas as reservas confirmadas ficam salvas aqui e qualquer aparelho
+  // que abrir o site enxerga a mesma informação.
+  const FIREBASE_URL = "https://arena-plural-b95b1-default-rtdb.firebaseio.com/";
 
   // Horários FIXOS da semana (ocupados todo dia da semana indicado). Cada um bloqueia 1 hora.
   const FIXED_SCHEDULE = {
@@ -275,6 +279,7 @@
   let selFrom = null; // início da seleção (minutos desde 00:00)
   let selTo = null;   // fim da seleção (minutos, exclusivo)
   let currentTotal = 0;
+  let bookingsCache = []; // última leitura do Firebase: [{id, date, time, duration}, ...]
 
   function pad(n){ return String(n).padStart(2,"0"); }
   function timeToMin(t){ const [h,m] = t.split(":").map(Number); return h*60+m; }
@@ -306,22 +311,35 @@
   dateInput.min = todayISO();
   dateInput.value = todayISO();
 
-  function getBookings(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    catch(e){ return []; }
-  }
-  function saveBooking(date, startMin, durationMin){
+  // ---- Banco de dados compartilhado (Firebase REST API) ----
+  async function fetchBookings(){
     try{
-      const list = getBookings();
-      list.push({date, time: minToTime(startMin), duration: durationMin});
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    }catch(e){}
+      const res = await fetch(FIREBASE_URL + "bookings.json");
+      if(!res.ok) throw new Error("Falha ao consultar o banco de dados.");
+      const data = await res.json();
+      if(!data) { bookingsCache = []; return bookingsCache; }
+      bookingsCache = Object.entries(data).map(([id, b]) => ({ id, date: b.date, time: b.time, duration: b.duration || 60 }));
+      return bookingsCache;
+    }catch(e){
+      console.error(e);
+      return bookingsCache; // mantém a última leitura conhecida em caso de falha de rede
+    }
   }
-  function removeBooking(date, time){
+
+  async function saveBooking(date, startMin, durationMin){
+    const res = await fetch(FIREBASE_URL + "bookings.json", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ date, time: minToTime(startMin), duration: durationMin })
+    });
+    if(!res.ok) throw new Error("Falha ao salvar a reserva.");
+    return res.json();
+  }
+
+  async function removeBooking(id){
     try{
-      const list = getBookings().filter(b => !(b.date === date && b.time === time));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    }catch(e){}
+      await fetch(FIREBASE_URL + "bookings/" + id + ".json", { method: "DELETE" });
+    }catch(e){ console.error(e); }
   }
 
   function getFixedWindows(weekday){
@@ -329,9 +347,9 @@
   }
   function getBookedWindows(dateVal){
     const toWin = b => { const s = timeToMin(b.time); return [s, s + (b.duration || 60)]; };
-    const fromStorage = getBookings().filter(b => b.date === dateVal).map(toWin);
+    const fromDb = bookingsCache.filter(b => b.date === dateVal).map(toWin);
     const manual = MANUAL_BOOKINGS.filter(b => b.date === dateVal).map(toWin);
-    return fromStorage.concat(manual);
+    return fromDb.concat(manual);
   }
 
   function windowState(dateVal, startMin, durationMin, weekday, isToday, nowMin){
@@ -357,9 +375,10 @@
   }
   window.addEventListener("hashchange", checkAdminHash);
 
-  function renderAdminList(){
+  async function renderAdminList(){
     if(!adminList) return;
-    const list = getBookings().slice().sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+    await fetchBookings();
+    const list = bookingsCache.slice().sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
     adminList.innerHTML = "";
     adminEmpty.classList.toggle("hidden", list.length > 0);
     list.forEach(b => {
@@ -374,10 +393,11 @@
       const delBtn = document.createElement("button");
       delBtn.className = "text-xs text-[var(--danger)] underline ml-3 whitespace-nowrap";
       delBtn.textContent = "remover";
-      delBtn.addEventListener("click", () => {
-        removeBooking(b.date, b.time);
-        renderAdminList();
-        renderGrid();
+      delBtn.addEventListener("click", async () => {
+        delBtn.disabled = true;
+        await removeBooking(b.id);
+        await renderAdminList();
+        await renderGrid();
       });
       row.appendChild(span);
       row.appendChild(delBtn);
@@ -385,9 +405,13 @@
     });
   }
 
-  function renderGrid(){
+  async function renderGrid(){
     const dateVal = dateInput.value;
     if(!dateVal) return;
+
+    slotsGrid.innerHTML = `<p class="col-span-full text-sm text-[var(--ink-dim)] py-2">Carregando horários…</p>`;
+    await fetchBookings();
+
     const weekday = parseLocalDate(dateVal).getDay();
     const isToday = dateVal === todayISO();
     const now = new Date();
@@ -490,7 +514,7 @@
     formError.classList.add("hidden");
   }
 
-  confirmBtn.addEventListener("click", () => {
+  confirmBtn.addEventListener("click", async () => {
     clearError();
     const name = nameInput.value.trim();
     const phone = phoneInput.value.trim();
@@ -504,25 +528,32 @@
     const duration = selTo - selFrom;
     if(duration < MIN_DURATION){ showError("O mínimo de reserva é 1 hora. Selecione mais um horário seguido."); return; }
 
-    const weekday = parseLocalDate(date).getDay();
-    const isToday = date === todayISO();
-    const now = new Date();
-    const nowMin = now.getHours()*60 + now.getMinutes();
-    const finalState = windowState(date, selFrom, duration, weekday, isToday, nowMin);
-    if(finalState !== "free"){
-      showError("Esse horário acabou de ficar indisponível. Escolha outro.");
-      renderGrid();
-      return;
-    }
+    confirmBtn.disabled = true;
+    const originalLabel = confirmBtn.innerHTML;
+    confirmBtn.innerHTML = `<span>Confirmando…</span>`;
 
-    const from = selFrom, to = selTo;
-    saveBooking(date, from, duration);
-    renderAdminList();
+    try{
+      // Revalida contra o banco de dados mais recente antes de confirmar,
+      // pra evitar que dois aparelhos fechem o mesmo horário ao mesmo tempo.
+      await fetchBookings();
+      const weekday = parseLocalDate(date).getDay();
+      const isToday = date === todayISO();
+      const now = new Date();
+      const nowMin = now.getHours()*60 + now.getMinutes();
+      const finalState = windowState(date, selFrom, duration, weekday, isToday, nowMin);
+      if(finalState !== "free"){
+        showError("Esse horário acabou de ficar indisponível. Escolha outro.");
+        await renderGrid();
+        return;
+      }
 
-    const total = priceFor(duration).toFixed(2).replace(".", ",");
-    const weekdayName = WEEKDAYS[weekday];
+      const from = selFrom, to = selTo;
+      await saveBooking(date, from, duration);
 
-    const message = `Olá! Gostaria de confirmar o agendamento na Arena Plural:
+      const total = priceFor(duration).toFixed(2).replace(".", ",");
+      const weekdayName = WEEKDAYS[weekday];
+
+      const message = `Olá! Gostaria de confirmar o agendamento na Arena Plural:
 
 Nome: ${name}
 Contato: ${phone}
@@ -533,17 +564,24 @@ Valor Total: R$ ${total}
 
 Aguardo a confirmação da reserva!`;
 
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    renderGrid();
-    window.location.href = url;
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.location.href = url;
+    }catch(e){
+      console.error(e);
+      showError("Não foi possível confirmar agora. Verifique sua internet e tente de novo.");
+    }finally{
+      confirmBtn.disabled = false;
+      confirmBtn.innerHTML = originalLabel;
+    }
   });
 
-  resetBtn.addEventListener("click", () => {
-    if(confirm("Isso vai apagar TODAS as reservas salvas neste navegador. Confirma?")){
-      try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
-      renderGrid();
-      renderAdminList();
+  resetBtn.addEventListener("click", async () => {
+    if(confirm("Isso vai apagar TODAS as reservas do banco de dados, pra todo mundo. Confirma?")){
+      try{
+        await fetch(FIREBASE_URL + "bookings.json", { method: "DELETE" });
+      }catch(e){ console.error(e); }
+      await renderGrid();
+      await renderAdminList();
     }
   });
 
