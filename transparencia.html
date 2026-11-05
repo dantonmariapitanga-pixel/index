@@ -79,25 +79,34 @@
 <section class="max-w-3xl mx-auto px-5 pt-8 pb-6">
   <div data-reveal class="reveal glass rounded-3xl p-5 sm:p-6 mb-5">
     <p class="text-sm text-[var(--ink-dim)] mb-2">Período</p>
-    <div role="tablist" aria-label="Tipo de período" class="grid grid-cols-4 gap-2 mb-3">
+    <div role="tablist" aria-label="Tipo de período" class="grid grid-cols-3 gap-2 mb-3">
       <button role="tab" data-mode="dia" aria-selected="false" class="tab rounded-xl py-2.5 text-sm">Dia</button>
-      <button role="tab" data-mode="semana" aria-selected="false" class="tab rounded-xl py-2.5 text-sm">Semana</button>
-      <button role="tab" data-mode="mes" aria-selected="true" class="tab rounded-xl py-2.5 text-sm">Mês</button>
-      <button role="tab" data-mode="tudo" aria-selected="false" class="tab rounded-xl py-2.5 text-sm">Tudo</button>
+      <button role="tab" data-mode="intervalo" aria-selected="false" class="tab rounded-xl py-2.5 text-sm">Intervalo</button>
+      <button role="tab" data-mode="tudo" aria-selected="true" class="tab rounded-xl py-2.5 text-sm">Tudo</button>
     </div>
 
+    <!-- Modo Dia -->
     <div id="navRow" class="flex items-center gap-2 mb-2">
-      <button id="prevBtn" type="button" aria-label="Período anterior" class="tab rounded-xl w-12 h-12 flex-shrink-0 text-lg">‹</button>
-      <input id="refDate" type="date" aria-label="Data de referência" class="field flex-1 min-w-0">
-      <button id="nextBtn" type="button" aria-label="Próximo período" class="tab rounded-xl w-12 h-12 flex-shrink-0 text-lg">›</button>
+      <button id="prevBtn" type="button" aria-label="Dia anterior" class="tab rounded-xl w-12 h-12 flex-shrink-0 text-lg">‹</button>
+      <input id="refDate" type="date" aria-label="Data" class="field flex-1 min-w-0">
+      <button id="nextBtn" type="button" aria-label="Próximo dia" class="tab rounded-xl w-12 h-12 flex-shrink-0 text-lg">›</button>
     </div>
+
+    <!-- Modo Intervalo -->
+    <div id="rangeRow" class="hidden grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2 mb-2">
+      <label for="fromDate" class="text-sm text-[var(--ink-dim)]">De</label>
+      <input id="fromDate" type="date" class="field">
+      <label for="toDate" class="text-sm text-[var(--ink-dim)]">Até</label>
+      <input id="toDate" type="date" class="field">
+    </div>
+
     <p id="rangeLabel" class="text-sm font-medium text-[var(--neon)] mb-4"></p>
 
     <label for="formaFilter" class="block text-sm text-[var(--ink-dim)] mb-2">Forma de pagamento</label>
     <select id="formaFilter" class="field"></select>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
     <div data-reveal class="reveal stat glass rounded-2xl p-5">
       <p class="text-xs text-[var(--ink-dim)] mb-1">Entradas</p>
       <p id="totIn" class="font-display text-2xl font-semibold text-[var(--neon)] whitespace-nowrap">R$ 0,00</p>
@@ -106,14 +115,10 @@
       <p class="text-xs text-[var(--ink-dim)] mb-1">Saídas</p>
       <p id="totOut" class="font-display text-2xl font-semibold text-[var(--danger)] whitespace-nowrap">R$ 0,00</p>
     </div>
-    <div data-reveal class="reveal stat glass rounded-2xl p-5">
-      <p class="text-xs text-[var(--ink-dim)] mb-2">Saldo do período (separado)</p>
-      <div id="balPeriod" class="space-y-1.5"></div>
-    </div>
   </div>
 </section>
 
-<!-- Saldo em conta por forma de pagamento (acumulado) -->
+<!-- Saldo atual por forma de pagamento (acumulado) -->
 <section class="max-w-3xl mx-auto px-5 pb-6">
   <div data-reveal class="reveal glass rounded-3xl p-5 sm:p-7">
     <h2 class="font-display text-lg font-semibold mb-1">Saldo atual</h2>
@@ -155,13 +160,11 @@
     { tipo: "out", date: "2026-11-04", hora: "11:32", texto: "Pagamento do plano do chip da empresa", valor: 44.90, forma: "Pix" },
     { tipo: "in",  date: "2026-11-04", hora: "19:00", texto: "Aluguel de campo — 1 hora", valor: 150, forma: "Pix" },
     { tipo: "in",  date: "2026-11-04", hora: "21:00", texto: "Aluguel de campo — 1 hora", valor: 150, forma: "Pix" },
-    
   ];
 
   const FORMAS_BASE = ["Pix","Dinheiro"];
   const labelForma = f => f;
   const saldoTitle = f => f === "Pix" ? "Conta (Pix)" : f;
-  const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
   const DIAS = ["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
   const brl = n => new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(n);
   const pad = n => String(n).padStart(2,"0");
@@ -181,11 +184,13 @@
 
   const $ = id => document.getElementById(id);
   const formaFilter = $("formaFilter"), refDate = $("refDate"), rangeLabel = $("rangeLabel"), navRow = $("navRow");
+  const rangeRow = $("rangeRow"), fromDate = $("fromDate"), toDate = $("toDate");
   const listEl = $("list"), emptyEl = $("empty"), byFormaEl = $("byForma");
-  const totIn = $("totIn"), totOut = $("totOut"), balPeriod = $("balPeriod");
+  const totIn = $("totIn"), totOut = $("totOut");
 
-  let mode = "mes";
+  let mode = "tudo";   // "dia" | "intervalo" | "tudo"
   let ref = new Date(); ref = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate());
+  let from = toISO(ref), to = toISO(ref);
   let activeTab = "all";
 
   // Filtro de forma de pagamento
@@ -194,39 +199,31 @@
     const o = document.createElement("option"); o.value = v; o.textContent = t; formaFilter.appendChild(o);
   });
 
-  // Intervalo do período selecionado: [início, fim] em ISO, ou null para "tudo"
+  // Intervalo selecionado: [início, fim] em ISO, ou null para "tudo"
   function range(){
     if(mode === "tudo") return null;
-    if(mode === "dia"){ const s = toISO(ref); return [s, s]; }
-    if(mode === "semana"){
-      const start = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate() - ref.getDay());
-      const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6);
-      return [toISO(start), toISO(end)];
-    }
-    const first = new Date(ref.getFullYear(), ref.getMonth(), 1);
-    const last = new Date(ref.getFullYear(), ref.getMonth()+1, 0);
-    return [toISO(first), toISO(last)];
+    if(mode === "dia"){ const d = toISO(ref); return [d, d]; }
+    return [from, to];
   }
 
   function labelFor(){
     const r = range();
     if(!r) return "Todos os lançamentos";
     if(mode === "dia") return `${fmtDate(r[0])} (${DIAS[ref.getDay()]})`;
-    if(mode === "semana") return `Semana de ${fmtDate(r[0])} a ${fmtDate(r[1])}`;
-    return `${MESES[ref.getMonth()].charAt(0).toUpperCase() + MESES[ref.getMonth()].slice(1)} de ${ref.getFullYear()}`;
+    return r[0] === r[1] ? fmtDate(r[0]) : `De ${fmtDate(r[0])} a ${fmtDate(r[1])}`;
   }
 
   function shift(dir){
-    if(mode === "dia") ref = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate() + dir);
-    else if(mode === "semana") ref = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate() + 7*dir);
-    else if(mode === "mes") ref = new Date(ref.getFullYear(), ref.getMonth() + dir, 1);
+    ref = new Date(ref.getFullYear(), ref.getMonth(), ref.getDate() + dir);
     sync();
   }
 
   function sync(){
     refDate.value = toISO(ref);
+    fromDate.value = from; toDate.value = to;
     rangeLabel.textContent = labelFor();
-    navRow.classList.toggle("hidden", mode === "tudo");
+    navRow.classList.toggle("hidden", mode !== "dia");
+    rangeRow.classList.toggle("hidden", mode !== "intervalo");
     document.querySelectorAll("[data-mode]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode === mode)));
     render();
   }
@@ -241,23 +238,7 @@
     totIn.textContent = brl(sumIn/100);
     totOut.textContent = brl(sumOut/100);
 
-    const pm = {}; FORMAS.forEach(f => pm[f] = 0);
-    base.forEach(x => { pm[x.forma] = (pm[x.forma] || 0) + (x.tipo === "in" ? x.cents : -x.cents); });
-    balPeriod.innerHTML = "";
-    FORMAS.filter(f => forma === "all" || f === forma).forEach(f => {
-      const line = document.createElement("div");
-      line.className = "flex items-baseline justify-between gap-2";
-      const n = document.createElement("span");
-      n.className = "text-xs text-[var(--ink-dim)]"; n.textContent = saldoTitle(f);
-      const v = document.createElement("span");
-      v.className = "font-display font-semibold whitespace-nowrap";
-      v.style.color = pm[f] < 0 ? "var(--danger)" : "var(--ink)";
-      v.textContent = brl(pm[f]/100);
-      line.appendChild(n); line.appendChild(v);
-      balPeriod.appendChild(line);
-    });
-
-    // Saldo em conta: acumulado geral por forma
+    // Saldo atual: acumulado geral por forma
     const map = {}; FORMAS.forEach(f => map[f] = 0);
     ALL.forEach(x => { map[x.forma] = (map[x.forma] || 0) + (x.tipo === "in" ? x.cents : -x.cents); });
     byFormaEl.innerHTML = "";
@@ -314,6 +295,8 @@
   $("prevBtn").addEventListener("click", () => shift(-1));
   $("nextBtn").addEventListener("click", () => shift(1));
   refDate.addEventListener("change", () => { if(refDate.value){ ref = fromISO(refDate.value); sync(); } });
+  fromDate.addEventListener("change", () => { if(fromDate.value){ from = fromDate.value; if(to < from) to = from; sync(); } });
+  toDate.addEventListener("change", () => { if(toDate.value){ to = toDate.value; if(from > to) from = to; sync(); } });
   formaFilter.addEventListener("change", render);
   document.querySelectorAll("[data-tab]").forEach(btn => {
     btn.addEventListener("click", () => {
