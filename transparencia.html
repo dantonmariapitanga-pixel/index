@@ -126,7 +126,7 @@
   </div>
   <div data-reveal class="reveal stat glass rounded-2xl p-5 mt-3">
     <p class="text-xs text-[var(--ink-dim)] mb-1">Lucro líquido <span class="opacity-70">(Entradas − Saídas)</span></p>
-    <p id="totLucro" class="font-display text-2xl font-semibold text-[var(--azul)] whitespace-nowrap">R$ 0,00</p>
+    <p id="totLucro" class="font-display text-2xl font-semibold text-[var(--ink)] whitespace-nowrap">R$ 0,00</p>
   </div>
 </section>
 
@@ -286,7 +286,7 @@
     totOut.textContent = brl(sumOut/100);
     const lucro = sumIn - sumOut;
     totLucro.textContent = brl(lucro/100);
-    totLucro.style.color = lucro < 0 ? "var(--danger)" : "var(--azul)";
+    totLucro.style.color = lucro < 0 ? "var(--danger)" : "var(--ink)";
 
     // Tudo que já aconteceu até o fim do período (inclui os dias anteriores), respeitando a forma de pagamento
     const end = r[1];
@@ -340,7 +340,7 @@
     n.className = "text-xs text-[var(--ink-dim)] mb-1"; n.textContent = name;
     const v = document.createElement("p");
     v.className = "font-display text-2xl font-semibold whitespace-nowrap";
-    v.style.color = cents < 0 ? "var(--danger)" : (cents === 0 ? "var(--ink-dim)" : "var(--neon)");
+    v.style.color = cents < 0 ? "var(--danger)" : (cents === 0 ? "var(--ink-dim)" : "var(--ink)");
     v.textContent = brl(cents/100);
     card.appendChild(n); card.appendChild(v);
     byFormaEl.appendChild(card);
