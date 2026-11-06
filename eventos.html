@@ -13,12 +13,19 @@
 :root{
   --bg:#0B0F0C; --bg-soft:#111810; --card-border:rgba(255,255,255,.1);
   --ink:#F1F4EF; --ink-dim:#8EA08C;
-  --neon:#4AFE7B; --gold:#D9B86C;
+  --neon:#4AFE7B; --gold:#4AFE7B;
   --ease:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body{
+  color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:
+    linear-gradient(180deg, rgba(5,8,6,0.45), rgba(5,8,6,0.72) 55%, rgba(5,8,6,0.9)),
+    url("https://raw.githubusercontent.com/dantonmariapitanga-pixel/index/refs/heads/main/F659C764-83F4-4848-8433-2B78DB94A555.png") repeat,
+    repeating-linear-gradient(90deg, #0D2113 0px, #0D2113 54px, #123420 54px, #123420 108px);
+  background-size: auto, 1200px 1200px, auto;
+}
 img{max-width:100%;display:block;}
 a{text-decoration:none;color:inherit;}
 .font-d{font-family:'Space Grotesk',sans-serif;}
@@ -76,8 +83,8 @@ h1,h2,h3{font-weight:600;line-height:1.1;}
 .extra p{font-size:.8rem;color:var(--ink-dim);margin-top:6px;}
 
 /* GALERIA */
-.gal-grid{margin-top:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-.g-item{border-radius:14px;overflow:hidden;aspect-ratio:1;}
+.gal-grid{margin-top:40px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:520px;}
+.g-item{border-radius:14px;overflow:hidden;aspect-ratio:9/16;}
 .g-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);}
 .g-item:hover img{transform:scale(1.08);}
 
@@ -187,12 +194,6 @@ footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;
     <div class="gal-grid reveal">
       <div class="g-item"><img src="galeria-1.jpg" alt=""></div>
       <div class="g-item"><img src="galeria-2.jpg" alt=""></div>
-      <div class="g-item"><img src="galeria-3.jpg" alt=""></div>
-      <div class="g-item"><img src="galeria-4.jpg" alt=""></div>
-      <div class="g-item"><img src="galeria-5.jpg" alt=""></div>
-      <div class="g-item"><img src="galeria-6.jpg" alt=""></div>
-      <div class="g-item"><img src="galeria-7.jpg" alt=""></div>
-      <div class="g-item"><img src="galeria-8.jpg" alt=""></div>
     </div>
   </div>
 </section>
@@ -206,9 +207,7 @@ footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;
         <div class="vf"><i class="fa-solid fa-users"></i><h4>Boa capacidade</h4><p>Conforto para convidados de todos os tamanhos de festa.</p></div>
         <div class="vf"><i class="fa-solid fa-music"></i><h4>Som &amp; iluminação</h4><p>Equipamentos profissionais inclusos.</p></div>
         <div class="vf"><i class="fa-solid fa-car"></i><h4>Estacionamento</h4><p>Amplo e próximo ao espaço.</p></div>
-        <div class="vf"><i class="fa-solid fa-wind"></i><h4>Climatização</h4><p>Conforto em qualquer época do ano.</p></div>
         <div class="vf"><i class="fa-solid fa-utensils"></i><h4>Cozinha equipada</h4><p>Estrutura para buffets parceiros.</p></div>
-        <div class="vf"><i class="fa-solid fa-shield-halved"></i><h4>Segurança</h4><p>Equipe durante todo o evento.</p></div>
       </div>
       <div class="reveal">
         <div class="map-box"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.3671173963016!2d-38.5938177!3d-3.7298986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c74b5da35be165%3A0xdcd3fdf9eb65ab3a!2sArena%20plural%20Socitety!5e0!3m2!1spt-BR!2sbr!4v1793847331397!5m2!1spt-BR!2sbr" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
