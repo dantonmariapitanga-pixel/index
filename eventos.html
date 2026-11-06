@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plural Eventos — Fortaleza</title>
+<meta name="description" content="Plural Eventos — espaço para casamentos, debutantes, aniversários e eventos corporativos em Fortaleza.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --bg:#0B0F0C; --bg-soft:#111810; --card-border:rgba(255,255,255,.1);
+  --ink:#F1F4EF; --ink-dim:#8EA08C;
+  --neon:#4AFE7B; --gold:#D9B86C;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+.font-d{font-family:'Space Grotesk',sans-serif;}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px;}
+section{padding:96px 0;}
+.glass{background:linear-gradient(180deg,rgba(17,24,16,.85),rgba(17,24,16,.7));border:1px solid var(--card-border);backdrop-filter:blur(14px);border-radius:20px;}
+.glow{text-shadow:0 2px 20px rgba(0,0,0,.6),0 0 30px rgba(74,254,123,.4);}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:12px;font-weight:600;font-size:.9rem;transition:transform .25s var(--ease),box-shadow .25s var(--ease);}
+.btn-neon{background:var(--neon);color:#06170C;box-shadow:0 10px 30px -8px rgba(74,254,123,.55);}
+.btn-neon:hover{transform:translateY(-2px);box-shadow:0 16px 40px -8px rgba(74,254,123,.7);}
+.btn-ghost{border:1px solid var(--card-border);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+h1,h2,h3{font-weight:600;line-height:1.1;}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+
+/* HERO */
+#hero{position:relative;min-height:88vh;display:flex;align-items:center;border-bottom:1px solid var(--card-border);overflow:hidden;}
+#hero img.bgph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35;}
+#hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,15,12,.4),rgba(11,15,12,.85) 70%,var(--bg));}
+.hero-inner{position:relative;z-index:1;max-width:620px;}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:100px;font-size:.78rem;color:var(--gold);margin-bottom:28px;}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--neon);}
+.hero-inner h1{font-size:clamp(2.6rem,6vw,4.2rem);}
+.hero-inner h1 span{color:var(--neon);}
+.hero-inner p{margin-top:18px;color:var(--ink-dim);font-size:1.05rem;max-width:480px;}
+.hero-actions{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.about-visual{position:relative;}
+.about-visual img.main{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:20px;}
+.about-visual img.accent{position:absolute;bottom:-32px;right:-32px;width:46%;aspect-ratio:1;object-fit:cover;border-radius:16px;border:4px solid var(--bg);}
+.eyebrow{color:var(--gold);font-size:.8rem;font-weight:600;margin-bottom:10px;}
+.sdesc{color:var(--ink-dim);line-height:1.8;margin-top:14px;max-width:460px;}
+.feat-list{margin-top:32px;display:flex;flex-direction:column;gap:12px;}
+.feat{display:flex;gap:14px;padding:16px 18px;border-radius:14px;background:var(--bg-soft);border:1px solid var(--card-border);}
+.feat i{color:var(--neon);margin-top:3px;}
+.feat h4{font-size:.9rem;}
+.feat p{font-size:.82rem;color:var(--ink-dim);margin-top:3px;}
+
+/* EVENTOS */
+.evt-grid{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.evt-card{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:3/4;}
+.evt-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);}
+.evt-card:hover img{transform:scale(1.06);}
+.evt-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,15,12,.95),rgba(11,15,12,.25) 60%);}
+.evt-body{position:absolute;bottom:0;left:0;right:0;padding:26px;}
+.evt-body h3{font-size:1.4rem;}
+.evt-body p{font-size:.82rem;color:var(--ink-dim);margin-top:6px;}
+.extra-grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.extra{padding:24px;border-radius:16px;background:var(--bg-soft);border:1px solid var(--card-border);}
+.extra i{color:var(--gold);font-size:1.3rem;margin-bottom:12px;}
+.extra h4{font-size:.92rem;}
+.extra p{font-size:.8rem;color:var(--ink-dim);margin-top:6px;}
+
+/* GALERIA */
+.gal-grid{margin-top:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.g-item{border-radius:14px;overflow:hidden;aspect-ratio:1;}
+.g-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);}
+.g-item:hover img{transform:scale(1.08);}
+
+/* ESPAÇO */
+.venue-grid{margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.vf-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.vf{padding:20px;border-radius:14px;background:var(--bg-soft);border:1px solid var(--card-border);}
+.vf i{color:var(--neon);font-size:1.2rem;margin-bottom:8px;}
+.vf h4{font-size:.86rem;}
+.vf p{font-size:.78rem;color:var(--ink-dim);margin-top:4px;}
+.map-box{border-radius:20px;overflow:hidden;border:1px solid var(--card-border);aspect-ratio:16/11;}
+.map-box iframe{width:100%;height:100%;border:0;}
+.info-row{margin-top:14px;padding:16px 18px;border-radius:14px;background:var(--bg-soft);border:1px solid var(--card-border);display:flex;gap:12px;}
+.info-row i{color:var(--gold);margin-top:2px;}
+.info-row h5{font-size:.84rem;}
+.info-row p{font-size:.8rem;color:var(--ink-dim);margin-top:2px;}
+
+/* CONTATO */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+.ch-list{margin-top:28px;display:flex;flex-direction:column;gap:12px;}
+.ch{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:14px;background:var(--bg-soft);border:1px solid var(--card-border);transition:transform .25s var(--ease);}
+.ch:hover{transform:translateX(4px);border-color:var(--neon);}
+.ch i{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--neon);background:rgba(74,254,123,.1);}
+.ch h4{font-size:.86rem;}
+.ch p{font-size:.78rem;color:var(--ink-dim);}
+.form-box{padding:32px;}
+.form-box h3{font-size:1.5rem;margin-bottom:22px;}
+.fg{margin-bottom:16px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fg label{display:block;font-size:.78rem;color:var(--ink-dim);margin-bottom:6px;}
+.fg input,.fg select,.fg textarea{width:100%;padding:12px 14px;background:var(--bg-soft);border:1px solid var(--card-border);border-radius:10px;color:var(--ink);font-family:inherit;font-size:.88rem;}
+.fg textarea{min-height:80px;resize:vertical;}
+.submit-btn{width:100%;padding:15px;border-radius:12px;background:var(--neon);color:#06170C;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;gap:10px;}
+
+footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;color:var(--ink-dim);font-size:.82rem;}
+
+@media(max-width:860px){
+  .about-grid,.venue-grid,.contact-grid{grid-template-columns:1fr;gap:36px;}
+  .evt-grid,.extra-grid{grid-template-columns:1fr;}
+  .gal-grid{grid-template-columns:repeat(2,1fr);}
+  .frow{grid-template-columns:1fr;}
+  .about-visual img.accent{display:none;}
+}
+</style>
+</head>
+<body>
+
+<section id="hero">
+  <img class="bgph" src="hero-plural-eventos.jpg" alt="Plural Eventos">
+  <div class="wrap">
+    <div class="hero-inner">
+      <a href="https://maps.app.goo.gl/a6mSBoQVnyxRVYyv9" target="_blank" class="badge glass">
+        <span class="dot"></span> Av. Emília Gonçalves, 869 — Quintino Cunha, Fortaleza
+      </a>
+      <h1 class="font-d">Plural <span class="glow">Eventos</span></h1>
+      <p>Casamentos, debutantes, aniversários e eventos corporativos em um espaço pensado para cada detalhe da sua celebração.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5585991042599?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20no%20Plural%20Eventos." target="_blank" class="btn btn-neon">
+          <i class="fa-brands fa-whatsapp"></i> Solicitar orçamento
+        </a>
+        <a href="#galeria" class="btn btn-ghost glass">Ver galeria</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="wrap about-grid">
+    <div class="about-visual reveal">
+      <img class="main" src="sobre-1.jpg" alt="Plural Eventos">
+      <img class="accent" src="sobre-2.jpg" alt="Detalhe do espaço">
+    </div>
+    <div class="reveal">
+      <p class="eyebrow">Nossa proposta</p>
+      <h2 class="font-d" style="font-size:clamp(2rem,4vw,2.8rem);">Um espaço feito para celebrar <span style="color:var(--gold);">o que importa</span></h2>
+      <p class="sdesc">O Plural Eventos nasceu para oferecer a Fortaleza um ambiente sofisticado e acolhedor, onde cada detalhe é cuidado com atenção — do planejamento à última dança.</p>
+      <div class="feat-list">
+        <div class="feat"><i class="fa-solid fa-star"></i><div><h4>Atendimento próximo</h4><p>Equipe dedicada do primeiro contato ao dia do evento.</p></div></div>
+        <div class="feat"><i class="fa-solid fa-location-dot"></i><div><h4>Localização central</h4><p>Fácil acesso e estacionamento para todos os convidados.</p></div></div>
+        <div class="feat"><i class="fa-solid fa-camera"></i><div><h4>Cenários próprios</h4><p>Ambientes pensados para fotos e memórias marcantes.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="eventos" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <p class="eyebrow reveal">O que oferecemos</p>
+    <h2 class="font-d reveal" style="font-size:clamp(2rem,4vw,2.8rem);">Eventos para cada <span style="color:var(--gold);">celebração</span></h2>
+    <div class="evt-grid">
+      <div class="evt-card reveal"><img src="evento-casamento.jpg" alt="Casamentos"><div class="evt-ov"></div><div class="evt-body"><h3 class="font-d">Casamentos</h3><p>Cerimônia e recepção com toda a elegância do grande dia.</p></div></div>
+      <div class="evt-card reveal"><img src="evento-aniversario.jpg" alt="Aniversários"><div class="evt-ov"></div><div class="evt-body"><h3 class="font-d">Aniversários</h3><p>Festas personalizadas ao gosto do aniversariante.</p></div></div>
+      <div class="evt-card reveal"><img src="evento-happy-hour.jpg" alt="Happy Hours"><div class="evt-ov"></div><div class="evt-body"><h3 class="font-d">Happy Hours</h3><p>Confraternizações descontraídas com estrutura completa.</p></div></div>
+    </div>
+    <div class="extra-grid reveal">
+      <div class="extra"><i class="fa-solid fa-dove"></i><h4>Batizados</h4><p>Momentos de fé e celebração em família.</p></div>
+      <div class="extra"><i class="fa-solid fa-champagne-glasses"></i><h4>Confraternizações</h4><p>Encontros de empresa, equipe ou grupo de amigos.</p></div>
+      <div class="extra"><i class="fa-solid fa-calendar-check"></i><h4>Eventos em geral</h4><p>Qualquer ocasião que mereça um espaço à altura.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="galeria">
+  <div class="wrap">
+    <p class="eyebrow reveal">Galeria</p>
+    <h2 class="font-d reveal" style="font-size:clamp(2rem,4vw,2.8rem);">Momentos que <span style="color:var(--gold);">ficam</span></h2>
+    <div class="gal-grid reveal">
+      <div class="g-item"><img src="galeria-1.jpg" alt=""></div>
+      <div class="g-item"><img src="galeria-2.jpg" alt=""></div>
+      <div class="g-item"><img src="galeria-3.jpg" alt=""></div>
+      <div class="g-item"><img src="galeria-4.jpg" alt=""></div>
+      <div class="g-item"><img src="galeria-5.jpg" alt=""></div>
+      <div class="g-item"><img src="galeria-6.jpg" alt=""></div>
+      <div class="g-item"><img src="galeria-7.jpg" alt=""></div>
+      <div class="g-item"><img src="galeria-8.jpg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<section id="espaco" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <p class="eyebrow reveal">Nossa estrutura</p>
+    <h2 class="font-d reveal" style="font-size:clamp(2rem,4vw,2.8rem);">Pensado em cada <span style="color:var(--gold);">detalhe</span></h2>
+    <div class="venue-grid">
+      <div class="vf-grid reveal">
+        <div class="vf"><i class="fa-solid fa-users"></i><h4>Boa capacidade</h4><p>Conforto para convidados de todos os tamanhos de festa.</p></div>
+        <div class="vf"><i class="fa-solid fa-music"></i><h4>Som &amp; iluminação</h4><p>Equipamentos profissionais inclusos.</p></div>
+        <div class="vf"><i class="fa-solid fa-car"></i><h4>Estacionamento</h4><p>Amplo e próximo ao espaço.</p></div>
+        <div class="vf"><i class="fa-solid fa-wind"></i><h4>Climatização</h4><p>Conforto em qualquer época do ano.</p></div>
+        <div class="vf"><i class="fa-solid fa-utensils"></i><h4>Cozinha equipada</h4><p>Estrutura para buffets parceiros.</p></div>
+        <div class="vf"><i class="fa-solid fa-shield-halved"></i><h4>Segurança</h4><p>Equipe durante todo o evento.</p></div>
+      </div>
+      <div class="reveal">
+        <div class="map-box"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.3671173963016!2d-38.5938177!3d-3.7298986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c74b5da35be165%3A0xdcd3fdf9eb65ab3a!2sArena%20plural%20Socitety!5e0!3m2!1spt-BR!2sbr!4v1793847331397!5m2!1spt-BR!2sbr" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <div class="info-row"><i class="fa-solid fa-location-dot"></i><div><h5>Av. Emília Gonçalves, 869</h5><p>Quintino Cunha, Fortaleza — CE</p></div></div>
+        <div class="info-row"><i class="fa-solid fa-clock"></i><div><h5>Horário de atendimento</h5><p>Todos os dias, das 7h às 23h</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <p class="eyebrow">Fale conosco</p>
+      <h2 class="font-d" style="font-size:clamp(2rem,4vw,2.8rem);">Vamos planejar seu <span style="color:var(--gold);">evento</span></h2>
+      <p class="sdesc">Conte um pouco sobre a sua celebração e nossa equipe retorna com uma proposta personalizada.</p>
+      <div class="ch-list">
+        <a href="https://wa.me/5585991042599" target="_blank" class="ch"><i class="fa-brands fa-whatsapp"></i><div><h4>WhatsApp</h4><p>Resposta rápida</p></div></a>
+        <a href="https://maps.app.goo.gl/a6mSBoQVnyxRVYyv9" target="_blank" class="ch"><i class="fa-solid fa-location-dot"></i><div><h4>Visita ao espaço</h4><p>Agende um horário</p></div></a>
+      </div>
+    </div>
+    <div class="glass form-box reveal">
+      <h3 class="font-d">Solicitar orçamento</h3>
+      <form id="cform" onsubmit="sendWA(event)">
+        <div class="frow">
+          <div class="fg"><label>Nome</label><input id="fnome" type="text" required></div>
+          <div class="fg"><label>WhatsApp</label><input id="ftel" type="tel" required></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Tipo de evento</label>
+            <select id="ftipo" required>
+              <option value="" disabled selected>Selecione...</option>
+              <option>Casamento</option><option>Debutante / 15 anos</option>
+              <option>Aniversário</option><option>Corporativo</option>
+              <option>Chá de bebê</option><option>Formatura</option><option>Outro</option>
+            </select>
+          </div>
+          <div class="fg"><label>Data prevista</label><input id="fdata" type="date"></div>
+        </div>
+        <div class="fg"><label>Mensagem (opcional)</label><textarea id="fmsg" placeholder="Conte sobre o seu evento..."></textarea></div>
+        <button type="submit" class="submit-btn"><i class="fa-brands fa-whatsapp"></i> Enviar pelo WhatsApp</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>Plural Eventos · Fortaleza, CE · Av. Emília Gonçalves, 869 — Quintino Cunha</footer>
+
+<script>
+function sendWA(e){
+  e.preventDefault();
+  const nome=document.getElementById('fnome').value;
+  const tel=document.getElementById('ftel').value;
+  const tipo=document.getElementById('ftipo').value;
+  const data=document.getElementById('fdata').value||'A definir';
+  const msg=document.getElementById('fmsg').value||'Sem mensagem adicional';
+  const text=encodeURIComponent(`Olá! Gostaria de um orçamento no Plural Eventos.\n\n👤 Nome: ${nome}\n📱 WhatsApp: ${tel}\n🎉 Evento: ${tipo}\n📅 Data: ${data}\n💬 Mensagem: ${msg}`);
+  window.open(`https://wa.me/5585991042599?text=${text}`,'_blank');
+}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
