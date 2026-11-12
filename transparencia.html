@@ -38,6 +38,16 @@
   }
   .stat:hover{ transform: translateY(-3px); box-shadow: 0 22px 44px -22px rgba(0,0,0,0.65); }
   .glow-text{ text-shadow: 0 2px 18px rgba(0,0,0,0.65), 0 0 26px rgba(74,254,123,0.6), 0 0 48px rgba(74,254,123,0.35); }
+
+  /* Cabeçalho (mesmo estilo do site de reservas) */
+  .hero-fade{ background:linear-gradient(180deg,rgba(10,13,11,.2),rgba(10,13,11,.85) 50%,#0A0D0B 90%); }
+  .hero-logo{ display:block; width:300px; max-width:88%; height:auto; margin:0 auto 20px; filter:drop-shadow(0 6px 24px rgba(0,0,0,.35)); }
+  .hero-text{ max-width:480px; margin:0 auto; color:#FFFFFF; font-size:1rem; line-height:1.6; text-align:center; }
+  @media (min-width:640px){
+    .hero-logo{ width:480px; max-width:85%; margin-bottom:28px; }
+    .hero-text{ font-size:1.05rem; }
+  }
+
   .dot{width:7px;height:7px;border-radius:999px;display:inline-block;}
   .tab{ border:1px solid var(--card-border); transition: background-color .2s var(--ease), color .2s var(--ease), transform .15s var(--ease), opacity .2s var(--ease); }
   .tab[aria-selected="true"]{ background:var(--neon); color:#06170C; font-weight:600; }
@@ -61,16 +71,10 @@
 <body class="min-h-screen">
 
 <header class="relative overflow-hidden border-b border-[var(--card-border)]">
-  <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent pointer-events-none"></div>
-  <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[var(--neon)] opacity-[0.1] blur-3xl pointer-events-none"></div>
-  <div class="relative max-w-3xl mx-auto px-5 pt-10 pb-10 sm:pt-14 sm:pb-12">
-    <span data-reveal class="reveal inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium text-[var(--neon)] mb-5">
-      <span class="dot bg-[var(--neon)]"></span> Portal da Transparência
-    </span>
-    <h1 data-reveal class="reveal font-display text-4xl sm:text-5xl font-semibold leading-[1.05] tracking-tight">
-      Arena <span class="glow-text text-[var(--neon)]">Plural</span>
-    </h1>
-    <p data-reveal class="reveal mt-4 text-[var(--ink-dim)] text-base sm:text-lg max-w-md">
+  <div class="hero-fade absolute inset-0 pointer-events-none"></div>
+  <div class="relative max-w-3xl mx-auto px-5 pt-[72px] pb-10 sm:pt-20 sm:pb-14 text-center">
+    <img data-reveal class="reveal hero-logo" src="https://raw.githubusercontent.com/dantonmariapitanga-pixel/index/refs/heads/main/LOGO%20PORTAL%20DA%20TRANSPARENCIA.png" alt="">
+    <p data-reveal class="reveal hero-text">
       Todas as entradas e saídas registradas, com data, horário e forma de pagamento.
     </p>
   </div>
