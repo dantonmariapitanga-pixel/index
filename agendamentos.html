@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agendamentos — Arena Plural</title>
+<meta name="description" content="Agendamentos Arena Plural: reserve o campo society ou conheça nosso espaço para eventos em Fortaleza.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0F0C; --bg-soft:#111810; --card-border:#FFFFFF;
+  --ink:#F1F4EF; --ink-dim:#FFFFFF;
+  --neon:#4AFE7B; --gold:#4AFE7B;
+  --box:rgba(0,0,0,.78);
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;min-height:100%;}
+body{
+  min-height:100vh;min-height:100svh;
+  color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:
+    linear-gradient(180deg, rgba(5,8,6,0.45), rgba(5,8,6,0.72) 55%, rgba(5,8,6,0.9)),
+    url("https://raw.githubusercontent.com/dantonmariapitanga-pixel/index/refs/heads/main/F659C764-83F4-4848-8433-2B78DB94A555.png") repeat,
+    repeating-linear-gradient(90deg, #0D2113 0px, #0D2113 54px, #123420 54px, #123420 108px);
+  background-size: auto, 1200px 1200px, auto;
+  background-attachment:fixed;
+  padding:calc(40px + env(safe-area-inset-top,0px)) 20px calc(40px + env(safe-area-inset-bottom,0px));
+}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+.font-d{font-family:'Space Grotesk',sans-serif;}
+
+.page{max-width:520px;margin:0 auto;text-align:center;}
+
+.logo{width:340px;max-width:85%;height:auto;margin:0 auto -40px;filter:drop-shadow(0 6px 24px rgba(0,0,0,.35));}
+.eyebrow{color:var(--gold);font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;}
+h1{font-weight:600;line-height:1.1;font-size:clamp(2.4rem,11vw,3.2rem);}
+h1 span{color:var(--neon);}
+.sub{margin-top:14px;color:var(--ink-dim);line-height:1.6;font-size:1rem;max-width:400px;margin-left:auto;margin-right:auto;}
+
+.links{margin-top:36px;display:flex;flex-direction:column;gap:14px;text-align:left;}
+.link{
+  display:flex;align-items:center;gap:16px;padding:20px 20px;border-radius:20px;
+  background:var(--box);border:1px solid var(--card-border);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease);
+}
+.link:hover,.link:focus-visible{transform:translateY(-3px);border-color:var(--neon);box-shadow:0 14px 36px -12px rgba(74,254,123,.55);outline:none;}
+.link:active{transform:translateY(0);}
+.ico{
+  flex-shrink:0;width:52px;height:52px;border-radius:14px;
+  background:var(--neon);color:#06170C;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 30px -8px rgba(74,254,123,.55);
+}
+.ico svg{width:28px;height:28px;}
+.txt{flex:1;min-width:0;}
+.txt h2{font-size:1.25rem;font-weight:600;line-height:1.15;}
+.txt p{margin-top:6px;font-size:.84rem;line-height:1.5;color:var(--ink-dim);}
+.arrow{flex-shrink:0;color:var(--neon);width:22px;height:22px;transition:transform .25s var(--ease);}
+.link:hover .arrow{transform:translateX(4px);}
+
+footer{margin-top:40px;color:var(--ink-dim);font-size:.8rem;line-height:1.6;}
+
+.reveal{opacity:0;transform:translateY(22px);animation:in .7s var(--ease) forwards;}
+.reveal:nth-child(2){animation-delay:.12s;}
+.reveal:nth-child(3){animation-delay:.24s;}
+@keyframes in{to{opacity:1;transform:none;}}
+
+@media(max-width:380px){
+  .link{padding:16px;gap:12px;}
+  .ico{width:46px;height:46px;}
+  .arrow{display:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .reveal{animation:none;opacity:1;transform:none;}
+  .link,.arrow{transition:none;}
+}
+</style>
+</head>
+<body>
+
+<main class="page">
+  <img class="logo" src="https://raw.githubusercontent.com/dantonmariapitanga-pixel/index/refs/heads/main/LOGO%20ARENA%20PLURAL.PNG" alt="Arena Plural">
+  <p class="eyebrow">Arena Plural</p>
+  <p class="sub">Escolha abaixo o que você quer reservar.</p>
+
+  <nav class="links">
+    <a class="link reveal" href="https://www.arenaplural.com.br" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="12 8 15.5 10.5 14.2 14.5 9.8 14.5 8.5 10.5 12 8"/><path d="M12 8V3.2M15.5 10.5l4.4-1.4M14.2 14.5l2.7 3.7M9.8 14.5l-2.7 3.7M8.5 10.5L4.1 9.1"/></svg></span>
+      <span class="txt"><h2 class="font-d">Society</h2><p>Reserve o dia, a data e a hora do seu jogo no campo society.</p></span>
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+
+    <a class="link reveal" href="https://www.arenaplural.com.br/eventos" target="_blank" rel="noopener">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><polygon points="12 12.5 13.1 14.7 15.5 15 13.8 16.7 14.2 19 12 17.9 9.8 19 10.2 16.7 8.5 15 10.9 14.7 12 12.5"/></svg></span>
+      <span class="txt"><h2 class="font-d">Eventos</h2><p>Conheça nosso espaço para eventos pelo site; contamos com galeria de fotos e descrição completa, além disso, você pode solicitar um orçamento por lá.</p></span>
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </nav>
+
+  <footer>Arena Plural · Fortaleza, CE<br>Av. Emília Gonçalves, 869 — Quintino Cunha</footer>
+</main>
+
+</body>
+</html>
