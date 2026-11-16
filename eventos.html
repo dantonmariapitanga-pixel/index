@@ -61,7 +61,6 @@ h1,h2,h3{font-weight:600;line-height:1.1;}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
 .about-visual{position:relative;}
 .about-visual img.main{width:100%;aspect-ratio:1214/1296;object-fit:cover;border-radius:20px;}
-.about-visual img.accent{position:absolute;bottom:-32px;right:-32px;width:46%;aspect-ratio:1;object-fit:cover;border-radius:16px;border:4px solid var(--bg);}
 .eyebrow{color:var(--gold);font-size:.8rem;font-weight:600;margin-bottom:10px;}
 .sdesc{color:var(--ink-dim);line-height:1.8;margin-top:14px;max-width:460px;}
 .feat-list{margin-top:32px;display:flex;flex-direction:column;gap:12px;}
@@ -79,11 +78,6 @@ h1,h2,h3{font-weight:600;line-height:1.1;}
 .evt-body{position:absolute;bottom:0;left:0;right:0;padding:26px;}
 .evt-body h3{font-size:1.4rem;}
 .evt-body p{font-size:.82rem;color:var(--ink-dim);margin-top:6px;}
-.extra-grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.extra{padding:24px;border-radius:16px;background:var(--bg-soft);border:1px solid var(--card-border);}
-.extra svg{color:var(--neon);margin-bottom:12px;}
-.extra h4{font-size:.92rem;}
-.extra p{font-size:.8rem;color:var(--ink-dim);margin-top:6px;}
 
 /* GALERIA */
 .gal-grid{margin-top:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
@@ -120,17 +114,41 @@ h1,h2,h3{font-weight:600;line-height:1.1;}
 .fg label{display:block;font-size:.78rem;color:var(--ink-dim);margin-bottom:6px;}
 .fg input,.fg select,.fg textarea{width:100%;padding:12px 14px;background:var(--bg-soft);border:1px solid var(--card-border);border-radius:10px;color:var(--ink);font-family:inherit;font-size:.88rem;}
 .fg textarea{min-height:80px;resize:vertical;}
-.submit-btn{width:100%;padding:15px;border-radius:12px;background:var(--neon);color:#06170C;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;gap:10px;}
+.submit-btn{width:100%;padding:15px;border-radius:12px;background:var(--neon);color:#06170C;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center;gap:10px;border:0;cursor:pointer;font-family:inherit;}
+
+/* CALENDÁRIO DE DISPONIBILIDADE */
+.cal{padding:18px;border-radius:16px;background:var(--box);border:1px solid var(--card-border);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.cal-head h4{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;text-transform:capitalize;}
+.cal-nav{width:38px;height:38px;border-radius:10px;border:1px solid var(--card-border);background:transparent;color:var(--ink);font-size:1.1rem;cursor:pointer;}
+.cal-nav:disabled{opacity:.25;cursor:default;}
+.cal-dow,.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+.cal-dow span{text-align:center;font-size:.68rem;color:var(--ink-dim);opacity:.7;padding-bottom:4px;}
+.cal-d{aspect-ratio:1;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:transparent;color:var(--ink);font-family:inherit;font-size:.88rem;font-weight:500;cursor:pointer;transition:background .2s,border-color .2s;}
+.cal-d:hover:not(:disabled){border-color:var(--neon);background:rgba(74,254,123,.12);}
+.cal-d.today{border-color:var(--neon);}
+.cal-d.sel{background:var(--neon);color:#06170C;font-weight:700;border-color:var(--neon);}
+.cal-d.booked{background:rgba(255,90,90,.16);border-color:rgba(255,90,90,.55);color:#ff9a9a;text-decoration:line-through;cursor:not-allowed;}
+.cal-d.past{opacity:.28;cursor:default;border-color:transparent;}
+.cal-d.part{background:rgba(255,190,60,.14);border-color:rgba(255,190,60,.6);color:#ffd27a;}
+.cal-d.part.sel{background:var(--neon);color:#06170C;border-color:var(--neon);}
+.cal-info{font-size:.8rem;line-height:1.5;color:var(--ink-dim);padding:10px 12px;border-radius:10px;border:1px solid rgba(255,190,60,.5);background:rgba(255,190,60,.08);margin-bottom:12px;}
+.cal-info.free{border-color:rgba(74,254,123,.5);background:rgba(74,254,123,.08);}
+.cal .frow{grid-template-columns:1fr 1fr!important;gap:10px!important;}
+.cal .fg{margin-bottom:8px;}
+.cal-warn{font-size:.78rem;color:#ff9a9a;min-height:1.1em;}
+.cal-blank{aspect-ratio:1;}
+.cal-leg{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:.72rem;color:var(--ink-dim);}
+.cal-leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
+.cal-pick{margin-top:10px;font-size:.82rem;color:var(--neon);min-height:1.2em;font-weight:600;}
 
 footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;color:var(--ink-dim);font-size:.82rem;}
 
 @media(max-width:860px){
   .about-grid,.venue-grid,.contact-grid{grid-template-columns:1fr;gap:36px;}
   .frow{grid-template-columns:1fr;gap:0;}
-  .about-visual img.accent{display:none;}
   .gal-grid{grid-template-columns:repeat(3,1fr);}
 }
-
 
 @media(max-width:640px){
   section{padding:56px 0;}
@@ -138,95 +156,69 @@ footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;
   .eyebrow{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;}
   .sdesc{max-width:none;line-height:1.7;font-size:.95rem;}
 
-  /* Hero */
   #hero{min-height:0;padding:calc(72px + env(safe-area-inset-top,0px)) 0 56px;}
   .hero-logo{width:300px;max-width:88%;margin-bottom:16px;}
-  .hero-inner h1{font-size:clamp(2.6rem,13vw,3.4rem);}
   .hero-inner p{font-size:1rem;line-height:1.6;}
-  .hero-actions{flex-direction:column;gap:12px;margin-top:28px;}
-  .hero-actions .btn{width:100%;justify-content:center;padding:16px 24px;}
+  .scroll-cue{margin-top:32px;}
 
-  /* Sobre */
   #sobre{padding-top:0;}
   .about-visual img.main{width:calc(100% + 40px);max-width:none;margin-left:-20px;height:100vh;height:100svh;aspect-ratio:auto;border-radius:0;object-fit:cover;object-position:center;}
   .feat-list{margin-top:24px;}
   .feat{padding:14px 16px;}
 
-  /* Eventos: carrossel horizontal */
   .evt-grid{display:flex;align-items:flex-start;gap:14px;margin:32px -20px 0;padding:0 20px 8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .evt-grid::-webkit-scrollbar{display:none;}
   .evt-card{flex:0 0 76%;scroll-snap-align:start;border-radius:18px;}
   .evt-card.reveal{opacity:1;transform:none;}
   .evt-body{padding:20px;}
   .evt-body h3{font-size:1.25rem;}
-  .extra-grid{grid-template-columns:1fr;gap:12px;margin-top:20px;}
-  .extra{display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:center;padding:16px 18px;}
-  .extra svg{grid-row:1 / 3;margin:0;}
-  .extra p{margin-top:2px;}
 
-  /* Galeria: carrossel horizontal */
   .gal-grid{display:flex;align-items:flex-start;gap:12px;margin:28px -20px 0;padding:0 20px 8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .gal-grid::-webkit-scrollbar{display:none;}
   .g-item{flex:0 0 58%;scroll-snap-align:start;border-radius:16px;}
 
-  /* Estrutura */
   .venue-grid{margin-top:32px;gap:24px;}
   .vf-grid{gap:10px;}
   .vf{padding:16px;}
   .vf p{font-size:.74rem;}
   .map-box{aspect-ratio:4/3;border-radius:18px;}
 
-  /* Contato */
   .ch{padding:16px;}
   .form-box{padding:22px 20px;}
   .form-box h3{font-size:1.35rem;margin-bottom:18px;}
   .fg input,.fg select,.fg textarea{font-size:16px;min-height:48px;}
   .fg textarea{min-height:96px;}
   .submit-btn{min-height:52px;font-size:.95rem;}
+  .cal{padding:14px;}
+  .cal-dow,.cal-days{gap:4px;}
 
-  /* Rodapé */
   footer{padding:32px 20px calc(32px + env(safe-area-inset-bottom,0px));line-height:1.6;}
-
 }
 
 @media(min-width:641px){
   #hero .wrap{width:100%;}
   .hero-inner{margin:0 auto;text-align:center;}
   .hero-inner p{margin-left:auto;margin-right:auto;}
-  .hero-actions{justify-content:center;}
 }
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
   .reveal{transition:none;}
+  .scroll-cue .chev{animation:none;}
 }
 
 /* Caixas: preto levemente translúcido */
 :root{ --box:rgba(0,0,0,.78); color-scheme:dark; }
-
-.glass,
-.feat,
-.extra,
-.vf,
-.info-row,
-.ch,
-.fg input,
-.fg select,
-.fg textarea{
+.glass,.feat,.extra,.vf,.info-row,.ch,.fg input,.fg select,.fg textarea{
   background:var(--box);
   -webkit-backdrop-filter:blur(8px);
   backdrop-filter:blur(8px);
 }
 
 /* Ícones pretos do WhatsApp (botões verdes): 30px */
-.btn-neon svg,
-.submit-btn svg{
-  width:30px;
-  height:30px;
-  flex-shrink:0;
-}
+.btn-neon svg,.submit-btn svg{width:30px;height:30px;flex-shrink:0;}
 
-/* Hero mais compacto */
+/* Hero compacto e centralizado */
 .hero-logo{margin-bottom:-70px;}
 .hero-inner p{margin-top:0;}
 #hero::before{background:linear-gradient(180deg,rgba(11,15,12,.2),rgba(11,15,12,.85) 50%,var(--bg) 90%);}
@@ -234,24 +226,24 @@ footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;
   .hero-logo{margin-bottom:-30px;}
   #hero{padding-bottom:40px;}
 }
-
-/* Texto do hero centralizado */
 .hero-inner{text-align:center;margin-left:auto;margin-right:auto;}
 .hero-inner p{text-align:center;margin-left:auto;margin-right:auto;}
 </style>
 </head>
 <body>
 
+<div id="prog"></div>
+
 <section id="hero">
   <div class="wrap">
     <div class="hero-inner">
       <img class="hero-logo" src="https://raw.githubusercontent.com/dantonmariapitanga-pixel/index/refs/heads/main/LOGO%20ARENA%20PLURAL.PNG" alt="Arena Plural">
       <p>Casamentos, aniversários, debutantes, batizados, formaturas e happy hours em um espaço pensado para cada detalhe da sua celebração.</p>
-      <div class="hero-actions">
-        <a href="https://wa.me/5585991042599?text=Ol%C3%A1!%20Quero%20um%20or%C3%A7amento%20no%20Plural%20Eventos." target="_blank" class="btn btn-neon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.6 14.3c-.2.6-1.3 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.6-.6-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.8 1.8.8 2 .1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg> Solicitar orçamento
-        </a>
-      </div>
+      <a href="#sobre" class="scroll-cue" aria-label="Role para conhecer o espaço">
+        <span class="cue-t">Conheça o espaço</span>
+        <span class="cue-s">Fotos, estrutura e datas livres no final da página</span>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+      </a>
     </div>
   </div>
 </section>
@@ -335,9 +327,9 @@ footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;
 <section id="contato">
   <div class="wrap contact-grid">
     <div class="reveal">
-      <p class="eyebrow">Fale conosco</p>
-      <h2 class="font-d" style="font-size:clamp(2rem,4vw,2.8rem);">Vamos planejar seu <span style="color:var(--gold);">evento</span></h2>
-      <p class="sdesc">Conte um pouco sobre a sua celebração e nossa equipe retorna com uma proposta personalizada.</p>
+      <p class="eyebrow">Agende seu evento</p>
+      <h2 class="font-d" style="font-size:clamp(2rem,4vw,2.8rem);">Escolha a data e vamos planejar seu <span style="color:var(--gold);">evento</span></h2>
+      <p class="sdesc">Veja no calendário os dias livres, escolha o seu e conte um pouco sobre a celebração. Nossa equipe retorna com uma proposta personalizada.</p>
       <div class="ch-list">
         <a href="https://wa.me/5585991042599" target="_blank" class="ch"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.6 14.3c-.2.6-1.3 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.6-.6-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.8 1.8.8 2 .1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg><div><h4>WhatsApp</h4><p>Resposta rápida</p></div></a>
         <a href="https://maps.app.goo.gl/a6mSBoQVnyxRVYyv9" target="_blank" class="ch"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><div><h4>Visita ao espaço</h4><p>Agende um horário</p></div></a>
@@ -350,18 +342,43 @@ footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;
           <div class="fg"><label>Nome</label><input id="fnome" type="text" required></div>
           <div class="fg"><label>WhatsApp</label><input id="ftel" type="tel" required></div>
         </div>
-        <div class="frow">
-          <div class="fg"><label>Tipo de evento</label>
-            <select id="ftipo" required>
-              <option value="" disabled selected>Selecione...</option>
-              <option>Casamentos</option><option>Aniversários</option>
-              <option>Debutantes</option><option>Batizados</option>
-              <option>Formaturas</option><option>Happy Hours</option>
-              <option>Confraternizações</option><option>Eventos em geral</option>
-              <option>Outros</option>
-            </select>
+        <div class="fg"><label>Tipo de evento</label>
+          <select id="ftipo" required>
+            <option value="" disabled selected>Selecione...</option>
+            <option>Casamentos</option><option>Aniversários</option>
+            <option>Debutantes</option><option>Batizados</option>
+            <option>Formaturas</option><option>Happy Hours</option>
+            <option>Confraternizações</option><option>Eventos em geral</option>
+            <option>Outros</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Data prevista — toque em um dia livre</label>
+          <div class="cal" id="cal">
+            <div class="cal-head">
+              <button type="button" class="cal-nav" id="cprev" aria-label="Mês anterior">‹</button>
+              <h4 id="ctitle"></h4>
+              <button type="button" class="cal-nav" id="cnext" aria-label="Próximo mês">›</button>
+            </div>
+            <div class="cal-dow"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>
+            <div class="cal-days" id="cdays"></div>
+            <div class="cal-leg">
+              <span><i style="background:var(--neon)"></i>Selecionado</span>
+              <span><i style="background:rgba(255,190,60,.55)"></i>Parcial (há horários livres)</span>
+              <span><i style="background:rgba(255,90,90,.5)"></i>Dia ocupado</span>
+              <span><i style="border:1px solid #fff"></i>Livre</span>
+            </div>
+            <div class="cal-pick" id="cpick"></div>
+            <div id="ctime" style="display:none;margin-top:12px">
+              <div class="cal-info" id="cinfo"></div>
+              <div class="frow">
+                <div class="fg"><label>Horário de início</label><select id="fhi"></select></div>
+                <div class="fg"><label>Horário de término</label><select id="fhf"></select></div>
+              </div>
+              <div class="cal-warn" id="cwarn"></div>
+            </div>
           </div>
-          <div class="fg"><label>Data prevista</label><input id="fdata" type="date"></div>
+          <input type="hidden" id="fdata">
         </div>
         <div class="fg"><label>Mensagem (opcional)</label><textarea id="fmsg" placeholder="Conte sobre o seu evento..."></textarea></div>
         <button type="submit" class="submit-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.6 14.3c-.2.6-1.3 1.2-1.9 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.6-.6-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.2.5.8 1.8.8 2 .1.2.1.3 0 .5-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.1.1-.3.3-.1.6.2.3.9 1.4 1.9 2.3 1.3 1.2 2.4 1.5 2.7 1.7.3.2.5.1.6-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.9.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg> Enviar pelo WhatsApp</button>
@@ -373,18 +390,123 @@ footer{padding:40px 0;border-top:1px solid var(--card-border);text-align:center;
 <footer>Plural Eventos · Fortaleza, CE · Av. Emília Gonçalves, 869 — Quintino Cunha</footer>
 
 <script>
+/* ===== AGENDA ===== 
+   'AAAA-MM-DD': [horaInício, horaFim]  -> bloqueia só esse horário
+   'AAAA-MM-DD': null                   -> bloqueia o dia inteiro (horário não informado) */
+const BOOKED = {
+  '2026-11-29':[10,16],
+  '2026-12-05':[8,15],
+  '2026-12-13':[9,15],
+  '2026-12-19':null
+};
+const OPEN=7, CLOSE=23;
+
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const DIAS=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+const pad=n=>String(n).padStart(2,'0');
+const hh=h=>pad(h)+'h';
+const iso=(y,m,d)=>`${y}-${pad(m+1)}-${pad(d)}`;
+const now=new Date(), todayISO=iso(now.getFullYear(),now.getMonth(),now.getDate());
+const minM=new Date(now.getFullYear(),now.getMonth(),1);
+const maxM=new Date(now.getFullYear(),now.getMonth()+12,1);
+let view=new Date(minM), sel='';
+const $=id=>document.getElementById(id);
+const isFull=k=>(k in BOOKED)&&BOOKED[k]===null;
+
+function renderCal(){
+  const y=view.getFullYear(), m=view.getMonth();
+  $('ctitle').textContent=`${MESES[m]} ${y}`;
+  $('cprev').disabled=view<=minM;
+  $('cnext').disabled=view>=maxM;
+  const first=new Date(y,m,1).getDay(), total=new Date(y,m+1,0).getDate();
+  const box=$('cdays'); box.innerHTML='';
+  for(let i=0;i<first;i++){const b=document.createElement('span');b.className='cal-blank';box.appendChild(b);}
+  for(let d=1;d<=total;d++){
+    const k=iso(y,m,d), b=document.createElement('button');
+    b.type='button'; b.textContent=d; b.className='cal-d';
+    if(k<todayISO){b.classList.add('past');b.disabled=true;}
+    else if(isFull(k)){b.classList.add('booked');b.disabled=true;b.setAttribute('aria-label',`${d} de ${MESES[m]} indisponível`);}
+    else{
+      if(BOOKED[k]){b.classList.add('part');b.setAttribute('aria-label',`${d} de ${MESES[m]}: parcialmente ocupado`);}
+      b.onclick=()=>pick(k);
+    }
+    if(k===todayISO)b.classList.add('today');
+    if(k===sel)b.classList.add('sel');
+    box.appendChild(b);
+  }
+}
+function fmt(k){const [y,m,d]=k.split('-').map(Number);return `${pad(d)}/${pad(m)}/${y} (${DIAS[new Date(y,m-1,d).getDay()]})`;}
+
+function renderTimes(){
+  const box=$('ctime');
+  if(!sel){box.style.display='none';return;}
+  box.style.display='block';
+  const b=BOOKED[sel], info=$('cinfo');
+  if(b){
+    const livres=[];
+    if(b[0]>OPEN)livres.push(`${hh(OPEN)} às ${hh(b[0])}`);
+    if(b[1]<CLOSE)livres.push(`${hh(b[1])} às ${hh(CLOSE)}`);
+    info.className='cal-info';
+    info.innerHTML=`<b>Reservado neste dia:</b> ${hh(b[0])} às ${hh(b[1])}.<br><b>Livre:</b> ${livres.join(' e ')||'nenhum horário'}.`;
+  }else{
+    info.className='cal-info free';
+    info.innerHTML=`<b>Dia totalmente livre</b> (${hh(OPEN)} às ${hh(CLOSE)}). Escolha o horário do seu evento.`;
+  }
+  const hi=$('fhi'), hf=$('fhf');
+  hi.innerHTML='<option value="">A definir</option>';
+  hf.innerHTML='<option value="">A definir</option>';
+  for(let h=OPEN;h<CLOSE;h++){
+    const o=document.createElement('option');o.value=h;o.textContent=hh(h);
+    if(b&&h>=b[0]&&h<b[1])o.disabled=true;
+    hi.appendChild(o);
+  }
+  for(let h=OPEN+1;h<=CLOSE;h++){
+    const o=document.createElement('option');o.value=h;o.textContent=hh(h);
+    if(b&&h>b[0]&&h<=b[1])o.disabled=true;
+    hf.appendChild(o);
+  }
+  $('cwarn').textContent='';
+}
+function checkTimes(){
+  const s=$('fhi').value, e=$('fhf').value, b=sel?BOOKED[sel]:null, w=$('cwarn');
+  w.textContent='';
+  if(s===''||e==='')return true;
+  const S=+s,E=+e;
+  if(E<=S){w.textContent='O término precisa ser depois do início.';return false;}
+  if(b&&S<b[1]&&E>b[0]){w.textContent=`Esse intervalo conflita com o horário reservado (${hh(b[0])} às ${hh(b[1])}).`;return false;}
+  return true;
+}
+function pick(k){
+  sel=(sel===k)?'':k;
+  $('fdata').value=sel;
+  $('cpick').textContent=sel?`✓ Data escolhida: ${fmt(sel)}`:'';
+  renderCal(); renderTimes();
+}
+$('cprev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCal();};
+$('cnext').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCal();};
+$('fhi').onchange=$('fhf').onchange=checkTimes;
+renderCal();
+
 function sendWA(e){
   e.preventDefault();
-  const nome=document.getElementById('fnome').value;
-  const tel=document.getElementById('ftel').value;
-  const tipo=document.getElementById('ftipo').value;
-  const data=document.getElementById('fdata').value||'A definir';
-  const msg=document.getElementById('fmsg').value||'Sem mensagem adicional';
-  const text=encodeURIComponent(`Olá! Gostaria de um orçamento no Plural Eventos.\n\n👤 Nome: ${nome}\n📱 WhatsApp: ${tel}\n🎉 Evento: ${tipo}\n📅 Data: ${data}\n💬 Mensagem: ${msg}`);
+  if(!checkTimes()){$('cwarn').scrollIntoView({block:'center'});return;}
+  const nome=$('fnome').value, tel=$('ftel').value, tipo=$('ftipo').value;
+  const data=sel?fmt(sel):'A definir';
+  const s=$('fhi').value, f=$('fhf').value;
+  const hor=(sel&&s!==''&&f!=='')?`${hh(+s)} às ${hh(+f)}`:'A definir';
+  const msg=$('fmsg').value||'Sem mensagem adicional';
+  const text=encodeURIComponent(`Olá! Gostaria de um orçamento no Plural Eventos.\n\n👤 Nome: ${nome}\n📱 WhatsApp: ${tel}\n🎉 Evento: ${tipo}\n📅 Data: ${data}\n🕒 Horário: ${hor}\n💬 Mensagem: ${msg}`);
   window.open(`https://wa.me/5585991042599?text=${text}`,'_blank');
 }
+
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  prog.style.width=(h>0?scrollY/h*100:0)+'%';
+},{passive:true});
 </script>
 </body>
 </html>
