@@ -413,6 +413,7 @@
     });
   });
 
+  // Reveal ao rolar: threshold 0 para que cards muito altos (lista no celular) também apareçam
   const revealEls = document.querySelectorAll("[data-reveal]");
   if("IntersectionObserver" in window){
     const io = new IntersectionObserver((entries) => {
@@ -423,8 +424,10 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
     revealEls.forEach(el => io.observe(el));
+    // garantia: se algo não aparecer, libera tudo após 1,5s
+    setTimeout(() => revealEls.forEach(el => el.classList.add("in")), 1500);
   } else {
     revealEls.forEach(el => el.classList.add("in"));
   }
